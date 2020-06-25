@@ -116,6 +116,16 @@ git clone https://github.com/libgit2/libgit2 mylibgit
 
 * 若没有` <本地自定义仓库名>`,本地创建的仓库名则为libgit2
 
+**命令3：**
+
+* `<url>`:  github上的仓库地址
+* `<branch>` ： 指定克隆的分支名
+* `-b` : 用于指定可克隆指定分支
+
+```
+git clone -b <branch> <url> 
+```
+
 
 
 
