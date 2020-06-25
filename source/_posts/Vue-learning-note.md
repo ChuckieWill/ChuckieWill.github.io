@@ -84,3 +84,5 @@ npm install vue --save
   * 视图模型层：View和Model沟通的桥梁。
   * 实现了Data Binding，也就是数据绑定，将Model的改变实时的反应到View中
   * 实现了DOM Listener，也就是DOM监听，当DOM发生一些事件(点击、滚动、touch等)时，可以监听到，并在需要的情况下改变对应的Data。
+
+  #  这是一次决定性的测试  命运于此
