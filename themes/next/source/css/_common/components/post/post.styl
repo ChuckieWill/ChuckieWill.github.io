@@ -1,12 +1,16 @@
 .post-body {
-  font-family: $font-family-posts;
   word-wrap();
+  font-family: $font-family-posts;
 
   +desktop-large() {
     font-size: $font-size-large;
   }
 
-  .exturl .fa {
+  +mobile() {
+    font-size: $font-size-small;
+  }
+
+  span.exturl .fa {
     font-size: $font-size-small;
     margin-left: 4px;
   }
@@ -24,11 +28,6 @@
 .post-sticky-flag {
   display: inline-block;
   transform: rotate(30deg);
-}
-
-.post-button {
-  margin-top: 40px;
-  text-align: center;
 }
 
 .use-motion {
@@ -57,17 +56,29 @@
   }
 }
 
+.post-body p a {
+  color: #0593d3;
+  border-bottom: none;
+  border-bottom: 1px solid #0593d3;
+  &:hover {
+    color: #fc6423;
+    border-bottom: none;
+    border-bottom: 1px solid #fc6423;
+  }
+}
+
+@import 'post-button';
 @import 'post-collapse';
 @import 'post-eof';
 @import 'post-expand';
 @import 'post-gallery';
-@import 'post-header';
+@import 'post-meta';
 @import 'post-nav';
 @import 'post-rtl';
 @import 'post-tags';
+@import 'post-title';
 @import 'post-widgets';
-@import 'post-reward';
+
+@import 'post-reward' if (hexo-config('reward_settings.enable'));
 
 @import 'post-copyright' if (hexo-config('creative_commons.post'));
-
-@import 'post-followme' if (hexo-config('follow_me'));

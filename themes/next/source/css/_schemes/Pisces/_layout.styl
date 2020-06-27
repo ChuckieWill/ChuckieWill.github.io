@@ -17,7 +17,7 @@
 }
 
 .header-inner {
-  background: var(--content-bg-color);
+  background: white;
   border-radius: $border-radius-inner;
   box-shadow: $box-shadow-inner;
   overflow: hidden;
@@ -27,7 +27,9 @@
   width: $sidebar-desktop;
 
   +desktop-large() {
-    width: $sidebar-desktop;
+    .container & {
+      width: $sidebar-desktop;
+    }
   }
 
   +tablet-mobile() {
@@ -37,31 +39,62 @@
   }
 }
 
-.main-inner {
-  align-items: flex-start;
-  display: flex;
-  justify-content: space-between;
+.main {
+  clearfix();
+}
 
-  if (hexo-config('sidebar.position') != 'right') {
-    flex-direction: row-reverse;
-  }
+.container .main-inner {
   +tablet-mobile() {
     width: auto;
   }
 }
 
 .content-wrap {
-  background: var(--content-bg-color);
+  background: white;
   border-radius: $border-radius-inner;
   box-shadow: $box-shadow-inner;
   box-sizing: border-box;
+  float: right;
+  min-height: 700px;
   padding: $content-desktop-padding;
   width: $content-wrap;
 
-  +tablet-mobile() {
+  +tablet() {
     border-radius: initial;
     padding: 20px;
     width: 100%;
+  }
+
+  +mobile() {
+    border-radius: initial;
+    min-height: auto;
+    padding: 20px;
+    width: 100%;
+  }
+}
+
+.sidebar {
+  background: $body-bg-color;
+  box-shadow: none;
+  float: left;
+  position: static;
+  width: $sidebar-desktop;
+
+  +tablet-mobile() {
+    display: none;
+  }
+}
+
+.sidebar-toggle {
+  display: none;
+}
+
+.footer-inner {
+  padding-left: 260px;
+
+  +tablet-mobile() {
+    padding: 0;
+    width: auto;
   }
 }
 
@@ -70,18 +103,23 @@ if (hexo-config('sidebar.position') == 'right') {
     right: 0;
   }
 
+  .content-wrap {
+    float: left;
+  }
+
+  .sidebar {
+    float: right;
+  }
+
   .book-mark-link {
     left: $b2t-position-right;
   }
 
   .footer-inner {
+    padding-left: 0;
     padding-right: 260px;
   }
 } else {
-  .footer-inner {
-    padding-left: 260px;
-  }
-
   .back-to-top {
     left: auto;
     right: $b2t-position-right;
@@ -89,14 +127,5 @@ if (hexo-config('sidebar.position') == 'right') {
     +tablet-mobile() {
       right: $b2t-position-right-mobile;
     }
-  }
-}
-
-.footer-inner {
-
-  +tablet-mobile() {
-    padding-left: 0;
-    padding-right: 0;
-    width: auto;
   }
 }

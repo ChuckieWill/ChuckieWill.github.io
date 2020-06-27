@@ -1,12 +1,17 @@
 .site-nav {
   +mobile() {
-    border-bottom: 1px solid $grey-lighter;
-    border-top: 1px solid $grey-lighter;
+    background: white;
+    border-bottom: 1px solid $gray-lighter;
     left: 0;
     margin: 0;
     padding: 0;
     width: 100%;
+    z-index: $zindex-3;
   }
+}
+
+.site-nav-toggle {
+  top: 50px;
 }
 
 .menu {
@@ -16,22 +21,44 @@
 }
 
 .menu-item-active a {
-  background: transparent;
-  border-bottom: 1px solid var(--link-hover-color) !important;
+  border-bottom-color: $menu-link-hover-border;
+  color: $black-deep;
 
   +mobile() {
-    border-bottom: 1px dotted $grey-lighter !important;
+    border-bottom: 1px dotted $gray-lighter;
   }
 }
 
 .menu .menu-item {
   +mobile() {
+    display: block;
     margin: 0 10px;
+    vertical-align: top;
+  }
+
+  .badge {
+    background-color: $gainsboro;
+    display: inline-block;
+    font-weight: $font-weight-bolder;
+    line-height: 1;
+    margin-left: 5px;
+    padding: 1px 4px;
+    text-align: center;
+    white-space: nowrap;
+
+    +mobile() {
+      float: right;
+      margin: .35em 0 0 0;
+    }
+  }
+
+  br {
+    +mobile() {
+      display: none;
+    }
   }
 
   a, span.exturl {
-    border-bottom: 1px solid transparent;
-
     +mobile() {
       padding: 5px 10px;
     }
@@ -39,19 +66,22 @@
     &:hover {
       @extend .menu-item-active a;
     }
-  }
 
-  .fa, .fab, .far, .fas {
-    +tablet-desktop() {
-      display: block;
-      line-height: 2;
-      margin-right: 0;
-      width: 100%;
+    // To prevent hover on external links with touch devices after click.
+    @media (hover: none) {
+      &:hover {
+        border-bottom-color: transparent !important;
+      }
     }
   }
 
-  .badge {
-    background: $gainsboro;
-    padding: 1px 4px;
+  .fa {
+    +tablet() {
+      width: 100%;
+    }
+
+    +desktop() {
+      width: 100%;
+    }
   }
 }

@@ -1,13 +1,13 @@
 {% extends '_layout.swig' %}
-{% import '_macro/sidebar.swig' as sidebar_template with context %}
+{% import '_macro/sidebar.swig' as sidebar_template %}
 
 {% block title %}{{ page.title }} | {{ title }}{% endblock %}
 
-{% block class %}post posts-expand{% endblock %}
-
 {% block content %}
 
-  {{ partial('_macro/post.swig', {post: page}) }}
+  <div id="posts" class="posts-expand">
+    {{ partial('_macro/post.swig', {post: page}) }}
+  </div>
 
 {% endblock %}
 
