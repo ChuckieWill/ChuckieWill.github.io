@@ -113,3 +113,16 @@ categories:
 >  | `permalink`  | 覆盖文章网址                                         |              |
 >  | `keywords`   | 仅用于 meta 标签和 Open Graph 的关键词（不推荐使用） |              |
 
+
+
+###  5 侧栏文章目录样式设置
+
+```
+toc:
+  enable: true
+  number: false   // 目录自动添加编号
+  wrap: false
+  expand_all: true  // 目录全部展开
+  max_depth: 6
+```
+
