@@ -98,7 +98,27 @@ git config --global user.email "1747363320@qq.com"
 git config --global user.email 
 ```
 
+##  6 权限设置
 
+* 输入远程仓库的用户名和密码  ---- 每次执行git push时会弹出
+
+![](Git-0x01-git本地仓库的使用/1588500024646.png)
+
+![](Git-0x01-git本地仓库的使用/1588500052640.png)
+
+* 执行如下代码可只需第一次弹出填写即可  后续git push时不会再弹出
+
+  ```
+  git config --global credential.helper wincred
+  ```
+
+* 删除本地保存的账户
+
+  ```
+  git credential-manager uninstall
+  ```
+
+  
 
 #  二、Git基础
 
@@ -474,3 +494,24 @@ git reset --hard 提交版本号
   ```
 
   
+
+##  4 分支管理
+
+###  4.1 分支管理相关指令
+
+* 查看分支： `git branch`
+* 查看分支详情（分支指向的版本）： `git branch -v`
+* 创建分支： `git branch 分支名`
+* 切换分支： `git checkout 分支名`
+* 创建并切换分支： `git checkout -b 分支名` 
+* 删除分支： `git branch -d 分支名`
+* 合并分支： `git merge 被合并的分支名`
+
+ ###  4.2 分支管理提示与注意
+
+* 查看当前所在分支
+
+![1588503826588](Git-0x01-git本地仓库的使用/1588503826588-1593665753745.png)
+
+* 注意：删除分支时 先退出要删除的分支 再删除
+
