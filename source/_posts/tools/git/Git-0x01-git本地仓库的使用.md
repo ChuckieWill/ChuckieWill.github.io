@@ -39,6 +39,12 @@ categories:
   git
   ```
 
+* 检测安装的版本
+
+  ```js
+  git --version
+  ```
+
 
 * git Bash 中查找git安装路径
 

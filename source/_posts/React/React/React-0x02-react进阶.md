@@ -118,8 +118,14 @@ this.setState(() => {
 
 * 在元素(也可以是自定义组件)上绑定`ref`
 
+  * 别名：标签上对标签的别称  两处别名要一致
+  * 调用名： 设置调用时的名称  
+
   ```heml
-  <input  ref = {(input) => {this.input = input}} />
+  <input  ref = {(别名) => {this.调用名 = 别名}} />
+  
+  //案例
+  <input  ref = {(icon) => {this.inputIcon = icon}} />
   ```
 
 * js中获取该元素并操作
