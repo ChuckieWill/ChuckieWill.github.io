@@ -45,3 +45,11 @@ constructor(props) {
   * 在子组件`shouldComponentUpdate()`函数中判断数据A是否变化，若没有变化则返回false，后续刷新就不会再执行了。
   * 当当父组件数据B变化时，子组件判断数据A没有变化，则不会执行后续刷新，从而避免了性能损耗。
 
+
+
+##  5 PureComponent
+
+**`PureComponent`定义的组件会自动实现`shouldComponentUpdate()`生命周期函数来避免`store`改变引起的不必要的页面刷新**
+
+* 使用好处： 不必要一个个手动的给组件增加` shouldComponentUpdate()`生命周期函数，并判断store数据的改变是否影响本组件。
+* 使用前提： `store`必须是用`immutable.js`管理的，否则会有很多报错。
