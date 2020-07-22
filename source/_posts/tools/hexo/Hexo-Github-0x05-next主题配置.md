@@ -303,3 +303,20 @@ back2top:
 
 4. 安装及配置完成后需要重启本地服务器，否则不会正常显示
 
+
+
+###  10 目录设置
+
+```js
+toc:
+  enable: true
+  # Automatically add list number to toc.
+  number: false  //自动将列表编号添加到目录。
+  # If true, all words will placed on next lines if header width longer then sidebar width.
+  wrap: false  //如果为true，则如果标题宽度比侧栏宽度长，则所有单词将放在下一行。
+  # If true, all level of TOC in a post will be displayed, rather than the activated part of it.
+  expand_all: true  //如果为true，则将显示帖子中所有级别的TOC，而不是其激活的部分。
+  # Maximum heading depth of generated toc.
+  max_depth: 6  //生成toc的最大掘进深度。
+```
+

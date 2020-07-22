@@ -490,8 +490,4 @@ export const getListChange = (list) => ({
 
 * `list.toJS()`
 
-  ```js
-  
-  ```
-
   
