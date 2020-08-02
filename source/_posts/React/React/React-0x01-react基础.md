@@ -337,6 +337,17 @@ export default TodoList;
 onTouchStart={e => this.touchS(e, arg)}
 ```
 
+###  2 事件触发
+
+```js
+//传参的正确写法
+<div onClick={() => onChange(3)}>hhhh</div>
+
+//传参数的错误写法
+//下面这种写法在没有点击时也会自动调用函数
+<div onClick={onChange(3)}>hhhh</div>
+```
+
 
 
 
