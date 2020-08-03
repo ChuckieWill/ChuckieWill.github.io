@@ -110,6 +110,25 @@ open in browser
 *  Todo Tree	待办事项高亮，知乎配置介绍
    
 
+
+
+##  2 设置
+
+###  2.1 缩进设置
+
+*  file-->preferenses-->setting   (文件-首选项-设置)
+* 搜索`tabsize`
+
+ ![img](vscode/8140656-62cf5ba118c0f093.webp) 
+
+
+
+*  要是设置了之后发现没有生效的话，那么就继续在搜索框那边搜`editor.detectIndentation` ，将这一项修改为false即可 
+
+ ![img](vscode/8140656-cf268cb03b01e407.webp) 
+
+
+
 ##  附录
 
 ###  1 vscode前端最佳配置

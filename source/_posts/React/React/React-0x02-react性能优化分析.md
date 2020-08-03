@@ -22,6 +22,16 @@ constructor(props) {
 
 ##  2 `setSate()`修改合并
 
+```js
+setState(() => {
+    return {
+        
+    }
+})
+```
+
+
+
 * `setState()`是异步函数，在短时间内进行的多次修改，`setState`会将多次修改合并，只执行一次更新，以提升性能
 
 ##  3 虚拟DOM
