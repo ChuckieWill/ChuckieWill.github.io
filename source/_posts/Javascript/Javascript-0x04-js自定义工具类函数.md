@@ -5,16 +5,15 @@ tags:
 - Javascript
 - 时间格式化
 - 防抖函数
-- ....
 categories:
 - [Javascript]
 ---
 
 
 
-#  格式化时间
+#  1格式化时间
 
-###  1 date->自定义格式
+###  1.1 date->自定义格式
 
 ```js
 //formatTime.js
@@ -45,7 +44,7 @@ function padLeftZero (str) {
 };
 ```
 
-###   2 second->h​,m,​s
+###   1.2 second->h​,m,​s
 
 ```js
 //传入参数：秒
@@ -68,7 +67,7 @@ module.exports = {
 }
 ```
 
-#  获取不重复的文件名
+#  2获取不重复的文件名
 
 ```js
 //index.js
@@ -79,7 +78,7 @@ export default getNoPrpetName(){
 
 
 
-# 防抖函数
+# 3 防抖函数
 
 **应用场景：**
 
@@ -120,7 +119,7 @@ const fangdou = deboumce(text， 300)
 fangdou()
 ```
 
-#  字符串随机生成器
+#  4 字符串随机生成器
 
 **定义：**
 
@@ -148,7 +147,7 @@ import {random} from '/commen.js'
 const words = random(n)   //n：生成n位字符串   返回n位字符串
 ```
 
-# 判断输入是否为数字
+# 5 判断输入是否为数字
 
 ```js
 //验证是否为数字
