@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一、资料1 转换base64格式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS(0x01)-css常用知识点">
+<meta property="og:url" content="http://yoursite.com/2020/02/22/CSS/css/CSS(0x01)-css%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86%E7%82%B9/index.html">
+<meta property="og:site_name" content="Chuckie&#39;s Blog">
+<meta property="og:description" content="一、资料1 转换base64格式">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-22T03:06:17.000Z">
+<meta property="article:modified_time" content="2020-09-02T08:52:06.526Z">
+<meta property="article:author" content="Chuckie">
+<meta property="article:tag" content="css">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/22/CSS/css/CSS(0x01)-css%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CSS(0x01)-css常用知识点 | Chuckie's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chuckie's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/22/CSS/css/CSS(0x01)-css%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CSS(0x01)-css常用知识点
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-22 11:06:17" itemprop="dateCreated datePublished" datetime="2020-02-22T11:06:17+08:00">2020-02-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-02 16:52:06" itemprop="dateModified" datetime="2020-09-02T16:52:06+08:00">2020-09-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、资料"><a href="#一、资料" class="headerlink" title="一、资料"></a>一、资料</h1><h3 id="1-转换base64格式"><a href="#1-转换base64格式" class="headerlink" title="1 转换base64格式"></a>1 转换base64格式</h3><ul>
+<li><a href="http://tool.chinaz.com/tools/imgtobase/" target="_blank" rel="noopener">网址</a></li>
+</ul>
+<h3 id="2-css色彩大全"><a href="#2-css色彩大全" class="headerlink" title="2 css色彩大全"></a>2 css色彩大全</h3><ul>
+<li><p><a href="https://www.cnblogs.com/xmm2017/p/8441124.html" target="_blank" rel="noopener">色彩地址1</a></p>
+</li>
+<li><p><a href="https://www.w3school.com.cn/cssref/css_colors.asp" target="_blank" rel="noopener">色彩地址2</a></p>
+</li>
+</ul>
+<h3 id="3-阿里iconfont-字体图标"><a href="#3-阿里iconfont-字体图标" class="headerlink" title="3 阿里iconfont 字体图标"></a>3 阿里iconfont 字体图标</h3><ul>
+<li><p><a href="https://www.iconfont.cn/" target="_blank" rel="noopener">阿里iconfont官网</a></p>
+</li>
+<li><p>页面内使用iconfont</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;1 在app.wxss中引入iconfont.wxss</span><br><span class="line">@import &quot;iconfont.wxss&quot;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;2 使用1</span><br><span class="line"> &#x2F;&#x2F;&lt;text class&#x3D;&quot;iconfont 阿里上的代码&quot;&gt;&lt;&#x2F;text&gt;</span><br><span class="line"> &lt;text class&#x3D;&quot;iconfont icon-shangyishou-yuanshijituantubiao&quot;&gt;&lt;&#x2F;text&gt;</span><br><span class="line">    使用2 </span><br><span class="line">   &lt;i class&#x3D;&quot;iconfont icon-fabu&quot;&gt;&lt;&#x2F;i&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>组件内使用iconfont</p>
+<ul>
+<li><p>方法1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 将 iconfont.wxss 直接复制到组件文件里 </span><br><span class="line">2 组件wxss引入   @import &quot;iconfont.wxss&quot;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法2 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;1 页面组件将样式传递给组件</span><br><span class="line">&lt;w-search iconfont&#x3D;&quot;iconfont&quot; icon-sousuo&#x3D;&quot;icon-sousuo&quot;&#x2F;&gt;</span><br><span class="line">&#x2F;&#x2F;2 组件接收</span><br><span class="line">externalClasses: [</span><br><span class="line">    &#39;iconfont&#39;,</span><br><span class="line">    &#39;icon-sousuo&#39;,</span><br><span class="line">  ],</span><br><span class="line">&#x2F;&#x2F; 3 组件wxml使用</span><br><span class="line">&lt;i class&#x3D;&quot;iconfont icon-sousuo  find&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;注意事项</span><br><span class="line">在组件内不能修改iconfont的样式</span><br><span class="line">必须再定义class  例如：find</span><br><span class="line">.find &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法3</p>
+<p>消除样式隔离 </p>
+<p>指南—自定义组件—组件模板和样式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Component(&#123;</span><br><span class="line">  options: &#123;</span><br><span class="line">    styleIsolation: &#39;apply-shared&#39;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="二、布局"><a href="#二、布局" class="headerlink" title="二、布局"></a>二、布局</h1><h3 id="1-flex布局"><a href="#1-flex布局" class="headerlink" title="1 flex布局"></a>1 flex布局</h3><ul>
+<li><a href="https://www.runoob.com/w3cnote/flex-grammar.html" target="_blank" rel="noopener">flex布局教程</a></li>
+</ul>
+<h3 id="2-css布局模型"><a href="#2-css布局模型" class="headerlink" title="2 css布局模型"></a>2 css布局模型</h3><h4 id="2-1-流动模型-flow"><a href="#2-1-流动模型-flow" class="headerlink" title="2.1 流动模型 flow"></a>2.1 流动模型 flow</h4><p>​    网页默认布局模型、块状自上而下、内联从左到右</p>
+<h4 id="2-2-浮动模型-float"><a href="#2-2-浮动模型-float" class="headerlink" title="2.2 浮动模型 float"></a>2.2 浮动模型 float</h4><p>   消除块状元素独占一行的特性</p>
+<pre><code>float:left;
+float:right;</code></pre><h4 id="3-3-层模型-position"><a href="#3-3-层模型-position" class="headerlink" title="3.3 层模型 position"></a>3.3 层模型 position</h4><h5 id="3-3-1-绝对定位-position-absolute"><a href="#3-3-1-绝对定位-position-absolute" class="headerlink" title="3.3.1  绝对定位(position: absolute)"></a>3.3.1  <strong>绝对定位</strong>(position: absolute)</h5><ul>
+<li><p>参照定位的元素（父元素）必须加入position:relative; </p>
+<p>如果想为元素设置层模型中的绝对定位，需要设置<strong>position:absolute</strong>(表示绝对定位)，这条语句的作用将元素从  文档流中拖出来，然后使用left、right、top、bottom属性相对于其最接近的一个具有定位属性的父包含块进行绝对定位。如果不存在这样的包含块，则相对于body元素，即相对于<strong>浏览器窗口</strong>。 </p>
+</li>
+</ul>
+<h5 id="3-3-2-相对定位-position-relative"><a href="#3-3-2-相对定位-position-relative" class="headerlink" title="3.3.2  相对定位(position: relative)"></a>3.3.2  <strong>相对定位</strong>(position: relative)</h5><p> 如果想为元素设置层模型中的相对定位，需要设置position:relative（表示相对定位），它通过left、right、top、bottom属性确定元素在<strong>正常文档流中</strong>的偏移位置。相对定位完成的过程是首先按static(float)方式生成一个元素(并且元素像层一样浮动了起来)，然后相对于<strong>以前的位置移动，</strong>移动的方向和幅度由left、right、top、bottom属性确定，偏移前的位置保留不动。 </p>
+<h5 id="3-3-3-固定定位-position-fixed"><a href="#3-3-3-固定定位-position-fixed" class="headerlink" title="3.3.3  固定定位(position: fixed)"></a>3.3.3  <strong>固定定位</strong>(position: fixed)</h5><p> fixed：表示固定定位，与absolute定位类型类似，但它的相对移动的坐标是视图（<strong>屏幕内的网页窗口</strong>）本身。由于视图本身是固定的，它不会随浏览器窗口的滚动条滚动而变化，除非你在屏幕中移动浏览器窗口的屏幕位置，或改变浏览器窗口的显示大小，因此固定定位的元素会始终位于浏览器窗口内视图的某个位置，不会受文档流动影响 。</p>
+<h3 id><a href="#" class="headerlink" title></a></h3><h1 id="三、单位及适配"><a href="#三、单位及适配" class="headerlink" title="三、单位及适配"></a>三、单位及适配</h1><h3 id="1单位"><a href="#1单位" class="headerlink" title="1单位"></a>1单位</h3><ul>
+<li>vh（viewport height）: 视图高度  —-  vh的具体高度是根据设备而定  <ul>
+<li>100vh 即整个视图的高度    —- 及设备的整个视图界面的高度</li>
+</ul>
+</li>
+<li>psd原稿的尺寸单位是：像素             1px = 2像素</li>
+</ul>
+<h3 id="2-适配"><a href="#2-适配" class="headerlink" title="2  适配"></a>2  适配</h3><h4 id="2-1-reset-css"><a href="#2-1-reset-css" class="headerlink" title="2.1 reset css"></a>2.1 reset css</h4><p><strong><code>reset css</code>用于统一不同浏览器标签样式的默认设置</strong></p>
+<ul>
+<li><p>不同浏览器对<code>body</code>等标签的<code>margin</code>、<code>padding</code>等默认设置是不同的</p>
+</li>
+<li><p><code>reset css</code>就是将这些不同的默认设置改为一样的设置，使得项目在不同浏览器的样式都一致</p>
+</li>
+<li><p><a href="https://meyerweb.com/eric/tools/css/reset/" target="_blank" rel="noopener">官网</a></p>
+</li>
+<li><p>将下面代码添加到全局样式中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">html, body, div, span, applet, object, iframe,</span><br><span class="line">h1, h2, h3, h4, h5, h6, p, blockquote, pre,</span><br><span class="line">a, abbr, acronym, address, big, cite, code,</span><br><span class="line">del, dfn, em, img, ins, kbd, q, s, samp,</span><br><span class="line">small, strike, strong, sub, sup, tt, <span class="keyword">var</span>,</span><br><span class="line">b, u, i, center,</span><br><span class="line">dl, dt, dd, ol, ul, li,</span><br><span class="line">fieldset, form, label, legend,</span><br><span class="line">table, caption, tbody, tfoot, thead, tr, th, td,</span><br><span class="line">article, aside, canvas, details, embed, </span><br><span class="line">figure, figcaption, footer, header, hgroup, </span><br><span class="line">menu, nav, output, ruby, section, summary,</span><br><span class="line">time, mark, audio, video &#123;</span><br><span class="line">	margin: <span class="number">0</span>;</span><br><span class="line">	padding: <span class="number">0</span>;</span><br><span class="line">	border: <span class="number">0</span>;</span><br><span class="line">	font-size: <span class="number">100</span>%;</span><br><span class="line">	font: inherit;</span><br><span class="line">	vertical-align: baseline;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* HTML5 display-role reset for older browsers */</span></span><br><span class="line">article, aside, details, figcaption, figure, </span><br><span class="line">footer, header, hgroup, menu, nav, section &#123;</span><br><span class="line">	display: block;</span><br><span class="line">&#125;</span><br><span class="line">body &#123;</span><br><span class="line">	line-height: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">ol, ul &#123;</span><br><span class="line">	list-style: none;</span><br><span class="line">&#125;</span><br><span class="line">blockquote, q &#123;</span><br><span class="line">	quotes: none;</span><br><span class="line">&#125;</span><br><span class="line">blockquote:before, <span class="attr">blockquote</span>:after,</span><br><span class="line">q:before, <span class="attr">q</span>:after &#123;</span><br><span class="line">	content: <span class="string">''</span>;</span><br><span class="line">	content: none;</span><br><span class="line">&#125;</span><br><span class="line">table &#123;</span><br><span class="line">	border-collapse: collapse;</span><br><span class="line">	border-spacing: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="2-2-宽高自适应"><a href="#2-2-宽高自适应" class="headerlink" title="2.2 宽高自适应"></a>2.2 宽高自适应</h3><h4 id="2-2-1-自适应屏宽高"><a href="#2-2-1-自适应屏宽高" class="headerlink" title="2.2.1 自适应屏宽高"></a>2.2.1 自适应屏宽高</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用vh、vw来设置宽高</span></span><br><span class="line"><span class="number">100</span>vh: <span class="number">100</span>%的屏幕高</span><br><span class="line"><span class="number">100</span>vw： <span class="number">100</span>%的屏幕宽</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-2-设置文档流固定高度后的剩余高度"><a href="#2-2-2-设置文档流固定高度后的剩余高度" class="headerlink" title="2.2.2 设置文档流固定高度后的剩余高度"></a>2.2.2 设置文档流固定高度后的剩余高度</h4><ul>
+<li>css3 中提供的<code>calc()</code>方法</li>
+<li>应用场景：不知道设备的具体高度  要设置一个元素的高度为设备高度减去上导航和下导航高度之后的高度</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.content&#123;</span><br><span class="line">	height: calc(100% - 98px)  &#x2F;&#x2F;100%是设备的整个视图界面的高度（内容高度  要舍去padding margin）</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h1 id="四、常用效果"><a href="#四、常用效果" class="headerlink" title="四、常用效果"></a>四、常用效果</h1><h2 id="4-1布局相关"><a href="#4-1布局相关" class="headerlink" title="4.1布局相关"></a>4.1布局相关</h2><h4 id="4-1-1-滑动到固定位置则脱离标准流-—–-gt-position-fixed"><a href="#4-1-1-滑动到固定位置则脱离标准流-—–-gt-position-fixed" class="headerlink" title="4.1.1 滑动到固定位置则脱离标准流  —–&gt;position:fixed"></a>4.1.1 滑动到固定位置则脱离标准流  —–&gt;position:fixed</h4><p><strong>语法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">position: sticky;</span><br><span class="line">top: 44px;         &#x2F;&#x2F;top设置滑动到距离顶部多少时 脱离标准流(原理是设置成了fixed)</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-1-2-原生实现局部区域的滚动"><a href="#4-1-2-原生实现局部区域的滚动" class="headerlink" title="4.1.2 原生实现局部区域的滚动"></a>4.1.2 原生实现局部区域的滚动</h4><ul>
+<li><strong>注意：</strong>原生的滚动效果在移动端效果很不好，  一般使用<a href="https://better-scroll.github.io/docs/zh-CN/" target="_blank" rel="noopener"><code>better-scroll</code></a>框架</li>
+</ul>
+<p><strong>语法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; html</span><br><span class="line">&lt;ul class&#x3D;&quot;content&quot;&gt;</span><br><span class="line">    &lt;li&gt;分类列表1&lt;&#x2F;li&gt;</span><br><span class="line">    </span><br><span class="line">&#x2F;&#x2F;css</span><br><span class="line"> .content&#123;</span><br><span class="line">    height: 150px;             &#x2F;&#x2F;1 为父元素设置高度</span><br><span class="line">    background-color: red; </span><br><span class="line">    overflow: hidden;          &#x2F;&#x2F;2 将超出的内容隐藏     ----- 有步骤3 此步骤可省略  </span><br><span class="line">    overflow-y: scroll;        &#x2F;&#x2F;3 设置在y轴是可以滚动的  </span><br><span class="line">    overflow-x: scroll;        &#x2F;&#x2F;3 设置在x轴是可以滚动的</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-1-3-边框不占元素宽高"><a href="#4-1-3-边框不占元素宽高" class="headerlink" title="4.1.3 边框不占元素宽高"></a>4.1.3 边框不占元素宽高</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">box-sizing:border-box;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-1-4-块级元素居中"><a href="#4-1-4-块级元素居中" class="headerlink" title="4.1.4 块级元素居中"></a>4.1.4 块级元素居中</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;上下左右居中  </span><br><span class="line">position: absolute;</span><br><span class="line">left:50%;</span><br><span class="line">top: 50%;</span><br><span class="line">transform: translate(-50%, -50%)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="4-2文本相关"><a href="#4-2文本相关" class="headerlink" title="4.2文本相关"></a>4.2文本相关</h2><h4 id="4-2-1-两行文字-’…’"><a href="#4-2-1-两行文字-’…’" class="headerlink" title="4.2.1 两行文字+’…’"></a>4.2.1 两行文字+’…’</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">display: -webkit-box;</span><br><span class="line">-webkit-box-orient: vertical;    &#x2F;&#x2F;	从顶部向底部垂直布置子元素</span><br><span class="line">-webkit-line-clamp: 2;           &#x2F;&#x2F;保留两行          </span><br><span class="line">&#x2F;* white-space: nowrap; *&#x2F;       &#x2F;&#x2F;不换行</span><br><span class="line">overflow: hidden;</span><br><span class="line">text-overflow: ellipsis;         &#x2F;&#x2F;’...‘样式</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-2-2-单行字符串-’…’"><a href="#4-2-2-单行字符串-’…’" class="headerlink" title="4.2.2 单行字符串+’…’"></a>4.2.2 单行字符串+’…’</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">text-overflow</span>: <span class="selector-tag">ellipsis</span>;</span><br><span class="line"><span class="selector-tag">white-space</span>: <span class="selector-tag">nowrap</span>;</span><br><span class="line"><span class="selector-tag">overflow</span>: <span class="selector-tag">hidden</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-2-3-文本头空两格"><a href="#4-2-3-文本头空两格" class="headerlink" title="4.2.3 文本头空两格"></a>4.2.3 文本头空两格</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.class&#123;</span><br><span class="line">	text-indent: <span class="number">58</span>px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="4-2-4-消除字体上下空白部分"><a href="#4-2-4-消除字体上下空白部分" class="headerlink" title="4.2.4 消除字体上下空白部分"></a>4.2.4 消除字体上下空白部分</h4><p>字体默认情况下 上下有空白填充</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;使字体行高&#x3D;字体高度  可以消除部分上下空白部分  但不能完全消除</span><br><span class="line">font-size: 24rpx;</span><br><span class="line">line-height: 24rpx; &#x2F;&#x2F;字体行高</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-3-动画效果"><a href="#4-3-动画效果" class="headerlink" title="4.3 动画效果"></a>4.3 动画效果</h2><h4 id="4-3-1-旋转效果"><a href="#4-3-1-旋转效果" class="headerlink" title="4.3.1 旋转效果"></a>4.3.1 旋转效果</h4><ul>
+<li>工具样式  直接使用下面的样式即可，不用全部弄懂  只需要在使用的地方使用rotation类即可</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">.rotation &#123;</span><br><span class="line">  -webkit-transform: rotate(360deg);</span><br><span class="line">  animation: rotation 12s linear infinite;</span><br><span class="line">  -moz-animation: rotation 12s linear infinite;</span><br><span class="line">  -webkit-animation: rotation 12s linear infinite;</span><br><span class="line">  -o-animation: rotation 12s linear infinite;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@-webkit-keyframes rotation &#123;</span><br><span class="line">  from &#123;</span><br><span class="line">    -webkit-transform: rotate(0deg);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  to &#123;</span><br><span class="line">    -webkit-transform: rotate(360deg);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-3-2-渐变效果"><a href="#4-3-2-渐变效果" class="headerlink" title="4.3.2 渐变效果"></a>4.3.2 渐变效果</h4><ul>
+<li>过渡渐变</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.show</span>&#123;</span><br><span class="line">	opacity: 1 ;  //透明度为1 即显示组件</span><br><span class="line">    transition: all 1s ease-in ; // 1秒完成变化 以ease-in的方式完成</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.hide</span>&#123;</span><br><span class="line">    opacity: 0 ;  //透明度为0  即隐藏组件</span><br><span class="line">    transition: all 1s ease-in ; // 1秒完成变化 以ease-in的方式完成</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>动画渐变</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.show</span>&#123;</span><br><span class="line">    animation: show-item 1s ease-in forwards ; //forwards是在变化完成时保留渐变到100%的样式效果，若没有这个属性，变化的动画效果结束后仍然显示的是变化之前的样式</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.hide</span>&#123;</span><br><span class="line">    <span class="attribute">animation</span>: hide-item <span class="number">1s</span> ease-in forwards ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@keyframes</span> show-item &#123;</span><br><span class="line">    0% &#123;      //变化进行到0%时</span><br><span class="line">       <span class="selector-tag">opacity</span>: 0 ;</span><br><span class="line">        <span class="selector-tag">color</span>: <span class="selector-tag">red</span>; </span><br><span class="line">    &#125;</span><br><span class="line">    50% &#123;      //变化进行到50%时</span><br><span class="line">       <span class="selector-tag">opacity</span>: 0<span class="selector-class">.5</span> ;</span><br><span class="line">        <span class="selector-tag">color</span>: <span class="selector-tag">green</span>; </span><br><span class="line">    &#125;</span><br><span class="line">    100% &#123;      //变化进行到100%时</span><br><span class="line">       <span class="selector-tag">opacity</span>: 1 ;</span><br><span class="line">        <span class="selector-tag">color</span>: <span class="selector-tag">blue</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@keyframes</span> hide-item &#123;</span><br><span class="line">    0% &#123;      //变化进行到0%时</span><br><span class="line">       <span class="selector-tag">opacity</span>: 1 ;</span><br><span class="line">        <span class="selector-tag">color</span>: <span class="selector-tag">red</span>; </span><br><span class="line">    &#125;</span><br><span class="line">    50% &#123;      //变化进行到50%时</span><br><span class="line">       <span class="selector-tag">opacity</span>: 0<span class="selector-class">.5</span> ;</span><br><span class="line">        <span class="selector-tag">color</span>: <span class="selector-tag">green</span>; </span><br><span class="line">    &#125;</span><br><span class="line">    100% &#123;      //变化进行到100%时</span><br><span class="line">       <span class="selector-tag">opacity</span>: 0 ;</span><br><span class="line">        <span class="selector-tag">color</span>: <span class="selector-tag">blue</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="五、常见问题"><a href="#五、常见问题" class="headerlink" title="五、常见问题"></a>五、常见问题</h1><h2 id="5-1去掉标签自带样式"><a href="#5-1去掉标签自带样式" class="headerlink" title="5.1去掉标签自带样式"></a>5.1去掉标签自带样式</h2><h3 id="5-1-1-去掉a标签自带样式"><a href="#5-1-1-去掉a标签自带样式" class="headerlink" title="5.1.1 去掉a标签自带样式"></a>5.1.1 去掉a标签自带样式</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span>标签去除默认样式</span><br><span class="line"><span class="comment">/*包含以下四种的链接*/</span></span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*正常的未被访问过的链接*/</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:link</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*已经访问过的链接*/</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:visited</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*鼠标划过(停留)的链接*/</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 正在点击的链接*/</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:active</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-父元素的透明度设置影响子元素"><a href="#5-2-父元素的透明度设置影响子元素" class="headerlink" title="5.2 父元素的透明度设置影响子元素"></a>5.2 父元素的透明度设置影响子元素</h2><p><strong>问题描述：</strong></p>
+<ul>
+<li><p>设置父元素<code>opacity：0.5</code>，子元素不设置<code>opacity</code>，子元素会受到父元素opacity的影响，也会有0.5的透明度。</p>
+</li>
+<li><p>即使设置子元素<code>opacity：1</code>，子元素的<code>opacity：1</code>也是在父元素的<code>opacity：0.5</code>的基础上设置的，因此子元素的opacity还是0.5。</p>
+</li>
+</ul>
+<p><strong>解决方法：</strong></p>
+<ul>
+<li>为父元素设置<code>background: rgba(0,0,0,0.5)</code>。</li>
+</ul>
+<h3 id="-1"><a href="#-1" class="headerlink" title></a></h3>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/css/" rel="tag"># css</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/12/third-repositories/axios/axios/" rel="prev" title="axios">
+      <i class="fa fa-chevron-left"></i> axios
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/22/CSS/css/CSS(0x02)-css%E9%9A%8F%E7%AC%94/" rel="next" title="CSS(0x02)-css随笔">
+      CSS(0x02)-css随笔 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、资料"><span class="nav-text">一、资料</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-转换base64格式"><span class="nav-text">1 转换base64格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-css色彩大全"><span class="nav-text">2 css色彩大全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-阿里iconfont-字体图标"><span class="nav-text">3 阿里iconfont 字体图标</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、布局"><span class="nav-text">二、布局</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-flex布局"><span class="nav-text">1 flex布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-css布局模型"><span class="nav-text">2 css布局模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-流动模型-flow"><span class="nav-text">2.1 流动模型 flow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-浮动模型-float"><span class="nav-text">2.2 浮动模型 float</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-层模型-position"><span class="nav-text">3.3 层模型 position</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-1-绝对定位-position-absolute"><span class="nav-text">3.3.1  绝对定位(position: absolute)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-2-相对定位-position-relative"><span class="nav-text">3.3.2  相对定位(position: relative)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-3-固定定位-position-fixed"><span class="nav-text">3.3.3  固定定位(position: fixed)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-text"></span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、单位及适配"><span class="nav-text">三、单位及适配</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1单位"><span class="nav-text">1单位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-适配"><span class="nav-text">2  适配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-reset-css"><span class="nav-text">2.1 reset css</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-宽高自适应"><span class="nav-text">2.2 宽高自适应</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-自适应屏宽高"><span class="nav-text">2.2.1 自适应屏宽高</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-设置文档流固定高度后的剩余高度"><span class="nav-text">2.2.2 设置文档流固定高度后的剩余高度</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、常用效果"><span class="nav-text">四、常用效果</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1布局相关"><span class="nav-text">4.1布局相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-滑动到固定位置则脱离标准流-—–-gt-position-fixed"><span class="nav-text">4.1.1 滑动到固定位置则脱离标准流  —–&gt;position:fixed</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-原生实现局部区域的滚动"><span class="nav-text">4.1.2 原生实现局部区域的滚动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-3-边框不占元素宽高"><span class="nav-text">4.1.3 边框不占元素宽高</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-4-块级元素居中"><span class="nav-text">4.1.4 块级元素居中</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2文本相关"><span class="nav-text">4.2文本相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-两行文字-’…’"><span class="nav-text">4.2.1 两行文字+’…’</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-单行字符串-’…’"><span class="nav-text">4.2.2 单行字符串+’…’</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-3-文本头空两格"><span class="nav-text">4.2.3 文本头空两格</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-4-消除字体上下空白部分"><span class="nav-text">4.2.4 消除字体上下空白部分</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-动画效果"><span class="nav-text">4.3 动画效果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-旋转效果"><span class="nav-text">4.3.1 旋转效果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-渐变效果"><span class="nav-text">4.3.2 渐变效果</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、常见问题"><span class="nav-text">五、常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1去掉标签自带样式"><span class="nav-text">5.1去掉标签自带样式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-去掉a标签自带样式"><span class="nav-text">5.1.1 去掉a标签自带样式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-父元素的透明度设置影响子元素"><span class="nav-text">5.2 父元素的透明度设置影响子元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-text"></span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chuckie"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Chuckie</p>
+  <div class="site-description" itemprop="description">Bright future</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ChuckieWill" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ChuckieWill" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/codewyj.163.com" title="E-Mail → codewyj.163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jianshu.com/u/de627226656c" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;de627226656c" rel="noopener" target="_blank">简书</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="/images/me.png"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chuckie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">170k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:35</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
