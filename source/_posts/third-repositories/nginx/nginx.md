@@ -1,6 +1,6 @@
 ---
 title: nginx
-date: 2020-08-05 13:45:50
+date: 2020-02-06 13:45:50
 tags:
 - nginx
 categories:

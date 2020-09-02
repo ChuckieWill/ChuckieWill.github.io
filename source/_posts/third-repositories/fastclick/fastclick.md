@@ -1,6 +1,6 @@
 ---
 title: fastclick
-date: 2020-08-05 12:45:50
+date: 2020-02-08 12:45:50
 tags:
 - fastclick
 categories:

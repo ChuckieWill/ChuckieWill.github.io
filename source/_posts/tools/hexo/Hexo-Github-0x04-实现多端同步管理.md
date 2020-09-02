@@ -1,6 +1,6 @@
 ---
 title: Hexo+Github(0x04)-实现多端同步管理
-date: 2020-06-27 16:42:27
+date: 2020-01-14 16:42:27
 tags:
 - Hexo
 - github pages

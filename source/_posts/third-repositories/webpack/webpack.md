@@ -1,3 +1,11 @@
+---
+title: webpack系统学习
+date: 2020-08-01 10:43:17
+tags:
+- webpack
+categories:
+- [third-repositories, webpack]
+---
 #  webpack
 
 #  一、webpack
@@ -693,4 +701,139 @@ new Vue({
   ```
 
   
+
+#  五、本地服务器
+
+##  1 搭建本地服务器
+
+* webpack提供了一个可选的本地开发服务器，这个本地服务器基于node.js搭建，内部使用express框架，可以实现浏览器自动刷新显示我们修改后的结果。
+
+* 安装
+
+  ```js
+  npm install --save-dev webpack-dev-server@版本号
+  ```
+
+* webpack.config.js中配置` devServer`
+
+  * pcontentBase：为哪一个文件夹提供本地服务，默认是根文件夹，一般指定./dist
+  * pport：端口号
+  * pinline：页面实时刷新
+  * phistoryApiFallback：在SPA页面中，依赖HTML5的history模式
+
+  ```js
+   devServer: {
+      contentBase: './dist',
+      inline: true
+    }
+  ```
+
+* package.js中配置`scripts`
+
+  * 该配置是设置启动本地服务器的命令
+
+  * `--open`: 表示直接打开浏览器
+
+    ```js
+     "scripts": {
+        "dev": "webpack-dev-server --open"
+      },
+    ```
+
+* 启动本地服务器
+
+  ```js
+  终端：npm run dev
+  ```
+
+
+
+##  2 webpack配置分离
+
+* 对`webpack.config.js`配置的分离
+
+* nwebpack配置分离的原因：开发时配置和发布时配置不同 所以需要分离以便发布时依赖准确清晰
+
+1. 项目根目录下新建`build`文件夹 文件夹下新建3个配置文件：
+
+   * `base.config.js`: webpack基本配置（开发时和发布时都使用的配置）
+   * `dev.config.js`: 开发时需要的webpack配置
+   * `prod.config.js`: 发布时需要的webpack配置
+
+2. 安装合并插件
+
+   ```js
+   npm install webpack-merge --save-dev
+   ```
+
+3. 使用`webpack-merge`
+
+   * `dev.config.js`中配置
+
+     ```js
+     const webpackMerge = require('webpack-merge')  //导入合并插件
+     const baseConfig = require('./base.config')   //导入基础配置
+     
+     module.exports = webpackMerge(baseConfig, {   //合并
+       devServer: {
+         contentBase: './dist',
+         inline: true
+       }
+     })
+     ```
+
+   * `prod.config.js`中配置
+
+     ```js
+     // const uglifyJsPlugin = require('uglifyjs-webpack-plugin')
+     const webpackMerge = require('webpack-merge')
+     const baseConfig = require('./base.config')
+     
+     module.exports = webpackMerge(baseConfig, {
+       plugins: [
+         // new uglifyJsPlugin()
+       ],
+     })
+     ```
+
+4. 删除之前的配置文件：`webpack.config.js`
+
+5. 更改`config.js`中的配置
+
+   * 默认情况下配置文件是：`webpack.config.js`
+
+   * `--config`: 重定向配置文件的位置
+
+   ```js
+   "scripts": {
+       "build": "webpack --config ./build/prod.config.js",    //指定配置文件位置
+       "dev": "webpack-dev-server --open  --config ./build/dev.config.js"//指定配置文件位置
+     },
+   ```
+
+6. 更改打包文件保存的路径
+
+   ```js
+   module.exports = {
+     //出口: path:打包文件保存路径  filename:打包的文件名
+     output:{
+         path: path.resolve(__dirname,'dist'),
+         filename: 'bundle.js'
+     },
+   ```
+
+   * 生成dist文件的路径有变化   __dirname拿到的是prod.config.js所在的路径 
+   * 若不更改 dista文件夹将生成在`prod.config.js`所在文件中
+   * 更改：使dist文件夹生成在项目根目录下
+
+   ```js
+   module.exports = {
+     //出口: path:打包文件保存路径  filename:打包的文件名
+     output:{
+         path: path.resolve(__dirname,'../dist'),    //'../dist'
+         filename: 'bundle.js'
+     },
+   ```
+
+   
 

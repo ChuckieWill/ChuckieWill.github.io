@@ -1,6 +1,6 @@
 ---
 title: win+r
-date: 2020-07-26 11:00:00
+date: 2020-01-07 11:00:00
 tags:
 - cmd
 - win+r

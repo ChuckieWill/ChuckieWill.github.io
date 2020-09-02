@@ -1,6 +1,6 @@
 ---
 title: "Warning: findDOMNode is deprecated in StrictMode. findDOMNode was passed an instance of Wave which is inside StrictMode. Instead, add a ref directly to the element you want to reference."
-date: 2020-07-08 21:06:17
+date: 2020-04-08 21:06:17
 tags:
 - react
 - StrictMode
