@@ -23,7 +23,9 @@ date: 2020-06-25 22:24:19
 
 * 武汉理工大学2018年“理工数传杯”计算机创意与应用能力大赛三等奖，担任负责人
 * 武汉理工大学2019年“理工数传杯”计算机创意与应用能力大赛一等奖，担任负责人
+  * 所在团队获得武汉理工大学计算机科学与技术学院科技文化艺术节优秀团队奖
 * 第五届中国“互联网+”大学生创新创业大赛湖北省铜奖，担任副队长
+  * 所在团队获得武汉理工大学计算机科学与技术学院科技文化艺术节优秀团队奖
 
 <br/>
 
@@ -33,20 +35,38 @@ date: 2020-06-25 22:24:19
 
 **国家级大学生创新创业训练计划 创业实践类**
 
-* 担任项目负责人 ，项目为期两年(2018.03---2020.03) ，目前已通过中期检查
+* 担任项目负责人 ，项目为期两年(2019.03---2021.03) ，目前已通过中期检查
 * 项目中主要负责团队管理、资源对接、部分产品设计、部分原型图绘制、前端开发、部分后端开发
-* 项目产品主要为微信小程序，小程序端开发采用了组件化开发，所有组件都是自主开发，对`tcb-router`、`request-promise`等库进行了再封装，部分小程序使用了小程序的云开发，并对云开发接口进行了封装；后台管理系统前端采用的`vue-templete-admin`模板，后台管理系统后端使用`node`和`koa2`开发，并对小程序云开发向第三方提供的接口进行了封装。
+* 项目产品技术概要
+  * 产品主要为微信小程序
+    * 小程序端开发采用了组件化开发，所有组件都是自主开发
+    * 对`tcb-router`、`request-promise`等库进行了实际应用的封装
+    * 部分小程序使用了小程序的云开发，并对云开发接口进行了封装
+  * 后台管理系统前端采用`vue-templete-admin`模板
+  * 后台管理系统后端使用`node`和`koa2`开发，并对小程序云开发向第三方提供的接口进行了封装
 * 项目成果：
   * 获得软著《音乐推荐与博客分享软件v1.0》，登记号：2020SR0904598  （第一作者）
+    * 核心功能：音乐播放、博客分享、博客评论等
   * 获得软著《期刊推荐与书刊查询软件v1.0》，登记号：2020SR0904616  （第一作者）
+    * 核心功能：期刊推荐、书刊查询、收藏、评论、分享等
   * 获得软著《英语听力训练软件v1.0》，登记号：2020SR0904587  （第二作者）
+    * 核心功能：在线测试、个性化训练、细致精听、学习日历、学习轨迹等
   * 获得软著《阅悦图书漂流软件v1.0》，登记号：2020SR0904622  （第二作者）
+    * 核心功能：图书查询、评论、交流、打分、捐书、借阅图书、归还图书等
   * 获得软著《穿越网络文件管理系统v1.0》，登记号：2020SR0904714 （第二作者）
+    * 核心功能：用户管理（增删改查用户信息）、文件管理（上传、浏览、删除文件）、个人信息管理
+  * 完成音乐推荐与博客分享软件后台管理系统，暂未申请软著
+    * 核心功能：歌单管理（编辑、删除歌单）、博客删除、轮播管理（删除、上传轮播图）
 
 **2020暑期“数传集团”实习**
 
-* 开发一个在线考试系统，项目中负责原型图绘制、前端开发、参与部分界面及功能的设计
-* 项目采用`React`框架，使用`Redux`储存状态，使用`Styled-Components`管理样式，使用`React Transition Group`实现动画效果，使用`create-react-app`和`react-router-dom`打造单页面应用，对`axiso`和`better-scroll`进行了再封装
+* 项目中负责原型图绘制、前端开发、参与部分界面及功能的设计
+* 项目旨在开发一个考试管理系统
+  * 项目采用`React`框架，使用`Redux`储存状态
+  * 使用`Styled-Components`管理样式，使用`React Transition Group`实现动画效果
+  * 使用`create-react-app`和`react-router-dom`打造单页面应用
+  * 对`axiso`和`better-scroll`等库进行了实际应用的封装
+* 产品核心功能：试题管理（添加、查询、删除题目）、试卷管理（创建、查询、删除试卷）、考试管理（创建、查询考试）、成绩管理、用户管理
 
 <br/>
 
@@ -59,7 +79,7 @@ date: 2020-06-25 22:24:19
 * [Vue](https://chuckiewill.github.io/categories/vue/)/[React](https://chuckiewill.github.io/categories/react/)   偶尔使用
 * [微信小程序开发](https://chuckiewill.github.io/categories/wxapplet/)   常用
 * HTML/CSS  常用 
-* Git常用  MySQL了解
+* Git常用 、MySQL了解
 * Node.js & [Webpack](https://chuckiewill.github.io/categories/third-repositories/webpack/) 偶尔使用
 
 <br/>
@@ -68,8 +88,8 @@ date: 2020-06-25 22:24:19
 
 ***
 
-* [个人博客](https://chuckiewill.github.io/):       https://chuckiewill.github.io/
+* [个人博客](https://chuckiewill.github.io/):     https://chuckiewill.github.io/
 
-* [github地址](https://github.com/ChuckieWill):   https://github.com/ChuckieWill
+* [GitHub](https://github.com/ChuckieWill):       https://github.com/ChuckieWill
 
-* e-mail:          1747363320@qq.com  / codewyj@163.com
+* E-mail:        1747363320@qq.com  / codewyj@163.com
