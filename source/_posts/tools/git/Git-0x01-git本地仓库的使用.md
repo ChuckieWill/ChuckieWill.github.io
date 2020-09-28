@@ -462,6 +462,10 @@ Date:   Mon Mar 17 21:52:11 2008 -0700
 
 *  列出每个提交的 SHA-1 校验和、作者的名字和电子邮件地址、提交时间以及提交说明。 
 
+**退出`git log`**
+
+* 英文状态下输入Q
+
 **[Git官网:`git log`的常用选项](https://git-scm.com/book/zh/v2/Git-基础-查看提交历史) **
 
 **[Git官网:限制 `git log` 输出的选项 ](https://git-scm.com/book/zh/v2/Git-基础-查看提交历史)**
