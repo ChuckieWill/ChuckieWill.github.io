@@ -28,7 +28,7 @@
 <meta property="og:description" content="一、JavaScript基础内容 菜鸟教程">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-04-02T02:33:22.000Z">
-<meta property="article:modified_time" content="2020-09-02T09:24:49.624Z">
+<meta property="article:modified_time" content="2020-10-06T15:55:56.666Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="Javascript">
 <meta property="article:tag" content="ES6">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-02 17:24:49" itemprop="dateModified" datetime="2020-09-02T17:24:49+08:00">2020-09-02</time>
+                <time title="修改时间：2020-10-06 23:55:56" itemprop="dateModified" datetime="2020-10-06T23:55:56+08:00">2020-10-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -239,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.8k</span>
+              <span>6.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -333,6 +333,23 @@
 <li>for(let i in list)     i取到的是list数组的索引值</li>
 <li>for(let item of list)   item取到的是list数组的元素</li>
 </ul>
+<h4 id="3-2-Object-keys"><a href="#3-2-Object-keys" class="headerlink" title="3.2 Object.keys()"></a>3.2 Object.keys()</h4><ul>
+<li><code>Object.keys()</code>返回结果为对象直接子节点的键，数据类型为Array</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> json = &#123;</span><br><span class="line">  a : &#123; <span class="attr">b</span> : &#123; <span class="attr">c</span> : <span class="string">'helo'</span>&#125;&#125;,</span><br><span class="line">  d : [<span class="number">110</span> , <span class="number">112</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> temp = <span class="built_in">Object</span>.keys(json)</span><br><span class="line"></span><br><span class="line"><span class="comment">//temp结果</span></span><br><span class="line">[<span class="string">'a'</span>, <span class="string">'d'</span>]</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3-构建数组"><a href="#3-3-构建数组" class="headerlink" title="3.3 构建数组"></a>3.3 构建数组</h4><ul>
+<li>构建二维数组</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> flow1 = <span class="built_in">Array</span>.from(&#123;<span class="attr">length</span>: 数组长度&#125;, () =&gt; <span class="keyword">new</span> <span class="built_in">Array</span>(数组长度).fill(数组填充内容))</span><br><span class="line"><span class="keyword">const</span> flow1 = <span class="built_in">Array</span>.from(&#123;<span class="attr">length</span>: m&#125;, () =&gt; <span class="keyword">new</span> <span class="built_in">Array</span>(n).fill(<span class="literal">false</span>))</span><br><span class="line"></span><br><span class="line">flow1 为一个m*n的二维数组，且全部填充为<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>字典转数组</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> list = <span class="built_in">Array</span>.from(map)</span><br><span class="line"></span><br><span class="line"><span class="comment">//map:字典</span></span><br><span class="line"><span class="built_in">Map</span>(<span class="number">3</span>) &#123; <span class="number">1</span> =&gt; <span class="number">3</span>, <span class="number">2</span> =&gt; <span class="number">2</span>, <span class="number">3</span> =&gt; <span class="number">1</span> &#125; </span><br><span class="line"><span class="comment">//list：字典转换为二维数组</span></span><br><span class="line">[ [ <span class="number">1</span>, <span class="number">3</span> ], [ <span class="number">2</span>, <span class="number">2</span> ], [ <span class="number">3</span>, <span class="number">1</span> ] ]</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="4-阅读代码提示"><a href="#4-阅读代码提示" class="headerlink" title="4 阅读代码提示"></a>4 阅读代码提示</h2><blockquote>
 <p><a href="https://www.bilibili.com/video/BV1nJ411J7a2?p=27" target="_blank" rel="noopener">函数提示解释视频</a></p>
 </blockquote>
@@ -563,7 +580,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、JavaScript基础内容"><span class="nav-text">一、JavaScript基础内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-JavaScript简介"><span class="nav-text">1 JavaScript简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-JavaScript编码规范"><span class="nav-text">2 JavaScript编码规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-基础语法"><span class="nav-text">3 基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-for循环"><span class="nav-text">3.1 for循环</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-阅读代码提示"><span class="nav-text">4 阅读代码提示</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、ES6"><span class="nav-text">二、ES6</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-ES6教程地址"><span class="nav-text">0 ES6教程地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-块级作用域-var-—-gt-const-let"><span class="nav-text">1 块级作用域  var —&gt; const let</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-对象增强写法"><span class="nav-text">2 对象增强写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-字符串"><span class="nav-text">3 字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-标签字符串"><span class="nav-text">3.1 标签字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-模板字符串"><span class="nav-text">3.2 模板字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-字符串识别函数"><span class="nav-text">3.3 字符串识别函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-字符串补全函数"><span class="nav-text">3.4 字符串补全函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-模块化-导入导出"><span class="nav-text">4 模块化 导入导出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-ES6-export-import"><span class="nav-text">4.1 ES6 export import</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2对比commonJS模块"><span class="nav-text">4.2对比commonJS模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-箭头函数–this"><span class="nav-text">5 箭头函数–this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-扩展运算符…"><span class="nav-text">6 扩展运算符…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-对象、数组解构"><span class="nav-text">7 对象、数组解构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-对象解构"><span class="nav-text">7.1 对象解构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-数组解构"><span class="nav-text">7.2 数组解构</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、JavaScript基础内容"><span class="nav-text">一、JavaScript基础内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-JavaScript简介"><span class="nav-text">1 JavaScript简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-JavaScript编码规范"><span class="nav-text">2 JavaScript编码规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-基础语法"><span class="nav-text">3 基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-for循环"><span class="nav-text">3.1 for循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-Object-keys"><span class="nav-text">3.2 Object.keys()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-构建数组"><span class="nav-text">3.3 构建数组</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-阅读代码提示"><span class="nav-text">4 阅读代码提示</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、ES6"><span class="nav-text">二、ES6</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-ES6教程地址"><span class="nav-text">0 ES6教程地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-块级作用域-var-—-gt-const-let"><span class="nav-text">1 块级作用域  var —&gt; const let</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-对象增强写法"><span class="nav-text">2 对象增强写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-字符串"><span class="nav-text">3 字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-标签字符串"><span class="nav-text">3.1 标签字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-模板字符串"><span class="nav-text">3.2 模板字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-字符串识别函数"><span class="nav-text">3.3 字符串识别函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-字符串补全函数"><span class="nav-text">3.4 字符串补全函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-模块化-导入导出"><span class="nav-text">4 模块化 导入导出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-ES6-export-import"><span class="nav-text">4.1 ES6 export import</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2对比commonJS模块"><span class="nav-text">4.2对比commonJS模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-箭头函数–this"><span class="nav-text">5 箭头函数–this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-扩展运算符…"><span class="nav-text">6 扩展运算符…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-对象、数组解构"><span class="nav-text">7 对象、数组解构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-对象解构"><span class="nav-text">7.1 对象解构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-数组解构"><span class="nav-text">7.2 数组解构</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -579,20 +596,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -651,13 +668,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">187k</span>
+    <span title="站点总字数">201k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:50</span>
+    <span title="站点阅读时长">3:03</span>
 </div>
 
         
