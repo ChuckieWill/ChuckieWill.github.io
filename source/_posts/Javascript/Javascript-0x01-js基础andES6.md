@@ -131,6 +131,46 @@ function text(index){
 * for(let i in list)     i取到的是list数组的索引值
 * for(let item of list)   item取到的是list数组的元素
 
+####  3.2 Object.keys()
+
+* ` Object.keys()`返回结果为对象直接子节点的键，数据类型为Array
+
+```js
+const json = {
+  a : { b : { c : 'helo'}},
+  d : [110 , 112]
+}
+
+const temp = Object.keys(json)
+
+//temp结果
+['a', 'd']
+```
+
+####  3.3 构建数组
+
+* 构建二维数组
+
+```js
+const flow1 = Array.from({length: 数组长度}, () => new Array(数组长度).fill(数组填充内容))
+const flow1 = Array.from({length: m}, () => new Array(n).fill(false))
+
+flow1 为一个m*n的二维数组，且全部填充为false
+```
+
+* 字典转数组
+
+```js
+let list = Array.from(map)
+
+//map:字典
+Map(3) { 1 => 3, 2 => 2, 3 => 1 } 
+//list：字典转换为二维数组
+[ [ 1, 3 ], [ 2, 2 ], [ 3, 1 ] ]
+```
+
+
+
 ##  4 阅读代码提示
 
 > [函数提示解释视频](https://www.bilibili.com/video/BV1nJ411J7a2?p=27 )

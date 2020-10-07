@@ -45,6 +45,7 @@ categories:
 * 关于nginx的cmd终端命令  *cmd终端切换到nginx的根目录下*
   * `nginx.exe`: 启动nginx   或者直接双击nginx.exe文件也可启动nginx
     * 网址输入localhost     页面显示welcome nginx则启动成功
+    * 每次配置文件修改后都需要重启nginx
   * `nginx -s stop`:中断运行
   * `nginx -s quit`:正常退出运行
   * `nginx -s reload` : 重启niginx
@@ -167,43 +168,8 @@ http {
     #    }
     #}
 
-}
 
 ```
-
-
-
-###  1.4 代理配置
-
-* 按`nginx-1.18.0\conf`打开`nginx.conf`文件
-
-  * 添加`include servers/*.conf`
-    * 注意添加的位置，在`server`上面
-    * `include servers/*.conf;`： 导入当前文件所在文件夹下的文件夹servers下的所有.conf文件
-    * servers文件夹和文件夹下的文件都是自定义的，是自定义的配置文件
-
-  ![image-20200926123759270](nginx/image-20200926123759270.png)
-
-* `servers/test.conf`代理配置
-
-  * 新建`nginx-1.18.0\conf、servers、test.conf`文件
-
-  ```js
-  //test.conf
-  server {                            //server表示nginx启动的本地服务
-  listen       80;                  //80 是nginx本地服务的端口号
-    server_name  test.com;            //test.com  是nginx本地服务的域名地址
-  
-    location / {
-      proxy_pass http://127.0.0.1:8888;   //nginx代理的地址访问test.com即会跳转到这个地址
-      proxy_set_header Host $host;        //host延用test.com而不是http://127.0.0.1:8888的host
-    }
-  }
-  ```
-  
-* 也可直接将`test.cong`文件的内容加在`nginx.conf`文件中，效果是一样的，只是这样分离更方便管理不同的配置
-
-  * 添加在`nginx.conf`中`server`配置的地方
 
 
 
@@ -226,6 +192,120 @@ http {
 3. 达到负载均衡，并且可以隐藏服务器真正的ip地址
 
 ![image-20200926200342876](nginx/image-20200926200342876.png)
+
+###   2.2 反向代理配置
+
+* 按`nginx-1.18.0\conf`打开`nginx.conf`文件
+
+  * 添加`include servers/*.conf`
+    * 注意添加的位置，在`server`上面
+    * `include servers/*.conf;`： 导入当前文件所在文件夹下的文件夹servers下的所有.conf文件
+    * servers文件夹和文件夹下的文件都是自定义的，是自定义的配置文件
+
+  ![image-20200926123759270](nginx/image-20200926123759270.png)
+
+* `servers/test.conf`代理配置
+
+  * 新建`nginx-1.18.0\conf、servers、test.conf`文件
+
+  ```js
+  //test.conf
+  server {                            //server表示nginx启动的本地服务
+    listen       80;                  //80 是nginx本地服务的端口号
+    server_name  localhost;            //localhost  是nginx本地服务的域名地址
+  
+    location / {
+      proxy_pass http://127.0.0.1:8888/;   //nginx代理的地址访问localhost即会跳转到这个地址
+      proxy_set_header Host $host;        //host延用localhost而不是http://127.0.0.1:8888的host
+    }
+  }
+  ```
+
+* 也可直接将`test.cong`文件的内容加在`nginx.conf`文件中，效果是一样的，只是这样分离更方便管理不同的配置
+
+  * 添加在`nginx.conf`中`server`配置的地方
+
+###  2.3 location路径映射
+
+**理解`\`**
+
+* location后面的`“/”`指的是上面`server_name  localhost;`的`localhost`
+
+```json
+server {                            
+  listen       80;                  
+  server_name  localhost;            
+
+  location / {
+    proxy_pass http://127.0.0.1:8888/;  
+    proxy_set_header Host $host;       
+  }
+}
+```
+
+**location匹配方式**
+
+```json
+# 1. = 匹配
+location = / {
+	#精准匹配，主机名后面不带任何的字符串
+} 
+#假如server_name是localhost  则只能精准匹配localhost   而localhost/xxx则不能匹配  因为多了/xxx
+
+location / {
+	#只要有/即可匹配
+} 
+#假如server_name是localhost  则只要有localhost即可匹配   localhost和localhost/xxx等都可匹配
+```
+
+---
+
+```json
+# 2. 通用匹配
+location /xxx {
+	#匹配所有以/xxx开头的路径
+} 
+```
+
+----
+
+```json
+# 3. 正则匹配
+location ~/xxx{
+	#匹配所有以/xxx开头的路径   与通用匹配一样  只是优先级高
+}
+```
+
+---
+
+```json
+# 4. 匹配开头路径
+location ^~/xxx{
+	#匹配所有以/xxx开头的路径   与通用匹配、正则匹配一样  只是优先级高于另外两个
+}
+```
+
+---
+
+```json
+# 5. 匹配结尾
+location ~*\.(gif|jpg|png)${
+	#匹配以gif|jpg|png结尾的路径
+}
+```
+
+**location匹配优先级**
+
+```json
+(location = ) > (location /xxx/yyy/xxx) > (location^~) > (location ~ , ~*) > (location/起始路径) > (location/)
+                                                                                                
+=匹配 > 完全匹配 > 开头匹配 > 正则匹配和结尾匹配 > 通用匹配(只有起始路径，匹配不全) > 通用匹配(只有根路径匹配)
+```
+
+* 完全匹配： 目标路径是localhost/xxx/yyy/xxx  匹配路径也是localhost/xxx/yyy/xxx   完全一致
+* 一般匹配从上面的优先级的后面往前匹配**直到`(location^~)`为止，所以写配置文件的时候按上面的优先级顺序写**
+
+
 
 
 

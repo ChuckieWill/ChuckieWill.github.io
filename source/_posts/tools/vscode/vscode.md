@@ -169,8 +169,56 @@ open in browser
 
 * 1 打开要运行的文件
 * 2 点击菜单栏`运行-添加配置`  选择相应的运行环境
-
 * 若在根目录下出现`.vscode/launch.json`文件则配置成功
+
+###  3.2 调试文件`launch.json`的配置
+
+* 文件位置：项目根目录下`.vscode/launch.json`
+
+* 每次调试文件变化时，需要在`launch.json`文件中作相应的修改
+  * `"program": "${workspaceFolder}\\`需要调试的文件路径" 
+
+```js
+{
+  // 使用 IntelliSense 了解相关属性。 
+  // 悬停以查看现有属性的描述。
+  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "启动程序",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}\\stack\\callFunc.js"  //在这里修改需要调试的文件路径
+    }
+  ]
+}
+```
+
+###  3.3 调试面板解释
+
+![image-20201002172840458](vscode/image-20201002172840458.png)
+
+* 1 ： 运行到下一个断点处
+* 2  ： 单步执行
+* 3 ： 进入函数
+* 4 ： 退出函数
+* 5 ： 重启调试
+* 6 ： 停止调试
+
+
+
+##  4 小技巧
+
+###  4.1 同时添加多个光标
+
+**单个添加:** 将光标放在一个位置，然后按住Alt键的时候用鼠标点击其他地方，点到的地方就会添加一个光标出来
+**添加一整列:** 按住Shift+Alt然后鼠标下拉，即可添加一整列光标
+
+
 
 ##  附录
 

@@ -17,13 +17,11 @@ categories:
 >
 >[Node.js-HTTP传输指南](https://nodejs.org/zh-cn/docs/guides/anatomy-of-an-http-transaction/)
 
-
-
-* 一个IP地址可以对应多个域名
+#  一、HTTP基础
 
 
 
-##  HTTP请求过程
+##  1.1 HTTP请求过程
 
 ![image-20200916173624473](HTTP/image-20200916173624473.png)
 
@@ -36,7 +34,7 @@ categories:
 
 
 
-## 五层网络模型
+## 1.2 五层网络模型
 
 ![image-20200916174544942](HTTP/image-20200916174544942.png)
 
@@ -46,7 +44,7 @@ categories:
 
 
 
-##  TCP三次握手与四次挥手
+##  1.3 TCP三次握手与四次挥手
 
 > 关于TCP三次握手和四次挥手及面试相关问题可以查看文章----->[HTTP(0x02)-TCP三次握手与四次挥手详解&面试常见问题](https://chuckiewill.github.io/2020/09/02/HTTP/HTTP(0x02)-TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/)
 
@@ -54,7 +52,7 @@ categories:
 
 
 
-##  URI、URL、URN
+##  1.4 URI、URL、URN
 
 **定义：**
 
@@ -122,25 +120,80 @@ categories:
 
 
 
+##  1.5 创建一个简单的web服务
+
+>[Node.js-HTTP传输指南](https://nodejs.org/zh-cn/docs/guides/anatomy-of-an-http-transaction/)
+>
+>[Node.Js的HTTP-API](https://nodejs.org/api/http.html)
+
+* http.createServer()： 创建服务 。创建的返回结果是一个server
+  * server.listen(端口) ： 给服务添加监听端口
+* request相关的操作是对服务请求的处理
+  * 请求可以是直接在浏览器输入域名，或者在浏览器解析中发送请求。
+* response相关的操作是对请求返回的处理
+  * 对浏览器发来的请求作出反馈，返回浏览器需要的数据。
+
+```js
+const http = require('http')
+
+http.createServer(function (request, response) {
+  console.log('request come', request.url)
+
+  //设置允许跨域访问
+  response.writeHead(200, {
+    'Access-Control-Allow-Origin': 'http://127.0.0.1:8888',
+    'Access-Control-Allow-Methods': 'PUT, GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'X-Test-Cors, X-PINGOTHER, Content-Type',
+    'Access-Control-Max-Age': '86400',
+    'Content-Type': 'text/html'    //以html个格式解析
+  })
+  response.end('123')
+}).listen(8887)
+
+console.log('server listening on 8887')
+```
 
 
-##  HTTP 方法
+
+
+
+
+
+##  1.6 Git Bash终端访问网路命令
+
+* `curl 域名`： 发送网络请求并接受返回结果
+
+  * 案例
+
+  ```js
+  curl baidu.com
+  ```
+
+  ![image-20200921131724348](HTTP(0x01)-HTTP基础/image-20200921131724348.png)
+
+  ```
+  curl www.baidu.com
+  ```
+
+  ![image-20200921131838199](HTTP(0x01)-HTTP基础/image-20200921131838199.png)
+
+* `curl -v  域名`  返回更详细的网络请求
+
+# 二、HTTP 方法
 
 > [HTTP 请求方法](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods)
 
-
-
-##  HTTP CODE
+# 三、HTTP CODE
 
 > [HTTP 响应代码](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status)
 
-
-
-##  HTTP 访问控制(CORS)-跨域问题
+#  四、HTTP 访问控制(CORS)-跨域问题
 
 > [HTTP访问控制（CORS）](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS)
+>
+> [HTTP(0x03)-跨域问题](https://chuckiewill.github.io/2020/09/03/HTTP/HTTP(0x03)-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/)
 
-##  HTTP Headers
+# 五、HTTP Headers
 
 > [HTTP Headers-MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers)
 >
@@ -365,63 +418,4 @@ console.log('server listening on 8888')
 
 
 
-
-##  创建一个简单的web服务
-
->[Node.js-HTTP传输指南](https://nodejs.org/zh-cn/docs/guides/anatomy-of-an-http-transaction/)
->
->[Node.Js的HTTP-API](https://nodejs.org/api/http.html)
-
-* http.createServer()： 创建服务 。创建的返回结果是一个server
-  * server.listen(端口) ： 给服务添加监听端口
-* request相关的操作是对服务请求的处理
-  * 请求可以是直接在浏览器输入域名，或者在浏览器解析中发送请求。
-* response相关的操作是对请求返回的处理
-  * 对浏览器发来的请求作出反馈，返回浏览器需要的数据。
-
-```js
-const http = require('http')
-
-http.createServer(function (request, response) {
-  console.log('request come', request.url)
-
-  //设置允许跨域访问
-  response.writeHead(200, {
-    'Access-Control-Allow-Origin': 'http://127.0.0.1:8888',
-    'Access-Control-Allow-Methods': 'PUT, GET, OPTIONS',
-    'Access-Control-Allow-Headers': 'X-Test-Cors, X-PINGOTHER, Content-Type',
-    'Access-Control-Max-Age': '86400',
-    'Content-Type': 'text/html'    //以html个格式解析
-  })
-  response.end('123')
-}).listen(8887)
-
-console.log('server listening on 8887')
-```
-
-
-
-
-
-
-
-##  Git Bash终端访问网路命令
-
-* `curl 域名`： 发送网络请求并接受返回结果
-
-  * 案例
-
-  ```js
-  curl baidu.com
-  ```
-
-  ![image-20200921131724348](HTTP(0x01)-HTTP基础/image-20200921131724348.png)
-
-  ```
-  curl www.baidu.com
-  ```
-
-  ![image-20200921131838199](HTTP(0x01)-HTTP基础/image-20200921131838199.png)
-
-* `curl -v  域名`  返回更详细的网络请求
 
