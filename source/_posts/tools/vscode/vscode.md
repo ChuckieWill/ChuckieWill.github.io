@@ -157,7 +157,9 @@ open in browser
 
 ## 3 配置
 
-###  3.1 每次调试弹出运行环境的选择
+###  3.1 启动项配置
+
+####  3.1.1 每次调试弹出运行环境的选择
 
 **问题描述：**
 
@@ -171,7 +173,7 @@ open in browser
 * 2 点击菜单栏`运行-添加配置`  选择相应的运行环境
 * 若在根目录下出现`.vscode/launch.json`文件则配置成功
 
-###  3.2 调试文件`launch.json`的配置
+#### 3.1.2 调试文件`launch.json`的配置
 
 * 文件位置：项目根目录下`.vscode/launch.json`
 
@@ -180,25 +182,65 @@ open in browser
 
 ```js
 {
-  // 使用 IntelliSense 了解相关属性。 
-  // 悬停以查看现有属性的描述。
-  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+    // ----1-----将调试与node serv项目自动重启(nodemon)向结合的配置------
     {
       "type": "node",
       "request": "launch",
-      "name": "启动程序",
+      "name": "nodemon",
+      "runtimeExecutable": "nodemon",
+      "program": "${workspaceFolder}/app.js",
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    },
+    // ----2-----额配置默认调试入口文件------
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\stack\\callFunc.js"  //在这里修改需要调试的文件路径
+      "program": "${workspaceFolder}\\app.js"
+    },
+    // ----3-----配置调试当前文件------
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "当前文件",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${file}"
     }
   ]
 }
 ```
 
-###  3.3 调试面板解释
+#####  3.1.2.1  配置node serv项目自动重启与调试向结合
+
+* 此配置使得，当开启调试的时候，也会同时开启自动重启
+
+![image-20201016235543062](vscode/image-20201016235543062.png)
+
+#####  3.1.2.2  不同配置的切换
+
+* nodemon:  1-----将调试与node serv项目自动重启(nodemon)向结合的配置------
+* Launch Program: 2-----额配置默认调试入口文件------
+* 当前文件: 3-----配置调试当前文件------
+
+![image-20201017000155900](vscode/image-20201017000155900.png)
+
+
+
+
+
+#### 3.1.3 调试面板解释
 
 ![image-20201002172840458](vscode/image-20201002172840458.png)
 

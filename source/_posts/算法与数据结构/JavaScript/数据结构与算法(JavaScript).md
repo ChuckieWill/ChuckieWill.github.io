@@ -591,6 +591,8 @@ postorder(bt)
 
 ##  7 图
 
+> LeetCode：65、417、133
+
 **图是网络结构的抽象模型，是一组由边连接的节点**
 
 ###  7.1 图的表示法
@@ -714,6 +716,8 @@ bfs(2)
 
 
 ##  8 堆
+
+> LeetCode：215、347、23
 
 **一种特殊的完全二叉树**
 
@@ -867,7 +871,7 @@ h.delTop()
 
 ###   1.1 js异步中的任务队列
 
-> [Javascript(0x06)-js异步中的任务队列)]()
+> [Javascript(0x06)-js异步中的任务队列)](https://chuckiewill.github.io/2020/10/02/Javascript/Javascript(0x06)-js%E5%BC%82%E6%AD%A5%E4%B8%AD%E7%9A%84%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/)
 
 ##  2 链表与前端
 
@@ -921,4 +925,288 @@ dfs(json, [])
 110 ------ [ 'd', '0' ]
 112 ------ [ 'd', '1' ]
 ```
+
+
+
+
+
+#  三、算法
+
+> [算法可视化](https://visualgo.net/zh)
+
+##  1 排序与搜索
+
+> LeetCode： 21、374
+
+###  1.1 排序
+
+####  1.1.1  冒泡排序
+
+* 时间复杂度：O(n*n)
+
+```js
+//冒泡排序  时间复杂度：O(n*n) 排序结果为升序
+Array.prototype.bubbleSort = function () {
+  for (let i = 0; i < this.length - 1; i++) {
+    for (let j = 0; j < this.length - 1 - i; j++) {
+      if (this[j] > this[j + 1]) {
+        let temp = this[j]
+        this[j] = this[j + 1]
+        this[j + 1] = temp
+      }
+    }
+  }
+}
+
+const arr = [5, 4, 3, 2, 1]
+arr.bubbleSort()
+```
+
+####  1.1.2 选择排序
+
+* 时间复杂度O(n*n)
+
+```js
+//选择排序  排序结果为升序
+Array.prototype.selSort = function () {
+  for(let i =0;i<this.length-1;i++){
+    let sel = i
+    for(let j = i;j<this.length;j++){
+      if(this[j] < this[sel]){
+        sel = j
+      }
+    }
+    if(sel !== i){
+      let temp = this[i]
+      this[i] = this[sel]
+      this[sel] = temp
+    }
+   
+  }
+}
+
+const arr = [5, 4, 3, 2, 1]
+arr.selSort()
+console.log(arr)
+```
+
+####  1.1.3 插入排序
+
+* 时间复杂度：O(n*n)
+
+```js
+//插入排序  排序结果为升序
+Array.prototype.insertSort = function () {
+  for (let i = 1; i < this.length; i++) {
+    let temp = this[i]
+    let j = i
+    while(j > 0){
+      if(this[j-1] > temp){
+        this[j] = this[j-1]
+      }else{
+        break
+      }
+      j--
+    }
+    this[j] = temp
+  }
+}
+
+const arr = [5, 4, 3, 2, 1]
+arr.insertSort()
+console.log(arr)
+```
+
+####  1.1.4 归并排序
+
+* 时间复杂度：O(n*logn)
+  * 分时间复杂度：O(logn)
+  * 合时间复杂度：O(n)
+
+```js
+//归并排序  排序结果为升序
+Array.prototype.mergeSort = function () {
+  const dfs = (arr) => {
+    //1 拆分
+    //1.1 拆分终点（单个元素）
+    if(arr.length === 1) return arr
+    const mid = Math.floor(arr.length / 2)
+    const left = arr.slice(0, mid)
+    const right = arr.slice(mid, arr.length)
+    //1.2 递归拆分 直到为单个元素
+    const orderLeft = dfs(left)
+    const orderRight = dfs(right)
+    //2 合并
+    const res = [] //用于存储合并后的有序数组元素
+    while(orderLeft.length || orderRight.length){
+      if(orderLeft.length && orderRight.length){
+        res.push(orderLeft[0] < orderRight[0] ? orderLeft.shift() : orderRight.shift())
+      }else if(orderLeft.length){
+        res.push(orderLeft.shift())
+      }else if(orderRight.length){
+        res.push(orderRight.shift())
+      }
+    }
+    return res
+  }
+  const res = dfs(this)
+  res.forEach((val , i) => {
+    this[i] = val
+  })
+}
+
+const arr = [5, 4, 3, 2, 1]
+arr.mergeSort()
+console.log(arr)
+```
+
+####  1.1.5 快速排序
+
+* 时间复杂度：O(n*logn)
+  * 递归时间复杂度：O(logn)
+  * 分区时间复杂度：O(n)
+
+```js
+//归并排序  排序结果为升序 时间复杂度：O(n*logn)
+Array.prototype.quickSort = function () {
+  const dfs = (arr) => {
+    //数组一个元素或空数组时为递归终点 当输入为有序数组时可能才分的左右数组为空数组
+    if(arr.length === 1 || arr.length === 0){
+      return arr
+    } 
+    const left = [] //存储比选取元素小的值
+    const right = [] //存储比选取元素大的值
+    const mid = arr[0] //任意选取一个参考值
+    //分区，比参考值大的在右，比参考值小的在左
+    for(let i = 1;i<arr.length;i++){
+      if(arr[i]<mid){
+        left.push(arr[i])
+      }else{
+        right.push(arr[i])
+      }
+    }
+    return [...dfs(left),mid,...dfs(right)]
+  }
+  const res = dfs(this)
+  res.forEach((val , i) => {
+    this[i] = val
+  })
+}
+
+const arr = [5, 4, 3, 2, 1]
+arr.quickSort()
+console.log(arr)
+```
+
+
+
+###  1.2 搜索
+
+####  1.2.1 顺序搜索
+
+* 时间复杂度：O(n)
+
+```js
+//顺序搜索
+Array.prototype.sequentialSearch = function (item) {
+  for(let i=0;i<this.length;i++){
+    if(this[i] === item){
+      return i //找到结果则返回下标
+    }
+  }
+  return -1 //没找到结果则返回-1
+
+}
+
+const res = [5,4,3,2,1].sequentialSearch(9)
+console.log(res)
+```
+
+####  1.2.2 二分搜索
+
+* 时间复杂度：O(logn)
+
+```js
+//二分搜索  ---前提：数组为有序数组  时间复杂度：O(logn)
+Array.prototype.binarySearch = function (item) {
+  let low = 0
+  let high = this.length-1
+  while(low <= high){
+    let mid = Math.floor((low+high) / 2)
+    if(item < this[mid]){
+      high = mid-1
+    }else if(item > this[mid]){
+      low = mid+1
+    }else{
+      return mid //找到结果则返回下标
+    }
+  }
+  return -1 //没找到结果则返回-1
+}
+
+const res = [1,2,3,4,5].binarySearch(1)
+console.log(res)
+```
+
+
+
+##  2 分而治之
+
+> 它将一个问题**分**成多个和原问题相似的小问题，**递归解决**小问题，再将小问题**合并**以解决原来的问题
+>
+> 
+>
+> LeetCode：374、226、100、101
+
+* 归并排序
+* 快速排序
+
+##   3 动态规划
+
+> 它将一个问题分解为**互相重叠**的子问题，通过反复求解子问题，来解决原来的问题
+>
+> 
+>
+> 动态规划 VS 分而治之
+>
+> * 子问题是相互重叠的（例：斐波拉切数列） 则是动态规划
+> * 子问题是相互独立的（例：[翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)）则是分而治之
+>
+> 
+>
+> LeetCode： 70、198
+
+* 斐波拉切数列
+
+![image-20201008144728198](数据结构与算法(JavaScript)/image-20201008144728198.png)
+
+##  4 贪心算法
+
+> 期盼通过每个阶段的**局部最优**选择，从而达到全局的最优
+>
+> * 结果并**不一定最优**
+>
+> 
+>
+> leetcode: 455、122
+
+**不是最优解案例：**
+
+* 零钱兑换
+
+  * 用最少的硬币数达到要求的兑换总额
+  * coins: 可以使用的面额， amount: 兑换总额
+  * 情况1是最优解，但是情况2可以是2个3，不是最优解
+
+  ![image-20201008164156548](数据结构与算法(JavaScript)/image-20201008164156548.png)
+
+
+
+##  5 回溯法
+
+> LeetCode：46、78
+>
+> 回溯法是一种**渐进式**寻找并构建问题解决方案的策略
+>
+> 回溯法会先从一个可能的动作开始解决问题，如果不行，就回溯并选择另一个动作，直到解决问题
 

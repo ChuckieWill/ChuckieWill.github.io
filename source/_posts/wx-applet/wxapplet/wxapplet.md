@@ -143,7 +143,21 @@ wx:for="{{books}}"  wx:key="*this"-----------注意wx:key没有{{}}、也不是i
 
 
 
+#  小程序中使用npm
 
+> [小程序使用npm官方文档](https://developers.weixin.qq.com/miniprogram/dev/devtools/npm.html)
+
+**使用步骤：**
+
+1. 编辑器右上角：详情-->本地设置-->勾选使用npm模块
+2. 任选一个文件夹右击选择在`终端打开`
+   * cd到项目根目录下
+   * 根目录下输入命令：`npm init`
+     * 操作成功后会在项目根目录下生成：`package.json`文件
+3. 使用npm安装需要的库
+   * 在终端根目录下输入安装命令即可：`npm install ....`
+4. 点击开发者工具中的菜单栏：工具 --> 构建 npm
+   * [构建npm的意义](https://developers.weixin.qq.com/community/develop/doc/000aeaf6b949887b353a1b38657000)
 
 
 

@@ -7,7 +7,9 @@ categories:
 - [node, node]
 ---
 
+node:mRw8LZz1ulLPMf5U
 
+小程序：K57S1kGd4CLBz2dw
 
 # node
 
@@ -38,17 +40,21 @@ categories:
 
 * Node.js 
   * Node.js不能重复安装  若计算机上已有老版本 安装新版本之前要把老版本先卸载  或者 用nvm管理两个不同的版本
-  * Node.js 的本质是让JS 可以脱离浏览器运行  而非是为了web开发 web开发只是其能力的一个方面
+  * Node.js 的本质是让JS 可以脱离浏览器运行  而非是为了web开发 ，web开发只是其能力的一个方面
   * Node.js的能力与应用
-    * 脱离浏览器运行JS
-    * NodeJS Stream（前端工程化基础）------开源的、框架级别的产品 
-    * 服务端API
-    * 作为中间层 ------------ 中大型项目中才有中间层
+    * **脱离浏览器运行JS**
+    * **NodeJS Stream（前端工程化基础）**------开源的、框架级别的产品 
+    * **服务端API**
+    * **作为中间层 **------------ 中大型项目中才有中间层
   * Node.js 对ES6-10支持情况  
     * 目前Node.js  对ES6-10的一些特性是不支持的：1、import from导入方式不支持  需要用require  2、decorator装饰器 不支持  3、class类的属性不支持  必须用this.x = x  设置属性   （相对其他语言没有属性这一说  必须在构造函数中设置属性）
 * npm:Node.js中的一个工具包
 * koa：基于Node.js 专业开发web的框架
   * koa特点：洋葱圈模型  精简   使用时需要二次开发，否则会很难用
+
+
+
+
 
 ##  2 node 语法
 
@@ -90,4 +96,32 @@ C:\code\music-imooc\music-imooc-admin-backend\utils\access_token.json
 ```
 
 
+
+
+
+
+
+#  node开发服务端API
+
+* 服务端开发
+  * 读写数据库
+  * 开发API
+
+##  1 node server项目自动重启配置
+
+1. 全局安装`nodemon`
+
+   ```js
+   npm install nodemon -g
+   ```
+
+2. 启动项目
+
+   ```js
+   nodemon 文件名
+   ```
+
+   * 启动后，当修改文件内容后，项目会自动重启
+
+*若不是全局安装则需要通过`npx nodemon 文件名`启动项目*
 

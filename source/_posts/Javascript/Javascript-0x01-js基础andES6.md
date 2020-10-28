@@ -8,6 +8,8 @@ categories:
 - [Javascript]
 ---
 
+
+
 #  一、JavaScript基础内容
 
 > [菜鸟教程]( https://www.runoob.com/js/js-tutorial.html )
@@ -167,6 +169,47 @@ let list = Array.from(map)
 Map(3) { 1 => 3, 2 => 2, 3 => 1 } 
 //list：字典转换为二维数组
 [ [ 1, 3 ], [ 2, 2 ], [ 3, 1 ] ]
+```
+
+####  3.4 原型链上添加属性或方法
+
+> [Javascript(0x07)-JS中的原型链](https://chuckiewill.github.io/2020/10/03/Javascript/Javascript(0x07)-JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%93%BE/)
+
+* 将方法或属性挂在数组原型链上
+  * 新建任何一个数组，都可以访问这个属性或方法
+    * 利用了原型链的特性：如果A对象上没有找到x属性（方法），那么会沿着A对象的原型链找x属性（方法）
+  * 这个方法可以通过this拿到实例化的数组
+
+```js
+Array.prototype.bubbleSort = function () {
+  console.log(this) //this可以拿到实例化的数组
+}
+
+const arr = [5, 4, 3, 2, 1]
+arr.bubbleSort()
+```
+
+####  3.5 forEach（）
+
+```js
+const res = [1,2,3,4,5]
+res.forEach((val , index) => {
+    console.log(val, index)
+  })
+
+//输出
+值 索引
+1 0
+2 1
+3 2
+4 3
+5 4
+```
+
+####  3.6 获取项目根目录地址
+
+```js
+process.cwd()
 ```
 
 
@@ -414,6 +457,30 @@ module.exports = {变量名，函数名，对象名}
 let {变量名，函数名，对象名}  = require('../aaa.js')
 ```
 
+* 别名
+
+  * 导出
+
+  ```js
+  module.exports = {
+    别名:原名
+  }
+  
+  module.exports = {
+    db:sequelize
+  }
+  ```
+
+  * 导入
+
+  ```js
+  const {原名 : 别名} = require('../../core/db')
+  
+  const {sequelize : db} = require('../../core/db')
+  ```
+
+  
+
 ##  5 箭头函数--this
 
 * 箭头函数与其函数写法对比
@@ -494,5 +561,6 @@ const [name1, name2, name3] = array  //---解构
 name1='why', name2='code',  name3='maxthon'
 ```
 
+##  8 类 class
 
-
+> [js类中实例方法、静态方法、原型方法的区别](https://blog.csdn.net/qiuqiula_/article/details/100138750?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param)
