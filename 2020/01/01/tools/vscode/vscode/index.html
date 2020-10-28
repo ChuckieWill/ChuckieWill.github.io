@@ -31,9 +31,11 @@
 <meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/8140656-cf268cb03b01e407.webp">
 <meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/image-20200916165531823.png">
 <meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/image-20200803170824816.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/image-20201016235543062.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/image-20201017000155900.png">
 <meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/image-20201002172840458.png">
 <meta property="article:published_time" content="2020-01-01T13:06:17.000Z">
-<meta property="article:modified_time" content="2020-10-05T16:09:44.185Z">
+<meta property="article:modified_time" content="2020-10-16T16:07:37.496Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="vscode">
 <meta name="twitter:card" content="summary">
@@ -226,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-06 00:09:44" itemprop="dateModified" datetime="2020-10-06T00:09:44+08:00">2020-10-06</time>
+                <time title="修改时间：2020-10-17 00:07:37" itemprop="dateModified" datetime="2020-10-17T00:07:37+08:00">2020-10-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -248,14 +250,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.3k</span>
+              <span>2.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -409,7 +411,7 @@
 <ul>
 <li>出现这个问题的原因是原键绑定设置了执行条件“!inDebugMode”，这个条件不能在原默认设置单独删除，所以将原来的配置整体删除后重新设置即可。</li>
 </ul>
-<h2 id="3-配置"><a href="#3-配置" class="headerlink" title="3 配置"></a>3 配置</h2><h3 id="3-1-每次调试弹出运行环境的选择"><a href="#3-1-每次调试弹出运行环境的选择" class="headerlink" title="3.1 每次调试弹出运行环境的选择"></a>3.1 每次调试弹出运行环境的选择</h3><p><strong>问题描述：</strong></p>
+<h2 id="3-配置"><a href="#3-配置" class="headerlink" title="3 配置"></a>3 配置</h2><h3 id="3-1-启动项配置"><a href="#3-1-启动项配置" class="headerlink" title="3.1 启动项配置"></a>3.1 启动项配置</h3><h4 id="3-1-1-每次调试弹出运行环境的选择"><a href="#3-1-1-每次调试弹出运行环境的选择" class="headerlink" title="3.1.1 每次调试弹出运行环境的选择"></a>3.1.1 每次调试弹出运行环境的选择</h4><p><strong>问题描述：</strong></p>
 <ul>
 <li><p>每次点击<code>shift+f5</code>都弹出如下运行环境的选择框，使得调试过程很不便捷</p>
 <p><img src="/2020/01/01/tools/vscode/vscode/image-20200803170824816.png" alt="image-20200803170824816"></p>
@@ -421,7 +423,7 @@
 <li>2 点击菜单栏<code>运行-添加配置</code>  选择相应的运行环境</li>
 <li>若在根目录下出现<code>.vscode/launch.json</code>文件则配置成功</li>
 </ul>
-<h3 id="3-2-调试文件launch-json的配置"><a href="#3-2-调试文件launch-json的配置" class="headerlink" title="3.2 调试文件launch.json的配置"></a>3.2 调试文件<code>launch.json</code>的配置</h3><ul>
+<h4 id="3-1-2-调试文件launch-json的配置"><a href="#3-1-2-调试文件launch-json的配置" class="headerlink" title="3.1.2 调试文件launch.json的配置"></a>3.1.2 调试文件<code>launch.json</code>的配置</h4><ul>
 <li><p>文件位置：项目根目录下<code>.vscode/launch.json</code></p>
 </li>
 <li><p>每次调试文件变化时，需要在<code>launch.json</code>文件中作相应的修改</p>
@@ -430,9 +432,19 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">// 使用 IntelliSense 了解相关属性。 </span></span><br><span class="line">  <span class="comment">// 悬停以查看现有属性的描述。</span></span><br><span class="line">  <span class="comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"0.2.0"</span>,</span><br><span class="line">  <span class="string">"configurations"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"启动程序"</span>,</span><br><span class="line">      <span class="string">"skipFiles"</span>: [</span><br><span class="line">        <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;\\stack\\callFunc.js"</span>  <span class="comment">//在这里修改需要调试的文件路径</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"0.2.0"</span>,</span><br><span class="line">  <span class="string">"configurations"</span>: [</span><br><span class="line">    <span class="comment">// ----1-----将调试与node serv项目自动重启(nodemon)向结合的配置------</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"nodemon"</span>,</span><br><span class="line">      <span class="string">"runtimeExecutable"</span>: <span class="string">"nodemon"</span>,</span><br><span class="line">      <span class="string">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;/app.js"</span>,</span><br><span class="line">      <span class="string">"restart"</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="string">"console"</span>: <span class="string">"integratedTerminal"</span>,</span><br><span class="line">      <span class="string">"internalConsoleOptions"</span>: <span class="string">"neverOpen"</span>,</span><br><span class="line">      <span class="string">"skipFiles"</span>: [</span><br><span class="line">        <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ----2-----额配置默认调试入口文件------</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"Launch Program"</span>,</span><br><span class="line">      <span class="string">"skipFiles"</span>: [</span><br><span class="line">        <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;\\app.js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ----3-----配置调试当前文件------</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"当前文件"</span>,</span><br><span class="line">      <span class="string">"skipFiles"</span>: [</span><br><span class="line">        <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"program"</span>: <span class="string">"$&#123;file&#125;"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="3-3-调试面板解释"><a href="#3-3-调试面板解释" class="headerlink" title="3.3 调试面板解释"></a>3.3 调试面板解释</h3><p><img src="/2020/01/01/tools/vscode/vscode/image-20201002172840458.png" alt="image-20201002172840458"></p>
+<h5 id="3-1-2-1-配置node-serv项目自动重启与调试向结合"><a href="#3-1-2-1-配置node-serv项目自动重启与调试向结合" class="headerlink" title="3.1.2.1  配置node serv项目自动重启与调试向结合"></a>3.1.2.1  配置node serv项目自动重启与调试向结合</h5><ul>
+<li>此配置使得，当开启调试的时候，也会同时开启自动重启</li>
+</ul>
+<p><img src="/2020/01/01/tools/vscode/vscode/image-20201016235543062.png" alt="image-20201016235543062"></p>
+<h5 id="3-1-2-2-不同配置的切换"><a href="#3-1-2-2-不同配置的切换" class="headerlink" title="3.1.2.2  不同配置的切换"></a>3.1.2.2  不同配置的切换</h5><ul>
+<li>nodemon:  1—–将调试与node serv项目自动重启(nodemon)向结合的配置——</li>
+<li>Launch Program: 2—–额配置默认调试入口文件——</li>
+<li>当前文件: 3—–配置调试当前文件——</li>
+</ul>
+<p><img src="/2020/01/01/tools/vscode/vscode/image-20201017000155900.png" alt="image-20201017000155900"></p>
+<h4 id="3-1-3-调试面板解释"><a href="#3-1-3-调试面板解释" class="headerlink" title="3.1.3 调试面板解释"></a>3.1.3 调试面板解释</h4><p><img src="/2020/01/01/tools/vscode/vscode/image-20201002172840458.png" alt="image-20201002172840458"></p>
 <ul>
 <li>1 ： 运行到下一个断点处</li>
 <li>2  ： 单步执行</li>
@@ -525,7 +537,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vscode使用"><span class="nav-text">vscode使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-快捷键"><span class="nav-text">0 快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-插件配置"><span class="nav-text">1 插件配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基础插件配置"><span class="nav-text">1.1 基础插件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-前端开发插件配置"><span class="nav-text">1.2  前端开发插件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-react-开发相关插件"><span class="nav-text">1.3 react 开发相关插件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-设置"><span class="nav-text">2 设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-缩进设置"><span class="nav-text">2.1 缩进设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-字体大小设置"><span class="nav-text">2.2 字体大小设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-快捷键设置"><span class="nav-text">2.3 快捷键设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-按F5无法开启调试的问题"><span class="nav-text">2.3.1 按F5无法开启调试的问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-配置"><span class="nav-text">3 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-每次调试弹出运行环境的选择"><span class="nav-text">3.1 每次调试弹出运行环境的选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-调试文件launch-json的配置"><span class="nav-text">3.2 调试文件launch.json的配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-调试面板解释"><span class="nav-text">3.3 调试面板解释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-小技巧"><span class="nav-text">4 小技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-同时添加多个光标"><span class="nav-text">4.1 同时添加多个光标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-text">附录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-vscode前端最佳配置"><span class="nav-text">1 vscode前端最佳配置</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vscode使用"><span class="nav-text">vscode使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-快捷键"><span class="nav-text">0 快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-插件配置"><span class="nav-text">1 插件配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基础插件配置"><span class="nav-text">1.1 基础插件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-前端开发插件配置"><span class="nav-text">1.2  前端开发插件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-react-开发相关插件"><span class="nav-text">1.3 react 开发相关插件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-设置"><span class="nav-text">2 设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-缩进设置"><span class="nav-text">2.1 缩进设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-字体大小设置"><span class="nav-text">2.2 字体大小设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-快捷键设置"><span class="nav-text">2.3 快捷键设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-按F5无法开启调试的问题"><span class="nav-text">2.3.1 按F5无法开启调试的问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-配置"><span class="nav-text">3 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-启动项配置"><span class="nav-text">3.1 启动项配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-每次调试弹出运行环境的选择"><span class="nav-text">3.1.1 每次调试弹出运行环境的选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-调试文件launch-json的配置"><span class="nav-text">3.1.2 调试文件launch.json的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-2-1-配置node-serv项目自动重启与调试向结合"><span class="nav-text">3.1.2.1  配置node serv项目自动重启与调试向结合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-2-2-不同配置的切换"><span class="nav-text">3.1.2.2  不同配置的切换</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3-调试面板解释"><span class="nav-text">3.1.3 调试面板解释</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-小技巧"><span class="nav-text">4 小技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-同时添加多个光标"><span class="nav-text">4.1 同时添加多个光标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-text">附录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-vscode前端最佳配置"><span class="nav-text">1 vscode前端最佳配置</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -541,20 +553,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">62</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -613,13 +625,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">201k</span>
+    <span title="站点总字数">231k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:03</span>
+    <span title="站点阅读时长">3:30</span>
 </div>
 
         
