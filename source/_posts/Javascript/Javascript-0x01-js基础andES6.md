@@ -61,6 +61,19 @@ function text(index){
 }
 ```
 
+* 并行、并发、单线程
+  * 并行是指同时执行，只有多线程的语言才支持
+  * 并发本质是充分利用cpu资源（多个任务交替使用cpu），并没有正真同时执行
+  * JavaScript、Python都是单线程语言，只能实现并发，不能实现并行
+  * Python的多线性是通过伪线程实现的
+
+  * JavaScript 并发
+    * 宏任务，微任务机制实现并发，EventLoop
+    * 本质是CPU足够快，当请求资源时（查询数据库、网络请求等）,此时CPU就空出来了，而这时CPU会切换到其他任务，只要切换的足够快，就实现了并发。
+  * Node.js 优势是只能异步编程，不支持同步编程，异步编程就大大提升了资源的利用率
+
+
+
 ##  2 JavaScript编码规范
 
 [airbnb/javascript规范](https://github.com/airbnb/javascript)
@@ -212,11 +225,94 @@ res.forEach((val , index) => {
 process.cwd()
 ```
 
+####  3.7 拼接对象
+
+```js
+const classicFields = {
+  title: Sequelize.STRING,
+  type: Sequelize.INTEGER
+}
+//拼接
+Object.assign({url:Sequelize.STRING},classicFields)
+//拼接结果
+const classicFields = {
+  title: Sequelize.STRING,
+  type: Sequelize.INTEGER,
+  url:Sequelize.STRING
+}
+```
+
+####  3.8 对象键值对定义
+
+```js
+//正常定义
+test: {
+      a: 400
+    }
+//键本质都是字符串
+test: {
+    'a' : 400
+}
+//[]形式 []可以计算一个值，将计算结果作为键
+test: {
+    [a]: 400
+}
+//以下两种方式等价
+//方式1
+a = 100
+test: {
+    [a]: 400
+}
+//方式2
+test: {
+    '100': 400
+}
+```
+
+####  3.9 util内置帮助函数
+
+```js
+const util = require('util')
+
+//拼接字符串
+//先用%s占位需要填充的位置
+loginUrl: 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code'
+//调用util.format()函数填充
+const url = util.format(loginUrl,appId,appSecret,code)
+```
+
+
+
+
+
 
 
 ##  4 阅读代码提示
 
 > [函数提示解释视频](https://www.bilibili.com/video/BV1nJ411J7a2?p=27 )
+
+##  5 易错点
+
+###  5.1 循环导入
+
+* 循环导入会导致，导入的类为undefined，以下面的情况为例，a.js、b.js互相循环导入对方的模块，则报错，报错提示导入的模块为undefined
+
+  * 目录结构：
+    * a.js
+    * b.js
+
+  ```js
+  //a.js
+  const a = require('./a.js')
+  
+  //b.js
+  const b = require('./b.js')
+  ```
+
+* 解决方案
+  * 不在文件头部导入，而是在使用的地方导入
+
+
 
 
 

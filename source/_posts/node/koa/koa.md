@@ -189,7 +189,7 @@ router.get('/v1/:id/classic/latest', async (ctx, next) => {
 
 #  二、项目框架
 
-> [koa开发基础框架模板Github地址](https://github.com/ChuckieWill/bink-backend/tree/v0.2)
+> **[koa开发基础框架模板Github地址](https://github.com/ChuckieWill/node-server-koa2)**
 
 ##  1 全局异常处理中间件
 
@@ -1022,7 +1022,7 @@ module.exports = router
 
 ##  6 注册及登录模块
 
-> 此部分源码只列出了入口部分，依赖的其他源码可查看[本项目github上的源码-tag-v0.2](https://github.com/ChuckieWill/bink-backend/tree/v0.2)
+> 此部分源码只列出了入口部分，依赖的其他源码可查看[本项目github上的源码](https://github.com/ChuckieWill/node-server-koa2)
 
 ###  6.1 目录结构
 
@@ -1223,9 +1223,12 @@ module.exports = router
 
 ###  6.5 用户权限验证
 
+> 使用`basic-auth`库，解析前端通过base64加密的token
+
 **验证包括：**
 
 * 是否有token，token是否过期、是否合法
+  * **要求前端以`http-basic-auth`方式给后端传递token**
 * 用户角色是否有权限（普通用户、管理员、超级管理员）
 
 **源码：**
@@ -1248,7 +1251,7 @@ class Auth {
   get m(){
     return async (ctx, next) => {
       //获取前端传来的token
-      const userToken = basicAuth(ctx.req)
+      const userToken = basicAuth(ctx.req)//用basicAuth解析前端通过base64加密的token
       //token不存在则阻止访问
       if(!userToken || !userToken.name){
         throw new global.errs.Forbbiden('未传token')
@@ -1304,29 +1307,74 @@ router.get('/latest', new Auth(LoginAuth.ADMIN).m, async (ctx, next) => {
 module.exports = router
 ```
 
+####  6.5.1 前端以`basic-auth`方式给后端传递token
+
+> 用户在访问接口时需要进行用户权限验证，其中就包括token的验证，因此需要前端每次在请求接口时携带上token,本项目统一规定以`basic-auth`的方式在header中传给后端。关于前端如何在header中以`basic-auth`的方式传递token给后端,下面有详细讲解
+
+* 1 安装[`js-base64`](https://www.npmjs.com/package/js-base64)
+
+  ```js
+  npm i js-base64
+  ```
 
 
+* 2 对token进行base64加密
 
+  ```js
+  //给token进行base64加密
+  encode(){
+      const token = wx.getStorageSync('token')
+      const base64 = Base64.encode(token+":")
+      return 'Basic '+base64
+  }
+  ```
+  
+* 3 将base64加密的token通过`basic-auth`传递给后端
 
+  ```js
+  header:{
+      Authorization: encode() //将加密的token传递在header中传递给前端
+  },
+  ```
+  
+* 案例
 
+  ```js
+  import {Base64} from 'js-base64'
+  
+  //小程序端以`basic-auth`方式携带token向后端发请求
+  wx.request({
+    url: 'http://localhost:3000/v1/classic/latest',
+    method: "GET",
+    header:{
+      Authorization: encode() //将加密的token传递在header中传递给前端
+    },
+    success: (res) => {
+      console.log(res)
+    }
+  })
+  //web端以`basic-auth`方式携带token向后端发请求
+  axios.get('http://localhost:3000/v1/classic/latest',{
+     headers:{
+      Authorization: encode() //将加密的token传递在header中传递给前端
+    }, 
+  }).then((res)=>{
+      console.log(res)
+  })
+  
+  //给token进行base64加密
+  encode(){
+      const token = wx.getStorageSync('token')
+      const base64 = Base64.encode(token+":")
+      return 'Basic '+base64
+  }
+  ```
 
-#  微信小程序
+  
 
-* 同一个用户在不同的小程序或公众号中的openid是不同的，只是在同一个小程序或公众号中，它的openid是唯一的
-  * 在a小程序中用户A的openID是openID1
-  * 在b小程序中用户A的openID是openID2
-* 在任何一个小程序或公众号中，一个用户只有唯一的一个unionID
-  * 在a,b,c,d小程序中用户A的unionID是一样的
+#  三、辅助库
 
-#  项目
-
-https://github.com/DandelionHu/islandServer
-
-
-
-
-
-###  密码加密处理
+## 1 密码加密处理
 
 1. 安装`bcrypt`
 
@@ -1350,8 +1398,9 @@ https://github.com/DandelionHu/islandServer
    
    ```
 
+##  2 生成令牌
 
-###   生成令牌
+> [`jsonwebtoken`官网](https://www.npmjs.com/package/jsonwebtoken)
 
 1. 安装`jsonwebtoken`
 
@@ -1359,7 +1408,7 @@ https://github.com/DandelionHu/islandServer
    npm i jsonwebtoken
    ```
 
-2. 使
+2. 使用
 
    ```js
    const jwt = require('jsonwebtoken')//第三方库 ，需要安装
@@ -1378,84 +1427,16 @@ https://github.com/DandelionHu/islandServer
    }
    ```
 
-   
 
+##  3 Sequelize  待完成
 
-
-#  接口文档
-
-##  用户
-
-#### 注册
-
-> 这个注册接口只针对邮箱注册的方式
-
-**URL:**
-
-```js
-POST  /v1/user/register
-```
-
-**Parameters**:
-
-* nickname :用户昵称
-* password : 用户密码
-* email :用户邮箱，唯一标识，不可重复
-
-**Response Status** 201:
-
-```js
-{
-        "error_code": 0,
-        "msg": "ok",
-        "request": "POST  /like/add"
-}
-```
-
-
-
-##  令牌 token
-
-####  登录
-
-> **用户邮箱登录：**（需要先调用上面的注册接口注册）
+> Sequelize使用的详细教程请查看：[Sequelize官方文档](https://www.sequelize.com.cn/)
 >
-> * account: 账户即为邮箱
-> * secret: 用户密码
->
-> **小程序登录：**（不需要注册，直接在小程序端发来js_code即可）
->
-> * account: 账户即为js_code
-> * secret: 不用传
-
-**URL:**
-
-```js
-POST  /v1/token/
-```
-
-**Parameters**:
-
-* account: 账户  
-* secret: 密码
-* type： 登录方式
-  * 100,//小程序方式登录
-  * 101,//用户邮箱登录
-  * 102,//用户手机登录
-  * 200,//管理员邮箱登录
+> 一下部分主要总结了sequelize一些常用功能的使用方法
 
 
 
-####  token校验
 
-> 校验token合法性，只有合法才返回true，否则返回false
 
-**URL:**
 
-```js
-POST  /v1/token/verify
-```
 
-**Parameters**:
-
-* token

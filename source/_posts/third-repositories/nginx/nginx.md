@@ -354,3 +354,31 @@ location / {
 
 ###  6.2远程部署
 
+####  6.2.1 部署流程
+
+* 前置步骤：
+  * 1 购买云服务器，Linux
+  * 2 购买域名、备案、解析域名与ip匹配
+* 安装软件，在云服务器上
+  * mysql
+  * node
+  * xampp
+  * nginx
+* nginx配置转发
+  * nginx端口设置为80
+  * 在云服务器上可以开启多个服务
+  * nginx根据域名转发到对应的云服务器上的服务
+    * ------------- *此处可查看上文：2.3location路径映射*---------------
+    * 例如：chu.com  转发到  云服务商开启的localhost:3000服务
+    * 例如：ckie.com  转发到  云服务商开启的localhost:4000服务
+* 启动服务（node环境）
+  * 不能直接在终端启动服务，因为终端关闭后，服务也关闭了
+  * 开启**守护进程**即终端关闭后，服务仍然运行
+    * 使用**pm2**---->[pm2官网文档](https://pm2.keymetrics.io/)
+      * 安装：`npm install pm2 -g`
+      * 启动： `pm2 start app.js`
+      * 查看：`pm2 list`
+      * 停止：`pm2 stop app`
+
+* tips
+  * 免费的https: lets encrypt

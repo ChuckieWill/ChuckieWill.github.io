@@ -251,7 +251,62 @@ async test(){
 打印结果为10000
 ```
 
-##  3 回调写法、promise写法、async await写法的比较
+##  3 回调写法
+
+> 回调写法很麻烦，每次都需要将回调函数传递给异步函数，这样才能实现堵塞结束后再执行下一个任务
+
+* 网络请求函数（异步）
+
+```js
+//sCallback为回调函数
+ test(sCallback){
+    wx.request({
+      url: 'classic/latest',
+      success:(res)=>{
+        sCallback(res)//将结果传给回调函数
+        console.log(res)
+      }
+    })
+  }
+```
+
+* 调用网络请求函数，并自定义回调函数内容
+
+```js
+  test((res)=>{
+      console.log(res)
+      this.setData({
+        classic:res,
+        likeCount:res.fav_nums,
+        likeStatus:res.like_status
+      })
+    })
+```
+
+* 以上写法等同于以下写法，只是上面写法才能实现任务分离
+
+```js
+test(){
+    wx.request({
+      url: 'classic/latest',
+      success:(res)=>{
+        console.log(res)
+        this.setData({
+            classic:res,
+            likeCount:res.fav_nums,
+            likeStatus:res.like_status
+        })
+        console.log(res)
+      }
+    })
+  }
+
+test()
+```
+
+
+
+##  4 回调写法、promise写法、async await写法的比较
 
 ```js
 //promise方式
