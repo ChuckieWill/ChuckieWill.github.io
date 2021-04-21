@@ -28,7 +28,7 @@
 <meta property="og:description" content="一、JavaScript基础内容 菜鸟教程">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-04-02T02:33:22.000Z">
-<meta property="article:modified_time" content="2020-11-17T08:57:38.325Z">
+<meta property="article:modified_time" content="2021-01-20T09:55:03.215Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="Javascript">
 <meta property="article:tag" content="ES6">
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-17 16:57:38" itemprop="dateModified" datetime="2020-11-17T16:57:38+08:00">2020-11-17</time>
+                <time title="修改时间：2021-01-20 17:55:03" itemprop="dateModified" datetime="2021-01-20T17:55:03+08:00">2021-01-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -239,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>8.1k</span>
+              <span>9.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>9 分钟</span>
             </span>
 
         </div>
@@ -351,9 +351,16 @@
 
 </li>
 </ul>
-<h2 id="3-基础语法"><a href="#3-基础语法" class="headerlink" title="3 基础语法"></a>3 基础语法</h2><h4 id="3-1-for循环"><a href="#3-1-for循环" class="headerlink" title="3.1 for循环"></a>3.1 for循环</h4><ul>
-<li>for(let i in list)     i取到的是list数组的索引值</li>
-<li>for(let item of list)   item取到的是list数组的元素</li>
+<h2 id="3-基础语法"><a href="#3-基础语法" class="headerlink" title="3 基础语法"></a>3 基础语法</h2><h4 id="3-1-for循环"><a href="#3-1-for循环" class="headerlink" title="3.1 for循环"></a>3.1 for循环</h4><blockquote>
+<p><a href="https://chuckiewill.github.io/2020/08/05/Javascript/Javascript-0x05-异步编程/" target="_blank" rel="noopener">Javascript(0x05)-异步编程-5for…of  异步循环</a></p>
+</blockquote>
+<ul>
+<li><p>forEach((item) =&gt; {})    <strong>同步执行</strong></p>
+</li>
+<li><p>for(let i in list)     i取到的是list数组的索引值, i取到的是list对象的键   <strong>同步执行</strong></p>
+</li>
+<li><p>for(let item of list)   item取到的是list数组的元素， item取到的是list对象的值   <strong>异步执行</strong></p>
+</li>
 </ul>
 <h4 id="3-2-Object-keys"><a href="#3-2-Object-keys" class="headerlink" title="3.2 Object.keys()"></a>3.2 Object.keys()</h4><ul>
 <li><code>Object.keys()</code>返回结果为对象直接子节点的键，数据类型为Array</li>
@@ -395,7 +402,29 @@
 
 <h4 id="3-9-util内置帮助函数"><a href="#3-9-util内置帮助函数" class="headerlink" title="3.9 util内置帮助函数"></a>3.9 util内置帮助函数</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//拼接字符串</span></span><br><span class="line"><span class="comment">//先用%s占位需要填充的位置</span></span><br><span class="line">loginUrl: <span class="string">'https://api.weixin.qq.com/sns/jscode2session?appid=%s&amp;secret=%s&amp;js_code=%s&amp;grant_type=authorization_code'</span></span><br><span class="line"><span class="comment">//调用util.format()函数填充</span></span><br><span class="line"><span class="keyword">const</span> url = util.format(loginUrl,appId,appSecret,code)</span><br></pre></td></tr></table></figure>
 
+<h4 id="3-10-判断属性不是原型上的属性"><a href="#3-10-判断属性不是原型上的属性" class="headerlink" title="3.10 判断属性不是原型上的属性"></a>3.10 判断属性不是原型上的属性</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">        <span class="comment">// 保证 key 不是原型的属性</span></span><br><span class="line">        <span class="keyword">if</span> (obj.hasOwnProperty(key)) &#123;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">obj.hasOwnProperty(key)</span><br><span class="line">hasOwnProperty(key)函数判断属性是否为obj对象原型上的属性</span><br><span class="line">若key属性是原型上的属性则返回<span class="literal">false</span></span><br><span class="line">若key属性不是原型上的属性则返回<span class="literal">true</span></span><br></pre></td></tr></table></figure>
 
+<h4 id="3-11-obj-键-式获取对象值"><a href="#3-11-obj-键-式获取对象值" class="headerlink" title="3.11 obj[键]式获取对象值"></a>3.11 obj[键]式获取对象值</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> test = &#123;</span><br><span class="line">  a: <span class="number">100</span>,</span><br><span class="line">  c: <span class="number">300</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> test[<span class="string">'b'</span>] =<span class="number">200</span></span><br><span class="line"> <span class="built_in">console</span>.log(test)</span><br><span class="line"> <span class="built_in">console</span>.log(test[<span class="string">'b'</span>])<span class="comment">//注意键是字符串形式</span></span><br><span class="line"> <span class="built_in">console</span>.log(test.b)</span><br><span class="line"></span><br><span class="line"> <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">in</span> test)&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(test[i],<span class="string">'hhh'</span>)</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//打印结果</span></span><br><span class="line">&#123; <span class="attr">a</span>: <span class="number">100</span>, <span class="attr">c</span>: <span class="number">300</span>, <span class="attr">b</span>: <span class="number">200</span> &#125;</span><br><span class="line"><span class="number">200</span></span><br><span class="line"><span class="number">200</span></span><br><span class="line"><span class="number">100</span> hhh</span><br><span class="line"><span class="number">300</span> hhh</span><br><span class="line"><span class="number">200</span> hhh</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-12-对象与类区别"><a href="#3-12-对象与类区别" class="headerlink" title="3.12 对象与类区别"></a>3.12 对象与类区别</h4><ul>
+<li>直接定义的简单对象中可以定义方法，且可以通过对象直接调用方法</li>
+<li>定义的类需要实例化后才能调用方法<ul>
+<li>类的本质是函数</li>
+<li>实例化后为对象</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> wangwu = &#123;</span><br><span class="line">  name:<span class="string">'王五'</span>,</span><br><span class="line">  sayHi( ) &#123;</span><br><span class="line">    <span class="comment">// this 即当前对象</span></span><br><span class="line">    <span class="built_in">console</span>. log ( <span class="keyword">this</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  waitAgain() &#123;</span><br><span class="line">    <span class="comment">//箭头函数的this取上级作用的this</span></span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123; </span><br><span class="line">      <span class="comment">//this即当前对象</span></span><br><span class="line">      <span class="built_in">console</span>. log( <span class="keyword">this</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">wangwu.sayHi()</span><br><span class="line">wangwu.waitAgain()<span class="comment">//直接调用方法</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name</span><br><span class="line">    <span class="keyword">this</span>.age = <span class="number">20</span></span><br><span class="line">  &#125;</span><br><span class="line">  sayHi() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log (<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> chuckie = <span class="keyword">new</span> People(<span class="string">'chuckie'</span>)</span><br><span class="line">chuckie.sayHi()<span class="comment">// chuckie对象</span></span><br><span class="line">People.sayHi()<span class="comment">//报错，因为没有实例化</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-13-匿名函数"><a href="#3-13-匿名函数" class="headerlink" title="3.13 匿名函数"></a>3.13 匿名函数</h4><blockquote>
+<p><a href="https://www.cnblogs.com/ranyonsue/p/10181035.html" target="_blank" rel="noopener">js中的匿名函数</a></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//匿名函数包裹一个括号</span></span><br><span class="line"><span class="comment">//匿名函数在其它应用场景括号可以省略</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//由于没有执行该匿名函数，所以不会执行匿名函数体内的语句。</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"张培跃"</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果需要执行匿名函数，在匿名函数后面加上一个括号即可立即执行！</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//此时会输出张培跃</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"张培跃"</span>);</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="comment">//倘若需要传值，直接将参数写到括号内即可：</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">str</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//此时会输出张培跃好帅！</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"张培跃"</span>+str);</span><br><span class="line">&#125;)(<span class="string">"好帅！"</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>用<code>!</code>分隔匿名函数(多个匿名函数时，不加<code>!</code>会引发错误)，<code>!</code>不会影响代码执行</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">!(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="number">100</span></span><br><span class="line">  <span class="built_in">console</span>.log(res) <span class="comment">// 100</span></span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
 
 
 
@@ -604,8 +633,8 @@
       <i class="fa fa-chevron-left"></i> tcb-router
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/04/02/python/office%E8%AF%BB%E5%86%99%E5%AE%9E%E7%8E%B0(python)/" rel="next" title="office读写实现(python)">
-      office读写实现(python) <i class="fa fa-chevron-right"></i>
+    <a href="/2020/04/02/python/python%E5%8A%9E%E5%85%AC%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="next" title="python办公自动化">
+      python办公自动化 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -665,7 +694,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、JavaScript基础内容"><span class="nav-text">一、JavaScript基础内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-JavaScript简介"><span class="nav-text">1 JavaScript简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-JavaScript编码规范"><span class="nav-text">2 JavaScript编码规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-基础语法"><span class="nav-text">3 基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-for循环"><span class="nav-text">3.1 for循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-Object-keys"><span class="nav-text">3.2 Object.keys()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-构建数组"><span class="nav-text">3.3 构建数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-原型链上添加属性或方法"><span class="nav-text">3.4 原型链上添加属性或方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-forEach（）"><span class="nav-text">3.5 forEach（）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-获取项目根目录地址"><span class="nav-text">3.6 获取项目根目录地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-7-拼接对象"><span class="nav-text">3.7 拼接对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-8-对象键值对定义"><span class="nav-text">3.8 对象键值对定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-9-util内置帮助函数"><span class="nav-text">3.9 util内置帮助函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-阅读代码提示"><span class="nav-text">4 阅读代码提示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-易错点"><span class="nav-text">5 易错点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-循环导入"><span class="nav-text">5.1 循环导入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、ES6"><span class="nav-text">二、ES6</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-ES6教程地址"><span class="nav-text">0 ES6教程地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-块级作用域-var-—-gt-const-let"><span class="nav-text">1 块级作用域  var —&gt; const let</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-对象增强写法"><span class="nav-text">2 对象增强写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-字符串"><span class="nav-text">3 字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-标签字符串"><span class="nav-text">3.1 标签字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-模板字符串"><span class="nav-text">3.2 模板字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-字符串识别函数"><span class="nav-text">3.3 字符串识别函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-字符串补全函数"><span class="nav-text">3.4 字符串补全函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-模块化-导入导出"><span class="nav-text">4 模块化 导入导出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-ES6-export-import"><span class="nav-text">4.1 ES6 export import</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2对比commonJS模块"><span class="nav-text">4.2对比commonJS模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-箭头函数–this"><span class="nav-text">5 箭头函数–this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-扩展运算符…"><span class="nav-text">6 扩展运算符…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-对象、数组解构"><span class="nav-text">7 对象、数组解构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-对象解构"><span class="nav-text">7.1 对象解构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-数组解构"><span class="nav-text">7.2 数组解构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-类-class"><span class="nav-text">8 类 class</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、JavaScript基础内容"><span class="nav-text">一、JavaScript基础内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-JavaScript简介"><span class="nav-text">1 JavaScript简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-JavaScript编码规范"><span class="nav-text">2 JavaScript编码规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-基础语法"><span class="nav-text">3 基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-for循环"><span class="nav-text">3.1 for循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-Object-keys"><span class="nav-text">3.2 Object.keys()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-构建数组"><span class="nav-text">3.3 构建数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-原型链上添加属性或方法"><span class="nav-text">3.4 原型链上添加属性或方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-forEach（）"><span class="nav-text">3.5 forEach（）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-获取项目根目录地址"><span class="nav-text">3.6 获取项目根目录地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-7-拼接对象"><span class="nav-text">3.7 拼接对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-8-对象键值对定义"><span class="nav-text">3.8 对象键值对定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-9-util内置帮助函数"><span class="nav-text">3.9 util内置帮助函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-10-判断属性不是原型上的属性"><span class="nav-text">3.10 判断属性不是原型上的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-11-obj-键-式获取对象值"><span class="nav-text">3.11 obj[键]式获取对象值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-12-对象与类区别"><span class="nav-text">3.12 对象与类区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-13-匿名函数"><span class="nav-text">3.13 匿名函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-阅读代码提示"><span class="nav-text">4 阅读代码提示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-易错点"><span class="nav-text">5 易错点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-循环导入"><span class="nav-text">5.1 循环导入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、ES6"><span class="nav-text">二、ES6</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-ES6教程地址"><span class="nav-text">0 ES6教程地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-块级作用域-var-—-gt-const-let"><span class="nav-text">1 块级作用域  var —&gt; const let</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-对象增强写法"><span class="nav-text">2 对象增强写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-字符串"><span class="nav-text">3 字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-标签字符串"><span class="nav-text">3.1 标签字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-模板字符串"><span class="nav-text">3.2 模板字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-字符串识别函数"><span class="nav-text">3.3 字符串识别函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-字符串补全函数"><span class="nav-text">3.4 字符串补全函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-模块化-导入导出"><span class="nav-text">4 模块化 导入导出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-ES6-export-import"><span class="nav-text">4.1 ES6 export import</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2对比commonJS模块"><span class="nav-text">4.2对比commonJS模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-箭头函数–this"><span class="nav-text">5 箭头函数–this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-扩展运算符…"><span class="nav-text">6 扩展运算符…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-对象、数组解构"><span class="nav-text">7 对象、数组解构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-对象解构"><span class="nav-text">7.1 对象解构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-数组解构"><span class="nav-text">7.2 数组解构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-类-class"><span class="nav-text">8 类 class</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -681,14 +710,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">47</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -742,8 +771,8 @@
 
 <div class="copyright">
   
-  &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="/images/me.png"></i>
   </span>
@@ -753,13 +782,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">240k</span>
+    <span title="站点总字数">281k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:38</span>
+    <span title="站点阅读时长">4:16</span>
 </div>
 
         
