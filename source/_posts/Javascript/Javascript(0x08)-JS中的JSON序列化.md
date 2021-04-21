@@ -6,7 +6,6 @@ tags:
 - JSON序列化
 categories:
 - [Javascript]
-
 ---
 
 # JS中JSON序列化
@@ -16,6 +15,10 @@ categories:
 > 对象的`tJSON()`函数会决定对象返回的结果
 >
 > 注意：配合JSON.stringify()使用才有效
+>
+> * JSON.stringify()函数用于实现JSON序列化
+> * 序列化就是将对象转化为字符串
+> * JSON中都是双引号，没有单引号
 
 * 不使用`toJSON()`
 
@@ -133,6 +136,8 @@ console.log(JSON.stringify(test))//转化为字符串
 * 完整代码理解
 
   ```js
+  const {unset, clone, isArray} = require( 'lodash ' )
+  
   class Model {
     constructor(){
       this.a = 100,
@@ -180,7 +185,38 @@ console.log(JSON.stringify(test))//转化为字符串
     d: { g: 'good', e: { f: 'node.js' } },
     exclude: [ 'b' ]//Model类toJSON()中全局移除了
   }
-  {"d":{"g":"good","e":{}}} //a、 d.e.f是类中定义的全局移除掉的， b是实例化model对象自定义移除的
+{"d":{"g":"good","e":{}}} //a、 d.e.f是类中定义的全局移除掉的， b是实例化model对象自定义移除的
   ```
-
   
+  
+
+##  3 遍历JSON
+
+```js
+const json = {
+  a : { b : { c : 1}},
+  d : [110 , 112]
+}
+
+//root: json对象， path：访问节点的路径
+const dfs = (root, path) => {
+  console.log(root,'------',path)
+  Object.keys(root).forEach(item => {
+    dfs(root[item], path.concat(item))
+  })
+}
+
+dfs(json, [])
+
+
+
+//打印结果
+{ a: { b: { c: 1 } }, d: [ 110, 112 ] } ------ []
+{ b: { c: 1 } } ------ [ 'a' ]
+{ c: 1 } ------ [ 'a', 'b' ]
+1 ------ [ 'a', 'b', 'c' ]
+[ 110, 112 ] ------ [ 'd' ]
+110 ------ [ 'd', '0' ]
+112 ------ [ 'd', '1' ]
+```
+

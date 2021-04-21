@@ -23,15 +23,44 @@ categories:
 
 ## 1 栈（stack）
 
+> 栈的常用操作
+>
+> * 入栈 push()
+> * 出栈 pop()
+> * 查看栈尾元素 stack[stack.length - 1]
+
 * 一种**后进先出**的数据结构
 
 ### 1.1 栈的应用场景
 
 #####  十进制转二进制
 
+```js
+//十进制二进制
+function tenToTwo (num){
+  let stack = []
+  while(num !== 0){
+    stack.push(num % 2)
+    num = Math.floor(num / 2)
+  }
+  let res = ''
+  while(stack.length !== 0){
+    res = res.concat(stack.pop())
+  }
+  return res
+}
+
+const res = tenToTwo(100)
+console.log(parseInt(res))//字符串转数字
+```
+
+
+
 ![image-20200803172255803](数据结构与算法(JavaScript)/image-20200803172255803.png)
 
 #####  有效的括号
+
+> LeetCode:20
 
 ![image-20200803172408631](数据结构与算法(JavaScript)/image-20200803172408631.png)
 
@@ -43,19 +72,33 @@ categories:
 
 ##  2  队列（queue）
 
+> 队列常用操作
+>
+> * 入队： push()
+> * 出队： shift()
+> * 查看队头元素： queue[0]
+
 ###  2.1 队列的应用场景
 
 ####  js异步中的任务队列
 
+>  [Javascript(0x06)-js异步中的任务队列](https://chuckiewill.github.io/2020/10/02/Javascript/Javascript(0x06)-js%E5%BC%82%E6%AD%A5%E4%B8%AD%E7%9A%84%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/)
+
 * js是单线程的，无法同时处理异步中的并发任务
 
 ####  计算最近请求次数
+
+> LeetCode: 933 
 
 ![image-20201002175325094](数据结构与算法(JavaScript)/image-20201002175325094.png)
 
 
 
 ##  3 链表
+
+> LeetCode: 237、206、2、83、141
+>
+> 注意：**使用指针之前一定判断指针是否存在**
 
 ###  3.1 链表遍历、节点插入与删除
 
@@ -211,6 +254,8 @@ console.log(set.size)
 
 ##  5 字典
 
+> LeetCode: 349、20、1、3、76
+
 **存储唯一值的数据结构，以键值对的形式来存储**
 
 ###  5.1 ES6中Map(字典)的使用
@@ -234,7 +279,7 @@ map.clear() //全部删除
 //修改元素
 map.set('b', 'bbbb') //覆盖以前的元素即可
 
-//字典中查找元素
+//字典中查找元素,以key来查找，不是以valuec查找
 map.has('b') //有该元素则返回true,否则返回false
 
 //遍历字典
@@ -242,6 +287,9 @@ map.has('b') //有该元素则返回true,否则返回false
 map.forEach((value,key) => {
     console.log(value,key)
 })
+
+//获取字典键值对数
+map.size
 ```
 
 
@@ -249,6 +297,8 @@ map.forEach((value,key) => {
 
 
 ##  6 树
+
+> LeetCode: 104、111、102、94、112
 
 **一种分层数据的抽象模型**
 
@@ -414,7 +464,7 @@ module.exports = bt
 
 ####  6.3.1 先序遍历
 
-**根节点先访问**
+**根节点先访问**,根左右
 
 ![image-20201004165702355](数据结构与算法(JavaScript)/image-20201004165702355.png)
 
@@ -476,7 +526,7 @@ preorder(bt)
 
 ####  6.3.2 中序遍历
 
-**根节点在中间访问**
+**根节点在中间访问**，左根右
 
 ![image-20201004170102258](数据结构与算法(JavaScript)/image-20201004170102258.png)
 
@@ -534,7 +584,7 @@ inorder(bt)
 
 ####  6.3.3 后序遍历
 
-**根节点在最后访问**
+**根节点在最后访问**，左右根
 
 ![image-20201004171255922](数据结构与算法(JavaScript)/image-20201004171255922.png)
 

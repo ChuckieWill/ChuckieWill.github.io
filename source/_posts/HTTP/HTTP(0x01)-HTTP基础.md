@@ -23,7 +23,7 @@ categories:
 
 ##  1.1 HTTP请求过程
 
-![image-20200916173624473](HTTP/image-20200916173624473.png)
+![image-20200916173624473](HTTP(0x01)-HTTP基础/image-20200916173624473.png)
 
 * Redirect : 将URL跳转到指定的URL(如果有指定的情况)
 * APP cache :  查找资源是否已经缓存
@@ -36,7 +36,7 @@ categories:
 
 ## 1.2 五层网络模型
 
-![image-20200916174544942](HTTP/image-20200916174544942.png)
+![image-20200916174544942](HTTP(0x01)-HTTP基础/image-20200916174544942.png)
 
 * TCP在传输层，HTTP在应用层，HTTP的发送是建立在TCP之上的
 * HTTP1.0以前，一个TCP的建立对应一个HTTP，HTTP内容传输完成后，TCP连接会自动释放，*效率低*

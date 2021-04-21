@@ -103,6 +103,24 @@ categories:
       如果未规定此参数，则删除从 index 开始到原数组结尾的所有元素。 
     * 可选。要添加到数组的新元素
   * 返回值： array------返回删除部分的数组   而不是删除之后的 数组
+  
+* filter():  使用filter时，若有{}则要加return
+
+  ```js
+  var intersection = function(nums1, nums2) {
+      let set1 = new Set(nums1)
+      ////此处只是省去了return
+      //函数内部语句只有一句 ----   可以省去{}  若有return  也可以省去return
+      return [...set1].filter(item => nums2.includes(item))
+   };
+  var intersection = function(nums1, nums2) {
+       let set1 = new Set(nums1)
+      // 使用filter时，若有{}则要加return
+       return [...set1].filter(item => {return nums2.includes(item)})
+  };
+  ```
+
+  
 
 
 

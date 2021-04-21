@@ -4,8 +4,9 @@ date: 2020-03-28 10:46:17
 tags:
 - wxapplet
 categories:
-- [wxapplet]
+- [wx-applet, wxapplet]
 ---
+
 
 
 #  细节

@@ -18,14 +18,6 @@ categories:
 >
 >[TCP三次握手详解及面试题](https://blog.csdn.net/Shuffle_Ts/article/details/93778635?utm_medium=distribute.pc_feed_404.none-task-blog-BlogCommendFromBaidu-2.nonecase&depth_1-utm_source=distribute.pc_feed_404.none-task-blog-BlogCommendFromBaidu-2.nonecas)
 
-
-
-
-
-
-
-
-
 ###  一、状态码
 
 * SYN(synchronous)  

@@ -807,7 +807,7 @@ module.exports = {HttpException}
 
 
 
-##  5 结合数据库MySQL
+##  5 Sequelize+MySQL
 
 > 关于MySQL的一些使用可以查看**本站分类：tools/MySQL文章**
 >
@@ -879,7 +879,9 @@ module.exports = {
   * 一定为'+08:00'，才能以北京的时间来记录所有的时间
 
 ```js
+const { Model } = require('sequelize')
 const Sequelize = require('sequelize')
+const {unset, clone, isArray} = require('lodash')
 const {database} = require('../config/config')//导入数据库配置信息
 
 //参数1：数据库名称  参数2：数据库用户名  参数3：数据库用户密码  参数4：对象（包含多个参数）
@@ -896,12 +898,41 @@ const sequelize = new Sequelize(database.dbName, database.user, database.passwor
     updatedAt: 'updated_at',
     deletedAt: 'deleted_at',
     underscored: true,//将所有的驼峰命名改成下划线命名
+    scopes: {//自定义查询语句，
+      bh : {//bh为自定义名称
+        attributes: {//查询时调用scope('bh')，则可以在查询时排除以下字段，即查询结果不包含一下字段
+          exclude : ['updated_at', 'deleted_at', 'created_at']
+        }
+      }
+    }
   }
 });
 
 sequelize.sync({
   force:false //数据库字段更改后自动更新，原理是删除原来的表单（包括数据），再新建表单，开发阶段可使用，上线后不可使用
 })
+
+//JSON序列化
+Model.prototype.toJSON = function(){
+  //浅拷贝 this.dataValues可以拿到模型上所有属性
+  let data = clone(this.dataValues)
+  //lodash-unset,移除对象属性
+  unset(data,'updated_at')
+  unset(data,'created_at')
+  unset(data,'deleted_at')
+
+  // exclude 模型上要删除的字段 提供模型实例自定义需要删除的字段
+  //lodash-isArray,判断是否为数组
+  if(isArray(this.exclude)){
+    //遍历数组
+    this.exclude.forEach((value)=>{
+      //移除需要自定义需要删除的字段
+      unset(data,value)
+    })
+  }
+
+  return data
+}
 
 module.exports = {
   sequelize
@@ -1428,13 +1459,118 @@ module.exports = router
    ```
 
 
-##  3 Sequelize  待完成
+##  3 Sequelize 
 
 > Sequelize使用的详细教程请查看：[Sequelize官方文档](https://www.sequelize.com.cn/)
 >
-> 一下部分主要总结了sequelize一些常用功能的使用方法
+> 以下部分主要总结了`sequelize`一些常用功能的使用方法
 
+###  3.1 in查询
 
+> 转入：数组（记录的属性）、   返回：数组（记录）
+
+```js
+//记录中有id属性， ids是一个数组，数组内容为多个id号
+// Op.in  需要导入Op   ---- const {Op} = require(sequelize)
+where: {
+    id: {
+      [Op.in]: ids// in查询，避免循环查询数据库  ids是要查找的数据id数组
+    }
+  }
+```
+
+###  3.2 查询结果排除特定属性
+
+> 定义在Model上
+>
+> 使用场景：实例化的对象查询的数据都需要排除某些属性
+
+* 定义排除的属性
+
+  ```js
+  //下面定义了所有查询结果都排除'updated_at', 'deleted_at', 'created_at'属性
+  const sequelize = new Sequelize(....., {
+      define: {
+  		scopes: {//自定义查询语句，
+            bh : {//bh为自定义名称
+              attributes: {//查询时调用scope('bh')，则可以在查询时排除以下字段，即查询结果不包含一下字段
+                exclude : ['updated_at', 'deleted_at', 'created_at']
+              }
+            }
+          }
+      }
+  })
+  ```
+
+* 使用
+
+  ```js
+  //使用时在实例对象上加上`scope('bh')`  bh就是上面自定义的名称
+  Movie.scope('bh').findAll(....)
+  ```
+
+###  3.3 不包括属性的某个值
+
+```js
+// type为属性名， 400是属性的某一个值， type允许的值可以有：100,200,300,400
+// 查询结果是所有记录除了type属性值为400记录
+where: {
+        type: {
+          [Op.not]: 400//不包括400
+        }
+      }
+```
+
+###  3.4 事务(数据一致性)
+
+> 事务，确保数据的一致性（两个操作保持一致，要么都操作，要么都没有操作）
+
+```js
+//下面是确保了删除和-1操作能一致进行
+   sequelize.transaction(async t => {
+      //删除favor表单的点赞记录
+      await favor.destroy({
+        force: true,//false为物理删除，true为软删除
+        transaction: t
+      })
+      //将相应期刊表单中点赞数量-1
+      const art = await Art.getData(art_id, type)
+      await art.decrement('fav_nums',{by:1, transaction: t})
+    })
+```
+
+###  3.5 删除操作
+
+> destory关键字
+
+```js
+//favor为查询返回的一条记录的实例化对象
+favor.destroy({
+        force: true,//false为物理删除，true为软删除
+      })
+```
+
+###  3.6 属性+1-1
+
+> decrement: -1
+>
+> increment: +1
+
+```js
+//art为查询返回的一条记录的实例化对象  fav_nums是记录的一个属性
+//下面的操作是给fav_nums属性值-1
+art.decrement('fav_nums',{by:1, transaction: t})
+```
+
+###  3.7 排序
+
+```js
+HotBook.findAll({
+      order: [
+        'id'//以id属性升序查询
+      ]
+    })
+```
 
 
 

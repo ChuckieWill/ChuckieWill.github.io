@@ -115,7 +115,7 @@ git config --global user.email
 * 执行如下代码可只需第一次弹出填写即可  后续git push时不会再弹出
 
   ```
-  git config --global credential.helper wincred
+  git config --global credential.helper store
   ```
 
 * 删除本地保存的账户

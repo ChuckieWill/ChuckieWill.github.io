@@ -143,8 +143,14 @@ function text(index){
 
 ####  3.1 for循环
 
-* for(let i in list)     i取到的是list数组的索引值
-* for(let item of list)   item取到的是list数组的元素
+> [Javascript(0x05)-异步编程-5for...of  异步循环](https://chuckiewill.github.io/2020/08/05/Javascript/Javascript-0x05-异步编程/)
+
+* forEach((item) => {})    **同步执行**
+
+* for(let i in list)     i取到的是list数组的索引值, i取到的是list对象的键   **同步执行**
+* for(let item of list)   item取到的是list数组的元素， item取到的是list对象的值   **异步执行**
+
+
 
 ####  3.2 Object.keys()
 
@@ -281,7 +287,122 @@ loginUrl: 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_co
 const url = util.format(loginUrl,appId,appSecret,code)
 ```
 
+####  3.10 判断属性不是原型上的属性
 
+```js
+for (let key in obj) {
+        // 保证 key 不是原型的属性
+        if (obj.hasOwnProperty(key)) {
+            
+        }
+    }
+
+obj.hasOwnProperty(key)
+hasOwnProperty(key)函数判断属性是否为obj对象原型上的属性
+若key属性是原型上的属性则返回false
+若key属性不是原型上的属性则返回true
+```
+
+####  3.11 obj[键]式获取对象值
+
+```js
+let test = {
+  a: 100,
+  c: 300
+}
+
+ test['b'] =200
+ console.log(test)
+ console.log(test['b'])//注意键是字符串形式
+ console.log(test.b)
+
+ for(let i in test){
+   console.log(test[i],'hhh')
+ }
+
+//打印结果
+{ a: 100, c: 300, b: 200 }
+200
+200
+100 hhh
+300 hhh
+200 hhh
+```
+
+####  3.12 对象与类区别
+
+* 直接定义的简单对象中可以定义方法，且可以通过对象直接调用方法
+* 定义的类需要实例化后才能调用方法
+  * 类的本质是函数
+  * 实例化后为对象
+
+```js
+const wangwu = {
+  name:'王五',
+  sayHi( ) {
+    // this 即当前对象
+    console. log ( this)
+  },
+  waitAgain() {
+    //箭头函数的this取上级作用的this
+    setTimeout(() => { 
+      //this即当前对象
+      console. log( this)
+    })
+  }
+}
+wangwu.sayHi()
+wangwu.waitAgain()//直接调用方法
+
+
+
+class People {
+  constructor(name) {
+    this.name = name
+    this.age = 20
+  }
+  sayHi() {
+    console.log (this)
+  }
+}
+const chuckie = new People('chuckie')
+chuckie.sayHi()// chuckie对象
+People.sayHi()//报错，因为没有实例化
+```
+
+####  3.13 匿名函数
+
+> [js中的匿名函数](https://www.cnblogs.com/ranyonsue/p/10181035.html)
+
+```js
+//匿名函数包裹一个括号
+//匿名函数在其它应用场景括号可以省略
+(function (){
+    //由于没有执行该匿名函数，所以不会执行匿名函数体内的语句。
+    console.log("张培跃");
+})
+
+//如果需要执行匿名函数，在匿名函数后面加上一个括号即可立即执行！
+(function (){
+    //此时会输出张培跃
+    console.log("张培跃");
+})()
+
+//倘若需要传值，直接将参数写到括号内即可：
+(function (str){
+    //此时会输出张培跃好帅！
+    console.log("张培跃"+str);
+})("好帅！")
+```
+
+* 用`!`分隔匿名函数(多个匿名函数时，不加`!`会引发错误)，`!`不会影响代码执行
+
+```js
+!(async function () {
+  const res = await 100
+  console.log(res) // 100
+})()
+```
 
 
 
@@ -310,6 +431,7 @@ const url = util.format(loginUrl,appId,appSecret,code)
   ```
 
 * 解决方案
+  
   * 不在文件头部导入，而是在使用的地方导入
 
 

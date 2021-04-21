@@ -21,6 +21,9 @@ categories:
 
 * promise是对象不是函数    new Promise
 * promise的三个状态
+  * pending 状态，不会触发then和catch
+  * resolved状态，会触发后续的then回调函数，不会触发catch
+  * rejected状态，会触发后续的catch回调函数，不会触发then
 
 ```
 pending  fulfilled  rejected
@@ -68,6 +71,21 @@ async text(){
 	const res = await function()
 }
 ```
+
+* 直接获取已成功或已失败的promise
+
+```js
+// 直接返回一个 resolved 状态
+Promise.resolve(100).then(res => {})
+cosnt p = Promise.resolve(100)
+p.then(res => {})
+// 直接返回一个 rejected 状态
+Promise.reject('some error').catch(err => {})
+cosnt p = Promise.reject('some error')
+p.catch(err => {})
+```
+
+
 
 ###  1.2 promise.all
 
@@ -179,11 +197,57 @@ model.getApi1()-----------------------------调用api1
 
 ```
 
+###  1.5 then 和catch改变状态
+
+* 状态变化会触发 then catch
+  * pending 不会触发任何 then catch 回调
+  * resolved状态，会触发后续的then回调函数，不会触发catch
+  * rejected状态，会触发后续的catch回调函数，不会触发then
+* then catch 会继续返回 Promise ，**此时可能会发生状态变化！！！**
+  * then 正常返回resolved ，里面有报错则返回rejected, 若没有被触发则忽略
+  * catch 正常返回resolved ，里面有报错则返回rejected，若没有被触发则忽略
+
+```js
+// 第一题
+Promise.resolve().then(() => {//返回 resolved 状态的 promise
+    console.log(1)
+}).catch(() => {//不触发
+    console.log(2)
+}).then(() => {// 返回 resolved 状态的 promise
+    console.log(3)
+})
+//打印结果 1 3
+
+// 第二题
+Promise.resolve().then(() => { // 返回 rejected 状态的 promise
+    console.log(1)
+    throw new Error('erro1')
+}).catch(() => { // 返回 resolved 状态的 promise
+    console.log(2)
+}).then(() => { // 返回 resolved 状态的 promise
+    console.log(3)
+})
+//打印结果1 2 3
+
+// 第三题
+Promise.resolve().then(() => { // 返回 rejected 状态的 promise
+    console.log(1)
+    throw new Error('erro1')
+}).catch(() => { // 返回 resolved 状态的 promise
+    console.log(2)
+}).catch(() => { // 不触发
+    console.log(3)
+})
+//打印结果1 2
+```
+
+
+
 ##  2 async await
 
 ###  2.1 async await的使用及前提
 
-* 异步调用的终极处理办法      异步的一般使用场景（读写文件、操作数据库、发送HTTP请求）
+* 异步调用的终极处理办法      异步的一般使用场景（读写文件、操作数据库、网络请求、定时器、DOM事件）
 * 前提：--------等待的异步函数返回的必须是一个promise对象-------
 * 使用
   * 在函数头部用async
@@ -198,6 +262,7 @@ async text(){
 ###  2.2 async字段的理解
 
 * async将一个函数的返回值强制包装成一个Promise对象
+  * 若返回值本身就是一个Promise对象，则将这个Promise对象本身返回，不再包装
 
 ```js
 async test(){
@@ -250,6 +315,110 @@ async test(){
 
 打印结果为10000
 ```
+
+###  2.4 和 Promise 的关系
+
+- await 处理 Promise的resolved状态，**不能处理rejected和pending状态**
+
+  * await 接收pending状态，await不会触发，后续回调函数不会执行
+  * await 接收rejected状态，await不会触发，且此时没有处理内部返回的错误，**会报错**
+
+  ```js
+  (async function () {
+      const p1 = new Promise(() => {})
+      await p1          //  await后面的代码相当于回调函数中的代码
+      console.log('p1') // 不会执行 因为结果为pending状态 await不处理  相当于不会进入回调函数
+  })()
+  
+  (async function () {
+      const p2 = Promise.resolve(100)
+      const res = await p2
+      console.log(res) // 100
+  })()
+  
+  (async function () {
+      const res = await 100
+      console.log(res) // 100
+  })()
+  
+  (async function () {
+      const p3 = Promise.reject('some err')
+      const res = await p3  //会报错 因为返回的错误 await不能处理   需要用try  catch处理这个错误
+      console.log(res) // 不会执行 因为结果为rejected状态 await不处理  相当于不会进入回调函数
+  })()
+  ```
+
+- try...catch 处理 Promise 的rejected状态，**不能处理resolved和pending状态**
+
+  - resolved和pending状态不会触发try...catch
+  
+  ```js
+  (async function () {
+      const p4 = Promise.reject('some err')
+      try {
+          const res = await p4
+          console.log(res)
+      } catch (ex) {
+          console.error(ex)
+      }
+  })()
+  ```
+
+###  2.5 await的本质是异步
+
+* **只要遇到了 `await` ，后面的代码都相当于放在 callback 里。**
+
+```js
+async function async1 () {
+  console.log('async1 start')
+  await async2()  // **----先执行async2()  await再起作用----**
+  //await的后面,都可以看做是callback里的内容，即异步
+  //类似，event loop , setTimeout(cb1)
+  //setTimeout(function() { console.log ( 'async1 end ') })
+  //Promise.resolve().then(()=> { console.log( 'async1 end ')})
+  console.log('async1 end') // 关键在这一步，它相当于放在 callback 中，最后执行
+}
+
+async function async2 () {
+  console.log('async2')
+}
+
+console.log('script start')
+async1()
+console.log('script end')
+
+//打印结果
+script start
+async1 start
+async2
+script end
+async1 end
+
+
+
+async function async1 () {
+  console.log('async1 start') //2
+  await async2()  
+  console.log('async1 end') //5
+  await async3()
+  console.log('async1 end 2')  //7
+   
+}
+
+async function async2 () {
+  console.log('async2')  //3
+}
+
+async function async3 () {
+  console.log('async3') //6
+}
+
+console.log('script start') //1
+async1()
+console.log('script end') //4
+```
+
+
 
 ##  3 回调写法
 
@@ -358,6 +527,47 @@ test()
       }
     })
   },
+```
+
+
+
+##  5 for...of 异步循环
+
+* forEach((item) => {})    **同步执行**
+
+* for(let i in list)     i取到的是list数组的索引值, i取到的是list对象的键   **同步执行**
+* for(let item of list)   item取到的是list数组的元素， item取到的是list对象的值   **异步执行**
+
+```js
+// 定时算乘法
+function multi(num) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(num * num)
+        }, 1000)
+    })
+}
+
+// 使用 forEach ，是 1s 之后打印出所有结果，即 3 个值是一起被计算出来的
+ function test1 () {
+     const nums = [1, 2, 3];
+     nums.forEach(async x => {
+         const res = await multi(x);
+         console.log(res);
+     })
+ }
+ test1();//隔1s后同时打印出1 4 9 
+
+// 使用 for...of ，可以让计算挨个串行执行
+async function test2 () {
+    const nums = [1, 2, 3];
+    for (let x of nums) {
+        // 在 for...of 循环体的内部，遇到 await 会挨个串行计算
+        const res = await multi(x) 
+        console.log(res)
+    }
+}
+test2() //隔1s后打印1 再隔1s后打印4  再隔1s后打印9
 ```
 
 
