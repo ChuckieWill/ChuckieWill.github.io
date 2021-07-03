@@ -9,12 +9,11 @@ categories:
 
 #  云开发
 
-* 云开发包括：**云函数**、云数据库、云存储、云调用
+* 云开发包括：**云函数**、云数据库、云存储、云调用、HTTP API
 * **小程序端和云函数端**云开发可参考以下微信官方文档： 
   * [云开发-开发指引]( https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/ )
   * [云开发-SDK文档]( https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-sdk-api/Cloud.init.html )
 * **第三方**调用云函数、操作云数据库、云存储、云调用
-* 
 
 ##   云函数
 

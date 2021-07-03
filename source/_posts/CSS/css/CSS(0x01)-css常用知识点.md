@@ -21,6 +21,8 @@ categories:
 
 ###  3 阿里iconfont 字体图标
 
+* [imooc视频教程-imooc-music-4.3引入iconfont字体图标](https://coding.imooc.com/lesson/373.html#mid=27424)
+
 * [阿里iconfont官网]( https://www.iconfont.cn/ )
 
 *  页面内使用iconfont

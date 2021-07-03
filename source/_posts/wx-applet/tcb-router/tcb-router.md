@@ -4,7 +4,7 @@ date: 2020-03-29 10:46:17
 tags:
 - tcb-router
 categories:
-- [wxapplet, tcb-router]
+- [wx-applet, tcb-router]
 ---
 
 
