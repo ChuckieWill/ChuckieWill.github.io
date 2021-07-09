@@ -615,6 +615,27 @@ console.log(`${this.test()}456`)
   import b from "./xxx.js"; // 不需要加{}， 使用任意变量接收
   ```
 
+  ```js
+  //导出
+  let myName = "Tom";
+  let myAge = 20;
+  let myfn = function(){
+      return "My name is" + myName + "! I'm '" + myAge + "years old."
+  }
+  let myClass =  class myClass {
+      static a = "yeah!";
+  }
+  export default{ myName, myAge, myfn, myClass }
+  
+  //导入
+  import xxx from './xxx.js'
+  //使用
+  xxx.myName
+  xxx.myAge
+  xxx.myfn()
+  xxx.myClass
+  ```
+
   
 
 * 导入：import

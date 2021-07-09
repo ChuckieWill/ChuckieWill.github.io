@@ -33,18 +33,15 @@ categories:
   * 全局安装
 
     * 在终端直接执行webpack命令，使用的全局安装的webpack
-
-    ```js
-    npm install webpack@版本号 -g
-    ```
+    * `npm install webpack@版本号 -g`
 
   * 局部安装 ----    *切换到项目根目录下*
 
     * 当在package.json中定义了scripts时，其中包含了webpack命令，此时使用的是局部webpack
 
-    ```js
-    npm insatll webpack@版本号 --save-dev
-    ```
+```js
+npm insatll webpack@版本号 --save-dev
+```
 
 
 
@@ -64,10 +61,10 @@ categories:
 
 * 命令
 
-  ```js
-  webpack 源文件路径  打包后文件路径
-  webpack ./src/main.js ./dist/bundle.js
-  ```
+```js
+webpack 源文件路径  打包后文件路径
+webpack ./src/main.js ./dist/bundle.js
+```
 
 ####  3.3 使用打包后的文件
 
@@ -92,37 +89,37 @@ categories:
 
   * `path`相关操作是`node.js`中读取文件路径的语法
 
-  ```js
-  //webpack.config.js
-  const path = require('path')
-  
-  module.exports = {
-    //入口：可以是字符串、数组、对象，这里只有一个入口，写字符串即可
-    entry:'./src/main.js',
-    //出口: path:打包文件保存路径  filename:打包的文件名
-    output:{
-        path: path.resolve(__dirname,'dist'),
-        filename: 'bundle.js'
-    }
-  }
-  ```
+```js
+//webpack.config.js
+const path = require('path')
+
+module.exports = {
+//入口：可以是字符串、数组、对象，这里只有一个入口，写字符串即可
+entry:'./src/main.js',
+//出口: path:打包文件保存路径  filename:打包的文件名
+output:{
+    path: path.resolve(__dirname,'dist'),
+    filename: 'bundle.js'
+}
+}
+```
 
 ####  4.2 局部（本地）安装webpack
 
 * 安装命令
 
-  ```js
-  npm install webpack@版本号 --save-dev
-  ```
+```js
+npm install webpack@版本号 --save-dev
+```
 
 * 通过node_modules/.bin/webpack启动webpack打包  ---- *此时使用的是局部的webpack* 
 
   * 注意：路径是反斜杠
 
-  ```js
-  终端命令
-  .\node_modules\.bin\webpack
-  ```
+```js
+终端命令
+.\node_modules\.bin\webpack
+```
 
 ####  4.3 package.json中定义打包启动
 
@@ -135,9 +132,9 @@ categories:
 
 * 配置完成后执行如下命令即可打包文件了
 
-  ```js
-  npm run build
-  ```
+```js
+npm run build
+```
 
   
 
@@ -173,43 +170,43 @@ categories:
 
 1. 在src/css文件夹下创建css文件
 
-   ```css
-   //src/css/normal.css
-   body{
-       baackground-red
-   }
-   ```
+```css
+//src/css/normal.css
+body{
+   baackground-red
+}
+```
 
 2. 在入口文件`main.js`文件中引入 css文件
 
-   ```js
-   require('./css/normal.css')
-   ```
+```js
+require('./css/normal.css')
+```
 
 3. **安装`css-loader`**
 
-   ```js
-   npm install --save-dev css-loader
-   ```
+```js
+npm install --save-dev css-loader
+```
 
 4. **安装`style-loader`**
 
-   ```js
-   npm install style-loader --save-dev
-   ```
+```js
+npm install style-loader --save-dev
+```
 
 5. **配置`css-loader`和`style-loader`**
 
-   ```js
-     module: {
-       rules: [
-         {
-           test: /\.css$/,
-           use: [ 'style-loader', 'css-loader' ]
-         }
-       ]
+```js
+ module: {
+   rules: [
+     {
+       test: /\.css$/,
+       use: [ 'style-loader', 'css-loader' ]
      }
-   ```
+   ]
+ }
+```
 
 **注意：**
 
@@ -222,9 +219,9 @@ categories:
 
   * webpack在读取使用的loader的过程中，是按照从右向左的顺序读取的。
 
-  ```js
-   use: [ 'style-loader', 'css-loader' ]
-  ```
+```js
+use: [ 'style-loader', 'css-loader' ]
+```
 
 
 
@@ -232,57 +229,57 @@ categories:
 
 1. 在src/css文件夹下创建less文件
 
-   ```css
-   //src/css/special.less
-   @fontSize: 50px;
-   @fontColor: red;
-   
-   body {
-     color: @fontColor;
-     font-size: @fontSize;
-   }
-   ```
+```css
+//src/css/special.less
+@fontSize: 50px;
+@fontColor: red;
+
+body {
+ color: @fontColor;
+ font-size: @fontSize;
+}
+```
 
 2. 在入口文件`main.js`文件中引入 less文件
 
-   ```js
-   require('./css/special.less')
-   ```
+```js
+require('./css/special.less')
+```
 
 3. **安装`css-loader`**
 
-   ```js
-   npm install --save-dev css-loader
-   ```
+```js
+npm install --save-dev css-loader
+```
 
 4. **安装`style-loader`**
 
-   ```js
-   npm install style-loader --save-dev
-   ```
+```js
+npm install style-loader --save-dev
+```
 
 5. **安装`less-loader`**
 
-   ```js
-   npm install --save-dev less-loader less
-   ```
+```js
+npm install --save-dev less-loader less
+```
 
 6. 配置`css-loader`、`style-loader`、`less-loader`
 
-   ```js
-   module: {
-           rules: [{
-               test: /\.less$/,
-               use: [{
-                   loader: "style-loader" // creates style nodes from JS strings
-               }, {
-                   loader: "css-loader" // translates CSS into CommonJS
-               }, {
-                   loader: "less-loader" // compiles Less to CSS
-               }]
+```js
+module: {
+       rules: [{
+           test: /\.less$/,
+           use: [{
+               loader: "style-loader" // creates style nodes from JS strings
+           }, {
+               loader: "css-loader" // translates CSS into CommonJS
+           }, {
+               loader: "less-loader" // compiles Less to CSS
            }]
-       }
-   ```
+       }]
+   }
+```
 
 **注意：**
 
@@ -296,23 +293,23 @@ categories:
 
   * webpack在读取使用的loader的过程中，是按照从右向左的顺序读取的。
 
-  ```js
-   use: [ 'style-loader', 'css-loader', 'less-loader' ]
-  ```
+```js
+use: [ 'style-loader', 'css-loader', 'less-loader' ]
+```
 
 ##  4 图片处理
 
 1. 安装`url-loader`
 
-   ```js
-   npm install --save-dev url-loader
-   ```
+```js
+npm install --save-dev url-loader
+```
 
 2. 安装`file-loader`
 
-   ```js
-   npm install --save-dev file-loader
-   ```
+```js
+npm install --save-dev file-loader
+```
 
 3. 配置
 
@@ -361,32 +358,32 @@ module: {
      * `babel-preset-es2015` : 指转ES6（es2015就是ES6） ---  *简单写法  不需要再配置babel*
      * `babel-preset-env`： 也是转ES6  -----  *需要再做babel相配置*
 
-   ```js
-   //方式1
-   npm install babel-loader@7 babel-core babel-preset-es2015  --save-dev
-   
-   npm install babel-loader babel-core babel-preset-env   --save-dev
-   ```
+```js
+//方式1
+npm install babel-loader@7 babel-core babel-preset-es2015  --save-dev
+
+npm install babel-loader babel-core babel-preset-env   --save-dev
+```
 
 2. 配置
 
-   ```js
-   module: {
-     rules: [
-       {
-         test: /\.js$/,
-         exclude: /(node_modules|bower_components)/,   //声明不做转换的文件夹
-         use: {
-           loader: 'babel-loader',
-           options: {
-             presets: ['es2015']             //对应安装方式1
-             presets: ['@babel/preset-env']  //对应安装方式2
-           }
-         }
+```js
+module: {
+ rules: [
+   {
+     test: /\.js$/,
+     exclude: /(node_modules|bower_components)/,   //声明不做转换的文件夹
+     use: {
+       loader: 'babel-loader',
+       options: {
+         presets: ['es2015']             //对应安装方式1
+         presets: ['@babel/preset-env']  //对应安装方式2
        }
-     ]
+     }
    }
-   ```
+ ]
+}
+```
 
 
 
@@ -397,134 +394,132 @@ module: {
 
 1. 安装vue
 
-   ```js
-    npm install vue --save
-   ```
+```js
+npm install vue --save
+```
 
 2. 配置
 
    * 因为使用的是`runtime-only`版本，所以需要在webpack.config.js中做如下配置
 
-   ```js
-   resolve: {
-       alias: {
-         'vue$': 'vue/dist/vue.esm.js'
-       }
+```js
+resolve: {
+   alias: {
+     'vue$': 'vue/dist/vue.esm.js'
    }
-   ```
+}
+```
 
 3. 使用vue
 
    * 3.1 vue基础用法
 
-   ```js
-   //main.js
-   
-   import Vue from 'vue'
-   new Vue({
-     el: '#app',
-     data: {
-       name: 'Chuckie'
-     }
-   })
-   ```
+```js
+//main.js
 
-   ```html
-   //index.html
-   
-   <body>
-     <div id="app">
-       <h2>{{name}}</h2>
-     </div>
-    
-     <script src="./dist/bundle.js"></script>
-   </body>
-   ```
+import Vue from 'vue'
+new Vue({
+ el: '#app',
+ data: {
+   name: 'Chuckie'
+ }
+})
+```
+
+```html
+//index.html
+
+<body>
+ <div id="app">
+   <h2>{{name}}</h2>
+ </div>
+
+ <script src="./dist/bundle.js"></script>
+</body>
+```
 
    * 3.2 vue组件化开发用法
 
-   ```js
-   //main.js
-   
-   import Vue from 'vue'
-   const App = {
-     template: `<h2>{{message}}</h2>`,
-     data(){
-       return {
-         message: '我是APP组件'
-       }
-     }
-   }
-   
-   new Vue({
-     el: '#app',
-     template: `            //template会直接替换index.html中<div id="app"></div>包裹的内容
-     <div id="app"> 
-       <h2>{{fname}}</h2>
-       <c-cpn/>
-     </div>
-     `,
-     data: {
-       fname: 'Chuckie'
-     },
-     components: {
-       'c-cpn' : App
-     }
-   })
-   ```
+```js
+//main.js
 
-   ```html
-   //index.html
-   
-   <body>
-     <div id="app">
-     </div>
-     <script src="./dist/bundle.js"></script>
-   </body>
-   ```
+import Vue from 'vue'
+const App = {
+ template: `<h2>{{message}}</h2>`,
+ data(){
+   return {
+     message: '我是APP组件'
+   }
+ }
+}
+
+new Vue({
+ el: '#app',
+ template: `            //template会直接替换index.html中<div id="app"></div>包裹的内容
+ <div id="app"> 
+   <h2>{{fname}}</h2>
+   <c-cpn/>
+ </div>
+ `,
+ data: {
+   fname: 'Chuckie'
+ },
+ components: {
+   'c-cpn' : App
+ }
+})
+```
+
+```html
+//index.html
+
+<body>
+<div id="app">
+</div>
+<script src="./dist/bundle.js"></script>
+</body>
+```
 
    * 3.3 `.vue`文件封装处理
 
      * 使用`.vue`文件需要做如下安装和配置
 
        * 安装
-
-         ```js
-         npm install vue-loader vue-template-compiler --save-dev
-         ```
-
+```js
+npm install vue-loader vue-template-compiler --save-dev
+```
        * 配置
 
-         ```js
-         //webpack.config.js
-         module: {
-             rules: [
-              {
-                 test: /\.vue$/,
-                 use: ['vue-loader']
-               }
-             ]
-         }
-         ```
+```js
+//webpack.config.js
+module: {
+ rules: [
+  {
+     test: /\.vue$/,
+     use: ['vue-loader']
+   }
+ ]
+}
+```
 
        * BUG处理
-   
-         * 问题：` Vue-loader在15.*之后的版本 vue-loader的使用都是需要伴有 VueLoaderPlugin `
+         * 问题：` Vue-loader`在15.*之后的版本 vue-loader的使用都是需要伴有 `VueLoaderPlugin `
          * 解决： webpack.config.js中做如下配置
-       
-         ```js
-         const VueLoaderPlugin = require('vue-loader/lib/plugin');
-         module.exports = {
-             plugins: [
-                 // make sure to include the plugin for the magic
-                 new VueLoaderPlugin()
-             ]
-         }
-         ```
-       
+
+```js
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+module.exports = {
+ plugins: [
+     // make sure to include the plugin for the magic
+     new VueLoaderPlugin()
+ ]
+}
+```
+
+
      * 使用：
-   
-   ```js
+
+```js
    //srv/vue/App.vue
    
    <template>
@@ -549,9 +544,9 @@ module: {
        color: green;
      }
    </style>
-   ```
+```
 
-   ```js
+```js
    //main.js
    
    import Vue from 'vue'
@@ -564,9 +559,9 @@ module: {
        App
      }
    })
-   ```
-   
-   ```html
+```
+
+```html
    //index.html
    
    <body>
@@ -574,7 +569,7 @@ module: {
      </div>
      <script src="./dist/bundle.js"></script>
    </body>
-   ```
+```
 
 ##   2 el和template的区别
 
@@ -635,7 +630,7 @@ new Vue({
 
 * 配置webpack.config.js
 
-  ```js
+```js
   //webpack.config.js
   const webpack = require('webpack')
   
@@ -644,7 +639,7 @@ new Vue({
           new webpack.BannerPlugin('最终版权归Chuckie所有')
         ]
   }
-  ```
+```
 
 * 效果： 在`bundle.js`文件开头会添加`最终版权归Chuckie所有`的声明
 
@@ -661,25 +656,31 @@ new Vue({
 
 * 安装`HtmlWebpackPlugin`插件
 
-  ```js
+```js
   npm install html-webpack-plugin --save-dev
-  ```
+```
 
 * 使用插件，修改webpack.config.js文件中plugins部分
 
   * 这里的template表示根据什么模板来生成index.html
-  * 需要**删除之前在output中添加的publicPath属性**,否则插入的script标签中的src可能会有问题
-
-  ```js
+  * fielname是在dist文件夹中生成的文件名
+* 需要**删除之前在output中添加的publicPath属性**,否则插入的script标签中的src可能会有问题
+  
+```js
   //webpack.config.js
   const HtmlWebpackPlugin = require('html-webpack-plugin')
   
-  plugins: [
+  module.exports = {
+    plugins: [
       new HtmlWebpackPlugin({
-        template: 'index.html'
+        template: './src/index.html',
+        filename: 'index.html'
       })
     ]
-  ```
+  }
+  
+  
+```
 
 
 
@@ -687,18 +688,18 @@ new Vue({
 
 * 安装
 
-  ```js
+```js
   npm install uglifyjs-webpack-plugin --save-dev
-  ```
+```
 
 * 配置
 
-  ```js
-  const uglifyJsPlugin = require('uglifyjs-webpack-plugin') 
-   plugins: [
-      new uglifyJsPlugin()
-    ]
-  ```
+```js
+const uglifyJsPlugin = require('uglifyjs-webpack-plugin') 
+plugins: [
+  new uglifyJsPlugin()
+]
+```
 
   
 
@@ -710,23 +711,24 @@ new Vue({
 
 * 安装
 
-  ```js
-  npm install --save-dev webpack-dev-server@版本号
-  ```
+```js
+npm install --save-dev webpack-dev-server@版本号
+```
 
 * webpack.config.js中配置` devServer`
 
-  * pcontentBase：为哪一个文件夹提供本地服务，默认是根文件夹，一般指定./dist
-  * pport：端口号
-  * pinline：页面实时刷新
-  * phistoryApiFallback：在SPA页面中，依赖HTML5的history模式
+  * contentBase：为哪一个文件夹提供本地服务，默认是根文件夹，一般指定./dist
+  * port：端口号
+  * inline：页面实时刷新
+  * historyApiFallback：在SPA页面中，依赖HTML5的history模式
 
-  ```js
-   devServer: {
-      contentBase: './dist',
-      inline: true
-    }
-  ```
+```js
+devServer: {
+  contentBase: './dist',
+  inline: true,
+  port:3000
+}
+```
 
 * package.js中配置`scripts`
 
@@ -734,17 +736,17 @@ new Vue({
 
   * `--open`: 表示直接打开浏览器
 
-    ```js
-     "scripts": {
-        "dev": "webpack-dev-server --open"
-      },
-    ```
+```js
+ "scripts": {
+    "dev": "webpack-dev-server --open"
+  },
+```
 
 * 启动本地服务器
 
-  ```js
-  终端：npm run dev
-  ```
+```js
+终端：npm run dev
+```
 
 
 
@@ -752,7 +754,7 @@ new Vue({
 
 * 对`webpack.config.js`配置的分离
 
-* nwebpack配置分离的原因：开发时配置和发布时配置不同 所以需要分离以便发布时依赖准确清晰
+* webpack配置分离的原因：开发时配置和发布时配置不同 所以需要分离以便发布时依赖准确清晰
 
 1. 项目根目录下新建`build`文件夹 文件夹下新建3个配置文件：
 
@@ -762,15 +764,14 @@ new Vue({
 
 2. 安装合并插件
 
-   ```js
-   npm install webpack-merge --save-dev
-   ```
+```js
+npm install webpack-merge --save-dev
+```
 
 3. 使用`webpack-merge`
 
    * `dev.config.js`中配置
-
-     ```js
+```js
      const webpackMerge = require('webpack-merge')  //导入合并插件
      const baseConfig = require('./base.config')   //导入基础配置
      
@@ -780,11 +781,11 @@ new Vue({
          inline: true
        }
      })
-     ```
+```
 
    * `prod.config.js`中配置
 
-     ```js
+```js
      // const uglifyJsPlugin = require('uglifyjs-webpack-plugin')
      const webpackMerge = require('webpack-merge')
      const baseConfig = require('./base.config')
@@ -794,7 +795,7 @@ new Vue({
          // new uglifyJsPlugin()
        ],
      })
-     ```
+```
 
 4. 删除之前的配置文件：`webpack.config.js`
 
@@ -804,36 +805,36 @@ new Vue({
 
    * `--config`: 重定向配置文件的位置
 
-   ```js
+```js
    "scripts": {
        "build": "webpack --config ./build/prod.config.js",    //指定配置文件位置
        "dev": "webpack-dev-server --open  --config ./build/dev.config.js"//指定配置文件位置
      },
-   ```
+```
 
 6. 更改打包文件保存的路径
 
-   ```js
+```js
    module.exports = {
      //出口: path:打包文件保存路径  filename:打包的文件名
      output:{
          path: path.resolve(__dirname,'dist'),
          filename: 'bundle.js'
      },
-   ```
+```
 
    * 生成dist文件的路径有变化   __dirname拿到的是prod.config.js所在的路径 
-   * 若不更改 dista文件夹将生成在`prod.config.js`所在文件中
+   * 若不更改 dist文件夹将生成在`prod.config.js`所在文件中
    * 更改：使dist文件夹生成在项目根目录下
 
-   ```js
+```js
    module.exports = {
      //出口: path:打包文件保存路径  filename:打包的文件名
      output:{
          path: path.resolve(__dirname,'../dist'),    //'../dist'
          filename: 'bundle.js'
      },
-   ```
+```
 
    
 
