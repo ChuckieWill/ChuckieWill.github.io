@@ -36,7 +36,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/01/17/tools/git/Git-0x01-git%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/1588494990163.png">
 <meta property="og:image" content="http://yoursite.com/2020/01/17/tools/git/Git-0x01-git%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/1588503826588-1593665753745.png">
 <meta property="article:published_time" content="2020-01-17T12:22:17.000Z">
-<meta property="article:modified_time" content="2020-11-17T15:21:22.337Z">
+<meta property="article:modified_time" content="2021-07-14T06:17:35.885Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary">
@@ -229,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-17 23:21:22" itemprop="dateModified" datetime="2020-11-17T23:21:22+08:00">2020-11-17</time>
+                <time title="修改时间：2021-07-14 14:17:35" itemprop="dateModified" datetime="2021-07-14T14:17:35+08:00">2021-07-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -251,7 +251,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.2k</span>
+              <span>5.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -421,7 +421,7 @@
 <h3 id="2-2-暂存区管理"><a href="#2-2-暂存区管理" class="headerlink" title="2.2 暂存区管理"></a>2.2 暂存区管理</h3><h4 id="2-2-1-忽略需要跟踪的文件"><a href="#2-2-1-忽略需要跟踪的文件" class="headerlink" title="2.2.1  忽略需要跟踪的文件"></a>2.2.1  忽略需要跟踪的文件</h4><p>在项目根目录下的<code>.gitignore</code>文件中配置忽略规则</p>
 <p>具体的忽略规则可查看<a href="https://git-scm.com/book/zh/v2/Git-基础-记录每次更新到仓库" target="_blank" rel="noopener">详细教程-忽略文件</a></p>
 <ul>
-<li>1  新建.gitnore文件<ul>
+<li>1  新建.gitignore文件<ul>
 <li>忽略文件需要新建一个.gitignore文件 </li>
 <li>该文件用于申明忽略文件或不忽略文件的规则</li>
 <li>规则对当前目录及子目录生效</li>
@@ -458,7 +458,11 @@
 </ul>
 </li>
 </ul>
-<h4 id="2-2-3-查看暂存区文件"><a href="#2-2-3-查看暂存区文件" class="headerlink" title="2.2.3 查看暂存区文件"></a>2.2.3 查看暂存区文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git ls-files</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-3-查看暂存区文件"><a href="#2-2-3-查看暂存区文件" class="headerlink" title="2.2.3 查看暂存区文件"></a>2.2.3 查看暂存区文件</h4><ul>
+<li>在暂存区的文件即都是<strong>已经被跟踪</strong>的文件</li>
+<li>也可以理解为查看被跟踪的文件有哪些</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git ls-files</span><br></pre></td></tr></table></figure>
 
 <h4 id="2-2-4-撤销或删除暂存区文件"><a href="#2-2-4-撤销或删除暂存区文件" class="headerlink" title="2.2.4 撤销或删除暂存区文件"></a>2.2.4 撤销或删除暂存区文件</h4><p><strong>撤销暂存区的某文件</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset HEAD &lt;文件名&gt;</span><br></pre></td></tr></table></figure>
@@ -467,17 +471,23 @@
 <li>将已保存到暂存区的文件撤销保存，即将文件移除暂存区，使文件状态处于未加入暂存区的状态</li>
 <li>即取消最近一次加入暂存区之前的修改</li>
 </ul>
-<p><strong>删除暂存区的某文件</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm --cached &lt;文件名&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>删除暂存区的某文件</strong>（不再跟踪某文件）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;不再跟踪某文件</span><br><span class="line">git rm --cached &lt;文件名&gt;</span><br><span class="line">git rm --cached test&#x2F;test.html</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;不再跟踪某文件夹</span><br><span class="line">git rm --cached &lt;文件夹名&gt; -r</span><br><span class="line">git rm --cached test -r</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>只把文件从 Git 仓库中删除（亦即从暂存区域移除），但仍然保留在当前工作目录中。  即让文件保留在磁盘，但 Git不再 继续跟踪。  </li>
+<li>只把文件从 Git 仓库中删除（即从暂存区域移除），但仍然保留在当前工作目录中。  即让文件保留在磁盘，但<strong>Git不再继续跟踪</strong>。  </li>
 </ul>
 <p><strong><code>git reset HEAD</code>和<code>git rm --cached</code>的区别</strong></p>
 <ul>
-<li>git rm – cached 是从stage（暂存区） 里面删除文件，当你提交（commit）之后文件就会删除了。</li>
-<li>git reset HEAD  : 回退暂存区里的文件（还原为HEAD commit里面该文件的状态），会撤销从上一次提交（commit）之后的一些操作。</li>
-<li>如果是对于新增文件，这两个操作时等效的。</li>
+<li>git rm – cached 是从stage（暂存区） 里面删除文件，当你提交（commit）之后文件就不再被跟踪了。<ul>
+<li><strong>该文件不再被跟踪</strong></li>
+</ul>
+</li>
+<li>git reset HEAD  : 回退暂存区里的文件（还原为HEAD commit里面该文件的状态），会撤销从上一次提交（commit）之后的一些操作。<ul>
+<li><strong>该文件仍然被跟踪，只是这次的修改没有加入暂存区</strong></li>
+</ul>
+</li>
+<li>如果是对于新增文件，这两个操作是等效的。</li>
 </ul>
 <h3 id="2-3-提交管理"><a href="#2-3-提交管理" class="headerlink" title="2.3 提交管理"></a>2.3 提交管理</h3><h4 id="2-3-1-提交（快拍）更新"><a href="#2-3-1-提交（快拍）更新" class="headerlink" title="2.3.1 提交（快拍）更新"></a>2.3.1 提交（快拍）更新</h4><p><strong>命令</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit</span><br></pre></td></tr></table></figure>
@@ -529,6 +539,7 @@
 <ul>
 <li>同时删除<strong>工作区和暂存区</strong>的该文件</li>
 <li>如果要删除之前修改过或已经放到暂存区的文件，则必须使用强制删除选项 <code>-f</code> </li>
+<li>如果该文件没有被跟踪，则执行报错</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm --cached &lt;文件名&gt;</span><br></pre></td></tr></table></figure>
 
@@ -705,7 +716,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -718,7 +729,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">66</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -777,13 +788,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">321k</span>
+    <span title="站点总字数">344k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">4:52</span>
+    <span title="站点阅读时长">5:13</span>
 </div>
 
         
