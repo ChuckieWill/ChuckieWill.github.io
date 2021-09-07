@@ -10,8 +10,6 @@ categories:
 
 
 
-
-
 # 数据结构与算法(JavaScript)
 
 ##  1 时间复杂度与空间复杂度
@@ -221,8 +219,8 @@ set.delete({a : 1, b :2})  //不能删除
 set.delete(obj)   //可以正常删除
 
 
-// 5 迭代，即循环集合
-for(let item of set) console.log(item)
+// 5 迭代，即循环集合   set的val和key一样
+for(let item of set) console.log(item) //d打印values
 for(let item of set.values())  console.log(item)
 for(let item of set.keys())  console.log(item)
   //以上三种方式输出结果一样，集合的values和keys属性一样
@@ -241,8 +239,10 @@ const set1 = new Set([1,2,3,4])
 // 7 求集合的交集和差集
 // 7.1 求集合交集
 const intersection = new Set([...set].filter(item => set1.has(item)))
-// 7.2 求差集
-const difference = new Set([...set].filter(item => !set1.has(item)))
+// 7.2 求差集  
+const difference1 = new Set([...set].filter(item => !set1.has(item)))
+const difference2 = new Set([...set1].filter(item => !set.has(item)))
+const defference = new Set([...difference1].concat([...difference2]))
 
 // 8 获取集合元素个数
 console.log(set.size)
@@ -421,7 +421,39 @@ bfs(tree)
 
 ###  6.3 二叉树
 
-**树中每个节点最多只能有两个子节点**
+> **树中每个节点最多只能有两个子节点**
+>
+> **二叉树性质**
+>
+> * 在二叉树的第i层上最多有2i-1 个节点 。（i>=1）
+> * 二叉树中如果深度为k,那么最多有2k-1个节点。(k>=1）
+> * n0=n2+1  n0表示度数为0的节点数，n2表示度数为2的节点数。
+> * 在完全二叉树中，具有n个节点的完全二叉树的深度为[log2n]+1，其中[log2n]是向下取整。
+> * 若对含 n 个结点的完全二叉树从上到下且从左至右进行 1 至 n 的编号，则对完全二叉树中任意一个编号为 i 的结点有如下特性：
+>   * (1)若 i=1，则该结点是二叉树的根，无双亲, 否则，编号为 [i/2] 的结点为其双亲结点;
+>   * (2) 若 2i>n，则该结点无左孩子，  否则，编号为 2i 的结点为其左孩子结点； 
+>   * (3) 若 2i+1>n，则该结点无右孩子结点，  否则，编号为2i+1 的结点为其右孩子结点。
+>
+> **满二叉树**
+>
+> * 在一棵二叉树中。如果所有分支结点都存在左子树和右子树，并且所有叶子都在同一层上，这样的二叉树称为满二叉树。
+> *  满二叉树的特点有：
+>   * 1）叶子只能出现在最下一层。出现在其它层就不可能达成平衡。
+>   * 2）非叶子结点的度一定是2。
+>   *  3）在同样深度的二叉树中，满二叉树的结点个数最多，叶子数最多。
+>
+> 
+>
+> **完全二叉树**
+>
+> * 对一颗具有n个结点的二叉树按层编号，如果编号为i(1<=i<=n)的结点与同样深度的满二叉树中编号为i的结点在二叉树中位置完全相同，则这棵二叉树称为完全二叉树。
+> * 特点：
+>   * 1）叶子结点只能出现在最下层和次下层。
+>   *  2）最下层的叶子结点集中在树的左部。
+>   *  3）倒数第二层若存在叶子结点，一定在右部连续位置。
+>   *  4）如果结点度为1，则该结点只有左孩子，即没有右子树。
+>   *  5）同样结点数目的二叉树，完全二叉树深度最小。
+>   * **注**：满二叉树一定是完全二叉树，但反过来不一定成立。
 
 * js中通过对象构建二叉树
 
@@ -432,23 +464,23 @@ const bt = {
   left : {
     val : 2,
     left : {
-      val : 4,
+      val : 3,
       left : null,
       right : null
     },
     right : {
-      val : 5,
-      left : null,
+      val : 4,
+      left : {
+          val: 5,
+          left: null,
+          right: null
+      },
       right : null
     }
   },
   right : {
-    val : 3,
-    left : {
-      val : 6,
-      left : null,
-      right : null
-    },
+    val : 6,
+    left : null,
     right : {
       val : 7,
       left : null,
@@ -761,7 +793,21 @@ bfs(2)
     }
 ```
 
+![image-20210722193642266](数据结构与算法(JavaScript)/image-20210722193642266.png)
 
+```js
+//sign:+、-号， digit:数字 
+const group = {
+        0: {'digit': 2, 'sign': 1, '.': 3},
+        1: {'digit': 2,'.': 3},
+        2: {'digit': 2, '.': 4, 'e': 5},
+        3: {'digit': 4},
+        4: {'digit': 4, 'e': 5},
+        5: {'digit': 7, 'sign': 6},
+        6: {'digit': 7},
+        7: {'digit': 7}
+    }
+```
 
 
 
@@ -990,6 +1036,8 @@ dfs(json, [])
 
 ###  1.1 排序
 
+> [JavaScript sort() 方法](https://www.runoob.com/jsref/jsref-sort.html)
+
 ####  1.1.1  冒泡排序
 
 * 时间复杂度：O(n*n)
@@ -1068,6 +1116,8 @@ console.log(arr)
 ```
 
 ####  1.1.4 归并排序
+
+> 火狐浏览器的sort()方法就是用的归并排序
 
 * 时间复杂度：O(n*logn)
   * 分时间复杂度：O(logn)
@@ -1259,4 +1309,23 @@ console.log(res)
 > 回溯法是一种**渐进式**寻找并构建问题解决方案的策略
 >
 > 回溯法会先从一个可能的动作开始解决问题，如果不行，就回溯并选择另一个动作，直到解决问题
+
+```js
+//时间复杂度：O(n!)  空间复杂度：O(n)
+var permute = function(nums) {
+    const res = []
+    const dfs = (path) => {
+        if(path.length === nums.length){
+            res.push(path)
+            return 
+        }
+        nums.forEach(n => {
+            if(path.includes(n)){return}
+            dfs(path.concat(n))
+        })
+    }
+    dfs([])
+    return res
+};
+```
 

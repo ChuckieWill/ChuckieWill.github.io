@@ -231,20 +231,42 @@ res.forEach((val , index) => {
 process.cwd()
 ```
 
-####  3.7 拼接对象
+####  3.7 拼接对象 Object.assign
+
+>  Object.assign只能实现浅拷贝，即只能拷贝第一层，更深层的只拷贝了引用
+>
+> 例如下面的obj1.type和obj2.type指向的是同一个内存地址 ，修改obj1.type.a  ,obj2.type.a也会被修改
 
 ```js
-const classicFields = {
+const obj1 = {
   title: Sequelize.STRING,
-  type: Sequelize.INTEGER
+  type: {
+      a: 100,
+      b: 100
+  }
 }
-//拼接
-Object.assign({url:Sequelize.STRING},classicFields)
+//拼接到原对象
+Object.assign({url:Sequelize.STRING},obj1)
 //拼接结果
-const classicFields = {
+obj1 = {
   title: Sequelize.STRING,
-  type: Sequelize.INTEGER,
+  type: {
+      a: 100,
+      b: 100
+  },
   url:Sequelize.STRING
+}
+
+//拼接到新对象
+const obj2 =  Object.assign({}, obj1, {e: 300})
+//拼接结果
+obj2 = {
+  title: Sequelize.STRING,
+  type: {
+      a: 100,
+      b: 100
+  },
+  e: 300
 }
 ```
 
@@ -377,19 +399,19 @@ People.sayHi()//报错，因为没有实例化
 ```js
 //匿名函数包裹一个括号
 //匿名函数在其它应用场景括号可以省略
-(function (){
+!(function (){
     //由于没有执行该匿名函数，所以不会执行匿名函数体内的语句。
     console.log("张培跃");
 })
 
 //如果需要执行匿名函数，在匿名函数后面加上一个括号即可立即执行！
-(function (){
+!(function (){
     //此时会输出张培跃
     console.log("张培跃");
 })()
 
 //倘若需要传值，直接将参数写到括号内即可：
-(function (str){
+!(function (str){
     //此时会输出张培跃好帅！
     console.log("张培跃"+str);
 })("好帅！")
@@ -403,6 +425,8 @@ People.sayHi()//报错，因为没有实例化
   console.log(res) // 100
 })()
 ```
+
+
 
 
 

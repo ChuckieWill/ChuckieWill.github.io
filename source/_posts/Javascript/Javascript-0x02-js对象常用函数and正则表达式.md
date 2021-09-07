@@ -106,6 +106,8 @@ categories:
   
 * filter():  使用filter时，若有{}则要加return
 
+  * filter() 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素。
+  
   ```js
   var intersection = function(nums1, nums2) {
       let set1 = new Set(nums1)
@@ -117,9 +119,9 @@ categories:
        let set1 = new Set(nums1)
       // 使用filter时，若有{}则要加return
        return [...set1].filter(item => {return nums2.includes(item)})
-  };
+};
   ```
-
+  
   
 
 

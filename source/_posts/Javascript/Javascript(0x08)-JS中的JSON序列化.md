@@ -202,10 +202,11 @@ const json = {
 const dfs = (root, path) => {
   console.log(root,'------',path)
   Object.keys(root).forEach(item => {
-    dfs(root[item], path.concat(item))
+    dfs(root[item], path.concat(item))//concat是数组的链接函数
   })
 }
 
+//json对象，[]数组
 dfs(json, [])
 
 

@@ -11,59 +11,133 @@ categories:
 
 #  一、Vue基础
 
-##  1 Vue安装
+> **[Vue官网-Vue2.x]( https://cn.vuejs.org/ )**
+>
+> **[Vue官网-Vue3](https://v3.cn.vuejs.org/ )**
+>
+> [Vue官网导航使用指南视频](https://www.bilibili.com/video/BV1Zy4y1K7SH?p=3)
 
-* **[Vue官网]( https://cn.vuejs.org/ )**
+##  1 Vue安装及使用
 
-* **方式一：直接CDN引入**
+###  1.1 直接使用`<script>`引入
 
-  * 你可以选择引入开发环境版本还是生产环境版本
+> 以下安装及使用基于`Vue2.x`
 
-  ```
-  <!-- 开发环境版本，包含了有帮助的命令行警告 --> 
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <!-- 生产环境版本，优化了尺寸和速度 -->
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  ```
+**引入方式： **
 
-* **方式二： 下载和引入**
-
-```
-开发环境 https://vuejs.org/js/vue.js 
-生产环境 https://vuejs.org/js/vue.min.js
-```
-
-1. 官网下载vue.js   官网--->安装---->直接用<script>引入方式(下载文件就是vue.js)  -----  开发阶段下载开发版本
-2. 在项目中新建js文件夹  再将vue.js文件  放入js文件夹下
-3. 引入及使用
-
-   * 创建Vue对象的时候，传入了一些options：{}
-     * {}中包含了el属性：该属性决定了这个Vue对象挂载到哪一个元素上,以"id"确定元素。
-     * {}中包含了data属性：该属性中通常会存储一些数据
-       * 这些数据可以是我们直接定义出来的。
-       * 也可能是来自网络，从服务器加载的。
-
-```
-    <div id="app">{{message}}
-        <h1>{{name}}</h1>
-    </div>
-    <script src="../js/vue.js"></script>
-    <script>
-        const app = new Vue({
-            el:'#app',
-            data:{
-                message:'你好呀  hello  vue',
-                name : 'maxthon'
-            }
-        })
-    </script>
-```
-
-* **方式三：NPM安装**
+* 方式一：直接CDN引入
+  * 官网位置：官网-学习-教程-安装-直接用`<script>`引入-CDN
+  * 可以选择引入开发环境版本还是生产环境版本，将相应地址在html中通过`<script>引入`
 
 ```js
-npm install vue --save
+<!-- 开发环境版本，包含了有帮助的命令行警告 --> 
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- 生产环境版本，优化了尺寸和速度 -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 ```
+
+
+
+* 方式二： 下载和引入
+  * 官网位置：官网-学习-教程-安装-直接用`<script>`引入
+  * 选择开发版本或生产版本直接下载一个js文件（开发阶段下载开发版本）
+  * 将下载的文件再在html文件中通过`<script>`引入
+
+```js
+开发环境 https://vuejs.org/js/vue.js   //下载的文件名：vue.js
+生产环境 https://vuejs.org/js/vue.min.js   //下载的文件名：vue.min.js
+```
+
+**使用Vue:**
+
+> 目录结构
+>
+> * 根文件夹
+>   * test.html
+>   * src
+>     * vue.js  
+
+1. 在项目中新建js文件夹 ,若是以上方式二引入Vue则需要将下载的vue.js文件 放入js文件夹下
+3. 在项目中新建html文件，并通过`<script>`引入Vue
+* 方式一则引入的src为网络地址
+   * 方式二则引入地址为本地地址
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue-demo</title>
+  <script  src="./src/vue.js"></script>  //方式二引入
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>//方式一引入
+</head>
+<body>
+</body>
+</html>
+```
+
+3. 创建Vue对象，传入options：{}
+
+   * {}中包含了el属性：该属性决定了这个Vue对象挂载到哪一个元素上,以"id"确定元素。
+
+   * {}中包含了data属性：该属性中通常会存储一些数据
+     * 这些数据可以是我们直接定义出来的。
+     * 也可能是来自网络，从服务器加载的。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue-demo</title>
+  <script src="./src/vue.js"></script>
+</head>
+<body>
+  <div id="app">{{message}}
+    <h1>{{name}}</h1>
+  </div>
+  <script>
+      const app = new Vue({
+          el:'#app',
+          data:{
+              message:'你好呀  hello  vue',
+              name : 'maxthon'
+          }
+      })
+  </script>
+</body>
+</html>
+```
+
+###  1.2 npm及CLI安装
+
+**npm直接安装vue**
+
+```js
+npm install vue 
+```
+
+**使用脚手架**
+
+1. (仅第一次执行)∶全局安装@vue/cli
+   `npm install -g @vue/cli`
+
+2. *切换到要创建项目的目录*，然后使用命令创建项目, 执行后会弹出选择安装vue2.x或vue3，自行选择；创建好的项目就已经接受git托管了
+
+   `vue create 项目名称`
+
+3. 启动项目
+   `npm run serve`
+
+
+
+###  1.3 单页组件
+
+> [单页组件视频教程](https://www.bilibili.com/video/BV1Zy4y1K7SH?p=60)
 
 
 
@@ -77,14 +151,17 @@ npm install vue --save
 
   * DOM层。
   * 给用户展示各种信息。
+  * 对应Vue中的模板：el
 
 * Model
   
-  * 数据层 -->传入Vue的options中的data
+  * 数据层 
+  * 对应Vue的options中的data
 * VueModel
   * 视图模型层：View和Model沟通的桥梁。
   * 实现了Data Binding，也就是数据绑定，将Model的改变实时的反应到View中
   * 实现了DOM Listener，也就是DOM监听，当DOM发生一些事件(点击、滚动、touch等)时，可以监听到，并在需要的情况下改变对应的Data。
+  * 对应Vue中的Vue实例对象
 
 ##  3 传入Vue的options
 
@@ -132,6 +209,10 @@ npm install vue --save
 
 ##  4 Vue生命周期
 
+* 挂载
+* 更新
+* 销毁
+
 <img src="Vuejs/vue-lifetime.png" style="zoom: 67%;" />
 
 ###  4.1 生命周期各时间节点易错点
@@ -151,15 +232,15 @@ npm install vue --save
 
 * mouted()在el挂载完成后执行
 
-3. **update()中DOM渲染还没有完成**
+3. **updated()中DOM渲染还没有完成**
 
-* update()在数据更新到DOM后执行
+* updated()在数据更新到DOM后执行
 
 4. **$nextTick()中图片还没有加载完成**
 
 * $nextTick(()=>{回调函数}) 在DOM渲染完成后执行
 
-  * update()钩子函数是在是数据更新到DOM完成的时间节点
+  * updated()钩子函数是在是数据更新到DOM完成的时间节点
   * nextTick()函数是在数据更新且DOM渲染完成后的时间节点(*DOM渲染完成 不包括图片加载完成*)
 
 ```
@@ -201,6 +282,7 @@ this.$nextTick(() => {
 
 * 该指令用于解析html代码
 * 当数据内容本身就是html代码时可以只用这个指令解析并展示
+* *v-html :会有XSS风险，会覆盖子组件*
 
 ![1590900171394](Vuejs/v-thml.png)
 
@@ -311,14 +393,14 @@ jack ma------1
 
   ```html
   //'active'、'line'为类名
-  <h2 class="title" :class=“[‘active’, 'line']">Hello World</h2>
+  <h2 class="title" :class=“['active’, 'line']">Hello World</h2>
   ```
 
   * 为变量名时不带引号  
 
   ```js
   <div id="app">
-      <h1 :class=“[active, line]">{{name}}</h1>
+      <h1 :class="[active, line]">{{name}}</h1>
   </div>
   <script src="../js/vue.js"></script>
   <script>
@@ -350,9 +432,11 @@ jack ma------1
   <div :style="[baseStyles, overridingStyles]"></div>
   
   data: {
-  	baseStyles:{backgroundcolor:'red'}  
+  	baseStyles:{backGroundColor:'red'}  //注意转换成驼峰形势
   }
   ```
+
+
 
 ##  3 计算属性
 
@@ -388,11 +472,13 @@ jack ma------1
 * `compoouted`的`get`和`set`
 
   * `computed`中定义的计算属性本来是包含`get`和`set`方法，`get`用于获取计算属性的结果，`set`用于设置计算属性，但是一般都只需要获取`get`，所以就简写成上面的函数形式，直接返回计算结果
-  * 案例
-
+  * 双向绑定（`v-model`）时，必须有`set 和 get`,否则会报错
+* 案例
+  
   ```js
   <div id="app">
-      <h1>{{fullName}}</h1>
+      <h1 >{{fullName}}</h1>
+      <input v-model="double2"/>
   </div>
   <script src="../js/vue.js"></script>
   <script>
@@ -400,7 +486,8 @@ jack ma------1
           el:'#app',
           data:{
               firstName: 'jack',
-              lastName: 'ma'
+              lastName: 'ma',
+              num: 0
           },
           computed: {
               fullName: {
@@ -411,6 +498,14 @@ jack ma------1
                       const names = newName.split(' ‘)
                       this.firsName = names[0]
                       this,lastName = names[1]
+                  }
+              },
+               double2: {
+                  get() {
+                      return this.num * 2
+                  },
+                  set(val) {
+                      this.num = val/2
                   }
               }
           }
@@ -425,7 +520,65 @@ jack ma------1
 * computed 和 methods中定义的方法都可以达到对data数据加工的效果
 * 但是：**计算属性会进行缓存，如果多次使用时，计算属性只会调用一次**  即只会计算一次  然后将计算结果保存，避免了重复无用的计算，节省了计算能力。
 
-##  4 事件监听
+
+
+##  4 watch
+
+> 当属性发送变化时就会触发
+
+* watch 监听引用类型，拿不到oldVal, 因为oldVal 和 val都是存储的引用地址，而引用地址是没有变化的只是引用的堆中的值类型发生了变化
+
+```js
+<template>
+    <div>
+        <input v-model="name"/>
+        <input v-model="info.city"/>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            name: '双越',
+            info: {
+                city: '北京'
+            }
+        }
+    },
+    watch: {
+        name(oldVal, val) {
+     		// 值类型，可正常拿到 oldVal 和 val
+            console.log('watch name', val, oldVal)
+        },
+        info: {
+            
+            handler(oldVal, val) {
+                // 引用类型，拿不到 oldVal 。因为指针相同，此时已经指向了新的 val
+                console.log('watch info', val, oldVal) 
+            },
+            deep: true, // 深度监听
+            immediate: true  // 该回调将会在侦听开始之后被立即调用
+            
+        },
+        // 'info.city':{
+        //   handler(oldVal, val) {
+                   // 此处是值类型，也可正常拿到 oldVal 和 val
+        //         console.log('watch city', val, oldVal) 
+        //     }
+        // },
+        'info.city'(oldVal, val) {
+            // 此处是值类型，也可正常拿到 oldVal 和 val
+            console.log('watch city', val, oldVal) 
+        }
+    }
+}
+</script>
+```
+
+
+
+##  5 事件监听
 
 ####  v-on
 
@@ -509,7 +662,7 @@ jack ma------1
 
 **[DOM原生事件列表](https://developer.mozilla.org/zh-CN/docs/Web/Events)**
 
-##  5 条件判断
+##  6 条件判断
 
 ####  v-if、v-else-if、v-else
 
@@ -538,13 +691,13 @@ jack ma------1
 
 ####  v-if VS  v-show
 
-* v-if条件为false时，对应的元素以及其子元素不会渲染。
-* v-show条件为false时，对应的元素以及其子元素会渲染。只是将元素的display属性设置为none，所以没有显示出来。
+* v-if条件为false时，对应的元素以及其子元素不会渲染。(通过Vue控制)
+* v-show条件为false时，对应的元素以及其子元素会渲染。只是将元素的display属性设置为none，所以没有显示出来。（通过css控制）
 * 总结：
   * 当需要在显示与隐藏之间切片很频繁时，使用v-show
   * 当只有少次切换时，通常使用v-if
 
-##  6 遍历循环
+##  7 遍历循环
 
 ####  v-for
 
@@ -581,7 +734,7 @@ jack ma------1
     * key相当于给每个节点做了唯一的标识
     * 这样就可以直接插入到B、C直接  效率更高
 
-##  7 双向绑定
+##  8 双向绑定
 
 ####  v-model
 
@@ -683,6 +836,8 @@ v-model.trim="message"
 #  三、Vue组件化开发
 
 ##  1 组件化开发基础内容
+
+![](Vuejs/image-20210727192610905.png)
 
 ###  1.1 注册组件
 
@@ -947,7 +1102,7 @@ Vue.component('m-cpn', {
 ###  1.6 组件数据存储
 
 * **data在组件中必须是一个函数**
-  * 因为组件会在多个位置使用，若data是对象形式，那么多个使用的位置就会指向同一个数据内存地址，一个位置修改数据，其他地方也会发生改变，导致组件相互影响，不能单独使用。若data是函数形式，在多个位置使用该组件时，会data函数会返回一个属于使用时组件自己的数据存储地址，是的组件使用是隔离的，不会互相影响。
+  * 因为组件会在多个位置使用，若data是对象形式，那么多个使用的位置就会指向同一个数据内存地址，一个位置修改数据，其他地方也会发生改变，导致组件相互影响，不能单独使用。若data是函数形式，在多个位置使用该组件时，会data函数会返回一个属于使用时组件自己的数据存储地址，使得组件使用是隔离的，不会互相影响。
 
 ```js
 // 使用组件 
@@ -1223,7 +1378,7 @@ this.$parent.方法
 
 * main.js中新建Vue实例作为事件总线: `Vue.prototype.$bus = new Vue()`
 
-```
+```vue
 Vue.prototype.$bus = new Vue()
 
 new Vue({
@@ -1247,6 +1402,7 @@ this.$bus.$on('发出事件名', (参数) => {
 ```
 
 * 组件取消全局事件的监听
+  * 注意在**组件销毁的生命周期函数(beforeDestory)**中执行取消该组件自定义的全局事件
 
 ```
 this.$bus.$off('发出事件名', 函数名)   //函数名：需要取消事件监听的函数
@@ -1254,7 +1410,118 @@ this.$bus.$off('发出事件名', 函数名)   //函数名：需要取消事件�
 
 ##  4 插槽
 
-* [插槽官网教程]( https://cn.vuejs.org/v2/guide/components-slots.html )
+> [插槽官网教程]( https://cn.vuejs.org/v2/guide/components-slots.html )
+
+* 基本使用
+
+```vue
+//父组件
+<template>
+	<div>
+        <Son >//子组件
+            <div>{{值}}</div>//放入插槽的内容
+        </Son>
+    </div>
+</template>
+```
+
+```vue
+//子组件
+<template>
+    <a>
+        <slot>
+            默认值显示当前这行话 ，即父组件不传内容时显示
+        </slot>
+    </a>
+</template>
+```
+
+
+
+* 作用域插槽
+  * 父组件可以拿到子组件data中的值并将该值作为插入的一部分插入
+
+```vue
+//父组件
+<template>
+	<div>
+        <Son >//子组件
+             <template v-slot="slotProps">//自定义名
+                 //此时的slotProps.slotData及指向了子组件data的website对象并可访问
+                {{slotProps.slotData.title}}//slotData子组件中定义，title子组件data中属性
+            </template>
+        </Son>
+    </div>
+</template>
+
+```
+
+```vue
+//子组件
+<template>
+    <a>
+        <slot :slotData="website">//父组件可以通过slotData拿到data中的website对象
+            {{website.subTitle}} <!-- 默认值显示 subTitle ，即父组件不传内容时 -->
+        </slot>
+    </a>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            website: {
+                url: 'http://wangEditor.com/',
+                title: 'wangEditor',
+                subTitle: '轻量级富文本编辑器'
+            }
+        }
+    }
+}
+</script>
+```
+
+
+
+* 具名插槽
+  * 当有多个插槽时便于区分
+
+```vue
+//父组件
+<template>
+	<div>
+        <Son >//子组件
+            <!--缩写<template #header> -->
+            <template v-slot:header>
+                <h1>将插入header slot中</h1>
+            </template>
+
+            <p>将插入到main slot 中，即未命名的slot</p>
+
+            <template v-slot:footer>
+                <p>将插入到footer slot中</p>
+            </template>
+        </Son>
+    </div>
+</template>
+```
+
+```vue
+//子组件
+<template>
+    <div>
+        <header>
+            <slot name="header"></slot>
+        </ header>
+        <main>
+            <slot></slot>//默认插入位置
+        </ main>
+        <footer>
+            <slot name="footer"></slot>
+        </footer>
+    </div>
+</template>
+```
 
 
 
@@ -1445,20 +1712,220 @@ this.$refs.scroll.$el.offsetTop
 
 
 
+#  Vue3
+
+> 源码：L264-code
+
+##  不熟悉的特性
+
+###  Non-Props
+
+> [非 Prop 的 Attribute](https://v3.cn.vuejs.org/guide/component-attrs.html)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 17</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  // Non-prop 属性
+  const app = Vue.createApp({
+    template: `
+      <div>
+        <counter msg="hello" msg1="hello1" @update="change"/>
+        <counter1 msg="hello" msg1="hello1" />
+      </div>
+    `,
+    methods:{
+      change(){
+        console.log('update')
+      }
+    }
+  });
+
+  app.component('counter', {
+    // inheritAttrs: false,
+    mounted() {
+      console.log(this.$attrs.msg);
+      console.log(this.$attrs)
+      this.$attrs.onUpdate()  //事件也可通过Non-Pro的方式传入子组件并调用,注意要加onXxxx()调用
+    },
+    // 子组件的根元素是多元素时，父组件传入的Non-Prop属性不会自动添加到根元素上
+    // 需要指定Non-Prop属性绑定到哪个元素上
+    template: `
+      <div :msg="$attrs.msg">Counter</div>
+      <div v-bind="$attrs">Counter</div> //所有属性都绑定到该元素上
+      <div :msg1="$attrs.msg1">Counter</div>
+    `
+  });
+
+  app.component('counter1', {
+    // inheritAttrs: false, //不接受父元素传入的Non-Prop属性
+    // 子组件的根元素是单元素时，父组件传入的Non-Prop属性会自动添加到根元素上
+    template: `
+      <div>Counter</div>
+    `
+  });
+
+  const vm = app.mount('#root');
+</script>
+</html>
+
+```
+
+###  v-model
+
+> [v-model作用于子组件](https://v3.cn.vuejs.org/guide/component-custom-events.html#%E5%A4%84%E7%90%86-v-model-%E4%BF%AE%E9%A5%B0%E7%AC%A6)
+>
+> * 默认写法，单个v-model
+> * 多个绑定，多个v-model
+> * 处理v-model修饰符
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson 19</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        count: 'a',
+        name: 'chuckie'
+      }
+    },
+    template: `
+      <counter v-model:count.uppercase="count"  />
+    `
+  });
+
+  app.component('counter', {
+    props: {
+      count: String,
+      countModifiers: { //属性名+Modifiers  处理修饰符
+        default: ()=> ({}) //默认为空字符串
+      }
+    },
+    methods: {
+      handleClick() {
+        let newValue = this.count + 'b';
+        console.log(this.countModifiers.uppercase)
+        //uppercase是父组件传入的修饰符，判断是否传入，若传入则做对应的操作
+        //若没传入则是undefined
+        if(this.countModifiers.uppercase) {
+          newValue = newValue.toUpperCase();
+        }
+        this.$emit('update:count', newValue);
+      },
+    },
+    template: `
+      <div @click="handleClick">{{count}}</div>
+    `
+  });
+
+  const vm = app.mount('#root');
+</script>
+</html>
+
+```
+
+###   Provide / Inject
+
+> [ Provide / Inject](https://v3.cn.vuejs.org/guide/component-provide-inject.html)
+>
+> 将父组件的参数直接传递到孙子组件
+>
+> * 传递data中的属性时，需要以返回对象的方式传递
+> * 响应式的处理方式
+
+###  directive
+
+> [自定义指令](https://v3.cn.vuejs.org/guide/custom-directive.html)
+
+###  plugin
+
+> [插件](https://v3.cn.vuejs.org/guide/plugins.html)
+>
+> 源码：plugin  (数据校验案例)
 
 
-###   数组可响应式的方法
 
-push()
-pop()
-shift()
-unshift()
-splice()
-sort()
-reverse()
+##  Vue3中的动画
+
+> [Animate.css](https://animate.style/)
 
 
 
-注意：arry[0] = 'adfa'  索引修改不会刷新界面
-Vue只带的方法：
-Vue.set(对象，索引，替换值)
+##  新脚手架
+
+* 卸载老版本的脚手架
+
+```js
+npm uninstall vue-cli -g
+```
+
+* 安装新的脚手架
+
+1. (仅第一次执行)∶全局安装@vue/cli
+   `npm install -g @vue/cli`
+
+   `npm install -g @vue/cli@版本号`
+
+2. *切换到要创建项目的目录*，然后使用命令创建项目, 执行后会弹出选择安装vue2.x或vue3，自行选择；创建好的项目就已经接受git托管了
+
+   `vue create 项目名称`
+
+3. 启动项目
+   `npm run serve`
+
+##  vue-router
+
+> [Vue-Router官方文档](https://next.router.vuejs.org/zh/)
+
+**脚手架创建项目时就安装vue-router**
+
+1. `vue create 项目名称`
+2. 选择`Manually select features`自定义安装的插件
+3. **空格选择`Router`**
+
+<img src="Vuejs/image-20210815162248328.png" alt="image-20210815162248328" style="zoom:80%;" />
+
+4. 选择vue3:`3.x`
+5. 是否选择history模式路由，不选择，则默认选择为hash模式路由
+
+![image-20210815162457644](Vuejs/image-20210815162457644.png)
+
+6. 选择仅错误时提醒ESlint
+
+![image-20210815162645470](Vuejs/image-20210815162645470.png)
+
+
+
+
+
+##  VueX
+
+> [Vuex官方文档](https://next.vuex.vuejs.org/zh/index.html)
+
+**脚手架创建项目时就安装VueX**
+
+1. `vue create 项目名称`
+2. 选择`Manually select features`自定义安装的插件
+3. **空格选择`Vuex`**
+
+<img src="Vuejs/image-20210815163117742.png" alt="image-20210815163117742" style="zoom:50%;" />
+

@@ -86,6 +86,7 @@ vscode-icons
 ```
 
 *  open in browser    方便打开html文件
+   *  alt+B
 
 ```
 open in browser  
@@ -110,7 +111,9 @@ open in browser
 *  Todo Tree	待办事项高亮，知乎配置介绍
    
 
+###  1.4 vue 相关插件
 
+* vetur
 
 ##  2 设置
 

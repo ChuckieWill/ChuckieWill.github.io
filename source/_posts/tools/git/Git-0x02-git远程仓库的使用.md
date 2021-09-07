@@ -153,6 +153,38 @@ $ git remote show origin
 
 ###  2.2 添加远程仓库
 
+**远程仓库为空仓库的情况**
+
+* 1 本地没有项目，从头开始创建
+
+```js
+echo "# git-demo" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M master
+git remote add origin https://github.com/ChuckieWill/git-demo.git
+git push -u origin master
+```
+
+* 2 本地已经存在项目，且有`.git`文件，即有本都git
+
+```js
+git remote add origin https://github.com/ChuckieWill/git-demo.git
+git branch -M master
+git push -u origin master
+
+
+ git remote add <shortname> <url> 
+ //<shortname>: 服务器简称
+ //<url> : 服务器地址
+ 
+ git push -u origin master
+ //-u : --set-upstream-to :设置git pull、git push 、git fetch 的默认地址及分支
+```
+
+**远程仓库不为空仓库的情况**
+
 * 方式1：
 
 1. 终端切换到打算存放代码的目录下  

@@ -67,7 +67,7 @@ text(){
 
 //2.2 async await的接收方式
 async text(){
-	//promise.then()的接收方式中--3--的结果（res或error）直接赋值给了这里的res
+	//promise.then()的接收方式中--3--的结果res直接赋值给了这里的res
 	const res = await function()
 }
 ```
@@ -318,37 +318,43 @@ async test(){
 
 ###  2.4 和 Promise 的关系
 
+* then同await,只处理Promise的resolved状态，**不能处理rejected和pending状态**
+  * then接收pending状态，then不会触发，后续回调函数不会执行
+  * then接收rejected状态，then不会触发，且此时没有处理内部返回的错误，**会报错**
+
 - await 处理 Promise的resolved状态，**不能处理rejected和pending状态**
 
   * await 接收pending状态，await不会触发，后续回调函数不会执行
   * await 接收rejected状态，await不会触发，且此时没有处理内部返回的错误，**会报错**
 
   ```js
-  (async function () {
+  !(async function () {
       const p1 = new Promise(() => {})
       await p1          //  await后面的代码相当于回调函数中的代码
       console.log('p1') // 不会执行 因为结果为pending状态 await不处理  相当于不会进入回调函数
   })()
   
-  (async function () {
+  !(async function () {
       const p2 = Promise.resolve(100)
       const res = await p2
       console.log(res) // 100
   })()
   
-  (async function () {
+  !(async function () {
       const res = await 100
       console.log(res) // 100
   })()
   
-  (async function () {
+  !(async function () {
       const p3 = Promise.reject('some err')
       const res = await p3  //会报错 因为返回的错误 await不能处理   需要用try  catch处理这个错误
       console.log(res) // 不会执行 因为结果为rejected状态 await不处理  相当于不会进入回调函数
   })()
   ```
 
-- try...catch 处理 Promise 的rejected状态，**不能处理resolved和pending状态**
+- catch处理 Promise 的rejected状态，**不能处理resolved和pending状态**
+
+- try...catch同promise机制的catch 处理 Promise 的rejected状态，**不能处理resolved和pending状态**
 
   - resolved和pending状态不会触发try...catch
   

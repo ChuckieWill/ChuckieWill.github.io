@@ -58,3 +58,36 @@ npm install vue --save
 
 
 
+###  3 nrm
+
+> 安装国内其它镜像源（包括taobao镜像源）
+
+```js
+安装：npm install nrm -g
+```
+
+**主要使用ls和use命令**
+
+* 1)`nrm ls`是列出来现在已经配置好的所有的原地址
+  * [运行`npm ls`报错解决方案](https://www.jianshu.com/p/cea5f163cb53)
+
+```
+nrm ls
+
+  npm ---- https://registry.npmjs.org/
+* cnpm --- http://r.cnpmjs.org/
+  taobao - http://registry.npm.taobao.org/
+  nj ----- https://registry.nodejitsu.com/
+  rednpm - http://registry.mirror.cqupt.edu.cn
+  npmMirror  https://skimdb.npmjs.com/registry
+```
+
+* 2)`nrm use`是切换到哪个源上
+
+```js
+nrm use npm
+```
+
+* 3)`nrm add`添加源
+* 4)`nrm del`删除源
+* 5)`nrm test`测试源的响应时间，可以作为使用哪个源的参考

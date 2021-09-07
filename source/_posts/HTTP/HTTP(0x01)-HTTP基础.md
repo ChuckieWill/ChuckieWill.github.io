@@ -147,7 +147,7 @@ http.createServer(function (request, response) {
     'Access-Control-Max-Age': '86400',
     'Content-Type': 'text/html'    //以html个格式解析
   })
-  response.end('123')
+  response.end('123')//返回服务端的内容
 }).listen(8887)
 
 console.log('server listening on 8887')
@@ -203,14 +203,14 @@ console.log('server listening on 8887')
 
 > [Cache-Control-MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Cache-Control)
 
-###  ETag Last-Modified (缓存验证)
+###  ETag Last-Modified (缓存验证-协商缓存)
 
 >[ETag](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/ETag)
 >
 >[Last-Modified](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Last-Modified)
 
 * **缓存验证前提：`Cache-Control`设置为`no-cache`**
-  * `no-cache`是指允许缓存，但是每次发送网络请求都任然需要发送到原服务器，通过`ETag`或`Last-Modified`判断请求的数据是否修改，如果没有修改就用缓存中的数据，如果修改了则使用实时返回的数据。
+  * `no-cache`是只允许协商缓存不允许强制缓存，但是每次发送网络请求都仍然需要发送到原服务器，通过`ETag`或`Last-Modified`判断请求的数据是否修改，如果没有修改就用缓存中的数据，如果修改了则使用实时返回的数据。
 * **缓存验证的意义**
   * `Cache-Control`设置为`public`或`private`时，可以实现缓存，但是也存在一个问题，就是如果设置的缓存时间过长，有可能服务端数据已经改变，但是网络请求任然使用的是本都缓存的数据，不能及时更新服务端的数据
   * 缓存验证就是判断服务端的数据是是否变化，如果变化了就把服务端的更新后的数据发送过来，如果没有变化就使用本地缓存的数据
