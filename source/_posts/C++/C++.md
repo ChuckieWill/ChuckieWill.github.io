@@ -69,6 +69,8 @@ categories:
 
 [vs2019快捷键](https://blog.csdn.net/qq_41979507/article/details/106188486)
 
+* 光标选中函数名，点`F1`可以在网页中打开函数的使用方式
+
 ##  基础容器
 
 ###  数组
@@ -81,14 +83,14 @@ int len = sizeof(a) / szieof(a[0]);   //sizeof是c++自带函数 sizeof计算的
 //数组名:a指向数组第一个元素，不可更改
 ```
 
-####  vector
+####  动态数组vector
 
 > vector是面向对象方式的动态数组
 >
 > 可以实现动态扩容插入元素
 
 * `vec.push_back()`：在尾部添加元素
-* `vec.capacity()`: 获取数组课容纳的元素个数， 会随着扩容发生变化
+* `vec.capacity()`: 获取数组可容纳的元素个数（不是剩余可容纳的元素，是数组一共可容纳的元素）， 会随着扩容发生变化
 * `vec.size()`: 获取数组当前元素个数
 * `vec.end()`: 获取数组结束位置的下标（即数组长度）
 * `vec.insert(插入的位置, 插入的元素)`: 在中间位置插入元素
@@ -119,6 +121,10 @@ int main()
 
 ###  字符串
 
+> [c和c++字符串比较](https://blog.csdn.net/manonghouyiming/article/details/79827040)
+
+####  c中的字符串
+
 * 字符串本质是字符数组
   * `''`单引号是字符
   * `""`双引号是字符串
@@ -132,20 +138,45 @@ char item[] = {"helloword"}
 
 * [ASCII](https://baike.baidu.com/item/ASCII/309296?fr=aladdin)
 
-####  字符串的指针
+#####  字符串的指针
 
 ```c++
-char strHelloWorld1[11]= { "helloworld" }; //这里的"helloworld"是变量
-//strHelloWorld 不可变，strHelloWorld[index]的值可变;
-char* pStrHelloWrold = "helloworld"; //这里的"helloworld"是常量
-//pStrHelloWrold可变，但是pStrHelloWrold[index]的值可变不可变取决于所指区间的存储区域是否可变;
-pStrHelloWrold = strHelloWorld1//可行
-pStrHelloWrold[index] = 'w'//修改指针指向的位置的值，通常不可行
+#include <iostream>
+
+using namespace std;
+
+int main()
+{   //这里的"hello"是变量
+    char strHelloWorld1[11] = { "hello" }; 
+    //这里的"world"是常量
+    const char* pStrHelloWrold = "world"; 
+    cout << strHelloWorld1 << endl;  // 打印结果： hello
+    cout << pStrHelloWrold << endl;  // 打印结果： world
+    cout << *strHelloWorld1 << endl; // 打印结果:  h
+    cout << *pStrHelloWrold << endl; // 打印结果:  w
+    cout << &strHelloWorld1 << endl; // 打印结果是指针本身的地址
+    cout << &pStrHelloWrold << endl; // 打印结果是指针本身的地址
+    //strHelloWorld这个指针不可变
+    strHelloWorld1 = pStrHelloWrold//报错 strHelloWorld1这个指针是常量，不可做左值
+    //strHelloWorld[index]的值可变;
+    strHelloWorld1[1] = 'j';
+    cout << strHelloWorld1 << endl;  // 打印结果： hjllo
+    //pStrHelloWrold可变，
+    pStrHelloWrold = strHelloWorld1;
+    cout << pStrHelloWrold << endl;  // 打印结果： hjllo
+    // pStrHelloWrold[index]的值可变不可变取决于所指区间的存储区域是否可变;
+    pStrHelloWrold[1] = 'w';//不可修改， 因为指针指向的位置存储的值是常量 ？？？？？？？？
+   
+}
 ```
 
-####  字符串string
+#####  <string.h>API
 
 > [c标准库`<string.h>`](https://www.runoob.com/cprogramming/c-standard-library-string-h.html)
+>
+> * **以下函数都是由安全问题的，会出现缓存区溢出的问题**
+>   * 推荐使用安全函数：strcpy_s()...等
+> * stelen的效率可以提升，strlen是遍历判断'\0'的位置计算长度，但其实可以在创建字符串的时候就用一个变量存储字符串长度，用空间换时间
 
 * `strlen()`：返回字符有效长度，不包括'\0'
 * `strcmp(s1,s2)`: 以ASCII比较字符串大小，例：`"A"<"B ";"A"<"AB";"Apple" <"Banana"`
@@ -213,6 +244,305 @@ int main()
 * 在使用上面的`<string.h>`中的函数时，需要在编译器（vs2019）中做设置
 * 项目根目录右击-点击属性-选择c/c++-选择预处理-选择右侧预处理器定义-点击编辑-在编辑内容的最下面添加`_CRT_SECURE_NO_WARNINGS`
 * 以上配置可以避免警告提示
+
+
+
+**安全API**
+
+> 添加的了原字符串长度的信息： MIN_SIZE
+
+* strcpy_s(b,MIN_SIZE, a)
+* strncpy_s(b,MIN_SIZE, a)
+* strcat_s(b,MIN_SIZE, a)
+
+```c++
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+const int MAX_SIZE = 8;
+const int MIN_SIZE = 7;
+
+int main()
+{
+    char a[] = { "helloworld" };
+    char b[7] = { "world" };
+    cout << "a:" << a << endl;
+    cout << "b:" << b << endl;
+
+
+    strcpy_s(b,MIN_SIZE, a);//安全方式 MIN_SIZE是b的最大容纳长度
+    cout << "a:" << a << endl;
+    cout << "b:" << b << endl;
+
+    cout << "Hello World!\n";
+}
+```
+
+####  c++中字符串
+
+> `<string>`库
+
+```c++
+#include <iostream>
+#include <string>//c++
+
+using namespace std;
+
+int main()
+{
+    //字符串定义
+    string s;//定义空字符串
+    string s1 = "helloworld";//定义并初始化
+    string s2("hello");//构造函数
+    string s3 = string("helloworld");
+    //获取字符长度
+    cout << s1.length() << endl;//10 string字符串没有'\0'
+    cout << s1.size() << endl;//10
+    cout << s1.capacity() << endl; //字符串可容纳的元素个数
+    //比较字符串
+    string c;
+    string c1 = "helloworld";
+    cout << (s == c) << endl;//1
+    cout << (s1 == c1) << endl;//1
+    cout << (s1 == s2) << endl;//0
+    cout << (s3 != s2) << endl;//1
+    //string字符串转换为c风格字符串
+    const char* c_str1 = s1.c_str();
+    cout <<"c_str:" << c_str1 << endl;
+    cout << "c_str1[2]:"<< c_str1[2] << endl;
+    //下标访问
+    cout << "s1[2]:"<<s1[2] << endl;
+    //字符串拷贝
+    string t1 = "hello";
+    string t2 = t1;
+    cout << "t2:" << t2 << endl;
+    //字符串链接
+    string t3 = t1 + t2;
+    t2 += t1;//t2 = t2 + t1
+    cout << "t3:" << t3 << endl;
+    cout << "t2:" << t2 << endl;
+}
+```
+
+####  字符数组与数组
+
+**数组**
+
+* 数组名本身是一个指向数组第一个元素的指针
+* 不能通过数组名一次输出数组全部元素
+
+```c++
+    int c[4] = { 0,1,2,3 };
+	int* p;
+	p = c;
+	cout << c << endl; //打印结果：数组c的第一个元素的地址即c[0]的地址
+	cout << *c << endl;//打印结果：0
+	cout << p << endl; //打印结果：数组c的第一个元素的地址即c[0]的地址
+	cout << *p << endl;//打印结果：0
+```
+
+**字符数组**
+
+* 可以通过字符数组名直接输出字符串
+
+```c++
+    //这里的"hello"是变量
+    char strHelloWorld1[11] = { "hello" }; 
+    //这里的"world"是常量
+    const char* pStrHelloWrold = "world"; 
+    cout << strHelloWorld1 << endl;  // 打印结果： hello
+    cout << pStrHelloWrold << endl;  // 打印结果： world
+    cout << *strHelloWorld1 << endl; // 打印结果:  h
+    cout << *pStrHelloWrold << endl; // 打印结果:  w
+    cout << &strHelloWorld1 << endl; // 打印结果是指针本身的地址
+    cout << &pStrHelloWrold << endl; // 打印结果是指针本身的地址
+```
+
+
+
+## 指针
+
+###  常见指针
+
+####  数组指针与指针数组
+
+```c++
+#include <iostream>
+
+using namespace std;
+
+int main()
+{   
+	int c[4] = { 0,1,2,3 };
+	int* a[4];  //指针数组，a是一个数组，数组有4个元素，每个元素是一个int型的指针
+	int(*b)[4]; //数组指针， b是一个指向数组的指针，这个数组有4个元素，每个元素是一个int型的值，
+	int* p;
+	p = c;
+	cout << c << endl; //打印结果：数组c的第一个元素的地址即c[0]的地址
+	cout << *c << endl;//打印结果：0
+	cout << p << endl; //打印结果：数组c的第一个元素的地址即c[0]的地址
+	cout << *p << endl;//打印结果：0
+	cout << c[0] << endl;//打印结果：0
+    
+	b = &c;     //此时b是一个指向指针的指针，b存储的是c的地址，c存储的是c[0]的地址
+	cout << (*b)[0] << endl; //打印结果：0  相当于c[0]
+    
+	//将数组c中元素复制到a中
+	for (int i = 0; i < 4; i++) {
+		a[i] = &(c[i]);
+	}
+	cout << *(a[0]) << endl;//0  相当于c[0]
+}
+```
+
+####  cosnt与指针
+
+```c++
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+const int MAX_LEN = 8;
+
+int main()
+{
+	char p[] = "chuckie";
+	//p2存储的地址可变，p2指向的那一片地址的内容不可变，即指针的值可变，指针指向的内容的值不可变
+	char const* p2 = "world";//等同于const char*   
+	//p3存储的地址不可变, p3指向的那一片地址的内容可变
+	char* const p3 = p;
+	//p4存储的地址不可变，p4指向的那一片地址的内容也不可变
+	char const* const p4 = "maxthon"; //等同于 const char* const
+	p2 = p;
+	//p3 = p; //p3不可变
+	//p4 = p; //p4不可变
+
+	unsigned int len = strnlen_s(p, MAX_LEN);
+	for (unsigned int i = 0; i < len; i++) {
+		//p2[i] += 1; p2指向的内容不可变
+		p3[i] += 1;   //p3指向的内容可变 其实此时p2,p3都指向p， 但p2指向的内容是不可变的？？？？
+		//p4[i] += 1; p4指向的内容不可变
+	}
+}
+```
+
+####  指向指针的指针
+
+```c++
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+	int a = 123;
+	int* b = &a;
+	int** d = &b; //指向指针的指针
+	cout << a << endl;
+	cout << &a << endl;
+	cout << b << endl;
+	cout << &b << endl;
+	cout << d << endl;
+	//打印结果
+	/*123
+		00F3FDDC
+		00F3FDDC
+		00F3FDD0
+		00F3FDD0*/
+}
+```
+
+####  易错指针
+
+```c++
+int *a ;
+*a = 12; // 出错
+```
+
+* 没有给a赋值，系统会随机分配
+  * 运气好的话:定位到一个非法地址，程序会出错，从而终止。
+  * 最坏的情况:定位到一个可以访问的地址，无意修改了它,这样的错误难以捕捉，引发的错误
+    可能与原先用于操作的代码完全不相干!
+
+* 用指针进行间接访问之前，一定要非常小心，确保它已经初始化,并被恰当的赋值。
+
+**NULL指针**
+
+* NULL指针不指向任何内容
+* 当一个指针不确定要指向什么位置时就赋值为NULL
+* 在使用指针前先判断指针是否为NULL
+
+```c++
+	int a = 123;
+	int* pa = NULL;//初始值不确定则设为NULL
+	pa = &a;
+	if (pa != NULL) {
+		cout << *pa << endl; //123
+	}
+	pa = NULL;// 不使用时也设置为NULL
+```
+
+**野指针**
+
+野指针即指向不确定的地址的指针
+
+* 1.指针变量没有初始化;
+* 2.已经释放不用的指针没有置NULL，如delete和free之后的指针;
+* 3.指针操作超越了变量的作用范围; （指向的内存空间有生命周期，到期后就收回了，但是指针还指向那里，此时就有可能出错）
+
+###  指针的基本运算
+
+####  ++与--操作符
+
+```c++
+char* cp1 = cp++; //先将cp的值赋值给cp1   再计算cp自加1
+char* cp2 = ++cp; //先计算cp自加1， 再将计算的结果赋值给cp1
+
+*p2++ //先指向p2的值，再计算p2自加，++优先级高于*
+    
+	char a[] = "chuckie";
+	char* p = a;
+	cout << *p << endl; //c
+	cout <<*p++ <<endl; //c
+	cout << *p << endl; //h
+	cout << *p << * p++ << *p << endl;//uhu
+```
+
+```c++
+int a = 1, b = 2, c;
+char t[] = "chuckie";
+c = a++ + b;//相当于(a++) + b
+//d = a++++b;//相当于a++ ++b  error
+char* cp = t;
+//++(*(++cp)) cp自加1地址变到t[1]的位置，再取t[1]的值，对取到的值自加1
+cout<<++*++cp<<c<<endl; //打印结果： i
+```
+
+
+
+###  存储区划分
+
+```c++
+int a = 0; //(GVAR)全局初始化区
+int* p1;   //(bss)全局未初始化区
+
+int main() //(text)代码区
+{
+	//栈区变量（以栈的方式存储，即先定义的变量地址大，后定义的变量地址小）		
+	int b = 1;       //(stack)栈区变量
+	char s[] = "abc";//(stack)栈区变量
+	int* p2 = NULL;  //(stack)栈区变量
+	const char* p3 = "123456";// 123456\0在常量区, p3在(stack)栈区
+	static int c = 0;//(GVAR)全局(静态)初始化区
+	//new产生的变量都在堆区（以队列的方式存储，即先定义的先地址小，后定义的地址大）
+	p1 = new int(10);//10(heap)堆区变量  p1(bss)全局未初始化区
+	p2 = new int(20);//20(heap)堆区变量  p4在栈区 
+	char* p4 = new char[7];//字符串在(heap)堆区变量  p4在栈区 
+	strcpy_s(p4, 7, "123456");//(text)代码区
+	return 0;// (text)代码区
+}
+```
 
 
 
