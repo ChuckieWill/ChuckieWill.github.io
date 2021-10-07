@@ -499,7 +499,7 @@ int *a ;
 char* cp1 = cp++; //先将cp的值赋值给cp1   再计算cp自加1
 char* cp2 = ++cp; //先计算cp自加1， 再将计算的结果赋值给cp1
 
-*p2++ //先指向p2的值，再计算p2自加，++优先级高于*
+*p2++ //先指向p2的值，再计算p2自加，*优先级高于+
     
 	char a[] = "chuckie";
 	char* p = a;
@@ -523,6 +523,8 @@ cout<<++*++cp<<c<<endl; //打印结果： i
 
 ###  存储区划分
 
+* c++中用关键字`new`、`delete`、`delete[]`创建和释放堆区变量
+
 ```c++
 int a = 0; //(GVAR)全局初始化区
 int* p1;   //(bss)全局未初始化区
@@ -535,14 +537,361 @@ int main() //(text)代码区
 	int* p2 = NULL;  //(stack)栈区变量
 	const char* p3 = "123456";// 123456\0在常量区, p3在(stack)栈区
 	static int c = 0;//(GVAR)全局(静态)初始化区
-	//new产生的变量都在堆区（以队列的方式存储，即先定义的先地址小，后定义的地址大）
+	//new产生的变量都在堆区（以队列的方式存储，即先定义的先地址小，后定义的地址大） 配合delete使用
 	p1 = new int(10);//10(heap)堆区变量  p1(bss)全局未初始化区
 	p2 = new int(20);//20(heap)堆区变量  p4在栈区 
 	char* p4 = new char[7];//字符串在(heap)堆区变量  p4在栈区 
 	strcpy_s(p4, 7, "123456");//(text)代码区
+    
+    if (p1 != NULL) 
+    {
+		delete p1; //释放的是p1指向的堆区变量
+		p1 = NULL;
+	}
+	if (p2 != NULL)
+	{
+		delete p2;
+		p2 = NULL;
+	}
+	if (p4 != NULL)
+	{
+		delete[] p4; //释放指向数组的指针需要用关键字delete[]
+		p4 = NULL;
+	}
+    
 	return 0;// (text)代码区
 }
 ```
+
+
+
+###  智能指针
+
+* 智能指针的核心功能是可以自动释放内存，不用开发者手动释放
+
+####  auto_ptr
+
+* 由new 创建堆区内容，auto_指向这个堆区内容，在auto_ptr指针销毁时，他所指向的堆区也会自动被delete 掉。
+* 所有权转移:不小心把它传递给另外的智能指针，原来的指针就不再拥有这个对象了。在拷贝/赋值过程中，会直接剥夺指针对原对象对内存的控制权，
+  转交给新对象，然后再将原对象指针置为nullptr。
+
+```c++
+#include "stdafx.h"
+#include <string>
+#include <iostream>
+#include <memory> //智能指针库
+using namespace std;
+int main()
+{
+	{// 确定auto_ptr失效的范围，{}块内的代码执行完后，auto_ptr指向的内容就会释放
+		// 对int使用
+		auto_ptr<int> pI(new int(10));
+		cout << *pI << endl;                // 10 
+
+		// auto_ptr	C++ 17中移除	拥有严格对象所有权语义的智能指针
+		// auto_ptr原理：在拷贝 / 赋值过程中，直接剥夺原对象对内存的控制权，转交给新对象，
+		// 然后再将原对象指针置为nullptr（早期：NULL）。这种做法也叫管理权转移。
+		// 他的缺点不言而喻，当我们再次去访问原对象时，程序就会报错，所以auto_ptr可以说实现的不好，
+		// 很多企业在其库内也是要求不准使用auto_ptr。
+		auto_ptr<string> languages[5] = {
+			auto_ptr<string>(new string("C")),
+			auto_ptr<string>(new string("Java")),
+			auto_ptr<string>(new string("C++")),
+			auto_ptr<string>(new string("Python")),
+			auto_ptr<string>(new string("Rust"))
+		};
+		cout << "There are some computer languages here first time: \n";
+		for (int i = 0; i < 5; ++i)
+		{
+			cout << *languages[i] << endl;
+		}
+		auto_ptr<string> pC;
+		pC = languages[2]; // languges[2] loses ownership. 将所有权从languges[2]转让给pC，
+		//此时languges[2]不再引用该字符串,而是变成空指针
+		cout << "There are some computer languages here second time: \n";
+		for (int i = 0; i < 2; ++i)
+		{
+				cout << *languages[i] << endl;
+		}
+		cout << "The winner is " << *pC << endl;
+		//cout << "There are some computer languages here third time: \n";
+		//for (int i = 0; i < 5; ++i)
+		//{
+		//	cout << *languages[i] << endl;  // 此处报错，因为*languages[2]时无法访问，此时所有权已经从languges[2]转让给pC了
+		//}
+	}
+	return 0; 
+}
+```
+
+####  unique_ptr
+
+* unique_ptr是专属所有权所以unique_ptr管理的内存，只能被一个对象持有，不支持复制和赋值。
+* 移动语义: unique_ptr禁止了拷贝语义，但有时我们也需要能够转移所有权于是提供了移动语义，即可以使用std.move()进行控制所有权的转移。
+
+```c++
+#include <memory>
+#include <iostream> //智能指针库
+using namespace std;
+int main()
+{
+	// 在这个范围之外，unique_ptr被释放
+	{
+		auto i = unique_ptr<int>(new int(10));
+		cout << *i << endl;
+	}
+
+	// unique_ptr
+	auto w = std::make_unique<int>(10);
+	cout << *(w.get()) << endl;                             // 10
+	//auto w2 = w; // 编译错误如果想要把 w 复制给 w2, 是不可以的。
+	//  因为复制从语义上来说，两个对象将共享同一块内存。
+
+	// unique_ptr 只支持移动语义, 即如下
+	auto w2 = std::move(w); // w2 获得内存所有权，w 此时等于 nullptr
+	cout << ((w.get() != nullptr) ? (*w.get()) : -1) << endl;       // -1
+	cout << ((w2.get() != nullptr) ? (*w2.get()) : -1) << endl;   // 10
+    return 0;
+}
+```
+
+####  shared_ptr
+
+* 介绍
+  * shared_ptr通过一个**引用计数**共享一个对象。
+  * shared ptr是为了[解决auto _ptr在对象所有权上的局限性，在使用引用计数的机制上提供了可以共享所有权的智能指针，当然这需要额外的开销。
+  * 当引用计数为0时，该对象没有被使用，可以进行析构。
+* 问题
+  * 循环引用:引用计数会带来循环引用的问题
+  * 循环引用会导致堆里的内存无法正常回收，造成内存泄漏。
+
+```c++
+#include <memory>
+#include <iostream>
+using namespace std;
+int main()
+{
+	// 在这个范围之外，unique_ptr被释放
+	{
+		auto i = unique_ptr<int>(new int(10));
+		cout << *i << endl;
+	}
+
+	// unique_ptr
+	auto w = std::make_unique<int>(10);
+	cout << *(w.get()) << endl;                             // 10
+	//auto w2 = w; // 编译错误如果想要把 w 复制给 w2, 是不可以的。
+	//  因为复制从语义上来说，两个对象将共享同一块内存。
+
+	// unique_ptr 只支持移动语义, 即如下
+	auto w2 = std::move(w); // w2 获得内存所有权，w 此时等于 nullptr
+	cout << ((w.get() != nullptr) ? (*w.get()) : -1) << endl;       // -1
+	cout << ((w2.get() != nullptr) ? (*w2.get()) : -1) << endl;   // 10
+    return 0;
+}
+```
+
+####  weak_ptr
+
+* weak ptr被设计为与shared ptr 共同工作，用一种观察者模式工作。
+* 作用是协助shared_ptr工作，可获得资源的观测权，
+* 像旁观者那样观测资源的使用情况。
+* 观察者意味着weak ptr只对shared ptr进行引用，而不改变其引用计数,当被观察的shared_ptr失效后，相应的weak_ptr 也相应失效。
+
+```c++
+#include <iostream>
+#include <memory>
+using namespace std;
+int main()
+{
+	//// shared_ptr 
+	//{
+	//	//shared_ptr 代表的是共享所有权，即多个 shared_ptr 可以共享同一块内存。
+	//	auto wA = shared_ptr<int>(new int(20));
+	//	{
+	//		auto wA2 = wA;
+	//		cout << ((wA2.get() != nullptr) ? (*wA2.get()) : -1) << endl;       // 20
+	//		cout << ((wA.get() != nullptr) ? (*wA.get()) : -1) << endl;           // 20
+	//		cout << wA2.use_count() << endl;                                              // 2
+	//		cout << wA.use_count() << endl;                                                // 2
+	//	}
+	//	//cout << wA2.use_count() << endl;       //作用域外，已经销毁                                        
+	//	cout << wA.use_count() << endl;                                                    // 1
+	//	cout << ((wA.get() != nullptr) ? (*wA.get()) : -1) << endl;               // 20
+	//	//shared_ptr 内部是利用引用计数来实现内存的自动管理，每当复制一个 shared_ptr，
+	//	//	引用计数会 + 1。当一个 shared_ptr 离开作用域时，引用计数会 - 1。
+	//	//	当引用计数为 0 的时候，则 delete 内存。
+	//}
+
+	// move 语法
+	auto wAA = std::make_shared<int>(30);
+	auto wAA2 = std::move(wAA); // 此时 wAA 等于 nullptr，wAA2.use_count() 等于 1
+	cout << ((wAA.get() != nullptr) ? (*wAA.get()) : -1) << endl;          // -1
+	cout << ((wAA2.get() != nullptr) ? (*wAA2.get()) : -1) << endl;      // 30
+	cout << wAA.use_count() << endl;                                                  // 0
+	cout << wAA2.use_count() << endl;                                                // 1
+	//将 wAA 对象 move 给 wAA2，意味着 wAA 放弃了对内存的所有权和管理，此时 wAA对象等于 nullptr。
+	//而 wAA2 获得了对象所有权，但因为此时 wAA 已不再持有对象，因此 wAA2 的引用计数为 1。
+
+    return 0;
+}
+```
+
+**weak_ptr解决循环引用的问题**
+
+```c++
+// demo5-11.cpp : 定义控制台应用程序的入口点。
+//
+
+#include "stdafx.h"
+
+#include <string>
+#include <iostream>
+#include <memory>
+using namespace std;
+
+struct B;
+struct A {
+	shared_ptr<B> pb;
+	~A()
+	{
+		cout << "~A()" << endl;
+	}
+};
+struct B {
+	shared_ptr<A> pa;
+	~B()
+	{
+		cout << "~B()" << endl;
+	}
+};
+
+// pa 和 pb 存在着循环引用，根据 shared_ptr 引用计数的原理，pa 和 pb 都无法被正常的释放。
+// weak_ptr 是为了解决 shared_ptr 双向引用的问题。
+struct BW;
+struct AW
+{
+	shared_ptr<BW> pb;
+	~AW()
+	{
+		cout << "~AW()" << endl;
+	}
+};
+struct BW
+{
+	weak_ptr<AW> pa;
+	~BW()
+	{
+		cout << "~BW()" << endl;
+	}
+};
+
+void Test()
+{
+	cout << "Test shared_ptr and shared_ptr:  " << endl;
+	shared_ptr<A> tA(new A());                                              
+	shared_ptr<B> tB(new B());                                              
+	cout << tA.use_count() << endl;										  //1
+	cout << tB.use_count() << endl;                                       //1
+	tA->pb = tB;
+	tB->pa = tA;
+	cout << tA.use_count() << endl;                                        // 2
+	cout << tB.use_count() << endl;                                        // 2
+}
+void Test2()
+{
+	cout << "Test weak_ptr and shared_ptr:  " << endl;
+	shared_ptr<AW> tA(new AW());
+	shared_ptr<BW> tB(new BW());
+	cout << tA.use_count() << endl;                                        // 1
+	cout << tB.use_count() << endl;                                        // 1
+	tA->pb = tB;
+	tB->pa = tA;
+	cout << tA.use_count() << endl;                                        // 1
+	cout << tB.use_count() << endl;                                        // 2
+}
+
+int main()
+{
+	Test();   //执行结束后不会打印 ~A() ~B()  因为循环引用，内存没有被释放
+	Test2();  //执行结束后会打印 ~AW() ~BW()
+    return 0;
+}
+
+
+```
+
+###  引用
+
+>  是一种特殊的指针，不允许修改的指针
+
+* 使用指针有哪些坑:
+  * 1.空指针;
+  * ⒉野指针;
+  * 3.不知不觉改变了指针的值，却继续使用;
+* 使用引用，则可以:
+  * 1.不存在空引用;
+  * ⒉必须初始化;
+  * 3.一个引用永远指向它初始化的那个对象;
+* 有了指针为什么还需要引用?
+  * Bjarne Stroustrup的解释: 为了支持函数运算符重载;
+* 有了引用为什么还需要指针?
+  * Bjarne Stroustrup的解释: 为了兼容C语言;
+
+```c++
+#include <iostream>
+#include <assert.h>
+using namespace std;
+
+// 编写一个函数，输入两个int型变量a,b
+// 实现在函数内部将a,b的值进行交换。
+void swap(int& a, int& b)
+{
+	int tmp = a;
+	a = b;
+	b = tmp;
+}
+void swap2(int* a, int* b)
+{
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+int main()
+{
+	//int x = 1, x2 = 3;
+	//int& rx = x;
+	//rx = 2;
+	//cout << x << endl;
+	//cout << rx << endl;
+	//rx = x2;
+	//cout << x << endl;
+	//cout << rx << endl;
+
+	// 交换变量的测试
+	int a = 3, b = 4;
+	swap(a, b);
+	assert(a == 4 && b == 3);
+
+	a = 3, b = 4;
+	swap2(&a, &b);
+	assert(a == 4 && b == 3);
+
+
+    return 0;
+}
+```
+
+
+
+##  面向对象
+
+> C++使用struct、class来定义一个类
+>
+> * struct的默认成员枚限是public,
+> * class的默认成员权限是private,
+> * 除此之外，二者基本无差别;
 
 
 
@@ -567,12 +916,12 @@ int main() //(text)代码区
 * 进程： 运行起来的可执行程序
 * 线程
   * 每个进程（执行起来的可执行程序），都有一个主线程，这个主线程是唯一的。
-    * 当执行可执行程序，产生一个进程后，这个主线程就随着这个进程的启动起来了。
+    * 当执行可执行程序，产生一个进程后，这个主线程就随着这个进程启动起来了。
     * ctrl+f5运行这个程序的时候，实际上是进程的主线程来执行（调用)这个main函数中的代码。
   * 线程:用来执行代码的;
     * 线程可以理解成一条代码的执行通路(道路）;
     * 除了主线程之外，可以通过自己写代码来创建其他线程，其他线程走的是别的道路，甚至去不同的地方
-    * 每创建一个新线程，可以在同一个时刻，多干一个不同的事(多走一条不同的代码执行路径）;
+    * 每创建一个新线程，可以在同一个时刻，干多个不同的事(多走一条不同的代码执行路径）;
     * 多线程(并发),线程并不是越多越好
       * 每个线程，都需要一个独立的堆栈空间（1M)，线程之间的切换要保存很多中间状态;
       * 切换会耗费本该属于程序运行的时间;
@@ -585,7 +934,7 @@ int main() //(text)代码区
     * 同一个电脑上:管道，文件，消息对列，共享内存) ; 
     * 不同电脑上:socket通信技术;
 * 在单个进程中，创建多个线程实现并发
-  * 线程象轻量级的进程。每个线程都有自己独立的运行路径，但是一个进程中的所有线程共享地址空间(共享内存)
+  * 线程像轻量级的进程。每个线程都有自己独立的运行路径，但是一个进程中的所有线程共享地址空间(共享内存)
     * 全局变量，指针，引用都可以在线程之间传递，
     * 使用多线程开销远远小于多进程。
     * 共享内存带来新问题，数据一致性问题。
@@ -593,6 +942,13 @@ int main() //(text)代码区
 ###  基本使用
 
 ####  c++11多线程API
+
+* 线程ID
+
+```c++
+std::this_thread::get_id();
+cout << "子线程id:" << std::this_thread::get_id()<<endl;
+```
 
 * thread
 * join
@@ -727,7 +1083,9 @@ int main()
 }
 ````
 
-####  线程传参详解，detach()大坑
+####  线程传参详解
+
+> 参数传递容易出问题的主原因是：**detach()函数**。 因为detach()使得子线程有可能在主线程之后执行，而主线程销毁后，子线程中还有引用或指针指向主线程中的变量，此时就会出现问题
 
 #####  引用和指针做参数
 
@@ -765,7 +1123,7 @@ int main()
 
 ```
 
-#####  传递临时对象作为线程参数
+#####  临时对象做参数
 
 * 值类型传参，直接用值传递，不用引用
 * 对象作为参数传递，不要用指针，而是用对象传递，而且有隐式类型转换时，在传递时要**先构造临时对象**
@@ -807,14 +1165,7 @@ int main()
 
 ```
 
-#####  线程ID
-
-```c++
-std::this_thread::get_id();
-cout << "子线程id:" << std::this_thread::get_id()<<endl;
-```
-
-####  传递类对象作为线程参数
+##### 对象做参数
 
 ```c++
 #include <iostream>
@@ -826,7 +1177,7 @@ using namespace std;
 class A
 {
 public:
-    mutable int m_i;// const A &pmybuf 因为引用时const的，所以在这里要设置为可修改
+    mutable int m_i;// const A &pmybuf 因为引用是const的，所以在这里要设置为可修改
     A(int a) :m_i(a) { cout << "[A::A(int a)构造函数执行]" <<"thread id:"<<std::this_thread::get_id() << endl; }
     A(const A &a) :m_i(a.m_i) { cout << "[A::A(const A)拷贝构造函数执行]" << "thread id:" << std::this_thread::get_id() << endl; }
     ~A(){ cout << "[A::~A()析构函数执行]" << "thread id:" << std::this_thread::get_id() << endl; }
@@ -834,7 +1185,7 @@ public:
 };
 
 void myprint(const A &pmybuf)//注意接受要是引用，避免多次拷贝
-{   //虽然此处是pmybuf是引用，但是它并不指向主线中的对象，而是从主线程拷贝到子线程中的对象
+{   //虽然此处pmybuf是引用，但是它并不指向主线中的对象，而是从主线程拷贝到子线程中的对象
     pmybuf.m_i = 199;//所以此处的修改，并不会影响主线的数据，不会有联动的效果
     cout << "子线程id:" << std::this_thread::get_id()<<endl;
     return;
@@ -854,9 +1205,9 @@ int main()
 }
 ```
 
-#####  std::ref()
+######  std::ref()
 
-* 不用std::ref()时，对象作为参数传入线程时，虽然是用引用接受对象，但是这个引用并不是真正的引用，通过这个引用在子线程中修改数据后，主线程并不会随之修改，所以并没有真正体现引用的所用
+* 不用std::ref()时，对象作为参数传入线程时，虽然是用引用接受对象，但是这个引用并不是真正的引用，通过这个引用在子线程中修改数据后，主线程并不会随之修改，所以并没有真正体现引用的作用
 * 使用std::ref()后，可以使得子线程中的引用是指向主线程中的对象，是真正的引用，在子线程或主线程修改数据后可以实现联动。
 
 ```c++
@@ -895,11 +1246,7 @@ int main()
 }
 ```
 
-
-
-
-
-####  传递智能指针作为线程参数
+#####  智能指针做参数
 
 ```c++
 #include <iostream>
@@ -927,11 +1274,7 @@ int main()
 
 ```
 
-
-
-0x00a50580
-
-####  成员函数做线程函数
+#####  成员函数做线程函数
 
 * 使用
 
@@ -993,4 +1336,10 @@ int main()
     return 0;
 }
 ```
+
+
+
+
+
+#  图论 Graph Theory
 
