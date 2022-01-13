@@ -158,6 +158,65 @@ open in browser
 
 * 出现这个问题的原因是原键绑定设置了执行条件“!inDebugMode”，这个条件不能在原默认设置单独删除，所以将原来的配置整体删除后重新设置即可。
 
+###  2.4 设置vue模板快捷生成
+
+> 教程：https://blog.csdn.net/weixin_44157964/article/details/105602639
+
+* 首选项-----用户片段-----vue
+
+![image-20211111095757475](vscode/image-20211111095757475.png)
+
+* vue.json复制为如下代码
+
+```json
+{
+	// Place your snippets for vue here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+
+	"Print to console": {
+        "prefix": "vue",
+        "body": [
+            "<template>",
+            "    <div>\n",
+            "    </div>",
+            "</template>",
+            "<script>",
+            "export default {",
+            "   data() {",
+            "      return {",
+			"      }",
+			"   },",
+			"   created(){",
+			"   },",
+			"   computed:{",
+			"   },",
+			"   methods:{",
+			"   },",
+			"}",
+			"</script>",
+			"<style lang=\"scss\" scoped>\n",
+			"</style>",
+            "$2"
+        ],
+        "description": "Log output to console"
+    }
+
+}
+```
+
+使用：`输入vue+tab键`即可自动补全
+
 ## 3 配置
 
 ###  3.1 启动项配置
@@ -274,6 +333,20 @@ open in browser
  * 函数注释
  */
 ```
+
+##  5 问题
+
+###  5.1英文界面问题
+
+有时候我们vscode已经下载好中文简体的插件，但是通过vue init webpack xxx创建的vue项目用vscode打开后还是会切换回英文界面。
+
+这时候需要做如下操作：
+
+1.Ctrl＋ Shift ＋P （command+shift+P）输入display 选择Configure display Language 
+
+2.选择zh-cn
+
+这时候vscode会提示需要重启，点击restart重启vscode，重启后vscode就会显示中文界面。
 
 
 

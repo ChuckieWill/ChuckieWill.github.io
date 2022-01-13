@@ -1,8 +1,9 @@
 ---
-title: nginx
+title: nginx的使用
 date: 2020-02-06 13:45:50
 tags:
 - nginx
+- CentOS
 categories:
 - [third-repositories, nginx]
 ---
@@ -15,7 +16,15 @@ categories:
 
 主机-----> 操作系统（windows/linux）----->tomcat/nginx
 
-###  1.1 安装
+###  1.1 nginx基本概念
+
+* Nginx 是高性能的 HTTP 和反向代理的服务器，处理高并发能力是十分强大的， 能经受高负载的考验 有报告表明能支持高达 50,000 个并发连接数。
+
+* Nginx支持热部署。它的启动特别容易, 并且几乎可以做到7*24不间断运行，即使运行数个月也不需要重新启动。你还能够在不间断服务的情况下，对软件版本进行进行升级。
+
+###  1.2 在windows上安装nginx及使用
+
+####  1.2.1 安装
 
 * [nginx官网]( http://nginx.org/ )
 
@@ -40,7 +49,9 @@ categories:
   
   ![](nginx/1590059470671.png)
 
-###  1.2 使用
+####  1.2.2  使用
+
+* 下载的时zip文件，解压后，进入解压的文件夹，双击nginx.exe即可启动nginx
 
 * 关于nginx的cmd终端命令  *cmd终端切换到nginx的根目录下*
   * `nginx.exe`: 启动nginx   或者直接双击nginx.exe文件也可启动nginx
@@ -50,9 +61,241 @@ categories:
   * `nginx -s quit`:正常退出运行
   * `nginx -s reload` : 重启niginx
 
-###  1.3 Nginx的配置文件
+
+
+###  1.3 在Linux(CentOS)系统安装nginx及使用
+
+####  1.3.1 安装
+
+#####  1 )终端切换为root用户
+
+* 输入的密码为服务器密码
+
+```
+su
+```
+
+
+
+![image-20211117224324926](nginx/image-20211117224324926.png)
+
+#####  2)安装依赖
+
+> 在任意目录下执行
+
+* gcc编译是否安装
+
+```
+检查安装：yum list installed | grep gcc
+执行安装：yum install gcc -y
+```
+
+* openssl库编译是否安装
+
+```
+检查安装：yum list installed | grep openssl
+执行安装：yum install openssl openssl-devel -y
+```
+
+* pcre库编译是否安装
+
+```
+检查安装：yum list installed | grep pcre
+执行安装：yum install pcre pcre-devel -y
+```
+
+* zlib库编译是否安装
+
+```
+检查安装：yum list installed | grep zlib
+执行安装：yum install zlib zlib-devel -y
+```
+
+* 一次性安装
+
+```
+一次性安装: yum install gcc openssl openssl-devel pcre pcre-devel zlib zlib-devel -y
+```
+
+( -y 代表自动安装 ， 自动选择 Y)
+
+#####  3)下载nginx
+
+* 再切换到/usr/loacl目录下下载Nginx
+
+![image-20211117225214421](nginx/image-20211117225214421.png)
+
+```
+cd  /usr/local
+```
+
+* 下载
+
+```
+wget http://nginx.org/download/nginx-1.18.0.tar.gz
+```
+
+* 解压
+  * 解压后的文件名为：nginx-1.18.0， 该文件就在/usr/local下
+
+```
+tar -zxvf nginx-1.18.0.tar.gz
+```
+
+#####  4)安装nginx
+
+* 打开nginx解压后路径, 即切换到nginx-1.18.0目录下
+
+```
+ cd nginx-1.18.0
+```
+
+* 指定安装路径 (–prefix 是指定nginx安装路径)， 在终端执行如下2条命令完成安装
+  * 安装完成后会在/usr/local目录下生成nginx文件夹
+
+```
+./configure --prefix=/usr/local/nginx
+make && make install
+```
+
+####  1.3.2 使用(nginx常用命令)
+
+> **注意：执行以下命令时，终端先切换到/usr/local/nginx/sbin目录下**
+
+##### 启动nginx
+
+* 切换到/usr/local/nginx/sbin文件夹下
+
+```
+./nginx
+```
+
+* 或者切换到/usr/local/nginx文件夹下
+
+```
+./sbin/nginx
+```
+
+* 或者按配置文件启动
+
+```
+/usr/local/nginx/sbin/nginx -c /usr/local/conf/nginx.conf
+```
+
+#####  检测nginx是否启动
+
+```
+ps -ef | grep nginx
+```
+
+* 若启动成功终端如下
+
+![image-20211117231353942](nginx/image-20211117231353942.png)
+
+#####  重新加载nginx
+
+* 例如修改了nginx.conf后则需要重新加载才能更新修改的配置
+
+```
+./nginx -s reload
+```
+
+#####  关闭nginx
+
+```
+./nginx -s stop
+```
+
+
+
+####  1.3.3 防火墙问题
+
+> 若是在windows的虚拟机的linux(CentOS)系统安装的nginx, 则启动nginx后不能在浏览器正常访问，需要开放防火墙对80端口的限制
+
+* 查看f防火墙开放的端口号
+
+```
+firewall-cmd --list-all
+```
+
+* 设置开放的端口号
+
+```
+firewall-cmd --add-port=80/tcp --permanent
+```
+
+* 重启防火墙
+  * 重启后才能看到80/tcp开放成功了
+
+```
+firewall-cmd --reload
+```
+
+![image-20211120144959605](nginx/image-20211120144959605.png)
+
+* 终端出现如下提示，则是防火墙没有开启
+
+![image-20211120150215367](nginx/image-20211120150215367.png)
+
+* 开启，关闭及查看防火墙状态命令
+  * 开启防火墙：systemctl start firewalld
+  * 关闭防火墙：systemctl stop firewalld
+  * 查看防火墙状态：systemctl status firewalld
+* 移除端口
+  * 移除后，也需要重启防火强才能看到移除了
+
+```
+firewall-cmd --remove-port=80/tcp --permanent
+```
+
+
+
+###  1.4  Nginx的配置文件
 
 > [`nginx.conf`文件解析](https://www.cnblogs.com/paulwhw/articles/11116363.html)
+>
+> * 配置文件的位置
+>
+> ```
+> linux下：/usr/loacal/nginx/conf/nginx.conf
+> wIndows下： 解压的nginx文件夹/conf/nginx.conf
+> ```
+
+**配置文件的内容 :**
+
+1)全局块：配置服务器整体运行的配置指令
+
+* 从配置文件开始到 events 块之间的内容，主要会设置一些影响nginx 服务器整体运行的配置指令，主要包括配置运行 Nginx 服务器的用户（组）、允许生成的 worker process 数，进程 PID 存放路径、日志存放路径和类型以及配置文件的引入等。
+* 例如：worker_processes 
+  * 这是 Nginx 服务器并发处理服务的关键配置，worker_processes 值越大，可以支持的并发处理量也越多，但是会受到硬件、软件等设备的制约，建议设置为等于CPU总核心数
+
+2)events 块 ：影响 Nginx 服务器与用户的网络连接
+
+* events 块涉及的指令主要影响 Nginx 服务器与用户的网络连接，常用的设置包括是否开启对多 work process 下的网络连接进行序列化，是否允许同时接收多个网络连接，选取哪种事件驱动模型来处理连接请求，每个 word process 可以同时支持的最大连接数等。
+
+3)http 块
+
+* 这算是 Nginx 服务器配置中最频繁的部分，代理、缓存和日志定义等绝大多数功能和第三方模块的配置都在这里。
+* http 块也可以包括 http全局块、server 块。
+
+3.1)http 全局块
+
+* http全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自定义、连接超时时间、单链接请求数上限等。
+
+3.2)server 块
+
+* 这块和虚拟主机有密切关系，虚拟主机从用户角度看，和一台独立的硬件主机是完全一样的，该技术的产生是为了节省互联网服务器硬件成本。
+* 每个 http 块可以包括多个 server 块，而每个 server 块就相当于一个虚拟主机。
+* 而每个 server 块也分为全局 server 块，以及可以同时包含多个 locaton 块。
+
+3.2.1)全局 server 块
+
+* 最常见的配置是本虚拟机主机的监听配置和本虚拟主机的名称或IP配置。
+
+3.2.2)location 块
+
+* 一个 server 块可以配置多个 location 块。
+* 这块的主要作用是基于 Nginx 服务器接收到的请求字符串（例如 server_name/uri-string），对虚拟主机名称（也可以是IP别名）之外的字符串（例如 前面的 /uri-string）进行匹配，对特定的请求进行处理。地址定向、数据缓存和应答控制等功能，还有许多第三方模块的配置也在这里进行。
 
 **`nginx.conf`文件**
 
@@ -60,7 +303,7 @@ categories:
 
 #user  nobody;
 worker_processes  1;
-#worker_processes数值越大并发能力越强  
+#worker_processes数值越大并发能力越强  处理并发数的配置 
 
 #error_log  logs/error.log;
 #error_log  logs/error.log  notice;
@@ -77,7 +320,7 @@ events {
 }
 
 #以上为events块
-#worker_connections数值越大并发能力越强
+#worker_connections数值越大并发能力越强   支持的最大连接数
 
 
 http {

@@ -32,7 +32,7 @@ npm install axios --save
 - 自动转换 JSON 数据
 - 客户端支持防御 [XSRF](http://en.wikipedia.org/wiki/Cross-site_request_forgery)
 
-
+##  3 vue中使用axios
 
 
 

@@ -9,7 +9,7 @@ categories:
 
 
 
- 
+> [c++参考手册](https://qingcms.gitee.io/cppreference/20210212/zh/)
 
  ##  基础知识点
 
@@ -70,6 +70,14 @@ categories:
 [vs2019快捷键](https://blog.csdn.net/qq_41979507/article/details/106188486)
 
 * 光标选中函数名，点`F1`可以在网页中打开函数的使用方式
+
+* 代码整体往右移动：
+
+  选中需要移动的代码：按tab键
+
+* 代码整体往左移动：
+
+  选中需要移动的代码：按 shift + tab键 
 
 ##  基础容器
 
@@ -571,7 +579,7 @@ int main() //(text)代码区
 
 ####  auto_ptr
 
-* 由new 创建堆区内容，auto_指向这个堆区内容，在auto_ptr指针销毁时，他所指向的堆区也会自动被delete 掉。
+* 由new 创建堆区内容，auto_ptr指向这个堆区内容，在auto_ptr指针销毁时，他所指向的堆区也会自动被delete 掉。
 * 所有权转移:不小心把它传递给另外的智能指针，原来的指针就不再拥有这个对象了。在拷贝/赋值过程中，会直接剥夺指针对原对象对内存的控制权，
   转交给新对象，然后再将原对象指针置为nullptr。
 
@@ -897,6 +905,8 @@ int main()
 
 ##  多线程
 
+> [课程笔记](https://blog.csdn.net/qq_38231713/category_10001159.html)
+
 **为什么要用多线程**
 
 * 任务分解
@@ -956,11 +966,8 @@ cout << "子线程id:" << std::this_thread::get_id()<<endl;
 * joinable
 
 ````c++
-// demo2.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//
-
 #include <iostream>
-#include <thread>
+#include <thread>//引入进程库
 
 using namespace std;
 
@@ -1089,7 +1096,7 @@ int main()
 
 #####  引用和指针做参数
 
-* 引用： 虽然是引用，但是其实还是值传递，主线程的销毁不影响子线程（不推荐使用）
+* 引用： 虽然是引用，但是其实还是值传递（子线程会拷贝引用指向的内容），主线程的销毁不影响子线程（不推荐使用）
 * 指针：指向主线程的地址，主线程的销毁影响子线程 （不能使用指针做线程参数）
 
 ```c++
@@ -1337,9 +1344,1021 @@ int main()
 }
 ```
 
+###   实际使用
+
+####  创建多个线程
+
+```c++
+#include <iostream>
+using namespace std;
+#include <thread>
+#include <vector>
+
+//线程入口函数
+void myprint(int inum) {
+	cout << "myprint线程开始执行了，线程编号=" << inum << endl;
+	//线程执行的具体任务
+
+	cout << "myprint线程执行结束了，线程编号=" << inum << endl;
+}
+
+
+int main() {
+	// 1 创建并等待多个线程
+	vector<thread> ts;
+	// 创建10个线程
+	for (int i = 0; i < 10; i++) {
+		ts.push_back(thread(myprint, i));//创建10个线程，并开始执行
+	}
+	// 等待10个线程都执行完
+	for (auto it = ts.begin(); it != ts.end(); it++) {  //it是一个指向数组元素的指针
+		it->join();
+	}
+	cout << "主线程结束" << endl;
+
+
+	system("pause");
+
+	return 0;
+}
+
+```
+
+####  数据共享问题
+
+#####  只读数据
+
+> 安全稳定，直接读取即可
+
+```c++
+#include <iostream>
+using namespace std;
+#include <thread>
+#include <vector>
+
+vector<int> g_v = { 1,2,3 };//全局共享数据  只读
+
+//线程入口函数
+void myprint(int inum) {
+	//cout << "myprint线程开始执行了，线程编号=" << inum << endl;
+	//线程执行的具体任务
+	cout << "线程id:" << std::this_thread::get_id() << "打印g_v的值：" << g_v[0] << g_v[1] << g_v[2] << endl;
+	//cout << "myprint线程执行结束了，线程编号=" << inum << endl;
+	return;
+}
+
+
+int main() {
+	// 1 创建并等待多个线程
+	vector<thread> ts;
+	// 创建10个线程
+	for (int i = 0; i < 10; i++) {
+		ts.push_back(thread(myprint, i));//创建10个线程，并开始执行
+	}
+	// 等待10个线程都执行完
+	for (auto it = ts.begin(); it != ts.end(); it++) {  //it是一个指向数组元素的指针
+		it->join();
+	}
+	cout << "主线程结束" << endl;
+
+
+	system("pause");
+
+	return 0;
+}
+```
+
+#####  有读有写的数据
+
+####  共享代码的保护
+
+> 一下代码不能正常执行，因为涉及到同时读写队列q
+
+```c++
+#include <iostream>
+using namespace std;
+#include <thread>
+#include <list>
+#include <windows.h>
+
+//成员函数做线程入口
+class A
+{
+public:
+	//队列加入数据的线程
+	void inQ() {
+		for (int i = 0; i < 100; i++) {
+			cout << "inQ执行，并在队列中加入一个元素：" << i << endl;
+			q.push_back(i);
+		}
+	}
+	//取出数据的线程
+	void outQ() {
+		for (int i = 0; i < 100; i++) {
+			if (!q.empty()) {
+				//取元素
+				int item = q.front();//获取队列第一个元素
+				q.pop_front();//移除队列第一个元素
+			}
+			else
+			{
+				cout << "outQ执行，队列为空" << i << endl;
+
+			}
+		}
+	}
+private:
+	std::list<int> q;
+};
+
+
+int main() {
+	
+	A myA;
+	
+	//myA.inQ();
+	myA.outQ();
+	//创建向队列添加数据的线程
+	//thread tIn(&A::inQ, &myA);
+	//创建从队列读取数据的线程
+	//thread tOut(&A::outQ, &myA);//创建线程并执行 
+
+	//tOut.join();
+	//tIn.join();//等待子线程完成
+	cout << "主线程结束" << endl;
+
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+####  互斥量、锁
+
+#####  互斥量的使用
+
+> #include <mutex> //互斥量的引入
+>
+> mutex my_mutex;//创建一个互斥量
+>
+> lock() //加锁
+>
+> unlock()//解锁
+>
+> std: : lock guard类模板 //取代lock()和unlock()， 
+
+###### lock() 和unlock()使用
+
+
+```c++
+#include <iostream>
+using namespace std;
+#include <thread>
+#include <list>
+#include <windows.h>
+#include <mutex> //互斥量的引入
+
+//成员函数做线程入口
+class A
+{
+public:
+	//队列加入数据的线程
+	void inQ() {
+		for (int i = 0; i < 100; i++) {
+			cout << "inQ执行，并在队列中加入一个元素：" << i << endl;
+			my_mutex.lock();
+			q.push_back(i);
+			my_mutex.unlock();
+		}
+	}
+	//取出数据线程的加锁代码
+	bool isEmpty(int& item) {
+		my_mutex.lock();
+		if (!q.empty()) {
+			//取元素
+			item = q.front();//获取队列第一个元素
+			q.pop_front();//移除队列第一个元素
+			my_mutex.unlock();
+			return true;
+
+		}
+		my_mutex.unlock();
+		return false;
+	}
+	//取出数据的线程
+	void outQ() {
+		int item = 0;
+		for (int i = 0; i < 100; i++) {
+			bool res = isEmpty(item);
+			if (res == true) {
+				cout << "outQ执行，取出一个数据" << item << endl;
+			}
+			else
+			{
+				cout << "outQ执行，队列为空" << i << endl;
+
+			}
+		}
+	}
+private:
+	std::list<int> q;
+	mutex my_mutex;//创建一个互斥量
+};
+
+
+int main() {
+	
+	A myA;
+	//创建向队列添加数据的线程
+	thread tIn(&A::inQ, &myA);
+	//创建从队列读取数据的线程
+	thread tOut(&A::outQ, &myA);//创建线程并执行 
+
+	tOut.join();
+	tIn.join();//等待子线程完成
+	cout << "主线程结束" << endl;
+
+
+	system("pause");
+
+	return 0;
+}
+```
+
+######  std: : lock guard类模板使用
+
+> lock_guard原理：
+>
+> * lock_guard构造函数里执行了mutex::lock()
+> * lock _guard析构函数里执行了mutext::unlock();
+
+* 用`{}`控制lock_guard的退出（执行析构函数）,以保证最小单元的上锁
+
+```c++
+#include <iostream>
+using namespace std;
+#include <thread>
+#include <list>
+#include <windows.h>
+#include <mutex> //互斥量的引入
+
+//成员函数做线程入口
+class A
+{
+public:
+	//队列加入数据的线程
+	void inQ() {
+		for (int i = 0; i < 100; i++) {
+			cout << "inQ执行，并在队列中加入一个元素：" << i << endl;
+			{
+				lock_guard<mutex> sbguard(my_mutex); //lock_guard类模板的使用
+				//my_mutex.lock();
+				q.push_back(i);
+				//my_mutex.unlock();
+			}
+		
+		}
+	}
+	//取出数据线程的加锁代码
+	bool isEmpty(int& item) {
+		lock_guard<mutex> sbguard(my_mutex); //lock_guard类模板的使用
+		//lock_guard构造函数里执行了mutex::lock()
+		//lock _guard析构函数里执行了mutext::unlock();  本函数退出是则会调用
+
+		//my_mutex.lock();
+		if (!q.empty()) {
+			//取元素
+			item = q.front();//获取队列第一个元素
+			q.pop_front();//移除队列第一个元素
+			//my_mutex.unlock();
+			return true;
+
+		}
+		//my_mutex.unlock();
+		return false;
+	}
+	//取出数据的线程
+	void outQ() {
+		int item = 0;
+		for (int i = 0; i < 100; i++) {
+			bool res = isEmpty(item);
+			if (res == true) {
+				cout << "outQ执行，取出一个数据" << item << endl;
+			}
+			else
+			{
+				cout << "outQ执行，队列为空" << i << endl;
+
+			}
+		}
+	}
+private:
+	std::list<int> q;
+	mutex my_mutex;//创建一个互斥量
+};
+
+
+int main() {
+	
+	A myA;
+	//创建向队列添加数据的线程
+	thread tIn(&A::inQ, &myA);
+	//创建从队列读取数据的线程
+	thread tOut(&A::outQ, &myA);//创建线程并执行 
+
+	tOut.join();
+	tIn.join();//等待子线程完成
+	cout << "主线程结束" << endl;
+
+
+	system("pause");
+
+	return 0;
+}
+```
+
+#####  死锁
+
+######  死锁 产生
+
+* 两把锁在不同的线程中加锁的顺序相反则会触发死锁问题
+
+```c++
+#include <iostream>
+using namespace std;
+#include <thread>
+#include <list>
+#include <windows.h>
+#include <mutex> //互斥量的引入
+
+//成员函数做线程入口
+class A
+{
+public:
+	//队列加入数据的线程
+	void inQ() {
+		for (int i = 0; i < 10000; i++) {
+			cout << "inQ执行，并在队列中加入一个元素：" << i << endl;
+			{
+				my_mutex1.lock();//--------------------------------------加锁顺序正好与另一个线程顺序相反------------------------------
+				my_mutex2.lock();
+
+				q.push_back(i);
+				my_mutex1.unlock();
+				my_mutex2.unlock();
+
+			}
+		
+		}
+	}
+	//取出数据线程的加锁代码
+	bool isEmpty(int& item) {
+		//lock_guard<mutex> sbguard(my_mutex); //lock_guard类模板的使用
+		//lock_guard构造函数里执行了mutex::lock()
+		//lock _guard析构函数里执行了mutext::unlock();  本函数退出是则会调用
+
+		my_mutex2.lock(); //--------------------------------------加锁顺序正好与另一个线程顺序相反---------------------------------
+		my_mutex1.lock();
+
+		if (!q.empty()) {
+			//取元素
+			item = q.front();//获取队列第一个元素
+			q.pop_front();//移除队列第一个元素
+			my_mutex2.unlock();
+			my_mutex1.unlock();
+
+			return true;
+
+		}
+		my_mutex1.unlock();
+		my_mutex2.unlock();
+
+		return false;
+	}
+	//取出数据的线程
+	void outQ() {
+		int item = 0;
+		for (int i = 0; i < 10000; i++) {
+			bool res = isEmpty(item);
+			if (res == true) {
+				cout << "outQ执行，取出一个数据" << item << endl;
+			}
+			else
+			{
+				cout << "outQ执行，队列为空" << i << endl;
+
+			}
+		}
+	}
+private:
+	std::list<int> q;
+	mutex my_mutex1;//创建一个互斥量 锁1
+	mutex my_mutex2;//创建一个互斥量 锁2
+
+};
+
+
+int main() {
+	
+	A myA;
+	//创建向队列添加数据的线程
+	thread tIn(&A::inQ, &myA);
+	//创建从队列读取数据的线程
+	thread tOut(&A::outQ, &myA);//创建线程并执行 
+
+	tOut.join();
+	tIn.join();//等待子线程完成
+	cout << "主线程结束" << endl;
+
+
+	system("pause");
+
+	return 0;
+}
+```
+
+######  死锁解决方案
+
+* 两把锁在不同的线程中加锁顺序相同，则可以避免死锁
+
+```c++
+#include <iostream>
+using namespace std;
+#include <thread>
+#include <list>
+#include <windows.h>
+#include <mutex> //互斥量的引入
+
+//成员函数做线程入口
+class A
+{
+public:
+	//队列加入数据的线程
+	void inQ() {
+		for (int i = 0; i < 10000; i++) {
+			cout << "inQ执行，并在队列中加入一个元素：" << i << endl;
+			{
+				my_mutex1.lock();//--------------------------------------加锁顺序正好与另一个线程顺序相同------------------------------
+				my_mutex2.lock();
+
+				q.push_back(i);
+				my_mutex1.unlock();
+				my_mutex2.unlock();
+
+			}
+		
+		}
+	}
+	//取出数据线程的加锁代码
+	bool isEmpty(int& item) {
+		//lock_guard<mutex> sbguard(my_mutex); //lock_guard类模板的使用
+		//lock_guard构造函数里执行了mutex::lock()
+		//lock _guard析构函数里执行了mutext::unlock();  本函数退出是则会调用
+
+		my_mutex1.lock(); //--------------------------------------加锁顺序正好与另一个线程顺序相同---------------------------------
+		my_mutex2.lock();
+
+		if (!q.empty()) {
+			//取元素
+			item = q.front();//获取队列第一个元素
+			q.pop_front();//移除队列第一个元素
+			my_mutex2.unlock();
+			my_mutex1.unlock();
+
+			return true;
+
+		}
+		my_mutex1.unlock();
+		my_mutex2.unlock();
+
+		return false;
+	}
+	//取出数据的线程
+	void outQ() {
+		int item = 0;
+		for (int i = 0; i < 10000; i++) {
+			bool res = isEmpty(item);
+			if (res == true) {
+				cout << "outQ执行，取出一个数据" << item << endl;
+			}
+			else
+			{
+				cout << "outQ执行，队列为空" << i << endl;
+
+			}
+		}
+	}
+private:
+	std::list<int> q;
+	mutex my_mutex1;//创建一个互斥量 锁1
+	mutex my_mutex2;//创建一个互斥量 锁2
+
+};
+
+
+int main() {
+	
+	A myA;
+	//创建向队列添加数据的线程
+	thread tIn(&A::inQ, &myA);
+	//创建从队列读取数据的线程
+	thread tOut(&A::outQ, &myA);//创建线程并执行 
+
+	tOut.join();
+	tIn.join();//等待子线程完成
+	cout << "主线程结束" << endl;
+
+
+	system("pause");
+
+	return 0;
+}
+```
+
+* lock_guard加多把锁的方式
+
+```c++
+#include <iostream>
+using namespace std;
+#include <thread>
+#include <list>
+#include <windows.h>
+#include <mutex> //互斥量的引入
+
+//成员函数做线程入口
+class A
+{
+public:
+	//队列加入数据的线程
+	void inQ() {
+		for (int i = 0; i < 10000; i++) {
+			cout << "inQ执行，并在队列中加入一个元素：" << i << endl;
+			{
+				lock_guard<mutex> sbguard1(my_mutex1); //lock_guard加锁1
+				lock_guard<mutex> sbguard2(my_mutex2); //lock_guard加锁2
+				//my_mutex1.lock();//加锁顺序正好与另一个线程顺序相反
+				//my_mutex2.lock();
+
+				q.push_back(i);
+				//my_mutex1.unlock();
+				//my_mutex2.unlock();
+
+			}
+		
+		}
+	}
+	//取出数据线程的加锁代码
+	bool isEmpty(int& item) {
+		lock_guard<mutex> sbguard1(my_mutex1); //lock_guard加锁1
+		lock_guard<mutex> sbguard2(my_mutex2); //lock_guard加锁2
+
+		//lock_guard构造函数里执行了mutex::lock()
+		//lock _guard析构函数里执行了mutext::unlock();  本函数退出是则会调用
+
+		//my_mutex2.lock(); //加锁顺序正好与另一个线程顺序相反
+		//my_mutex1.lock();
+
+		if (!q.empty()) {
+			//取元素
+			item = q.front();//获取队列第一个元素
+			q.pop_front();//移除队列第一个元素
+			//my_mutex2.unlock();
+			//my_mutex1.unlock();
+			return true;
+		}
+		//my_mutex1.unlock();
+		//my_mutex2.unlock();
+		return false;
+	}
+	//取出数据的线程
+	void outQ() {
+		int item = 0;
+		for (int i = 0; i < 10000; i++) {
+			bool res = isEmpty(item);
+			if (res == true) {
+				cout << "outQ执行，取出一个数据" << item << endl;
+			}
+			else
+			{
+				cout << "outQ执行，队列为空" << i << endl;
+
+			}
+		}
+	}
+private:
+	std::list<int> q;
+	mutex my_mutex1;//创建一个互斥量 锁1
+	mutex my_mutex2;//创建一个互斥量 锁2
+
+};
+
+
+int main() {
+	
+	A myA;
+	//创建向队列添加数据的线程
+	thread tIn(&A::inQ, &myA);
+	//创建从队列读取数据的线程
+	thread tOut(&A::outQ, &myA);//创建线程并执行 
+
+	tOut.join();
+	tIn.join();//等待子线程完成
+	cout << "主线程结束" << endl;
+
+
+	system("pause");
+
+	return 0;
+}
+```
+
+######  std::lock()模板
+
+> 能力:一次锁住两个或者两个以上的互斥量（至少两个）
+>
+> 如果互斥量中有一个没锁柱，它就在那里等着，等所有互斥量都锁住，它才能往下走（返回)
+>
+> 要么两个互斥量都锁住，要么两个互斥量都没锁住
+>
+> 如果有一个锁住了，但另一个没有锁住，则会先释放已经锁住的那个，再寻求一次性锁住两个，这样就可以避免死锁
+
+```c++
+#include <iostream>
+using namespace std;
+#include <thread>
+#include <list>
+#include <mutex> //互斥量的引入
+
+//成员函数做线程入口
+class A
+{
+public:
+	//队列加入数据的线程
+	void inQ() {
+		for (int i = 0; i < 10000; i++) {
+			cout << "inQ执行，并在队列中加入一个元素：" << i << endl;
+            lock(my_mutex1, my_mutex2);  //-----------相当于给每一个互斥量都加了.lock()--------注意还是要配合.unlock()使用-----
+            q.push_back(i);
+            my_mutex1.unlock();
+            my_mutex2.unlock();
+		}
+	}
+	//取出数据线程的加锁代码
+	bool isEmpty(int& item) {
+		lock(my_mutex1, my_mutex2);//-----------相当于给每一个互斥量都加了.lock()--------注意还是要配合.unlock()使用-----
+		if (!q.empty()) {
+			//取元素
+			item = q.front();//获取队列第一个元素
+			q.pop_front();//移除队列第一个元素
+			my_mutex2.unlock();
+			my_mutex1.unlock();
+			return true;
+		}
+		my_mutex1.unlock();
+		my_mutex2.unlock();
+		return false;
+	}
+	//取出数据的线程
+	void outQ() {
+		int item = 0;
+		for (int i = 0; i < 10000; i++) {
+			bool res = isEmpty(item);
+			if (res == true) {
+				cout << "outQ执行，取出一个数据" << item << endl;
+			}
+			else
+			{
+				cout << "outQ执行，队列为空" << i << endl;
+
+			}
+		}
+	}
+private:
+	std::list<int> q;
+	mutex my_mutex1;//创建一个互斥量 锁1
+	mutex my_mutex2;//创建一个互斥量 锁2
+
+};
+
+
+int main() {
+	
+	A myA;
+	//创建向队列添加数据的线程
+	thread tIn(&A::inQ, &myA);
+	//创建从队列读取数据的线程
+	thread tOut(&A::outQ, &myA);//创建线程并执行 
+
+	tOut.join();
+	tIn.join();//等待子线程完成
+	cout << "主线程结束" << endl;
+
+
+	system("pause");
+
+	return 0;
+}
+```
+
+######  lock()和lock_guard配合使用
+
+> std::lock()使用有一个缺点是：还是必须配合unlock()使用
+>
+> 如果配合lock_guard就可以不用考虑unlock()了
+>
+> adopt_lock相当于一个标识，告诉lock_guard在构造函数里不要执行lock(), 因为std::lock()里已经执行了一次lock()了
+
+```c++
+// test.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
+//
+
+#include <iostream>
+using namespace std;
+#include <thread>
+#include <list>
+#include <windows.h>
+#include <mutex> //互斥量的引入
+
+//成员函数做线程入口
+class A
+{
+public:
+	//队列加入数据的线程
+	void inQ() {
+		for (int i = 0; i < 10000; i++) {
+			cout << "inQ执行，并在队列中加入一个元素：" << i << endl;
+            lock(my_mutex1, my_mutex2);
+            lock_guard<mutex> sbguard1(my_mutex1, adopt_lock); //lock_guard加锁1
+            lock_guard<mutex> sbguard2(my_mutex2, adopt_lock); //lock_guard加锁2
+            q.push_back(i);
+            //my_mutex1.unlock();
+            //my_mutex2.unlock();
+		}
+	}
+	//取出数据线程的加锁代码
+	bool isEmpty(int& item) {
+		lock(my_mutex1, my_mutex2);
+		lock_guard<mutex> sbguard1(my_mutex1,adopt_lock); //lock_guard加锁1
+		lock_guard<mutex> sbguard2(my_mutex2,adopt_lock); //lock_guard加锁2
+		if (!q.empty()) {
+			//取元素
+			item = q.front();//获取队列第一个元素
+			q.pop_front();//移除队列第一个元素
+			//my_mutex2.unlock();
+			//my_mutex1.unlock();
+			return true;
+		}
+		//my_mutex1.unlock();
+		//my_mutex2.unlock();
+		return false;
+	}
+	//取出数据的线程
+	void outQ() {
+		int item = 0;
+		for (int i = 0; i < 10000; i++) {
+			bool res = isEmpty(item);
+			if (res == true) {
+				cout << "outQ执行，取出一个数据" << item << endl;
+			}
+			else
+			{
+				cout << "outQ执行，队列为空" << i << endl;
+
+			}
+		}
+	}
+private:
+	std::list<int> q;
+	mutex my_mutex1;//创建一个互斥量 锁1
+	mutex my_mutex2;//创建一个互斥量 锁2
+
+};
+
+
+int main() {
+	
+	A myA;
+	//创建向队列添加数据的线程
+	thread tIn(&A::inQ, &myA);
+	//创建从队列读取数据的线程
+	thread tOut(&A::outQ, &myA);//创建线程并执行 
+
+	tOut.join();
+	tIn.join();//等待子线程完成
+	cout << "主线程结束" << endl;
+
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+###  unique_lock()
+
+```c++
+(1) unique_ock取代lock_guard
+(2) unique_ock的第二个参数
+	(2.1) std::adopt_lock
+    (2.2) std::tyr_to_lock
+    (2.3) std::defer_lock
+(3) unique_lock的成员函数
+	(3.1) lock()
+	(3.2) unlock()
+    (3.3) try_lock)
+    (3.4) release()
+(4) unique_lock所有权的传递
+
+```
+
+```c++
+// 一: unique_lock取代lock_guard
+//unique_lock是个类模板，工作中，一般lock_guard(推荐使用)﹔ lock_guard取代了mutex的lock 和unlock ();
+//unique_lock比lock_guard灵活很多;效率上差一点，内存占用多一点。
+//二:unique_lock的第二个参数
+//lock_guard可以带第二个参数:
+//std::lock_guard<std::mutex〉 sbguard1(my_mutex1, std::adopt_lock):
+//adopt_lock标记作用;
+//(2.1) std::adopt_lock:表示这个互斥量已经被lock了(你必须要把互斥量提前lock了,否则会报异常)
+//std::adopt_lock标记的效果就是“假设调用防线程已经拥有了互斥的所有权(已经lock()成功了）;
+//通知lock_guard不需要在构造函数中lock这个互斥量了;
+//unique_lock也可以带std; .adopt_lock标记，含义相同, 就是不希望再unique_lock()的构造函数中lock
+//用这个adopt_lock的前提是，你需要自己先把mutex先lock上3
+
+//(2.2）std::try_to_lock
+//我们会尝试用mutex的lock()去锁定这个mutex，但如果没有锁定成动，也会立即返回，并不会阻塞在那里;
+//用这个try_to_lock的前提是自己不能先去lock。
+
+//(2.3）std::defer_lock
+//用这个defer_lock的前提是你不能自己先lock，否则会报异常。
+//defer_lock的意思就是并没有给mutext加锁:初始化了一个没有加锁的mutexo
+//我们借着defer_lock的话题，来介绍一些unique_lock的重要成员函数
+
+// 三:unique_lock的成员函数
+// 以下成员函数都是配合std::defer_lock使用
+//(3.1) lock()，加锁
+//(3.2) unlock()，解锁
+//(3.3) try lock()，尝试给互斥量加锁，如果拿不到锁，则返回false, 如果拿到了锁，返回true，这个函数不阻塞的; 
+//(3.4） release()，返回它所管理的mutex对象指针，并释放所有权;unique_lock和mutext不再有关系。
+// 严格区分unlock()和release()的区别，不要混淆。
+// 如果原来mutex对象处于加锁状态，你有责任接管过来并负责解锁。
+
+//四、所有权转移
+//实现转移的方式
+//1 返回临时对象，调用unique_lock 移动构造函数
+//2 使用move函数
 
 
 
 
-#  图论 Graph Theory
+#include <iostream>
+using namespace std;
+#include <thread>
+#include <list>
+#include <windows.h>
+#include <mutex> //互斥量的引入
 
+//成员函数做线程入口
+class A
+{
+public:
+	unique_lock<mutex> rtn_unique_lock() {
+		unique_lock<mutex> tmpGuard(my_mutex1);
+		return tmpGuard; // 返回临时对象，调用unique_lock 移动构造函数
+	}
+	//队列加入数据的线程
+	void inQ() {
+		for (int i = 0; i < 10000; i++) {
+			cout << "inQ执行，并在队列中加入一个元素：" << i << endl;
+
+			// 1 unique_lock第二个参数使用adopt_lock
+			//my_mutex1.lock();
+			//unique_lock<mutex> sbguard1(my_mutex1,adopt_lock); 
+			
+			// 2 unique_lock第二个参数使用try_to_lock
+			//unique_lock<mutex> sbguard1(my_mutex1, try_to_lock);
+			//if (sbguard1.owns_lock()) {
+				//拿到了锁
+			//	q.push_back(i);
+			//}
+			//else {
+				//没有拿到锁
+			//	cout << "outQ延时20秒，所以在inQ中没有拿到锁，但是使用了try_to_lock，所以inQ的线程不会卡在这里"<<endl;
+			//}
+
+			// 3 unique_lock第三个参数使用defer_lock
+			//unique_lock<mutex> sbguard1(my_mutex1, defer_lock); //没有加锁的my_mutex1
+			// 3.1 unique_lock成员函数lock()和unlock()配合defer_lock使用
+			//sbguard1.lock(); //给my_mutex1加锁
+			//处理共享代码
+			//sbguard1.unlock(); //意义就是能够便捷的控制解锁，使共享代码和非共享代码可以便捷的交替执行
+			//处理非共享代码
+			//sbguard1.lock();
+			//处理共享代码
+			//3.2 unique_lock成员函数try_lock配合defer_lock使用
+			//if (sbguard1.try_lock() == true) { //try_lock尝试上锁
+			//	q.push_back(i);
+			//}
+			//else {
+			//	cout << "outQ延时20秒，所以在inQ中没有拿到锁，但是使用了try_to_lock，所以inQ的线程不会卡在这里" << endl;
+			//}
+
+			//4 unique_lock成员函数release()的使用
+			//unique_lock<mutex> sbguard1(my_mutex1); //my_mutex1已经加锁
+			//mutex *ptx = sbguard1.release(); //指针指向my_mutex1， 此时unique_lock已经和my_mutex1没有关系
+			//q.push_back(i);
+			//ptx->unlock();//注意一定要在这里unlock 否则会报错 因为上面已经lock()了
+
+			//5 所有权移动
+			 // 移动语义 这个时候就直接把所有权转移到了sbGuard2了
+			//方式1
+			//unique_lock<mutex> sbguard1(my_mutex1);
+	        //unique_lock<mutex> sbGuard2(move(sbguard1));
+			//方式2
+			//也可以通过返回
+			unique_lock<mutex> sbGuard2 = rtn_unique_lock();
+			q.push_back(i);
+		}
+	}
+	//取出数据线程的加锁代码
+	bool isEmpty(int& item) {
+		unique_lock<mutex> sbguard1(my_mutex1); //unique_lock的使用
+
+		//使线程在这里延时20秒
+		//std::chrono::milliseconds dura(20000);//1秒= 1000毫秒，所以20000毫秒=20秒
+		//std::this_thread::sleep_for(dura) ; //休息一定的时长
+
+		if (!q.empty()) {
+			//取元素
+			item = q.front();//获取队列第一个元素
+			q.pop_front();//移除队列第一个元素
+			return true;
+		}
+		return false;
+	}
+	//取出数据的线程
+	void outQ() {
+		int item = 0;
+		for (int i = 0; i < 10000; i++) {
+			bool res = isEmpty(item);
+			if (res == true) {
+				cout << "outQ执行，取出一个数据" << item << endl;
+			}
+			else
+			{
+				cout << "outQ执行，队列为空" << i << endl;
+
+			}
+		}
+	}
+private:
+	std::list<int> q;
+	mutex my_mutex1;//创建一个互斥量 锁1
+	mutex my_mutex2;//创建一个互斥量 锁2
+
+};
+
+
+int main() {
+	
+	A myA;
+	//创建向队列添加数据的线程
+	thread tIn(&A::inQ, &myA);
+	//创建从队列读取数据的线程
+	thread tOut(&A::outQ, &myA);//创建线程并执行 
+
+	tOut.join();
+	tIn.join();//等待子线程完成
+	cout << "主线程结束" << endl;
+
+
+	system("pause");
+
+	return 0;
+}
+```
+
+
+
+##  特性
+
+###  Lambda
+
+> c++11新特性  匿名函数
+>
+> [Lambda视频教程](https://www.bilibili.com/video/BV1CC4y187Km?from=search&seid=3858185157690700367&spm_id_from=333.337.0.0)
+
+
+
+###  calloc() 与 [malloc()](http://c.biancheng.net/cpp/html/137.html) 
+
+> http://c.biancheng.net/cpp/html/134.html
+
+###  assert()
+
+> http://c.biancheng.net/ref/assert.html

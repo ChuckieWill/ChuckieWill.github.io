@@ -18,6 +18,10 @@ categories:
 切换到D:\dev目录—— cd /d D:\dev
 ```
 
+####  1.2 dir 显示目录下的文件即文件夹
+
+
+
 ###  2 查看电脑型号
 
 * win+r   输入：`dxdiag` 回车  即可查看到

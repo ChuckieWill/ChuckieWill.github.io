@@ -23,6 +23,10 @@ categories:
 4. **安装成功验证**
    * cmd终端输入：python，出现以下交互效果则安装成功
    * ![image-20201215213006332](python解释器下载及开发环境搭建/image-20201215213006332.png)
+   
+   * windows 安装好python并配置好环境变量，打开CMD命令行窗口输入 python 打开运行界面。 使用常规退出按键组合 Ctrl+c 关闭提示KeyboardInterrupt，无法终止结束。 
+     * 输入exit ()退出
+     * Ctrl+z，退出
 
 **安装注意点：**
 

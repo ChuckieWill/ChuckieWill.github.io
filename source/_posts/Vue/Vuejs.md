@@ -249,6 +249,20 @@ this.$nextTick(() => {
 })
 ```
 
+## 5 vue.config.js配置
+
+* vue.config.js 文件放在根目录下
+
+```js
+module.exports = {
+    devServer:{
+        port: 8999, //默认打开端口
+        open: tru  //自动在浏览器打开
+    }
+
+}
+```
+
 
 
 #  二、Vue基础语法
