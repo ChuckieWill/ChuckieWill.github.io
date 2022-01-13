@@ -28,7 +28,7 @@
 <meta property="og:description" content="一、axios基础0 官网">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-02-12T12:45:50.000Z">
-<meta property="article:modified_time" content="2021-09-10T12:10:50.835Z">
+<meta property="article:modified_time" content="2021-11-11T01:09:57.134Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="axios">
 <meta name="twitter:card" content="summary">
@@ -220,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-10 20:10:50" itemprop="dateModified" datetime="2021-09-10T20:10:50+08:00">2021-09-10</time>
+                <time title="修改时间：2021-11-11 09:09:57" itemprop="dateModified" datetime="2021-11-11T09:09:57+08:00">2021-11-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -277,7 +277,7 @@
 <li>自动转换 JSON 数据</li>
 <li>客户端支持防御 <a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery" target="_blank" rel="noopener">XSRF</a></li>
 </ul>
-<ol>
+<h2 id="3-vue中使用axios"><a href="#3-vue中使用axios" class="headerlink" title="3 vue中使用axios"></a>3 vue中使用axios</h2><ol>
 <li>get方法——–传递数据用params</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import request from &#39;@&#x2F;utils&#x2F;request&#39;</span><br><span class="line">&#x2F;&#x2F;请求后端的基础地址</span><br><span class="line">const baseURL &#x3D; &#39;http:&#x2F;&#x2F;localhost:3000&#39;</span><br><span class="line"></span><br><span class="line">export function fetchList (params)&#123;</span><br><span class="line">    return request(&#123;</span><br><span class="line">        params, &#x2F;&#x2F;页面调用时传入的参数  在此处再传给后端</span><br><span class="line">        url:&#96;$&#123;baseURL&#125;&#x2F;playlist&#x2F;list&#96;,&#x2F;&#x2F;后端的&#96;$&#123;域名&#125;&#x2F;路由&#x2F;方法&#96;</span><br><span class="line">        method: &#39;get&#39; &#x2F;&#x2F;此处的请求方式get&quot;or&#39;post&#39;根据后端controller下方法路由设置而定    </span><br><span class="line">                      router.get&lt;&#x3D;&#x3D;&#x3D;&#x3D;&gt;&#39;get&#39;  router.post&lt;&#x3D;&#x3D;&#x3D;&#x3D;&gt;&#39;post&#39;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;再在页面中调用  fetchList方法  需要传入参数----在params中</span><br><span class="line">fetchList(&#123;</span><br><span class="line">                skip:this.playlist.length,  &#x2F;&#x2F;params中的参数</span><br><span class="line">                limit: this.count           &#x2F;&#x2F;params中的参数</span><br><span class="line">            &#125;).then((res) &#x3D;&gt; &#123;</span><br><span class="line">                console.log(res)</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
@@ -370,7 +370,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、axios基础"><span class="nav-text">一、axios基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-官网"><span class="nav-text">0 官网</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-安装"><span class="nav-text">1 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-特性"><span class="nav-text">2 特性</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、axios基础"><span class="nav-text">一、axios基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-官网"><span class="nav-text">0 官网</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-安装"><span class="nav-text">1 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-特性"><span class="nav-text">2 特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-vue中使用axios"><span class="nav-text">3 vue中使用axios</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -386,20 +386,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-count">50</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-count">75</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -448,7 +448,7 @@
 <div class="copyright">
   
   &copy; 2020 – 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="/images/me.png"></i>
   </span>
@@ -458,13 +458,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">419k</span>
+    <span title="站点总字数">449k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:21</span>
+    <span title="站点阅读时长">6:48</span>
 </div>
 
         

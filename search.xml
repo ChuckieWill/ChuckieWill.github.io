@@ -3,7 +3,10 @@
   <entry>
     <title>C++</title>
     <url>/2021/07/06/C++/C++/</url>
-    <content><![CDATA[<h2 id="基础知识点"><a href="#基础知识点" class="headerlink" title="基础知识点"></a>基础知识点</h2><h4 id="编译、链接的过程"><a href="#编译、链接的过程" class="headerlink" title="编译、链接的过程"></a>编译、链接的过程</h4><p><img src="/2021/07/06/C++/C++/image-20210816181241344.png" alt="image-20210816181241344"></p>
+    <content><![CDATA[<blockquote>
+<p><a href="https://qingcms.gitee.io/cppreference/20210212/zh/" target="_blank" rel="noopener">c++参考手册</a></p>
+</blockquote>
+<h2 id="基础知识点"><a href="#基础知识点" class="headerlink" title="基础知识点"></a>基础知识点</h2><h4 id="编译、链接的过程"><a href="#编译、链接的过程" class="headerlink" title="编译、链接的过程"></a>编译、链接的过程</h4><p><img src="/2021/07/06/C++/C++/image-20210816181241344.png" alt="image-20210816181241344"></p>
 <h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><ul>
 <li>1byte = 8bits</li>
 <li>short类型  2byte    存储范围[-2^15, 2^15-1]  [ -32768 , 32767]</li>
@@ -46,7 +49,14 @@
 <p><img src="/2021/07/06/C++/C++/image-20210907144220778.png" alt="image-20210907144220778"></p>
 <h4 id="vs2019快捷键"><a href="#vs2019快捷键" class="headerlink" title="vs2019快捷键"></a>vs2019快捷键</h4><p><a href="https://blog.csdn.net/qq_41979507/article/details/106188486" target="_blank" rel="noopener">vs2019快捷键</a></p>
 <ul>
-<li>光标选中函数名，点<code>F1</code>可以在网页中打开函数的使用方式</li>
+<li><p>光标选中函数名，点<code>F1</code>可以在网页中打开函数的使用方式</p>
+</li>
+<li><p>代码整体往右移动：</p>
+<p>选中需要移动的代码：按tab键</p>
+</li>
+<li><p>代码整体往左移动：</p>
+<p>选中需要移动的代码：按 shift + tab键 </p>
+</li>
 </ul>
 <h2 id="基础容器"><a href="#基础容器" class="headerlink" title="基础容器"></a>基础容器</h2><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><ul>
 <li>计算数组长度</li>
@@ -216,7 +226,7 @@
 <li>智能指针的核心功能是可以自动释放内存，不用开发者手动释放</li>
 </ul>
 <h4 id="auto-ptr"><a href="#auto-ptr" class="headerlink" title="auto_ptr"></a>auto_ptr</h4><ul>
-<li>由new 创建堆区内容，auto_指向这个堆区内容，在auto_ptr指针销毁时，他所指向的堆区也会自动被delete 掉。</li>
+<li>由new 创建堆区内容，auto_ptr指向这个堆区内容，在auto_ptr指针销毁时，他所指向的堆区也会自动被delete 掉。</li>
 <li>所有权转移:不小心把它传递给另外的智能指针，原来的指针就不再拥有这个对象了。在拷贝/赋值过程中，会直接剥夺指针对原对象对内存的控制权，<br>转交给新对象，然后再将原对象指针置为nullptr。</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdafx.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory&gt; //智能指针库</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	&#123;<span class="comment">// 确定auto_ptr失效的范围，&#123;&#125;块内的代码执行完后，auto_ptr指向的内容就会释放</span></span><br><span class="line">		<span class="comment">// 对int使用</span></span><br><span class="line">		<span class="function"><span class="built_in">auto_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">pI</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>))</span></span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; *pI &lt;&lt; <span class="built_in">endl</span>;                <span class="comment">// 10 </span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// auto_ptr	C++ 17中移除	拥有严格对象所有权语义的智能指针</span></span><br><span class="line">		<span class="comment">// auto_ptr原理：在拷贝 / 赋值过程中，直接剥夺原对象对内存的控制权，转交给新对象，</span></span><br><span class="line">		<span class="comment">// 然后再将原对象指针置为nullptr（早期：NULL）。这种做法也叫管理权转移。</span></span><br><span class="line">		<span class="comment">// 他的缺点不言而喻，当我们再次去访问原对象时，程序就会报错，所以auto_ptr可以说实现的不好，</span></span><br><span class="line">		<span class="comment">// 很多企业在其库内也是要求不准使用auto_ptr。</span></span><br><span class="line">		<span class="built_in">auto_ptr</span>&lt;<span class="built_in">string</span>&gt; languages[<span class="number">5</span>] = &#123;</span><br><span class="line">			<span class="built_in">auto_ptr</span>&lt;<span class="built_in">string</span>&gt;(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">"C"</span>)),</span><br><span class="line">			<span class="built_in">auto_ptr</span>&lt;<span class="built_in">string</span>&gt;(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">"Java"</span>)),</span><br><span class="line">			<span class="built_in">auto_ptr</span>&lt;<span class="built_in">string</span>&gt;(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">"C++"</span>)),</span><br><span class="line">			<span class="built_in">auto_ptr</span>&lt;<span class="built_in">string</span>&gt;(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">"Python"</span>)),</span><br><span class="line">			<span class="built_in">auto_ptr</span>&lt;<span class="built_in">string</span>&gt;(<span class="keyword">new</span> <span class="built_in">string</span>(<span class="string">"Rust"</span>))</span><br><span class="line">		&#125;;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"There are some computer languages here first time: \n"</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; ++i)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; *languages[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">auto_ptr</span>&lt;<span class="built_in">string</span>&gt; pC;</span><br><span class="line">		pC = languages[<span class="number">2</span>]; <span class="comment">// languges[2] loses ownership. 将所有权从languges[2]转让给pC，</span></span><br><span class="line">		<span class="comment">//此时languges[2]不再引用该字符串,而是变成空指针</span></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"There are some computer languages here second time: \n"</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; ++i)</span><br><span class="line">		&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; *languages[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"The winner is "</span> &lt;&lt; *pC &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="comment">//cout &lt;&lt; "There are some computer languages here third time: \n";</span></span><br><span class="line">		<span class="comment">//for (int i = 0; i &lt; 5; ++i)</span></span><br><span class="line">		<span class="comment">//&#123;</span></span><br><span class="line">		<span class="comment">//	cout &lt;&lt; *languages[i] &lt;&lt; endl;  // 此处报错，因为*languages[2]时无法访问，此时所有权已经从languges[2]转让给pC了</span></span><br><span class="line">		<span class="comment">//&#125;</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -290,7 +300,10 @@
 <li>除此之外，二者基本无差别;</li>
 </ul>
 </blockquote>
-<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><p><strong>为什么要用多线程</strong></p>
+<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><blockquote>
+<p><a href="https://blog.csdn.net/qq_38231713/category_10001159.html" target="_blank" rel="noopener">课程笔记</a></p>
+</blockquote>
+<p><strong>为什么要用多线程</strong></p>
 <ul>
 <li>任务分解<ul>
 <li>耗时的操作，任务分解，实时响应</li>
@@ -366,13 +379,13 @@
 <li>detach</li>
 <li>joinable</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// demo2.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 一、用函数作为可调用对象创建线程</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">myprint</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程开始执行了"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了1"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了2"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了3"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了4"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了5"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了6"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了7"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了8"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了9"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello World!\n"</span>;</span><br><span class="line">    <span class="comment">// 1 thread: 创建子线程并执行子线程</span></span><br><span class="line">    <span class="function">thread <span class="title">myobj</span><span class="params">(myprint)</span></span>;</span><br><span class="line">    <span class="comment">// 2 joinable: 判断join和detach是否用过，用过则为false，没用则为true</span></span><br><span class="line">    <span class="keyword">if</span> (myobj.joinable())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"1joinable===true"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"1joinable===false"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 3 join: 阻塞主线程，并等待子线程执行完成</span></span><br><span class="line">    myobj.join();</span><br><span class="line">    <span class="comment">// 4 detach: 主线程不等子线程，主线程和子线程分开执行，子线程驻留后台运行</span></span><br><span class="line">    <span class="comment">//此时子线程相当于被C++时库接管，当子线程执行完成后，由运行时库负责清理该线程相关资源</span></span><br><span class="line">    <span class="comment">//myobj.detach();</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (myobj.joinable())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"2joinable===true"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"2joinable===false"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China1"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China2"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China3"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China4"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China5"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China6"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China7"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 二、其它创建线程的手法</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.1 用类对象创建线程</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TA</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span>&amp; m_i;</span><br><span class="line">	TA(<span class="keyword">int</span>&amp; i) :m_i(i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"TA()构造函数被执行"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	TA(<span class="keyword">const</span> TA&amp; ta) :m_i(ta.m_i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"TA()拷贝构造函数被执行"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	~TA()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"~TA()析构函数被执行"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程operator()开始执行"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程operator()执行结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> myi = <span class="number">6</span>;</span><br><span class="line">	<span class="function">TA <span class="title">ta</span><span class="params">(myi)</span></span>;</span><br><span class="line">	<span class="comment">//注意使用detach时，ta是复制到子线程中的，所以即使主线程销毁，</span></span><br><span class="line">	<span class="comment">//子线程中的ta也不会销毁，不会影响子线程的执行</span></span><br><span class="line">	<span class="function">thread <span class="title">myobj</span><span class="params">(ta)</span></span>;</span><br><span class="line">    <span class="comment">//thread myobj(std::ref(ta));//传入真引用时，下面就不能用detach()了</span></span><br><span class="line">	myobj.join();</span><br><span class="line">	<span class="comment">// 注意使用detach时，传入ta的参数不能是指向主线程中变量的引用或者指针，</span></span><br><span class="line">	<span class="comment">// 因为主线程先执行完时，引用和指针指向的变量就销毁了</span></span><br><span class="line">	<span class="comment">// 所以容易造成错误</span></span><br><span class="line">	<span class="comment">//myobj.detach();</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.2 用lambda表达式创建线程</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> mylamthrad = [] &#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程mylamthrad()开始执行"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程mylamthrad()执行结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">myobj</span><span class="params">(mylamthrad)</span></span>;</span><br><span class="line">	<span class="comment">//myobj.join();</span></span><br><span class="line">	myobj.<span class="built_in">detach</span>();</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;//引入进程库</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 一、用函数作为可调用对象创建线程</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">myprint</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程开始执行了"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了1"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了2"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了3"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了4"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了5"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了6"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了7"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了8"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程执行完毕了9"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello World!\n"</span>;</span><br><span class="line">    <span class="comment">// 1 thread: 创建子线程并执行子线程</span></span><br><span class="line">    <span class="function">thread <span class="title">myobj</span><span class="params">(myprint)</span></span>;</span><br><span class="line">    <span class="comment">// 2 joinable: 判断join和detach是否用过，用过则为false，没用则为true</span></span><br><span class="line">    <span class="keyword">if</span> (myobj.joinable())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"1joinable===true"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"1joinable===false"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 3 join: 阻塞主线程，并等待子线程执行完成</span></span><br><span class="line">    myobj.join();</span><br><span class="line">    <span class="comment">// 4 detach: 主线程不等子线程，主线程和子线程分开执行，子线程驻留后台运行</span></span><br><span class="line">    <span class="comment">//此时子线程相当于被C++时库接管，当子线程执行完成后，由运行时库负责清理该线程相关资源</span></span><br><span class="line">    <span class="comment">//myobj.detach();</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (myobj.joinable())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"2joinable===true"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"2joinable===false"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China1"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China2"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China3"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China4"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China5"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China6"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China7"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 二、其它创建线程的手法</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.1 用类对象创建线程</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TA</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span>&amp; m_i;</span><br><span class="line">	TA(<span class="keyword">int</span>&amp; i) :m_i(i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"TA()构造函数被执行"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	TA(<span class="keyword">const</span> TA&amp; ta) :m_i(ta.m_i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"TA()拷贝构造函数被执行"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	~TA()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"~TA()析构函数被执行"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程operator()开始执行"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程operator()执行结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> myi = <span class="number">6</span>;</span><br><span class="line">	<span class="function">TA <span class="title">ta</span><span class="params">(myi)</span></span>;</span><br><span class="line">	<span class="comment">//注意使用detach时，ta是复制到子线程中的，所以即使主线程销毁，</span></span><br><span class="line">	<span class="comment">//子线程中的ta也不会销毁，不会影响子线程的执行</span></span><br><span class="line">	<span class="function">thread <span class="title">myobj</span><span class="params">(ta)</span></span>;</span><br><span class="line">    <span class="comment">//thread myobj(std::ref(ta));//传入真引用时，下面就不能用detach()了</span></span><br><span class="line">	myobj.join();</span><br><span class="line">	<span class="comment">// 注意使用detach时，传入ta的参数不能是指向主线程中变量的引用或者指针，</span></span><br><span class="line">	<span class="comment">// 因为主线程先执行完时，引用和指针指向的变量就销毁了</span></span><br><span class="line">	<span class="comment">// 所以容易造成错误</span></span><br><span class="line">	<span class="comment">//myobj.detach();</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.2 用lambda表达式创建线程</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> mylamthrad = [] &#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程mylamthrad()开始执行"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"我的线程mylamthrad()执行结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">myobj</span><span class="params">(mylamthrad)</span></span>;</span><br><span class="line">	<span class="comment">//myobj.join();</span></span><br><span class="line">	myobj.<span class="built_in">detach</span>();</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="线程传参详解"><a href="#线程传参详解" class="headerlink" title="线程传参详解"></a>线程传参详解</h4><blockquote>
 <p>参数传递容易出问题的主原因是：<strong>detach()函数</strong>。 因为detach()使得子线程有可能在主线程之后执行，而主线程销毁后，子线程中还有引用或指针指向主线程中的变量，此时就会出现问题</p>
 </blockquote>
 <h5 id="引用和指针做参数"><a href="#引用和指针做参数" class="headerlink" title="引用和指针做参数"></a>引用和指针做参数</h5><ul>
-<li>引用： 虽然是引用，但是其实还是值传递，主线程的销毁不影响子线程（不推荐使用）</li>
+<li>引用： 虽然是引用，但是其实还是值传递（子线程会拷贝引用指向的内容），主线程的销毁不影响子线程（不推荐使用）</li>
 <li>指针：指向主线程的地址，主线程的销毁影响子线程 （不能使用指针做线程参数）</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">myprint</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> &amp;i, <span class="keyword">char</span> *pmybuf)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"子线程"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//此时的引用i并不是指向主线程的中的mvar，而是值传递过来的，即使主线程执行结束，也不影响子线程的执行</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; pmybuf &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//此时指针pmybuf指向主线程中的mybuf, 主线程销毁则会影响子线程</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mvar = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span>&amp; mvary = mvar;</span><br><span class="line">    <span class="keyword">char</span> mybuf[] = <span class="string">"this is a test!"</span>;</span><br><span class="line">    <span class="function">thread <span class="title">mytobj</span><span class="params">(myprint, mvar, mybuf)</span></span>;</span><br><span class="line">    <span class="comment">//mytobj.join();</span></span><br><span class="line">    mytobj.<span class="built_in">detach</span>();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -418,11 +431,90 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">    <span class="function">A <span class="title">myobj</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="function">thread <span class="title">mytobj</span><span class="params">(&amp;A::thread_work, &amp;myobj, <span class="number">15</span>)</span></span>;<span class="comment">//&amp;myobj 等价于 std::ref(myobj)</span></span><br><span class="line">    mytobj.join();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"I love China!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h3 id="实际使用"><a href="#实际使用" class="headerlink" title="实际使用"></a>实际使用</h3><h4 id="创建多个线程"><a href="#创建多个线程" class="headerlink" title="创建多个线程"></a>创建多个线程</h4><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//线程入口函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">myprint</span><span class="params">(<span class="keyword">int</span> inum)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"myprint线程开始执行了，线程编号="</span> &lt;&lt; inum &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">//线程执行的具体任务</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"myprint线程执行结束了，线程编号="</span> &lt;&lt; inum &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 1 创建并等待多个线程</span></span><br><span class="line">	<span class="built_in">vector</span>&lt;thread&gt; ts;</span><br><span class="line">	<span class="comment">// 创建10个线程</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">		ts.push_back(thread(myprint, i));<span class="comment">//创建10个线程，并开始执行</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 等待10个线程都执行完</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> it = ts.<span class="built_in">begin</span>(); it != ts.<span class="built_in">end</span>(); it++) &#123;  <span class="comment">//it是一个指向数组元素的指针</span></span><br><span class="line">		it-&gt;join();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"主线程结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="数据共享问题"><a href="#数据共享问题" class="headerlink" title="数据共享问题"></a>数据共享问题</h4><h5 id="只读数据"><a href="#只读数据" class="headerlink" title="只读数据"></a>只读数据</h5><blockquote>
+<p>安全稳定，直接读取即可</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; g_v = &#123; <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> &#125;;<span class="comment">//全局共享数据  只读</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//线程入口函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">myprint</span><span class="params">(<span class="keyword">int</span> inum)</span> </span>&#123;</span><br><span class="line">	<span class="comment">//cout &lt;&lt; "myprint线程开始执行了，线程编号=" &lt;&lt; inum &lt;&lt; endl;</span></span><br><span class="line">	<span class="comment">//线程执行的具体任务</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"线程id:"</span> &lt;&lt; <span class="built_in">std</span>::this_thread::get_id() &lt;&lt; <span class="string">"打印g_v的值："</span> &lt;&lt; g_v[<span class="number">0</span>] &lt;&lt; g_v[<span class="number">1</span>] &lt;&lt; g_v[<span class="number">2</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">//cout &lt;&lt; "myprint线程执行结束了，线程编号=" &lt;&lt; inum &lt;&lt; endl;</span></span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 1 创建并等待多个线程</span></span><br><span class="line">	<span class="built_in">vector</span>&lt;thread&gt; ts;</span><br><span class="line">	<span class="comment">// 创建10个线程</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">		ts.push_back(thread(myprint, i));<span class="comment">//创建10个线程，并开始执行</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 等待10个线程都执行完</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> it = ts.<span class="built_in">begin</span>(); it != ts.<span class="built_in">end</span>(); it++) &#123;  <span class="comment">//it是一个指向数组元素的指针</span></span><br><span class="line">		it-&gt;join();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"主线程结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="有读有写的数据"><a href="#有读有写的数据" class="headerlink" title="有读有写的数据"></a>有读有写的数据</h5><h4 id="共享代码的保护"><a href="#共享代码的保护" class="headerlink" title="共享代码的保护"></a>共享代码的保护</h4><blockquote>
+<p>一下代码不能正常执行，因为涉及到同时读写队列q</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//成员函数做线程入口</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//队列加入数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">inQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"inQ执行，并在队列中加入一个元素："</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			q.push_back(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">outQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (!q.empty()) &#123;</span><br><span class="line">				<span class="comment">//取元素</span></span><br><span class="line">				<span class="keyword">int</span> item = q.front();<span class="comment">//获取队列第一个元素</span></span><br><span class="line">				q.pop_front();<span class="comment">//移除队列第一个元素</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，队列为空"</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	A myA;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//myA.inQ();</span></span><br><span class="line">	myA.outQ();</span><br><span class="line">	<span class="comment">//创建向队列添加数据的线程</span></span><br><span class="line">	<span class="comment">//thread tIn(&amp;A::inQ, &amp;myA);</span></span><br><span class="line">	<span class="comment">//创建从队列读取数据的线程</span></span><br><span class="line">	<span class="comment">//thread tOut(&amp;A::outQ, &amp;myA);//创建线程并执行 </span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//tOut.join();</span></span><br><span class="line">	<span class="comment">//tIn.join();//等待子线程完成</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"主线程结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
+<h4 id="互斥量、锁"><a href="#互斥量、锁" class="headerlink" title="互斥量、锁"></a>互斥量、锁</h4><h5 id="互斥量的使用"><a href="#互斥量的使用" class="headerlink" title="互斥量的使用"></a>互斥量的使用</h5><blockquote>
+<p>#include <mutex> //互斥量的引入</mutex></p>
+<p>mutex my_mutex;//创建一个互斥量</p>
+<p>lock() //加锁</p>
+<p>unlock()//解锁</p>
+<p>std: : lock guard类模板 //取代lock()和unlock()， </p>
+</blockquote>
+<h6 id="lock-和unlock-使用"><a href="#lock-和unlock-使用" class="headerlink" title="lock() 和unlock()使用"></a>lock() 和unlock()使用</h6><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt; //互斥量的引入</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//成员函数做线程入口</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//队列加入数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">inQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"inQ执行，并在队列中加入一个元素："</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			my_mutex.lock();</span><br><span class="line">			q.push_back(i);</span><br><span class="line">			my_mutex.unlock();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据线程的加锁代码</span></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">(<span class="keyword">int</span>&amp; item)</span> </span>&#123;</span><br><span class="line">		my_mutex.lock();</span><br><span class="line">		<span class="keyword">if</span> (!q.empty()) &#123;</span><br><span class="line">			<span class="comment">//取元素</span></span><br><span class="line">			item = q.front();<span class="comment">//获取队列第一个元素</span></span><br><span class="line">			q.pop_front();<span class="comment">//移除队列第一个元素</span></span><br><span class="line">			my_mutex.unlock();</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		my_mutex.unlock();</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">outQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> item = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">			<span class="keyword">bool</span> res = isEmpty(item);</span><br><span class="line">			<span class="keyword">if</span> (res == <span class="literal">true</span>) &#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，取出一个数据"</span> &lt;&lt; item &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，队列为空"</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">	mutex my_mutex;<span class="comment">//创建一个互斥量</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	A myA;</span><br><span class="line">	<span class="comment">//创建向队列添加数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tIn</span><span class="params">(&amp;A::inQ, &amp;myA)</span></span>;</span><br><span class="line">	<span class="comment">//创建从队列读取数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tOut</span><span class="params">(&amp;A::outQ, &amp;myA)</span></span>;<span class="comment">//创建线程并执行 </span></span><br><span class="line"></span><br><span class="line">	tOut.join();</span><br><span class="line">	tIn.join();<span class="comment">//等待子线程完成</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"主线程结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="图论-Graph-Theory"><a href="#图论-Graph-Theory" class="headerlink" title="图论 Graph Theory"></a>图论 Graph Theory</h1>]]></content>
+<h6 id="std-lock-guard类模板使用"><a href="#std-lock-guard类模板使用" class="headerlink" title="std: : lock guard类模板使用"></a>std: : lock guard类模板使用</h6><blockquote>
+<p>lock_guard原理：</p>
+<ul>
+<li>lock_guard构造函数里执行了mutex::lock()</li>
+<li>lock _guard析构函数里执行了mutext::unlock();</li>
+</ul>
+</blockquote>
+<ul>
+<li>用<code>{}</code>控制lock_guard的退出（执行析构函数）,以保证最小单元的上锁</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt; //互斥量的引入</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//成员函数做线程入口</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//队列加入数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">inQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"inQ执行，并在队列中加入一个元素："</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="function">lock_guard&lt;mutex&gt; <span class="title">sbguard</span><span class="params">(my_mutex)</span></span>; <span class="comment">//lock_guard类模板的使用</span></span><br><span class="line">				<span class="comment">//my_mutex.lock();</span></span><br><span class="line">				q.push_back(i);</span><br><span class="line">				<span class="comment">//my_mutex.unlock();</span></span><br><span class="line">			&#125;</span><br><span class="line">		</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据线程的加锁代码</span></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">(<span class="keyword">int</span>&amp; item)</span> </span>&#123;</span><br><span class="line">		<span class="function">lock_guard&lt;mutex&gt; <span class="title">sbguard</span><span class="params">(my_mutex)</span></span>; <span class="comment">//lock_guard类模板的使用</span></span><br><span class="line">		<span class="comment">//lock_guard构造函数里执行了mutex::lock()</span></span><br><span class="line">		<span class="comment">//lock _guard析构函数里执行了mutext::unlock();  本函数退出是则会调用</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//my_mutex.lock();</span></span><br><span class="line">		<span class="keyword">if</span> (!q.empty()) &#123;</span><br><span class="line">			<span class="comment">//取元素</span></span><br><span class="line">			item = q.front();<span class="comment">//获取队列第一个元素</span></span><br><span class="line">			q.pop_front();<span class="comment">//移除队列第一个元素</span></span><br><span class="line">			<span class="comment">//my_mutex.unlock();</span></span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//my_mutex.unlock();</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">outQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> item = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">			<span class="keyword">bool</span> res = isEmpty(item);</span><br><span class="line">			<span class="keyword">if</span> (res == <span class="literal">true</span>) &#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，取出一个数据"</span> &lt;&lt; item &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，队列为空"</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">	mutex my_mutex;<span class="comment">//创建一个互斥量</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	A myA;</span><br><span class="line">	<span class="comment">//创建向队列添加数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tIn</span><span class="params">(&amp;A::inQ, &amp;myA)</span></span>;</span><br><span class="line">	<span class="comment">//创建从队列读取数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tOut</span><span class="params">(&amp;A::outQ, &amp;myA)</span></span>;<span class="comment">//创建线程并执行 </span></span><br><span class="line"></span><br><span class="line">	tOut.join();</span><br><span class="line">	tIn.join();<span class="comment">//等待子线程完成</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"主线程结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h5><h6 id="死锁-产生"><a href="#死锁-产生" class="headerlink" title="死锁 产生"></a>死锁 产生</h6><ul>
+<li>两把锁在不同的线程中加锁的顺序相反则会触发死锁问题</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt; //互斥量的引入</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//成员函数做线程入口</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//队列加入数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">inQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"inQ执行，并在队列中加入一个元素："</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#123;</span><br><span class="line">				my_mutex1.lock();<span class="comment">//--------------------------------------加锁顺序正好与另一个线程顺序相反------------------------------</span></span><br><span class="line">				my_mutex2.lock();</span><br><span class="line"></span><br><span class="line">				q.push_back(i);</span><br><span class="line">				my_mutex1.unlock();</span><br><span class="line">				my_mutex2.unlock();</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据线程的加锁代码</span></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">(<span class="keyword">int</span>&amp; item)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//lock_guard&lt;mutex&gt; sbguard(my_mutex); //lock_guard类模板的使用</span></span><br><span class="line">		<span class="comment">//lock_guard构造函数里执行了mutex::lock()</span></span><br><span class="line">		<span class="comment">//lock _guard析构函数里执行了mutext::unlock();  本函数退出是则会调用</span></span><br><span class="line"></span><br><span class="line">		my_mutex2.lock(); <span class="comment">//--------------------------------------加锁顺序正好与另一个线程顺序相反---------------------------------</span></span><br><span class="line">		my_mutex1.lock();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!q.empty()) &#123;</span><br><span class="line">			<span class="comment">//取元素</span></span><br><span class="line">			item = q.front();<span class="comment">//获取队列第一个元素</span></span><br><span class="line">			q.pop_front();<span class="comment">//移除队列第一个元素</span></span><br><span class="line">			my_mutex2.unlock();</span><br><span class="line">			my_mutex1.unlock();</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		my_mutex1.unlock();</span><br><span class="line">		my_mutex2.unlock();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">outQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> item = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">			<span class="keyword">bool</span> res = isEmpty(item);</span><br><span class="line">			<span class="keyword">if</span> (res == <span class="literal">true</span>) &#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，取出一个数据"</span> &lt;&lt; item &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，队列为空"</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">	mutex my_mutex1;<span class="comment">//创建一个互斥量 锁1</span></span><br><span class="line">	mutex my_mutex2;<span class="comment">//创建一个互斥量 锁2</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	A myA;</span><br><span class="line">	<span class="comment">//创建向队列添加数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tIn</span><span class="params">(&amp;A::inQ, &amp;myA)</span></span>;</span><br><span class="line">	<span class="comment">//创建从队列读取数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tOut</span><span class="params">(&amp;A::outQ, &amp;myA)</span></span>;<span class="comment">//创建线程并执行 </span></span><br><span class="line"></span><br><span class="line">	tOut.join();</span><br><span class="line">	tIn.join();<span class="comment">//等待子线程完成</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"主线程结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="死锁解决方案"><a href="#死锁解决方案" class="headerlink" title="死锁解决方案"></a>死锁解决方案</h6><ul>
+<li>两把锁在不同的线程中加锁顺序相同，则可以避免死锁</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt; //互斥量的引入</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//成员函数做线程入口</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//队列加入数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">inQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"inQ执行，并在队列中加入一个元素："</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#123;</span><br><span class="line">				my_mutex1.lock();<span class="comment">//--------------------------------------加锁顺序正好与另一个线程顺序相同------------------------------</span></span><br><span class="line">				my_mutex2.lock();</span><br><span class="line"></span><br><span class="line">				q.push_back(i);</span><br><span class="line">				my_mutex1.unlock();</span><br><span class="line">				my_mutex2.unlock();</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据线程的加锁代码</span></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">(<span class="keyword">int</span>&amp; item)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//lock_guard&lt;mutex&gt; sbguard(my_mutex); //lock_guard类模板的使用</span></span><br><span class="line">		<span class="comment">//lock_guard构造函数里执行了mutex::lock()</span></span><br><span class="line">		<span class="comment">//lock _guard析构函数里执行了mutext::unlock();  本函数退出是则会调用</span></span><br><span class="line"></span><br><span class="line">		my_mutex1.lock(); <span class="comment">//--------------------------------------加锁顺序正好与另一个线程顺序相同---------------------------------</span></span><br><span class="line">		my_mutex2.lock();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!q.empty()) &#123;</span><br><span class="line">			<span class="comment">//取元素</span></span><br><span class="line">			item = q.front();<span class="comment">//获取队列第一个元素</span></span><br><span class="line">			q.pop_front();<span class="comment">//移除队列第一个元素</span></span><br><span class="line">			my_mutex2.unlock();</span><br><span class="line">			my_mutex1.unlock();</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		my_mutex1.unlock();</span><br><span class="line">		my_mutex2.unlock();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">outQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> item = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">			<span class="keyword">bool</span> res = isEmpty(item);</span><br><span class="line">			<span class="keyword">if</span> (res == <span class="literal">true</span>) &#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，取出一个数据"</span> &lt;&lt; item &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，队列为空"</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">	mutex my_mutex1;<span class="comment">//创建一个互斥量 锁1</span></span><br><span class="line">	mutex my_mutex2;<span class="comment">//创建一个互斥量 锁2</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	A myA;</span><br><span class="line">	<span class="comment">//创建向队列添加数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tIn</span><span class="params">(&amp;A::inQ, &amp;myA)</span></span>;</span><br><span class="line">	<span class="comment">//创建从队列读取数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tOut</span><span class="params">(&amp;A::outQ, &amp;myA)</span></span>;<span class="comment">//创建线程并执行 </span></span><br><span class="line"></span><br><span class="line">	tOut.join();</span><br><span class="line">	tIn.join();<span class="comment">//等待子线程完成</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"主线程结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>lock_guard加多把锁的方式</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt; //互斥量的引入</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//成员函数做线程入口</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//队列加入数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">inQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"inQ执行，并在队列中加入一个元素："</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="function">lock_guard&lt;mutex&gt; <span class="title">sbguard1</span><span class="params">(my_mutex1)</span></span>; <span class="comment">//lock_guard加锁1</span></span><br><span class="line">				<span class="function">lock_guard&lt;mutex&gt; <span class="title">sbguard2</span><span class="params">(my_mutex2)</span></span>; <span class="comment">//lock_guard加锁2</span></span><br><span class="line">				<span class="comment">//my_mutex1.lock();//加锁顺序正好与另一个线程顺序相反</span></span><br><span class="line">				<span class="comment">//my_mutex2.lock();</span></span><br><span class="line"></span><br><span class="line">				q.push_back(i);</span><br><span class="line">				<span class="comment">//my_mutex1.unlock();</span></span><br><span class="line">				<span class="comment">//my_mutex2.unlock();</span></span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据线程的加锁代码</span></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">(<span class="keyword">int</span>&amp; item)</span> </span>&#123;</span><br><span class="line">		<span class="function">lock_guard&lt;mutex&gt; <span class="title">sbguard1</span><span class="params">(my_mutex1)</span></span>; <span class="comment">//lock_guard加锁1</span></span><br><span class="line">		<span class="function">lock_guard&lt;mutex&gt; <span class="title">sbguard2</span><span class="params">(my_mutex2)</span></span>; <span class="comment">//lock_guard加锁2</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//lock_guard构造函数里执行了mutex::lock()</span></span><br><span class="line">		<span class="comment">//lock _guard析构函数里执行了mutext::unlock();  本函数退出是则会调用</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//my_mutex2.lock(); //加锁顺序正好与另一个线程顺序相反</span></span><br><span class="line">		<span class="comment">//my_mutex1.lock();</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!q.empty()) &#123;</span><br><span class="line">			<span class="comment">//取元素</span></span><br><span class="line">			item = q.front();<span class="comment">//获取队列第一个元素</span></span><br><span class="line">			q.pop_front();<span class="comment">//移除队列第一个元素</span></span><br><span class="line">			<span class="comment">//my_mutex2.unlock();</span></span><br><span class="line">			<span class="comment">//my_mutex1.unlock();</span></span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//my_mutex1.unlock();</span></span><br><span class="line">		<span class="comment">//my_mutex2.unlock();</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">outQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> item = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">			<span class="keyword">bool</span> res = isEmpty(item);</span><br><span class="line">			<span class="keyword">if</span> (res == <span class="literal">true</span>) &#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，取出一个数据"</span> &lt;&lt; item &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，队列为空"</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">	mutex my_mutex1;<span class="comment">//创建一个互斥量 锁1</span></span><br><span class="line">	mutex my_mutex2;<span class="comment">//创建一个互斥量 锁2</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	A myA;</span><br><span class="line">	<span class="comment">//创建向队列添加数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tIn</span><span class="params">(&amp;A::inQ, &amp;myA)</span></span>;</span><br><span class="line">	<span class="comment">//创建从队列读取数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tOut</span><span class="params">(&amp;A::outQ, &amp;myA)</span></span>;<span class="comment">//创建线程并执行 </span></span><br><span class="line"></span><br><span class="line">	tOut.join();</span><br><span class="line">	tIn.join();<span class="comment">//等待子线程完成</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"主线程结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="std-lock-模板"><a href="#std-lock-模板" class="headerlink" title="std::lock()模板"></a>std::lock()模板</h6><blockquote>
+<p>能力:一次锁住两个或者两个以上的互斥量（至少两个）</p>
+<p>如果互斥量中有一个没锁柱，它就在那里等着，等所有互斥量都锁住，它才能往下走（返回)</p>
+<p>要么两个互斥量都锁住，要么两个互斥量都没锁住</p>
+<p>如果有一个锁住了，但另一个没有锁住，则会先释放已经锁住的那个，再寻求一次性锁住两个，这样就可以避免死锁</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt; //互斥量的引入</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//成员函数做线程入口</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//队列加入数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">inQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"inQ执行，并在队列中加入一个元素："</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            lock(my_mutex1, my_mutex2);  <span class="comment">//-----------相当于给每一个互斥量都加了.lock()--------注意还是要配合.unlock()使用-----</span></span><br><span class="line">            q.push_back(i);</span><br><span class="line">            my_mutex1.unlock();</span><br><span class="line">            my_mutex2.unlock();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据线程的加锁代码</span></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">(<span class="keyword">int</span>&amp; item)</span> </span>&#123;</span><br><span class="line">		lock(my_mutex1, my_mutex2);<span class="comment">//-----------相当于给每一个互斥量都加了.lock()--------注意还是要配合.unlock()使用-----</span></span><br><span class="line">		<span class="keyword">if</span> (!q.empty()) &#123;</span><br><span class="line">			<span class="comment">//取元素</span></span><br><span class="line">			item = q.front();<span class="comment">//获取队列第一个元素</span></span><br><span class="line">			q.pop_front();<span class="comment">//移除队列第一个元素</span></span><br><span class="line">			my_mutex2.unlock();</span><br><span class="line">			my_mutex1.unlock();</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		my_mutex1.unlock();</span><br><span class="line">		my_mutex2.unlock();</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">outQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> item = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">			<span class="keyword">bool</span> res = isEmpty(item);</span><br><span class="line">			<span class="keyword">if</span> (res == <span class="literal">true</span>) &#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，取出一个数据"</span> &lt;&lt; item &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，队列为空"</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">	mutex my_mutex1;<span class="comment">//创建一个互斥量 锁1</span></span><br><span class="line">	mutex my_mutex2;<span class="comment">//创建一个互斥量 锁2</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	A myA;</span><br><span class="line">	<span class="comment">//创建向队列添加数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tIn</span><span class="params">(&amp;A::inQ, &amp;myA)</span></span>;</span><br><span class="line">	<span class="comment">//创建从队列读取数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tOut</span><span class="params">(&amp;A::outQ, &amp;myA)</span></span>;<span class="comment">//创建线程并执行 </span></span><br><span class="line"></span><br><span class="line">	tOut.join();</span><br><span class="line">	tIn.join();<span class="comment">//等待子线程完成</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"主线程结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="lock-和lock-guard配合使用"><a href="#lock-和lock-guard配合使用" class="headerlink" title="lock()和lock_guard配合使用"></a>lock()和lock_guard配合使用</h6><blockquote>
+<p>std::lock()使用有一个缺点是：还是必须配合unlock()使用</p>
+<p>如果配合lock_guard就可以不用考虑unlock()了</p>
+<p>adopt_lock相当于一个标识，告诉lock_guard在构造函数里不要执行lock(), 因为std::lock()里已经执行了一次lock()了</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// test.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt; //互斥量的引入</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//成员函数做线程入口</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//队列加入数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">inQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"inQ执行，并在队列中加入一个元素："</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            lock(my_mutex1, my_mutex2);</span><br><span class="line">            <span class="function">lock_guard&lt;mutex&gt; <span class="title">sbguard1</span><span class="params">(my_mutex1, adopt_lock)</span></span>; <span class="comment">//lock_guard加锁1</span></span><br><span class="line">            <span class="function">lock_guard&lt;mutex&gt; <span class="title">sbguard2</span><span class="params">(my_mutex2, adopt_lock)</span></span>; <span class="comment">//lock_guard加锁2</span></span><br><span class="line">            q.push_back(i);</span><br><span class="line">            <span class="comment">//my_mutex1.unlock();</span></span><br><span class="line">            <span class="comment">//my_mutex2.unlock();</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据线程的加锁代码</span></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">(<span class="keyword">int</span>&amp; item)</span> </span>&#123;</span><br><span class="line">		lock(my_mutex1, my_mutex2);</span><br><span class="line">		<span class="function">lock_guard&lt;mutex&gt; <span class="title">sbguard1</span><span class="params">(my_mutex1,adopt_lock)</span></span>; <span class="comment">//lock_guard加锁1</span></span><br><span class="line">		<span class="function">lock_guard&lt;mutex&gt; <span class="title">sbguard2</span><span class="params">(my_mutex2,adopt_lock)</span></span>; <span class="comment">//lock_guard加锁2</span></span><br><span class="line">		<span class="keyword">if</span> (!q.empty()) &#123;</span><br><span class="line">			<span class="comment">//取元素</span></span><br><span class="line">			item = q.front();<span class="comment">//获取队列第一个元素</span></span><br><span class="line">			q.pop_front();<span class="comment">//移除队列第一个元素</span></span><br><span class="line">			<span class="comment">//my_mutex2.unlock();</span></span><br><span class="line">			<span class="comment">//my_mutex1.unlock();</span></span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//my_mutex1.unlock();</span></span><br><span class="line">		<span class="comment">//my_mutex2.unlock();</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">outQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> item = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">			<span class="keyword">bool</span> res = isEmpty(item);</span><br><span class="line">			<span class="keyword">if</span> (res == <span class="literal">true</span>) &#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，取出一个数据"</span> &lt;&lt; item &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，队列为空"</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">	mutex my_mutex1;<span class="comment">//创建一个互斥量 锁1</span></span><br><span class="line">	mutex my_mutex2;<span class="comment">//创建一个互斥量 锁2</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	A myA;</span><br><span class="line">	<span class="comment">//创建向队列添加数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tIn</span><span class="params">(&amp;A::inQ, &amp;myA)</span></span>;</span><br><span class="line">	<span class="comment">//创建从队列读取数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tOut</span><span class="params">(&amp;A::outQ, &amp;myA)</span></span>;<span class="comment">//创建线程并执行 </span></span><br><span class="line"></span><br><span class="line">	tOut.join();</span><br><span class="line">	tIn.join();<span class="comment">//等待子线程完成</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"主线程结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="unique-lock"><a href="#unique-lock" class="headerlink" title="unique_lock()"></a>unique_lock()</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">(<span class="number">1</span>) unique_ock取代lock_guard</span><br><span class="line">(<span class="number">2</span>) unique_ock的第二个参数</span><br><span class="line">	(<span class="number">2.1</span>) <span class="built_in">std</span>::adopt_lock</span><br><span class="line">    (<span class="number">2.2</span>) <span class="built_in">std</span>::tyr_to_lock</span><br><span class="line">    (<span class="number">2.3</span>) <span class="built_in">std</span>::defer_lock</span><br><span class="line">(<span class="number">3</span>) unique_lock的成员函数</span><br><span class="line">	(<span class="number">3.1</span>) lock()</span><br><span class="line">	(<span class="number">3.2</span>) unlock()</span><br><span class="line">    (<span class="number">3.3</span>) try_lock)</span><br><span class="line">    (<span class="number">3.4</span>) <span class="built_in">release</span>()</span><br><span class="line">(<span class="number">4</span>) unique_lock所有权的传递</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 一: unique_lock取代lock_guard</span></span><br><span class="line"><span class="comment">//unique_lock是个类模板，工作中，一般lock_guard(推荐使用)﹔ lock_guard取代了mutex的lock 和unlock ();</span></span><br><span class="line"><span class="comment">//unique_lock比lock_guard灵活很多;效率上差一点，内存占用多一点。</span></span><br><span class="line"><span class="comment">//二:unique_lock的第二个参数</span></span><br><span class="line"><span class="comment">//lock_guard可以带第二个参数:</span></span><br><span class="line"><span class="comment">//std::lock_guard&lt;std::mutex〉 sbguard1(my_mutex1, std::adopt_lock):</span></span><br><span class="line"><span class="comment">//adopt_lock标记作用;</span></span><br><span class="line"><span class="comment">//(2.1) std::adopt_lock:表示这个互斥量已经被lock了(你必须要把互斥量提前lock了,否则会报异常)</span></span><br><span class="line"><span class="comment">//std::adopt_lock标记的效果就是“假设调用防线程已经拥有了互斥的所有权(已经lock()成功了）;</span></span><br><span class="line"><span class="comment">//通知lock_guard不需要在构造函数中lock这个互斥量了;</span></span><br><span class="line"><span class="comment">//unique_lock也可以带std; .adopt_lock标记，含义相同, 就是不希望再unique_lock()的构造函数中lock</span></span><br><span class="line"><span class="comment">//用这个adopt_lock的前提是，你需要自己先把mutex先lock上3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//(2.2）std::try_to_lock</span></span><br><span class="line"><span class="comment">//我们会尝试用mutex的lock()去锁定这个mutex，但如果没有锁定成动，也会立即返回，并不会阻塞在那里;</span></span><br><span class="line"><span class="comment">//用这个try_to_lock的前提是自己不能先去lock。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//(2.3）std::defer_lock</span></span><br><span class="line"><span class="comment">//用这个defer_lock的前提是你不能自己先lock，否则会报异常。</span></span><br><span class="line"><span class="comment">//defer_lock的意思就是并没有给mutext加锁:初始化了一个没有加锁的mutexo</span></span><br><span class="line"><span class="comment">//我们借着defer_lock的话题，来介绍一些unique_lock的重要成员函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 三:unique_lock的成员函数</span></span><br><span class="line"><span class="comment">// 以下成员函数都是配合std::defer_lock使用</span></span><br><span class="line"><span class="comment">//(3.1) lock()，加锁</span></span><br><span class="line"><span class="comment">//(3.2) unlock()，解锁</span></span><br><span class="line"><span class="comment">//(3.3) try lock()，尝试给互斥量加锁，如果拿不到锁，则返回false, 如果拿到了锁，返回true，这个函数不阻塞的; </span></span><br><span class="line"><span class="comment">//(3.4） release()，返回它所管理的mutex对象指针，并释放所有权;unique_lock和mutext不再有关系。</span></span><br><span class="line"><span class="comment">// 严格区分unlock()和release()的区别，不要混淆。</span></span><br><span class="line"><span class="comment">// 如果原来mutex对象处于加锁状态，你有责任接管过来并负责解锁。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//四、所有权转移</span></span><br><span class="line"><span class="comment">//实现转移的方式</span></span><br><span class="line"><span class="comment">//1 返回临时对象，调用unique_lock 移动构造函数</span></span><br><span class="line"><span class="comment">//2 使用move函数</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mutex&gt; //互斥量的引入</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//成员函数做线程入口</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">unique_lock&lt;mutex&gt; <span class="title">rtn_unique_lock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="function">unique_lock&lt;mutex&gt; <span class="title">tmpGuard</span><span class="params">(my_mutex1)</span></span>;</span><br><span class="line">		<span class="keyword">return</span> tmpGuard; <span class="comment">// 返回临时对象，调用unique_lock 移动构造函数</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//队列加入数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">inQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">"inQ执行，并在队列中加入一个元素："</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 1 unique_lock第二个参数使用adopt_lock</span></span><br><span class="line">			<span class="comment">//my_mutex1.lock();</span></span><br><span class="line">			<span class="comment">//unique_lock&lt;mutex&gt; sbguard1(my_mutex1,adopt_lock); </span></span><br><span class="line">			</span><br><span class="line">			<span class="comment">// 2 unique_lock第二个参数使用try_to_lock</span></span><br><span class="line">			<span class="comment">//unique_lock&lt;mutex&gt; sbguard1(my_mutex1, try_to_lock);</span></span><br><span class="line">			<span class="comment">//if (sbguard1.owns_lock()) &#123;</span></span><br><span class="line">				<span class="comment">//拿到了锁</span></span><br><span class="line">			<span class="comment">//	q.push_back(i);</span></span><br><span class="line">			<span class="comment">//&#125;</span></span><br><span class="line">			<span class="comment">//else &#123;</span></span><br><span class="line">				<span class="comment">//没有拿到锁</span></span><br><span class="line">			<span class="comment">//	cout &lt;&lt; "outQ延时20秒，所以在inQ中没有拿到锁，但是使用了try_to_lock，所以inQ的线程不会卡在这里"&lt;&lt;endl;</span></span><br><span class="line">			<span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line">			<span class="comment">// 3 unique_lock第三个参数使用defer_lock</span></span><br><span class="line">			<span class="comment">//unique_lock&lt;mutex&gt; sbguard1(my_mutex1, defer_lock); //没有加锁的my_mutex1</span></span><br><span class="line">			<span class="comment">// 3.1 unique_lock成员函数lock()和unlock()配合defer_lock使用</span></span><br><span class="line">			<span class="comment">//sbguard1.lock(); //给my_mutex1加锁</span></span><br><span class="line">			<span class="comment">//处理共享代码</span></span><br><span class="line">			<span class="comment">//sbguard1.unlock(); //意义就是能够便捷的控制解锁，使共享代码和非共享代码可以便捷的交替执行</span></span><br><span class="line">			<span class="comment">//处理非共享代码</span></span><br><span class="line">			<span class="comment">//sbguard1.lock();</span></span><br><span class="line">			<span class="comment">//处理共享代码</span></span><br><span class="line">			<span class="comment">//3.2 unique_lock成员函数try_lock配合defer_lock使用</span></span><br><span class="line">			<span class="comment">//if (sbguard1.try_lock() == true) &#123; //try_lock尝试上锁</span></span><br><span class="line">			<span class="comment">//	q.push_back(i);</span></span><br><span class="line">			<span class="comment">//&#125;</span></span><br><span class="line">			<span class="comment">//else &#123;</span></span><br><span class="line">			<span class="comment">//	cout &lt;&lt; "outQ延时20秒，所以在inQ中没有拿到锁，但是使用了try_to_lock，所以inQ的线程不会卡在这里" &lt;&lt; endl;</span></span><br><span class="line">			<span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line">			<span class="comment">//4 unique_lock成员函数release()的使用</span></span><br><span class="line">			<span class="comment">//unique_lock&lt;mutex&gt; sbguard1(my_mutex1); //my_mutex1已经加锁</span></span><br><span class="line">			<span class="comment">//mutex *ptx = sbguard1.release(); //指针指向my_mutex1， 此时unique_lock已经和my_mutex1没有关系</span></span><br><span class="line">			<span class="comment">//q.push_back(i);</span></span><br><span class="line">			<span class="comment">//ptx-&gt;unlock();//注意一定要在这里unlock 否则会报错 因为上面已经lock()了</span></span><br><span class="line"></span><br><span class="line">			<span class="comment">//5 所有权移动</span></span><br><span class="line">			 <span class="comment">// 移动语义 这个时候就直接把所有权转移到了sbGuard2了</span></span><br><span class="line">			<span class="comment">//方式1</span></span><br><span class="line">			<span class="comment">//unique_lock&lt;mutex&gt; sbguard1(my_mutex1);</span></span><br><span class="line">	        <span class="comment">//unique_lock&lt;mutex&gt; sbGuard2(move(sbguard1));</span></span><br><span class="line">			<span class="comment">//方式2</span></span><br><span class="line">			<span class="comment">//也可以通过返回</span></span><br><span class="line">			unique_lock&lt;mutex&gt; sbGuard2 = rtn_unique_lock();</span><br><span class="line">			q.push_back(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据线程的加锁代码</span></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">(<span class="keyword">int</span>&amp; item)</span> </span>&#123;</span><br><span class="line">		<span class="function">unique_lock&lt;mutex&gt; <span class="title">sbguard1</span><span class="params">(my_mutex1)</span></span>; <span class="comment">//unique_lock的使用</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//使线程在这里延时20秒</span></span><br><span class="line">		<span class="comment">//std::chrono::milliseconds dura(20000);//1秒= 1000毫秒，所以20000毫秒=20秒</span></span><br><span class="line">		<span class="comment">//std::this_thread::sleep_for(dura) ; //休息一定的时长</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!q.empty()) &#123;</span><br><span class="line">			<span class="comment">//取元素</span></span><br><span class="line">			item = q.front();<span class="comment">//获取队列第一个元素</span></span><br><span class="line">			q.pop_front();<span class="comment">//移除队列第一个元素</span></span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//取出数据的线程</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">outQ</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> item = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">			<span class="keyword">bool</span> res = isEmpty(item);</span><br><span class="line">			<span class="keyword">if</span> (res == <span class="literal">true</span>) &#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，取出一个数据"</span> &lt;&lt; item &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; <span class="string">"outQ执行，队列为空"</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">	mutex my_mutex1;<span class="comment">//创建一个互斥量 锁1</span></span><br><span class="line">	mutex my_mutex2;<span class="comment">//创建一个互斥量 锁2</span></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	A myA;</span><br><span class="line">	<span class="comment">//创建向队列添加数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tIn</span><span class="params">(&amp;A::inQ, &amp;myA)</span></span>;</span><br><span class="line">	<span class="comment">//创建从队列读取数据的线程</span></span><br><span class="line">	<span class="function">thread <span class="title">tOut</span><span class="params">(&amp;A::outQ, &amp;myA)</span></span>;<span class="comment">//创建线程并执行 </span></span><br><span class="line"></span><br><span class="line">	tOut.join();</span><br><span class="line">	tIn.join();<span class="comment">//等待子线程完成</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"主线程结束"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><h3 id="Lambda"><a href="#Lambda" class="headerlink" title="Lambda"></a>Lambda</h3><blockquote>
+<p>c++11新特性  匿名函数</p>
+<p><a href="https://www.bilibili.com/video/BV1CC4y187Km?from=search&seid=3858185157690700367&spm_id_from=333.337.0.0" target="_blank" rel="noopener">Lambda视频教程</a></p>
+</blockquote>
+<h3 id="calloc-与-malloc"><a href="#calloc-与-malloc" class="headerlink" title="calloc() 与 malloc()"></a>calloc() 与 <a href="http://c.biancheng.net/cpp/html/137.html" target="_blank" rel="noopener">malloc()</a></h3><blockquote>
+<p><a href="http://c.biancheng.net/cpp/html/134.html" target="_blank" rel="noopener">http://c.biancheng.net/cpp/html/134.html</a></p>
+</blockquote>
+<h3 id="assert"><a href="#assert" class="headerlink" title="assert()"></a>assert()</h3><blockquote>
+<p><a href="http://c.biancheng.net/ref/assert.html" target="_blank" rel="noopener">http://c.biancheng.net/ref/assert.html</a></p>
+</blockquote>
+]]></content>
       <categories>
         <category>C++</category>
       </categories>
@@ -2240,8 +2332,16 @@
 </li>
 <li><p><strong>安装成功验证</strong></p>
 <ul>
-<li>cmd终端输入：python，出现以下交互效果则安装成功</li>
-<li><img src="/2020/02/02/python/python%E8%A7%A3%E9%87%8A%E5%99%A8%E4%B8%8B%E8%BD%BD%E5%8F%8A%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20201215213006332.png" alt="image-20201215213006332"></li>
+<li><p>cmd终端输入：python，出现以下交互效果则安装成功</p>
+</li>
+<li><p><img src="/2020/02/02/python/python%E8%A7%A3%E9%87%8A%E5%99%A8%E4%B8%8B%E8%BD%BD%E5%8F%8A%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20201215213006332.png" alt="image-20201215213006332"></p>
+</li>
+<li><p>windows 安装好python并配置好环境变量，打开CMD命令行窗口输入 python 打开运行界面。 使用常规退出按键组合 Ctrl+c 关闭提示KeyboardInterrupt，无法终止结束。 </p>
+<ul>
+<li>输入exit ()退出</li>
+<li>Ctrl+z，退出</li>
+</ul>
+</li>
 </ul>
 </li>
 </ol>
@@ -2477,6 +2577,11 @@
 </li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">this.$nextTick(() &#x3D;&gt; &#123;</span><br><span class="line">	&#x2F;&#x2F;DOM渲染完成后需要执行的操作</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-vue-config-js配置"><a href="#5-vue-config-js配置" class="headerlink" title="5 vue.config.js配置"></a>5 vue.config.js配置</h2><ul>
+<li>vue.config.js 文件放在根目录下</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    devServer:&#123;</span><br><span class="line">        port: <span class="number">8999</span>, <span class="comment">//默认打开端口</span></span><br><span class="line">        open: tru  <span class="comment">//自动在浏览器打开</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -7426,7 +7531,7 @@
 <li>自动转换 JSON 数据</li>
 <li>客户端支持防御 <a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery" target="_blank" rel="noopener">XSRF</a></li>
 </ul>
-<ol>
+<h2 id="3-vue中使用axios"><a href="#3-vue中使用axios" class="headerlink" title="3 vue中使用axios"></a>3 vue中使用axios</h2><ol>
 <li>get方法——–传递数据用params</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import request from &#39;@&#x2F;utils&#x2F;request&#39;</span><br><span class="line">&#x2F;&#x2F;请求后端的基础地址</span><br><span class="line">const baseURL &#x3D; &#39;http:&#x2F;&#x2F;localhost:3000&#39;</span><br><span class="line"></span><br><span class="line">export function fetchList (params)&#123;</span><br><span class="line">    return request(&#123;</span><br><span class="line">        params, &#x2F;&#x2F;页面调用时传入的参数  在此处再传给后端</span><br><span class="line">        url:&#96;$&#123;baseURL&#125;&#x2F;playlist&#x2F;list&#96;,&#x2F;&#x2F;后端的&#96;$&#123;域名&#125;&#x2F;路由&#x2F;方法&#96;</span><br><span class="line">        method: &#39;get&#39; &#x2F;&#x2F;此处的请求方式get&quot;or&#39;post&#39;根据后端controller下方法路由设置而定    </span><br><span class="line">                      router.get&lt;&#x3D;&#x3D;&#x3D;&#x3D;&gt;&#39;get&#39;  router.post&lt;&#x3D;&#x3D;&#x3D;&#x3D;&gt;&#39;post&#39;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;再在页面中调用  fetchList方法  需要传入参数----在params中</span><br><span class="line">fetchList(&#123;</span><br><span class="line">                skip:this.playlist.length,  &#x2F;&#x2F;params中的参数</span><br><span class="line">                limit: this.count           &#x2F;&#x2F;params中的参数</span><br><span class="line">            &#125;).then((res) &#x3D;&gt; &#123;</span><br><span class="line">                console.log(res)</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
@@ -8461,13 +8566,19 @@
       </tags>
   </entry>
   <entry>
-    <title>nginx</title>
+    <title>nginx的使用</title>
     <url>/2020/02/06/third-repositories/nginx/nginx/</url>
     <content><![CDATA[<h1 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h1><ul>
 <li><strong><code>nginx</code>用于部署项目</strong></li>
 </ul>
 <h2 id="一、基础介绍"><a href="#一、基础介绍" class="headerlink" title="一、基础介绍"></a>一、基础介绍</h2><p>主机—–&gt; 操作系统（windows/linux）—–&gt;tomcat/nginx</p>
-<h3 id="1-1-安装"><a href="#1-1-安装" class="headerlink" title="1.1 安装"></a>1.1 安装</h3><ul>
+<h3 id="1-1-nginx基本概念"><a href="#1-1-nginx基本概念" class="headerlink" title="1.1 nginx基本概念"></a>1.1 nginx基本概念</h3><ul>
+<li><p>Nginx 是高性能的 HTTP 和反向代理的服务器，处理高并发能力是十分强大的， 能经受高负载的考验 有报告表明能支持高达 50,000 个并发连接数。</p>
+</li>
+<li><p>Nginx支持热部署。它的启动特别容易, 并且几乎可以做到7*24不间断运行，即使运行数个月也不需要重新启动。你还能够在不间断服务的情况下，对软件版本进行进行升级。</p>
+</li>
+</ul>
+<h3 id="1-2-在windows上安装nginx及使用"><a href="#1-2-在windows上安装nginx及使用" class="headerlink" title="1.2 在windows上安装nginx及使用"></a>1.2 在windows上安装nginx及使用</h3><h4 id="1-2-1-安装"><a href="#1-2-1-安装" class="headerlink" title="1.2.1 安装"></a>1.2.1 安装</h4><ul>
 <li><p><a href="http://nginx.org/" target="_blank" rel="noopener">nginx官网</a></p>
 </li>
 <li><p><a href="http://mirrors.sohu.com/nginx/" target="_blank" rel="noopener">国内镜像下载地址</a></p>
@@ -8492,8 +8603,11 @@
 <p><img src="/2020/02/06/third-repositories/nginx/nginx/1590059470671.png" alt></p>
 </li>
 </ul>
-<h3 id="1-2-使用"><a href="#1-2-使用" class="headerlink" title="1.2 使用"></a>1.2 使用</h3><ul>
-<li>关于nginx的cmd终端命令  <em>cmd终端切换到nginx的根目录下</em><ul>
+<h4 id="1-2-2-使用"><a href="#1-2-2-使用" class="headerlink" title="1.2.2  使用"></a>1.2.2  使用</h4><ul>
+<li><p>下载的时zip文件，解压后，进入解压的文件夹，双击nginx.exe即可启动nginx</p>
+</li>
+<li><p>关于nginx的cmd终端命令  <em>cmd终端切换到nginx的根目录下</em></p>
+<ul>
 <li><code>nginx.exe</code>: 启动nginx   或者直接双击nginx.exe文件也可启动nginx<ul>
 <li>网址输入localhost     页面显示welcome nginx则启动成功</li>
 <li>每次配置文件修改后都需要重启nginx</li>
@@ -8505,11 +8619,196 @@
 </ul>
 </li>
 </ul>
-<h3 id="1-3-Nginx的配置文件"><a href="#1-3-Nginx的配置文件" class="headerlink" title="1.3 Nginx的配置文件"></a>1.3 Nginx的配置文件</h3><blockquote>
-<p><a href="https://www.cnblogs.com/paulwhw/articles/11116363.html" target="_blank" rel="noopener"><code>nginx.conf</code>文件解析</a></p>
+<h3 id="1-3-在Linux-CentOS-系统安装nginx及使用"><a href="#1-3-在Linux-CentOS-系统安装nginx及使用" class="headerlink" title="1.3 在Linux(CentOS)系统安装nginx及使用"></a>1.3 在Linux(CentOS)系统安装nginx及使用</h3><h4 id="1-3-1-安装"><a href="#1-3-1-安装" class="headerlink" title="1.3.1 安装"></a>1.3.1 安装</h4><h5 id="1-终端切换为root用户"><a href="#1-终端切换为root用户" class="headerlink" title="1 )终端切换为root用户"></a>1 )终端切换为root用户</h5><ul>
+<li>输入的密码为服务器密码</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">su</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2020/02/06/third-repositories/nginx/nginx/image-20211117224324926.png" alt="image-20211117224324926"></p>
+<h5 id="2-安装依赖"><a href="#2-安装依赖" class="headerlink" title="2)安装依赖"></a>2)安装依赖</h5><blockquote>
+<p>在任意目录下执行</p>
 </blockquote>
+<ul>
+<li>gcc编译是否安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">检查安装：yum list installed | grep gcc</span><br><span class="line">执行安装：yum install gcc -y</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>openssl库编译是否安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">检查安装：yum list installed | grep openssl</span><br><span class="line">执行安装：yum install openssl openssl-devel -y</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>pcre库编译是否安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">检查安装：yum list installed | grep pcre</span><br><span class="line">执行安装：yum install pcre pcre-devel -y</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>zlib库编译是否安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">检查安装：yum list installed | grep zlib</span><br><span class="line">执行安装：yum install zlib zlib-devel -y</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>一次性安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一次性安装: yum install gcc openssl openssl-devel pcre pcre-devel zlib zlib-devel -y</span><br></pre></td></tr></table></figure>
+
+<p>( -y 代表自动安装 ， 自动选择 Y)</p>
+<h5 id="3-下载nginx"><a href="#3-下载nginx" class="headerlink" title="3)下载nginx"></a>3)下载nginx</h5><ul>
+<li>再切换到/usr/loacl目录下下载Nginx</li>
+</ul>
+<p><img src="/2020/02/06/third-repositories/nginx/nginx/image-20211117225214421.png" alt="image-20211117225214421"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd  &#x2F;usr&#x2F;local</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>下载</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;nginx.org&#x2F;download&#x2F;nginx-1.18.0.tar.gz</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>解压<ul>
+<li>解压后的文件名为：nginx-1.18.0， 该文件就在/usr/local下</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tar -zxvf nginx-1.18.0.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-安装nginx"><a href="#4-安装nginx" class="headerlink" title="4)安装nginx"></a>4)安装nginx</h5><ul>
+<li>打开nginx解压后路径, 即切换到nginx-1.18.0目录下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd nginx-1.18.0</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指定安装路径 (–prefix 是指定nginx安装路径)， 在终端执行如下2条命令完成安装<ul>
+<li>安装完成后会在/usr/local目录下生成nginx文件夹</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;configure --prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;nginx</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-2-使用-nginx常用命令"><a href="#1-3-2-使用-nginx常用命令" class="headerlink" title="1.3.2 使用(nginx常用命令)"></a>1.3.2 使用(nginx常用命令)</h4><blockquote>
+<p><strong>注意：执行以下命令时，终端先切换到/usr/local/nginx/sbin目录下</strong></p>
+</blockquote>
+<h5 id="启动nginx"><a href="#启动nginx" class="headerlink" title="启动nginx"></a>启动nginx</h5><ul>
+<li>切换到/usr/local/nginx/sbin文件夹下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;nginx</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>或者切换到/usr/local/nginx文件夹下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;sbin&#x2F;nginx</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>或者按配置文件启动</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin&#x2F;nginx -c &#x2F;usr&#x2F;local&#x2F;conf&#x2F;nginx.conf</span><br></pre></td></tr></table></figure>
+
+<h5 id="检测nginx是否启动"><a href="#检测nginx是否启动" class="headerlink" title="检测nginx是否启动"></a>检测nginx是否启动</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ps -ef | grep nginx</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>若启动成功终端如下</li>
+</ul>
+<p><img src="/2020/02/06/third-repositories/nginx/nginx/image-20211117231353942.png" alt="image-20211117231353942"></p>
+<h5 id="重新加载nginx"><a href="#重新加载nginx" class="headerlink" title="重新加载nginx"></a>重新加载nginx</h5><ul>
+<li>例如修改了nginx.conf后则需要重新加载才能更新修改的配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<h5 id="关闭nginx"><a href="#关闭nginx" class="headerlink" title="关闭nginx"></a>关闭nginx</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;nginx -s stop</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="1-3-3-防火墙问题"><a href="#1-3-3-防火墙问题" class="headerlink" title="1.3.3 防火墙问题"></a>1.3.3 防火墙问题</h4><blockquote>
+<p>若是在windows的虚拟机的linux(CentOS)系统安装的nginx, 则启动nginx后不能在浏览器正常访问，需要开放防火墙对80端口的限制</p>
+</blockquote>
+<ul>
+<li>查看f防火墙开放的端口号</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">firewall-cmd --list-all</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>设置开放的端口号</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">firewall-cmd --add-port&#x3D;80&#x2F;tcp --permanent</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>重启防火墙<ul>
+<li>重启后才能看到80/tcp开放成功了</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/02/06/third-repositories/nginx/nginx/image-20211120144959605.png" alt="image-20211120144959605"></p>
+<ul>
+<li>终端出现如下提示，则是防火墙没有开启</li>
+</ul>
+<p><img src="/2020/02/06/third-repositories/nginx/nginx/image-20211120150215367.png" alt="image-20211120150215367"></p>
+<ul>
+<li>开启，关闭及查看防火墙状态命令<ul>
+<li>开启防火墙：systemctl start firewalld</li>
+<li>关闭防火墙：systemctl stop firewalld</li>
+<li>查看防火墙状态：systemctl status firewalld</li>
+</ul>
+</li>
+<li>移除端口<ul>
+<li>移除后，也需要重启防火强才能看到移除了</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">firewall-cmd --remove-port&#x3D;80&#x2F;tcp --permanent</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-4-Nginx的配置文件"><a href="#1-4-Nginx的配置文件" class="headerlink" title="1.4  Nginx的配置文件"></a>1.4  Nginx的配置文件</h3><blockquote>
+<p><a href="https://www.cnblogs.com/paulwhw/articles/11116363.html" target="_blank" rel="noopener"><code>nginx.conf</code>文件解析</a></p>
+<ul>
+<li>配置文件的位置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">linux下：&#x2F;usr&#x2F;loacal&#x2F;nginx&#x2F;conf&#x2F;nginx.conf</span><br><span class="line">wIndows下： 解压的nginx文件夹&#x2F;conf&#x2F;nginx.conf</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>配置文件的内容 :</strong></p>
+<p>1)全局块：配置服务器整体运行的配置指令</p>
+<ul>
+<li>从配置文件开始到 events 块之间的内容，主要会设置一些影响nginx 服务器整体运行的配置指令，主要包括配置运行 Nginx 服务器的用户（组）、允许生成的 worker process 数，进程 PID 存放路径、日志存放路径和类型以及配置文件的引入等。</li>
+<li>例如：worker_processes <ul>
+<li>这是 Nginx 服务器并发处理服务的关键配置，worker_processes 值越大，可以支持的并发处理量也越多，但是会受到硬件、软件等设备的制约，建议设置为等于CPU总核心数</li>
+</ul>
+</li>
+</ul>
+<p>2)events 块 ：影响 Nginx 服务器与用户的网络连接</p>
+<ul>
+<li>events 块涉及的指令主要影响 Nginx 服务器与用户的网络连接，常用的设置包括是否开启对多 work process 下的网络连接进行序列化，是否允许同时接收多个网络连接，选取哪种事件驱动模型来处理连接请求，每个 word process 可以同时支持的最大连接数等。</li>
+</ul>
+<p>3)http 块</p>
+<ul>
+<li>这算是 Nginx 服务器配置中最频繁的部分，代理、缓存和日志定义等绝大多数功能和第三方模块的配置都在这里。</li>
+<li>http 块也可以包括 http全局块、server 块。</li>
+</ul>
+<p>3.1)http 全局块</p>
+<ul>
+<li>http全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自定义、连接超时时间、单链接请求数上限等。</li>
+</ul>
+<p>3.2)server 块</p>
+<ul>
+<li>这块和虚拟主机有密切关系，虚拟主机从用户角度看，和一台独立的硬件主机是完全一样的，该技术的产生是为了节省互联网服务器硬件成本。</li>
+<li>每个 http 块可以包括多个 server 块，而每个 server 块就相当于一个虚拟主机。</li>
+<li>而每个 server 块也分为全局 server 块，以及可以同时包含多个 locaton 块。</li>
+</ul>
+<p>3.2.1)全局 server 块</p>
+<ul>
+<li>最常见的配置是本虚拟机主机的监听配置和本虚拟主机的名称或IP配置。</li>
+</ul>
+<p>3.2.2)location 块</p>
+<ul>
+<li>一个 server 块可以配置多个 location 块。</li>
+<li>这块的主要作用是基于 Nginx 服务器接收到的请求字符串（例如 server_name/uri-string），对虚拟主机名称（也可以是IP别名）之外的字符串（例如 前面的 /uri-string）进行匹配，对特定的请求进行处理。地址定向、数据缓存和应答控制等功能，还有许多第三方模块的配置也在这里进行。</li>
+</ul>
 <p><strong><code>nginx.conf</code>文件</strong></p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">#user  nobody;</span><br><span class="line">worker_processes  1;</span><br><span class="line">#worker_processes数值越大并发能力越强  </span><br><span class="line"></span><br><span class="line">#error_log  logs/error.log;</span><br><span class="line">#error_log  logs/error.log  notice;</span><br><span class="line">#error_log  logs/error.log  info;</span><br><span class="line">#错误存放的地址</span><br><span class="line"></span><br><span class="line">#pid        logs/nginx.pid;</span><br><span class="line"></span><br><span class="line">#以上为全局快</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#以上为events块</span><br><span class="line">#worker_connections数值越大并发能力越强</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '</span><br><span class="line">    #                  '$status $body_bytes_sent "$http_referer" '</span><br><span class="line">    #                  '"$http_user_agent" "$http_x_forwarded_for"';</span><br><span class="line"></span><br><span class="line">    #access_log  logs/access.log  main;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line">    #tcp_nopush     on;</span><br><span class="line"></span><br><span class="line">    #keepalive_timeout  0;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">    #gzip  on;</span><br><span class="line"></span><br><span class="line">    #include     servers/*.conf;</span><br><span class="line">    server &#123;</span><br><span class="line">      listen       80; </span><br><span class="line">      server_name  test.com;</span><br><span class="line"></span><br><span class="line">      location / &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:8888;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  localhost;</span><br><span class="line"></span><br><span class="line">        #charset koi8-r;</span><br><span class="line"></span><br><span class="line">        #access_log  logs/host.access.log  main;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            root   html;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">		#以上为location块</span><br><span class="line">		#root: 将接收的请求根据html路径去查找静态资源</span><br><span class="line">		#index: 默认去上述中找到index.html或index.htm 以响应用户</span><br><span class="line">    &#125;</span><br><span class="line">	#以上是server块</span><br><span class="line">	#listen： nginx监听的端口</span><br><span class="line">	#server_name: nginx接收的ip地址或域名</span><br><span class="line">&#125;</span><br><span class="line">#以上为http块</span><br><span class="line">#include 表示从外部引入文件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # another virtual host using mix of IP-, name-, and port-based configuration</span><br><span class="line">    #</span><br><span class="line">    #server &#123;</span><br><span class="line">    #    listen       8000;</span><br><span class="line">    #    listen       somename:8080;</span><br><span class="line">    #    server_name  somename  alias  another.alias;</span><br><span class="line"></span><br><span class="line">    #    location / &#123;</span><br><span class="line">    #        root   html;</span><br><span class="line">    #        index  index.html index.htm;</span><br><span class="line">    #    &#125;</span><br><span class="line">    #&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # HTTPS server</span><br><span class="line">    #</span><br><span class="line">    #server &#123;</span><br><span class="line">    #    listen       443 ssl;</span><br><span class="line">    #    server_name  localhost;</span><br><span class="line"></span><br><span class="line">    #    ssl_certificate      cert.pem;</span><br><span class="line">    #    ssl_certificate_key  cert.key;</span><br><span class="line"></span><br><span class="line">    #    ssl_session_cache    shared:SSL:1m;</span><br><span class="line">    #    ssl_session_timeout  5m;</span><br><span class="line"></span><br><span class="line">    #    ssl_ciphers  HIGH:!aNULL:!MD5;</span><br><span class="line">    #    ssl_prefer_server_ciphers  on;</span><br><span class="line"></span><br><span class="line">    #    location / &#123;</span><br><span class="line">    #        root   html;</span><br><span class="line">    #        index  index.html index.htm;</span><br><span class="line">    #    &#125;</span><br><span class="line">    #&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">#user  nobody;</span><br><span class="line">worker_processes  1;</span><br><span class="line">#worker_processes数值越大并发能力越强  处理并发数的配置 </span><br><span class="line"></span><br><span class="line">#error_log  logs/error.log;</span><br><span class="line">#error_log  logs/error.log  notice;</span><br><span class="line">#error_log  logs/error.log  info;</span><br><span class="line">#错误存放的地址</span><br><span class="line"></span><br><span class="line">#pid        logs/nginx.pid;</span><br><span class="line"></span><br><span class="line">#以上为全局快</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#以上为events块</span><br><span class="line">#worker_connections数值越大并发能力越强   支持的最大连接数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '</span><br><span class="line">    #                  '$status $body_bytes_sent "$http_referer" '</span><br><span class="line">    #                  '"$http_user_agent" "$http_x_forwarded_for"';</span><br><span class="line"></span><br><span class="line">    #access_log  logs/access.log  main;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line">    #tcp_nopush     on;</span><br><span class="line"></span><br><span class="line">    #keepalive_timeout  0;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">    #gzip  on;</span><br><span class="line"></span><br><span class="line">    #include     servers/*.conf;</span><br><span class="line">    server &#123;</span><br><span class="line">      listen       80; </span><br><span class="line">      server_name  test.com;</span><br><span class="line"></span><br><span class="line">      location / &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:8888;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  localhost;</span><br><span class="line"></span><br><span class="line">        #charset koi8-r;</span><br><span class="line"></span><br><span class="line">        #access_log  logs/host.access.log  main;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            root   html;</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line">		#以上为location块</span><br><span class="line">		#root: 将接收的请求根据html路径去查找静态资源</span><br><span class="line">		#index: 默认去上述中找到index.html或index.htm 以响应用户</span><br><span class="line">    &#125;</span><br><span class="line">	#以上是server块</span><br><span class="line">	#listen： nginx监听的端口</span><br><span class="line">	#server_name: nginx接收的ip地址或域名</span><br><span class="line">&#125;</span><br><span class="line">#以上为http块</span><br><span class="line">#include 表示从外部引入文件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # another virtual host using mix of IP-, name-, and port-based configuration</span><br><span class="line">    #</span><br><span class="line">    #server &#123;</span><br><span class="line">    #    listen       8000;</span><br><span class="line">    #    listen       somename:8080;</span><br><span class="line">    #    server_name  somename  alias  another.alias;</span><br><span class="line"></span><br><span class="line">    #    location / &#123;</span><br><span class="line">    #        root   html;</span><br><span class="line">    #        index  index.html index.htm;</span><br><span class="line">    #    &#125;</span><br><span class="line">    #&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # HTTPS server</span><br><span class="line">    #</span><br><span class="line">    #server &#123;</span><br><span class="line">    #    listen       443 ssl;</span><br><span class="line">    #    server_name  localhost;</span><br><span class="line"></span><br><span class="line">    #    ssl_certificate      cert.pem;</span><br><span class="line">    #    ssl_certificate_key  cert.key;</span><br><span class="line"></span><br><span class="line">    #    ssl_session_cache    shared:SSL:1m;</span><br><span class="line">    #    ssl_session_timeout  5m;</span><br><span class="line"></span><br><span class="line">    #    ssl_ciphers  HIGH:!aNULL:!MD5;</span><br><span class="line">    #    ssl_prefer_server_ciphers  on;</span><br><span class="line"></span><br><span class="line">    #    location / &#123;</span><br><span class="line">    #        root   html;</span><br><span class="line">    #        index  index.html index.htm;</span><br><span class="line">    #    &#125;</span><br><span class="line">    #&#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -8649,6 +8948,7 @@
       </categories>
       <tags>
         <tag>nginx</tag>
+        <tag>CentOS</tag>
       </tags>
   </entry>
   <entry>
@@ -10488,7 +10788,7 @@
     <url>/2020/01/07/tools/cmd/cmd/</url>
     <content><![CDATA[<h1 id="win-r"><a href="#win-r" class="headerlink" title="win+r"></a>win+r</h1><h3 id="1cmd"><a href="#1cmd" class="headerlink" title="1cmd"></a>1cmd</h3><h4 id="1-1-磁盘切换"><a href="#1-1-磁盘切换" class="headerlink" title="1.1 磁盘切换"></a>1.1 磁盘切换</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">切换到D盘根目录——   cd &#x2F;d D:</span><br><span class="line">切换到D:\dev目录—— cd &#x2F;d D:\dev</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-查看电脑型号"><a href="#2-查看电脑型号" class="headerlink" title="2 查看电脑型号"></a>2 查看电脑型号</h3><ul>
+<h4 id="1-2-dir-显示目录下的文件即文件夹"><a href="#1-2-dir-显示目录下的文件即文件夹" class="headerlink" title="1.2 dir 显示目录下的文件即文件夹"></a>1.2 dir 显示目录下的文件即文件夹</h4><h3 id="2-查看电脑型号"><a href="#2-查看电脑型号" class="headerlink" title="2 查看电脑型号"></a>2 查看电脑型号</h3><ul>
 <li>win+r   输入：<code>dxdiag</code> 回车  即可查看到</li>
 </ul>
 <h3 id="3-查看注册表"><a href="#3-查看注册表" class="headerlink" title="3  查看注册表"></a>3  查看注册表</h3><ul>
@@ -12335,6 +12635,19 @@
 <ul>
 <li>出现这个问题的原因是原键绑定设置了执行条件“!inDebugMode”，这个条件不能在原默认设置单独删除，所以将原来的配置整体删除后重新设置即可。</li>
 </ul>
+<h3 id="2-4-设置vue模板快捷生成"><a href="#2-4-设置vue模板快捷生成" class="headerlink" title="2.4 设置vue模板快捷生成"></a>2.4 设置vue模板快捷生成</h3><blockquote>
+<p>教程：<a href="https://blog.csdn.net/weixin_44157964/article/details/105602639" target="_blank" rel="noopener">https://blog.csdn.net/weixin_44157964/article/details/105602639</a></p>
+</blockquote>
+<ul>
+<li>首选项—–用户片段—–vue</li>
+</ul>
+<p><img src="/2020/01/01/tools/vscode/vscode/image-20211111095757475.png" alt="image-20211111095757475"></p>
+<ul>
+<li>vue.json复制为如下代码</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="comment">// Place your snippets for vue here. Each snippet is defined under a snippet name and has a prefix, body and </span></span><br><span class="line">	<span class="comment">// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:</span></span><br><span class="line">	<span class="comment">// $1, $2 for tab stops, $0 for the final cursor position, and $&#123;1:label&#125;, $&#123;2:another&#125; for placeholders. Placeholders with the </span></span><br><span class="line">	<span class="comment">// same ids are connected.</span></span><br><span class="line">	<span class="comment">// Example:</span></span><br><span class="line">	<span class="comment">// "Print to console": &#123;</span></span><br><span class="line">	<span class="comment">// 	"prefix": "log",</span></span><br><span class="line">	<span class="comment">// 	"body": [</span></span><br><span class="line">	<span class="comment">// 		"console.log('$1');",</span></span><br><span class="line">	<span class="comment">// 		"$2"</span></span><br><span class="line">	<span class="comment">// 	],</span></span><br><span class="line">	<span class="comment">// 	"description": "Log output to console"</span></span><br><span class="line">	<span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">	<span class="attr">"Print to console"</span>: &#123;</span><br><span class="line">        <span class="attr">"prefix"</span>: <span class="string">"vue"</span>,</span><br><span class="line">        <span class="attr">"body"</span>: [</span><br><span class="line">            <span class="string">"&lt;template&gt;"</span>,</span><br><span class="line">            <span class="string">"    &lt;div&gt;\n"</span>,</span><br><span class="line">            <span class="string">"    &lt;/div&gt;"</span>,</span><br><span class="line">            <span class="string">"&lt;/template&gt;"</span>,</span><br><span class="line">            <span class="string">"&lt;script&gt;"</span>,</span><br><span class="line">            <span class="string">"export default &#123;"</span>,</span><br><span class="line">            <span class="string">"   data() &#123;"</span>,</span><br><span class="line">            <span class="string">"      return &#123;"</span>,</span><br><span class="line">			<span class="string">"      &#125;"</span>,</span><br><span class="line">			<span class="string">"   &#125;,"</span>,</span><br><span class="line">			<span class="string">"   created()&#123;"</span>,</span><br><span class="line">			<span class="string">"   &#125;,"</span>,</span><br><span class="line">			<span class="string">"   computed:&#123;"</span>,</span><br><span class="line">			<span class="string">"   &#125;,"</span>,</span><br><span class="line">			<span class="string">"   methods:&#123;"</span>,</span><br><span class="line">			<span class="string">"   &#125;,"</span>,</span><br><span class="line">			<span class="string">"&#125;"</span>,</span><br><span class="line">			<span class="string">"&lt;/script&gt;"</span>,</span><br><span class="line">			<span class="string">"&lt;style lang=\"scss\" scoped&gt;\n"</span>,</span><br><span class="line">			<span class="string">"&lt;/style&gt;"</span>,</span><br><span class="line">            <span class="string">"$2"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"description"</span>: <span class="string">"Log output to console"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用：<code>输入vue+tab键</code>即可自动补全</p>
 <h2 id="3-配置"><a href="#3-配置" class="headerlink" title="3 配置"></a>3 配置</h2><h3 id="3-1-启动项配置"><a href="#3-1-启动项配置" class="headerlink" title="3.1 启动项配置"></a>3.1 启动项配置</h3><h4 id="3-1-1-每次调试弹出运行环境的选择"><a href="#3-1-1-每次调试弹出运行环境的选择" class="headerlink" title="3.1.1 每次调试弹出运行环境的选择"></a>3.1.1 每次调试弹出运行环境的选择</h4><p><strong>问题描述：</strong></p>
 <ul>
 <li><p>每次点击<code>shift+f5</code>都弹出如下运行环境的选择框，使得调试过程很不便捷</p>
@@ -12380,8 +12693,11 @@
 <h2 id="4-小技巧"><a href="#4-小技巧" class="headerlink" title="4 小技巧"></a>4 小技巧</h2><h3 id="4-1-同时添加多个光标"><a href="#4-1-同时添加多个光标" class="headerlink" title="4.1 同时添加多个光标"></a>4.1 同时添加多个光标</h3><p><strong>单个添加:</strong> 将光标放在一个位置，然后按住Alt键的时候用鼠标点击其他地方，点到的地方就会添加一个光标出来<br><strong>添加一整列:</strong> 按住Shift+Alt然后鼠标下拉，即可添加一整列光标</p>
 <h3 id="4-2-函数注释"><a href="#4-2-函数注释" class="headerlink" title="4.2 函数注释"></a>4.2 函数注释</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">语法：</span><br><span class="line"><span class="comment">/**回车</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">效果：</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 函数注释</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
 
-
-
+<h2 id="5-问题"><a href="#5-问题" class="headerlink" title="5 问题"></a>5 问题</h2><h3 id="5-1英文界面问题"><a href="#5-1英文界面问题" class="headerlink" title="5.1英文界面问题"></a>5.1英文界面问题</h3><p>有时候我们vscode已经下载好中文简体的插件，但是通过vue init webpack xxx创建的vue项目用vscode打开后还是会切换回英文界面。</p>
+<p>这时候需要做如下操作：</p>
+<p>1.Ctrl＋ Shift ＋P （command+shift+P）输入display 选择Configure display Language </p>
+<p>2.选择zh-cn</p>
+<p>这时候vscode会提示需要重启，点击restart重启vscode，重启后vscode就会显示中文界面。</p>
 <h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="1-vscode前端最佳配置"><a href="#1-vscode前端最佳配置" class="headerlink" title="1 vscode前端最佳配置"></a>1 vscode前端最佳配置</h3><blockquote>
 <p><a href="https://blog.csdn.net/win7583362/article/details/79315055/" target="_blank" rel="noopener">2020 vscode 前端最佳配置</a></p>
 </blockquote>
@@ -12837,6 +13153,24 @@
 </ul>
 </li>
 </ul>
+<blockquote>
+<p>前端组件库</p>
+<ul>
+<li><p>React UI 组件库<br>Ant Design ：<a href="https://ant.design/" target="_blank" rel="noopener">https://ant.design/</a><br>React Bootstrap： <a href="https://react-bootstrap.github.io/" target="_blank" rel="noopener">https://react-bootstrap.github.io/</a><br>MATERIAL-UI ：  <a href="https://material-ui.com/" target="_blank" rel="noopener">https://material-ui.com/</a></p>
+</li>
+<li><p>Vue UI组件库</p>
+<p>Element : <a href="https://element.eleme.io/#/zh-CN" target="_blank" rel="noopener">https://element.eleme.io/#/zh-CN</a><br>vant : <a href="https://youzan.github.io/vant/#/zh-C%E2%80%A6" target="_blank" rel="noopener">https://youzan.github.io/vant/#/zh-C%E2%80%A6</a><br>View UI :  <a href="https://www.iviewui.com/" target="_blank" rel="noopener">https://www.iviewui.com/</a></p>
+</li>
+<li><p>动画库<br>Animate.css ：  <a href="https://animate.style/" target="_blank" rel="noopener">https://animate.style/</a></p>
+</li>
+<li><p>常用效果组件<br>swiper ： <a href="https://www.swiper.com.cn/" target="_blank" rel="noopener">https://www.swiper.com.cn/</a><br>mescroll.js   <a href="http://www.mescroll.com/api.html" target="_blank" rel="noopener">http://www.mescroll.com/api.html</a></p>
+</li>
+<li><p>工具类轮子<br>lodash.js ：  <a href="https://www.lodashjs.com/" target="_blank" rel="noopener">https://www.lodashjs.com/</a><br>Day.js  ： <a href="https://dayjs.fenxianglu.cn/" target="_blank" rel="noopener">https://dayjs.fenxianglu.cn/</a><br>timeago.js ：  <a href="https://github.com/hustcc/timeago.js" target="_blank" rel="noopener">https://github.com/hustcc/timeago.js</a><br>echarts  ：  <a href="https://echarts.apache.org/zh/index.html" target="_blank" rel="noopener">https://echarts.apache.org/zh/index.html</a><br>Meditor.md  :  <a href="https://pandao.github.io/editor.md/" target="_blank" rel="noopener">https://pandao.github.io/editor.md/</a><br>validator.js :   <a href="https://github.com/validatorjs/validator.js" target="_blank" rel="noopener">https://github.com/validatorjs/validator.js</a></p>
+</li>
+<li><p>Vue工具类<br>vue-draggable ：  <a href="https://www.itxst.com/vue-draggable/tutorial.html" target="_blank" rel="noopener">https://www.itxst.com/vue-draggable/tutorial.html</a><br>vue-qr :   <a href="https://www.npmjs.com/package/vue-qr" target="_blank" rel="noopener">https://www.npmjs.com/package/vue-qr</a><br>vue-cropper :   <a href="https://github.com/xyxiao001/vue-cropper" target="_blank" rel="noopener">https://github.com/xyxiao001/vue-cropper</a><br>vue-lazyload :   <a href="https://www.npmjs.com/package/vue-lazyload" target="_blank" rel="noopener">https://www.npmjs.com/package/vue-lazyload</a><br>vue-simple-upload :   <a href="https://github.com/saivarunk/vue-simple-upload" target="_blank" rel="noopener">https://github.com/saivarunk/vue-simple-upload</a></p>
+</li>
+</ul>
+</blockquote>
 <h1 id="一、Vue"><a href="#一、Vue" class="headerlink" title="一、Vue"></a>一、Vue</h1><blockquote>
 <p><a href="https://cn.vuejs.org/" target="_blank" rel="noopener">Vue官方文档</a></p>
 <p><a href="https://v3.cn.vuejs.org/" target="_blank" rel="noopener">Vue3官方文档</a></p>
@@ -13789,6 +14123,429 @@
         <tag>webpack</tag>
         <tag>vue3</tag>
         <tag>React</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Intel TBB库+VS2019+WIN10配置</title>
+    <url>/2021/11/22/C++/Intel%20TBB%E5%BA%93+VS2019+WIN10%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h1 id="Intel-TBB库-VS2019-WIN10配置"><a href="#Intel-TBB库-VS2019-WIN10配置" class="headerlink" title="Intel TBB库+VS2019+WIN10配置"></a>Intel TBB库+VS2019+WIN10配置</h1><blockquote>
+<p>参考：<a href="https://blog.csdn.net/weixin_42973508/article/details/109190717" target="_blank" rel="noopener">https://blog.csdn.net/weixin_42973508/article/details/109190717</a></p>
+</blockquote>
+<h2 id="下载TBB"><a href="#下载TBB" class="headerlink" title="下载TBB"></a>下载TBB</h2><blockquote>
+<p><a href="https://github.com/oneapi-src/oneTBB" target="_blank" rel="noopener">GitHub下载TBB</a></p>
+<p>下载编译好的的版本下载解压即可</p>
+</blockquote>
+<p><img src="/2021/11/22/C++/Intel%20TBB%E5%BA%93+VS2019+WIN10%E9%85%8D%E7%BD%AE/C:%5CUsers%5CChuckie%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20211122160007926.png" alt="image-20211122160007926"></p>
+<p><img src="/2021/11/22/C++/Intel%20TBB%E5%BA%93+VS2019+WIN10%E9%85%8D%E7%BD%AE/C:%5CUsers%5CChuckie%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20211122160555627.png" alt="image-20211122160555627"></p>
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><ul>
+<li>下载编译好的版本，解压后如下图</li>
+</ul>
+<p>![image-20211122160907533](Intel TBB库+VS2019+WIN10配置/image-20211122160907533.png)</p>
+<ul>
+<li><p>右键此电脑–&gt;属性–&gt;高级系统设置–&gt;环境变量–&gt;系统变量–&gt;path，添加DLL动态库。如下图</p>
+<ul>
+<li><strong>*请务必将32和64位的文件夹都加入环境变量</strong>，不然你的TBB程序在VS中调试时会无法运行*</li>
+</ul>
+<p>![image-20211122161430441](Intel TBB库+VS2019+WIN10配置/image-20211122161430441.png)</p>
+</li>
+</ul>
+<p>![image-20211122161546224](Intel TBB库+VS2019+WIN10配置/image-20211122161546224.png)</p>
+<h2 id="配置项目属性"><a href="#配置项目属性" class="headerlink" title="配置项目属性"></a>配置项目属性</h2><ul>
+<li>打开需要使用TBB的项目，右击项目–&gt;属性–&gt;VC++目录–&gt;包含目录–&gt;编辑  做如下添加</li>
+</ul>
+<p>![image-20211122162145122](Intel TBB库+VS2019+WIN10配置/image-20211122162145122.png)</p>
+<ul>
+<li>打开需要使用TBB的项目，右击项目–&gt;属性–&gt;VC++目录–&gt;库目录–&gt;编辑  做如下添加<ul>
+<li><em>这里注意一下VS的版本和运行平台的对应关系，X86对应ia32，X64对应intel64。</em></li>
+</ul>
+</li>
+</ul>
+<p>![image-20211122162532145](Intel TBB库+VS2019+WIN10配置/image-20211122162532145.png)</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>TBB</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>win10下生成ssh公钥</title>
+    <url>/2021/11/22/C++/win10%E4%B8%8B%E7%94%9F%E6%88%90ssh%E5%85%AC%E9%92%A5/</url>
+    <content><![CDATA[<h1 id="win10下生成ssh公钥"><a href="#win10下生成ssh公钥" class="headerlink" title="win10下生成ssh公钥"></a>win10下生成ssh公钥</h1><blockquote>
+<p>[windows下部署ssh公钥](<a href="https://www.pianshen.com/article/14751878479/" target="_blank" rel="noopener">windows下部署ssh公钥 - 程序员大本营 (pianshen.com)</a>)</p>
+</blockquote>
+<p><img src="/2021/11/22/C++/win10%E4%B8%8B%E7%94%9F%E6%88%90ssh%E5%85%AC%E9%92%A5/image-20211122165708487.png" alt="image-20211122165708487"></p>
+<p>ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC9MSfHgqvDJdKfbJYrR76krManBgxmkD6Gwd1ubhvDSDtq6gv79isulbxfabtW/9Yl+6xb/tRuG7ArhYIzqxZhMKDvcQbJGAKdnb6Oav8jNdK++VwfDheGO/R2M8UWH3nCgh6HW6G3wQFdzzAJnr/3oVTP/RXIgFI1iviFcFf0NyHBlxX8buLNT5FTB12RjTyYRZmEuUvmb2cVCI17XW16u7yZM6xlfQiGZXsL9wOee9pF6qq/DXNkuejdUl3osnX4hGij4OAbD3t46BYN6gW+AnHJJUZ0svRjJm5Lkog3AgAy4iy1gTBxk4TpI+whYlaBHYaSQDAndTspdp1/qAvFMtl54WyhY4PYZ3KetZLODhldisGujug3eexqlYewIZ7DN8gIOj9567sfY8RNnccNaCS2yy1DSkCs/iviY/LqQQNrdZTTmi+4hxd2cME8QbevIxHBcu5h7FM6FiVhkXX8tMhhHRNT7kKRf1zu7rX1vSrrjit/jOVGuJqrZdFk/3E= <a href="mailto:1747363320@qq.com">1747363320@qq.com</a></p>
+<p>ssh <a href="mailto:wangyj@222.20.94.69">wangyj@222.20.94.69</a> -p 50001</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>ssh</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LInux系统(CentOS)上载及安装依赖的方式及命令</title>
+    <url>/2021/11/20/linux/LInux%E7%B3%BB%E7%BB%9F(CentOS)%E4%B8%8A%E8%BD%BD%E5%8F%8A%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E7%9A%84%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h1 id="LInux系统-CentOS-上载及安装依赖的方式及命令"><a href="#LInux系统-CentOS-上载及安装依赖的方式及命令" class="headerlink" title="LInux系统(CentOS)上载及安装依赖的方式及命令"></a>LInux系统(CentOS)上载及安装依赖的方式及命令</h1><h2 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h2><blockquote>
+<p> 以安装pcre依赖为例</p>
+</blockquote>
+<p>1 通过wget命令下载安装包</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;downloads.sourceforge.net&#x2F;project&#x2F;pcre&#x2F;pcre&#x2F;8.37&#x2F;pcre 8.37.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>2 解压文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tar -zxvf pcre 8.37.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>3 cd到解压的文件夹下, 进行安装</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;configure   或    .&#x2F;configure --prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;pcre  安装指定路径安装</span><br><span class="line">make &amp;&amp;  make install</span><br></pre></td></tr></table></figure>
+
+<p>4 查看安装的版本号</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pcre-config --verson</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="方式二"><a href="#方式二" class="headerlink" title="方式二"></a>方式二</h2><ul>
+<li>通过yum命令直接下载并安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">yum install pcre pcre-devel -y</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>CentOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ECharts在vue2中的使用</title>
+    <url>/2021/11/05/Vue/Echarts/</url>
+    <content><![CDATA[<h1 id="ECharts在vue2中的使用"><a href="#ECharts在vue2中的使用" class="headerlink" title="ECharts在vue2中的使用"></a>ECharts在vue2中的使用</h1><blockquote>
+<p><a href="https://echarts.apache.org/zh/index.html" target="_blank" rel="noopener">Echarts官网</a></p>
+</blockquote>
+<h2 id="1-基本使用"><a href="#1-基本使用" class="headerlink" title="1 基本使用"></a>1 基本使用</h2><ul>
+<li>安装</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">npm install echarts --save</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>引入及全局挂载</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//vue的原型上挂载echarts</span></span><br><span class="line"><span class="comment">//在main.js文件中</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> echarts <span class="keyword">from</span> <span class="string">'echarts'</span>;</span><br><span class="line">Vue.prototype.$echarts = echarts;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+        <tag>ECharts</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue项目部署到腾讯云轻量应用服务器</title>
+    <url>/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="vue项目部署到腾讯云轻量应用服务器"><a href="#vue项目部署到腾讯云轻量应用服务器" class="headerlink" title="vue项目部署到腾讯云轻量应用服务器"></a>vue项目部署到腾讯云轻量应用服务器</h1><h3 id="登录腾讯云并找到相应位置"><a href="#登录腾讯云并找到相应位置" class="headerlink" title="登录腾讯云并找到相应位置"></a>登录腾讯云并找到相应位置</h3><ul>
+<li>控制台</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117215931750.png" alt="image-20211117215931750"></p>
+<ul>
+<li>云产品</li>
+<li>轻量应用服务器</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117220002880.png" alt="image-20211117220002880"></p>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117220125535.png" alt="image-20211117220125535"></p>
+<h3 id="安装需要的系统（CentOS-7-6）"><a href="#安装需要的系统（CentOS-7-6）" class="headerlink" title="安装需要的系统（CentOS 7.6）"></a>安装需要的系统（CentOS 7.6）</h3><ul>
+<li>可以根据需要重置为需要的系统，没有限制</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117220247164.png" alt="image-20211117220247164"></p>
+<ul>
+<li>选择系统镜像</li>
+<li>安装<strong>CentOS 7.6</strong></li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117220452474.png" alt="image-20211117220452474"></p>
+<h3 id="重置服务器密码"><a href="#重置服务器密码" class="headerlink" title="重置服务器密码"></a>重置服务器密码</h3><ul>
+<li>重置后记得保存密码</li>
+<li>账户名为root </li>
+<li>这里设置的用户名及密码就是这个轻量应用服务器的用户名和密码<ul>
+<li>在后续使用<code>xshell</code>和<code>xftp</code>时需要使用</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117220655172.png" alt="image-20211117220655172"></p>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117220713357.png" alt="image-20211117220713357"></p>
+<h3 id="将域名绑定到本服务器"><a href="#将域名绑定到本服务器" class="headerlink" title="将域名绑定到本服务器"></a>将域名绑定到本服务器</h3><ul>
+<li>点击域名解析即会跳转到域名页面</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117231854143.png" alt="image-20211117231854143"></p>
+<ul>
+<li>选择一个要绑定域名点进去</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117232010168.png" alt="image-20211117232010168"></p>
+<ul>
+<li>需要添加两条记录<ul>
+<li>www和@  主机记录就填这两个值</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117232121608.png" alt="image-20211117232121608"></p>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117232220529.png" alt="image-20211117232220529"></p>
+<ul>
+<li>完成以上绑定后，在浏览器输入域名就会解析为服务器域名，并显示下面部署的前端项目</li>
+</ul>
+<h3 id="密钥与Xshell"><a href="#密钥与Xshell" class="headerlink" title="密钥与Xshell"></a>密钥与Xshell</h3><blockquote>
+<ul>
+<li>通过Xftp实现将本地文件传输到服务器的CentOS系统中</li>
+</ul>
+</blockquote>
+<h4 id="1-创建密钥"><a href="#1-创建密钥" class="headerlink" title="1 创建密钥"></a>1 创建密钥</h4><ul>
+<li>创建密钥后，会自动下载一个密钥文件，一定保存好这个文件，且记住下载保存的本地地址，后续在xftp中会用到</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117221613730.png" alt="image-20211117221613730"></p>
+<h4 id="2-安装Xshell并建立与服务器的链接"><a href="#2-安装Xshell并建立与服务器的链接" class="headerlink" title="2 安装Xshell并建立与服务器的链接"></a>2 安装Xshell并建立与服务器的链接</h4><ul>
+<li><p>下载Xftp下载地址：<a href="https://www.netsarang.com/zh/xftp/（有免费版需认证）" target="_blank" rel="noopener">https://www.netsarang.com/zh/xftp/（有免费版需认证）</a>  </p>
+<ul>
+<li>同时安装xsell和xftp  (下载的都是.exe文件，直接双击即可运行)</li>
+</ul>
+</li>
+<li><p>创建会话</p>
+<ul>
+<li>文件—&gt;新建</li>
+<li>端口号保持22不变</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211120134700211.png" alt="image-20211120134700211"></p>
+<ul>
+<li>输入root，点击确定</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211120134725153.png" alt="image-20211120134725153"></p>
+<ul>
+<li>在Pubulic Key导入下载到本地的密钥（上面第一步创建并下载到本地的密钥），密码为空（不用填），确定即可连接成功</li>
+</ul>
+<ul>
+<li>服务器公网IP地址</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117222621472.png" alt="image-20211117222621472"></p>
+<ul>
+<li>Xshell与服务器建立连接后，即创建会话成功后，界面如下，此时Xshell当前会话的终端就是服务器的终端<ul>
+<li>此时是可以直接将文件（压缩包也可）拖到终端的，拖动到终端后就实现了将文件传输到服务器（此时文件传输的位置就是终端所在的文件路径下）</li>
+<li>但是不能实现文件夹的传输，若要传输文件夹，则需要下载安装Xftp，后文会讲到</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211120141747995.png" alt="image-20211120141747995"></p>
+<h3 id="开放端口"><a href="#开放端口" class="headerlink" title="开放端口"></a>开放端口</h3><ul>
+<li>如果有端口需要默认访问，则需要在防火墙设置</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117223820587.png" alt="image-20211117223820587"></p>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117223910035.png" alt="image-20211117223910035"></p>
+<h3 id="在CentOS上安装Nginx"><a href="#在CentOS上安装Nginx" class="headerlink" title="在CentOS上安装Nginx"></a>在CentOS上安装Nginx</h3><h4 id="1-打开服务器远程终端"><a href="#1-打开服务器远程终端" class="headerlink" title="1 打开服务器远程终端"></a>1 打开服务器远程终端</h4><ul>
+<li>点击登录即可进入终端</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117224141593.png" alt="image-20211117224141593"></p>
+<h4 id="2-切换为root用户"><a href="#2-切换为root用户" class="headerlink" title="2 切换为root用户"></a>2 切换为root用户</h4><ul>
+<li>输入的密码为服务器密码</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">su</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117224324926.png" alt="image-20211117224324926"></p>
+<h4 id="3-安装依赖"><a href="#3-安装依赖" class="headerlink" title="3 安装依赖"></a>3 安装依赖</h4><blockquote>
+<p>在任意目录下执行</p>
+</blockquote>
+<ul>
+<li>gcc编译是否安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">检查安装：yum list installed | grep gcc</span><br><span class="line">执行安装：yum install gcc -y</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>openssl库编译是否安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">检查安装：yum list installed | grep openssl</span><br><span class="line">执行安装：yum install openssl openssl-devel -y</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>pcre库编译是否安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">检查安装：yum list installed | grep pcre</span><br><span class="line">执行安装：yum install pcre pcre-devel -y</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>zlib库编译是否安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">检查安装：yum list installed | grep zlib</span><br><span class="line">执行安装：yum install zlib zlib-devel -y</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>一次性安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一次性安装: yum install gcc openssl openssl-devel pcre pcre-devel zlib zlib-devel -y</span><br></pre></td></tr></table></figure>
+
+<p>( -y 代表自动安装 ， 自动选择 Y)</p>
+<h4 id="4-下载nginx"><a href="#4-下载nginx" class="headerlink" title="4 下载nginx"></a>4 下载nginx</h4><ul>
+<li>最开始进入终端在/home/lighthouse目录下，需要回退两次到更目录下</li>
+<li>再切换到/usr/loacl目录下下载Nginx</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117225214421.png" alt="image-20211117225214421"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd  &#x2F;usr&#x2F;local</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>下载</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;nginx.org&#x2F;download&#x2F;nginx-1.18.0.tar.gz</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>解压<ul>
+<li>解压后的文件名为：nginx-1.18.0， 该文件就在/usr/local下</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tar -zxvf nginx-1.18.0.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-安装nginx"><a href="#5-安装nginx" class="headerlink" title="5 安装nginx"></a>5 安装nginx</h4><ul>
+<li>打开nginx解压后路径, 即切换到nginx-1.18.0目录下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd nginx-1.18.0</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指定安装路径 (–prefix 是指定nginx安装路径)， 在终端执行如下2条命令完成安装<ul>
+<li>安装完成后会在/usr/local目录下生成nginx文件夹</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;configure --prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;nginx</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="将打包的vue文件通过Xftp上传到nginx"><a href="#将打包的vue文件通过Xftp上传到nginx" class="headerlink" title="将打包的vue文件通过Xftp上传到nginx"></a>将打包的vue文件通过Xftp上传到nginx</h3><ul>
+<li>xshell建立连接后，点击下面的按钮，启动Xftp，进行文件传输</li>
+<li>点击后可能提示没有安装Xftp,没有安装，就先安装</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117230342618.png" alt="image-20211117230342618"></p>
+<ul>
+<li>打卡Xftp后也需要建立与服务器的连接，建立连接时需要输入用户名和密码，则输入服务器的用户名和密码</li>
+<li>下面的界面就是建立连接后的界面，左边是本地文件，右边是服务器文件</li>
+<li>将本地文件直接拖到服务器相应文件夹即可实现文件的上传</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117230605651.png" alt="image-20211117230605651"></p>
+<ul>
+<li>将vue打包的dist文件夹下的文件上传到服务器/usr/loacl/nginx/html文件夹下<ul>
+<li>/usr/loacl/nginx/html中原有的文件删除</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117231128074.png" alt="image-20211117231128074"></p>
+<h3 id="启动nginx"><a href="#启动nginx" class="headerlink" title="启动nginx"></a>启动nginx</h3><ul>
+<li>切换到/usr/local/nginx/sbin文件夹下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;nginx</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>或者切换到/usr/local/nginx文件夹下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;sbin&#x2F;nginx</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>或者按配置文件启动</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin&#x2F;nginx -c &#x2F;usr&#x2F;local&#x2F;conf&#x2F;nginx.conf</span><br></pre></td></tr></table></figure>
+
+<h3 id="检测nginx是否启动"><a href="#检测nginx是否启动" class="headerlink" title="检测nginx是否启动"></a>检测nginx是否启动</h3><blockquote>
+<p>切换到/usr/local/nginx/sbin文件夹下</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ps -ef | grep nginx</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>若启动成功终端如下</li>
+</ul>
+<p><img src="/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117231353942.png" alt="image-20211117231353942"></p>
+<h3 id="重新加载nginx"><a href="#重新加载nginx" class="headerlink" title="重新加载nginx"></a>重新加载nginx</h3><ul>
+<li>例如修改了nginx.conf后则需要重新加载才能更新修改的配置</li>
+</ul>
+<blockquote>
+<p>切换到/usr/local/nginx/sbin文件夹下</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<h3 id="关闭nginx"><a href="#关闭nginx" class="headerlink" title="关闭nginx"></a>关闭nginx</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;nginx -s stop</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+        <tag>nginx</tag>
+        <tag>CentOS</tag>
+        <tag>腾讯云</tag>
+        <tag>轻量应用服务器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>将多个vue项目部署到一个腾讯云轻量应用服务器</title>
+    <url>/2020/06/10/Vue/%E5%B0%86%E5%A4%9A%E4%B8%AAvue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E4%B8%80%E4%B8%AA%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+    <content><![CDATA[<h2 id="0、前言-amp-问题描述"><a href="#0、前言-amp-问题描述" class="headerlink" title="0、前言&amp;问题描述"></a>0、前言&amp;问题描述</h2><blockquote>
+<p><strong>前言</strong></p>
+<p>关于腾讯云轻量服务器的使用，在CentOS上安装及使用nginx,  域名与服务器的绑定， 通过nginx部署项目、通过Xftp进行文件传输等问题可以参考我的上一篇文章：<a href>vue项目部署到腾讯云轻量应用服务器</a></p>
+<p>参考：<a href="https://juejin.cn/post/6844904183879958541" target="_blank" rel="noopener">使用nginx部署多个前端项目</a></p>
+</blockquote>
+<blockquote>
+<p><strong>问题描述</strong></p>
+<p>有一台腾讯云轻量应用服务器，有两个域名: a.com和b.com</p>
+<p>目标：通过nginx配置，使访问a.com时显示vue项目1， 访问b.com时显示vue项目2</p>
+</blockquote>
+<h2 id="1-将两个域名都解析到服务器的公网IP"><a href="#1-将两个域名都解析到服务器的公网IP" class="headerlink" title="1 将两个域名都解析到服务器的公网IP"></a>1 将两个域名都解析到服务器的公网IP</h2><blockquote>
+<p>两个域名都解析到这一个腾讯云轻量应用服务器的公网IP</p>
+<p>a.com和b.com的绑定操作都如下</p>
+</blockquote>
+<ul>
+<li>点击域名解析即会跳转到域名页面</li>
+</ul>
+<p><img src="/2020/06/10/Vue/%E5%B0%86%E5%A4%9A%E4%B8%AAvue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E4%B8%80%E4%B8%AA%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117231854143.png" alt="image-20211117231854143"></p>
+<ul>
+<li>选择一个要绑定域名点进去</li>
+</ul>
+<p><img src="/2020/06/10/Vue/%E5%B0%86%E5%A4%9A%E4%B8%AAvue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E4%B8%80%E4%B8%AA%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117232010168.png" alt="image-20211117232010168"></p>
+<ul>
+<li>需要添加两条记录<ul>
+<li>www和@  主机记录就填这两个值</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2020/06/10/Vue/%E5%B0%86%E5%A4%9A%E4%B8%AAvue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E4%B8%80%E4%B8%AA%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117232121608.png" alt="image-20211117232121608"></p>
+<p><img src="/2020/06/10/Vue/%E5%B0%86%E5%A4%9A%E4%B8%AAvue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E4%B8%80%E4%B8%AA%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211117232220529.png" alt="image-20211117232220529"></p>
+<ul>
+<li>完成以上绑定后，在浏览器输入域名就会解析为服务器域名，并显示下面部署的前端项目</li>
+</ul>
+<h2 id="2-将多个dist文件传输到服务器上"><a href="#2-将多个dist文件传输到服务器上" class="headerlink" title="2 将多个dist文件传输到服务器上"></a>2 将多个dist文件传输到服务器上</h2><ul>
+<li>在<code>/usr/local/nginx/html</code>下新建两文件夹data1和data2(文件名自定义，可区分即可)</li>
+<li>在data1中放vue项目1的dist文件夹下的文件（dist是vue打包的项目文件）</li>
+<li>在data2中放vue项目2的dist文件夹下的文件</li>
+<li>以上的文件传输操作通过<strong>Xftp</strong>实现，Xftp的传输如下图</li>
+</ul>
+<p><img src="/2020/06/10/Vue/%E5%B0%86%E5%A4%9A%E4%B8%AAvue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E4%B8%80%E4%B8%AA%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/image-20211120210421466.png" alt="image-20211120210421466"></p>
+<h2 id="3-修改nginx-conf配置文件"><a href="#3-修改nginx-conf配置文件" class="headerlink" title="3 修改nginx.conf配置文件"></a>3 修改nginx.conf配置文件</h2><ul>
+<li>通过配置不同的域名，实现不同项目的跳转</li>
+<li>当访问a.com时，解析的就是html/data1，跳转到的就是vue项目1</li>
+<li>当访问b.com时，解析的就是html/data2，跳转到的就是vue项目2</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">     listen       80;</span><br><span class="line">     server_name  a.com;</span><br><span class="line"></span><br><span class="line">     location &#x2F; &#123;</span><br><span class="line">         root   html&#x2F;data1;</span><br><span class="line">         index  index.html index.htm;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> server &#123;</span><br><span class="line">     listen       80;</span><br><span class="line">     server_name  b.com;</span><br><span class="line"></span><br><span class="line">     location &#x2F; &#123;</span><br><span class="line">         root   html&#x2F;data2;</span><br><span class="line">         index  index.html index.htm;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+        <tag>nginx</tag>
+        <tag>CentOS</tag>
+        <tag>腾讯云</tag>
+        <tag>轻量应用服务器</tag>
       </tags>
   </entry>
 </search>
