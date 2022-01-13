@@ -14548,4 +14548,56 @@
         <tag>轻量应用服务器</tag>
       </tags>
   </entry>
+  <entry>
+    <title>使用gitee作为博客图床</title>
+    <url>/2022/01/13/tools/markdown/%E4%BD%BF%E7%94%A8gitee%E4%BD%9C%E4%B8%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E5%BA%8A/</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://blog.csdn.net/zenglintao/article/details/106076822" target="_blank" rel="noopener">使用gitee(码云)作为博客图床</a></p>
+</blockquote>
+<h4 id="参考上面的博客需要注意一下几点"><a href="#参考上面的博客需要注意一下几点" class="headerlink" title="参考上面的博客需要注意一下几点"></a>参考上面的博客需要注意一下几点</h4><ul>
+<li>“二、创建仓库”步骤中需要初始化，生成master分支</li>
+<li>“三、获取token令牌”步骤中生成的私人令牌只显示一次，需要保存好</li>
+<li>“五、gitee插件配置”步骤中配置repo的仓库路径，注意是可以在浏览器中打开</li>
+<li>下载PicGo，安装包位置</li>
+</ul>
+<blockquote>
+<p><a href="https://github.com/Molunerfinn/PicGo/releases" target="_blank" rel="noopener">PicGo下载地址</a></p>
+</blockquote>
+<p><img src="https://gitee.com/ChuckieWill/picture/raw/master/img/202201131104572.png" alt="image-20220113110414403"></p>
+<h4 id="Typroa中上传图片的配置"><a href="#Typroa中上传图片的配置" class="headerlink" title="Typroa中上传图片的配置"></a>Typroa中上传图片的配置</h4><ul>
+<li>配置</li>
+</ul>
+<p><img src="/2022/01/13/tools/markdown/%E4%BD%BF%E7%94%A8gitee%E4%BD%9C%E4%B8%BA%E5%8D%9A%E5%AE%A2%E5%9B%BE%E5%BA%8A/Users/Chuckie/AppData/Roaming/Typora/typora-user-images/image-20220113114617302.png" alt="image-20220113114617302"></p>
+<ul>
+<li><p>上传图片</p>
+<ul>
+<li>右击图片选择上传图片即可上传</li>
+<li><em>不能实现全文一键上传，只能一个一个图片的上传</em></li>
+<li>如果要实现复制到文档中后直接自动上传到图床，可以做如下配置的修改</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://gitee.com/ChuckieWill/picture/raw/master/img/202201131109840.png" alt="image-20220113110923795"></p>
+<ul>
+<li>配置图片重命名（命名去重，否则相同图片不能多次上传）<ul>
+<li>PicGo软件中勾选上传前重命名或者时间戳重命名</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://gitee.com/ChuckieWill/picture/raw/master/img/202201131113940.png" alt="image-20220113111205937"></p>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ul>
+<li>在gitee创建图床仓库时，一定要选为公开，否则在typroa和PicGo中都不能正常显示图片</li>
+<li>修改为为公开的步骤如下</li>
+</ul>
+<p><img src="https://gitee.com/ChuckieWill/picture/raw/master/img/202201131127515.png" alt="image-20220113112714563"></p>
+<p><img src="https://gitee.com/ChuckieWill/picture/raw/master/img/202201131127936.png" alt="image-20220113112742663"></p>
+]]></content>
+      <categories>
+        <category>tools</category>
+        <category>markdown</category>
+      </categories>
+      <tags>
+        <tag>使用gitee作为博客图床</tag>
+      </tags>
+  </entry>
 </search>
