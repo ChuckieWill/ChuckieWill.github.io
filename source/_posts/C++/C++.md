@@ -79,6 +79,27 @@ categories:
 
   选中需要移动的代码：按 shift + tab键 
 
+##  库函数
+
+###  std
+
+####  [swap](https://qingcms.gitee.io/cppreference/20210212/zh/cpp/algorithm/swap.html)
+
+* 可交换数组中的元素： `swap(arr[i],arr[j])`
+
+####  [copy]()
+
+```c++
+//拷贝一个int型的数组
+	int* copyIntArray(int a[], int n) {
+		int* arr = new int[n]; //在堆区开辟新的数组存储空间
+		copy(a, a + n, arr);//（拷贝起始指针，拷贝结束指针，拷贝到的起始指针）
+		return arr;
+	}
+```
+
+
+
 ##  基础容器
 
 ###  数组
