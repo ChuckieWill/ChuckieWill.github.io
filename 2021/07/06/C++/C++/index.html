@@ -40,7 +40,7 @@
 <meta property="og:image" content="http://yoursite.com/2021/07/06/C++/C++/image-20210907144140147.png">
 <meta property="og:image" content="http://yoursite.com/2021/07/06/C++/C++/image-20210907144220778.png">
 <meta property="article:published_time" content="2021-07-06T02:43:17.000Z">
-<meta property="article:modified_time" content="2021-12-30T07:33:19.264Z">
+<meta property="article:modified_time" content="2022-03-03T12:12:52.047Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-30 15:33:19" itemprop="dateModified" datetime="2021-12-30T15:33:19+08:00">2021-12-30</time>
+                <time title="修改时间：2022-03-03 20:12:52" itemprop="dateModified" datetime="2022-03-03T20:12:52+08:00">2022-03-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -251,14 +251,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>43k</span>
+              <span>44k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>39 分钟</span>
+              <span>40 分钟</span>
             </span>
 
         </div>
@@ -274,6 +274,21 @@
 <p><a href="https://qingcms.gitee.io/cppreference/20210212/zh/" target="_blank" rel="noopener">c++参考手册</a></p>
 </blockquote>
 <h2 id="基础知识点"><a href="#基础知识点" class="headerlink" title="基础知识点"></a>基础知识点</h2><h4 id="编译、链接的过程"><a href="#编译、链接的过程" class="headerlink" title="编译、链接的过程"></a>编译、链接的过程</h4><p><img src="/2021/07/06/C++/C++/image-20210816181241344.png" alt="image-20210816181241344"></p>
+<h5 id="pragma-once"><a href="#pragma-once" class="headerlink" title="#pragma once"></a>#pragma once</h5><p>#pragma once是一个比较常用的C/C++杂注，只要在头文件的最开始加入这条杂注，就能够保证头文件只被编译一次。</p>
+<p>#pragma once是<a href="https://baike.baidu.com/item/编译器" target="_blank" rel="noopener">编译器</a>相关的，有的编译器支持，有的编译器不支持，具体情况请查看编译器API文档，不过现在大部分编译器都有这个杂注了。</p>
+<p>#ifndef，#define，#endif是C/C++语言中的宏定义，通过宏定义避免文件多次编译。所以在所有支持C++语言的编译器上都是有效的，如果写的程序要跨平台，最好使用这种方式。</p>
+<p>具体写法：</p>
+<p>方式一：</p>
+<p>#ifndef <em>SOMEFILE_H</em></p>
+<p>#define <em>SOMEFILE_H</em></p>
+<p>………. // 一些声明语句</p>
+<p>#endif</p>
+<p>方式二：</p>
+<p>#pragma once</p>
+<p>… … // 一些声明语句</p>
+<h5 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h5><blockquote>
+<p><a href="https://blog.csdn.net/u010977122/article/details/89416520" target="_blank" rel="noopener">C/C++ 宏定义的常见使用</a></p>
+</blockquote>
 <h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><ul>
 <li>1byte = 8bits</li>
 <li>short类型  2byte    存储范围[-2^15, 2^15-1]  [ -32768 , 32767]</li>
@@ -324,6 +339,15 @@
 <li><p>代码整体往左移动：</p>
 <p>选中需要移动的代码：按 shift + tab键 </p>
 </li>
+</ul>
+<h2 id="库函数"><a href="#库函数" class="headerlink" title="库函数"></a>库函数</h2><h3 id="std"><a href="#std" class="headerlink" title="std"></a>std</h3><h4 id="swap"><a href="#swap" class="headerlink" title="swap"></a><a href="https://qingcms.gitee.io/cppreference/20210212/zh/cpp/algorithm/swap.html" target="_blank" rel="noopener">swap</a></h4><ul>
+<li>可交换数组中的元素： <code>swap(arr[i],arr[j])</code></li>
+</ul>
+<h4 id="copy"><a href="#copy" class="headerlink" title="copy"></a><a href>copy</a></h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//拷贝一个int型的数组</span></span><br><span class="line">	<span class="function"><span class="keyword">int</span>* <span class="title">copyIntArray</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span>* arr = <span class="keyword">new</span> <span class="keyword">int</span>[n]; <span class="comment">//在堆区开辟新的数组存储空间</span></span><br><span class="line">		copy(a, a + n, arr);<span class="comment">//（拷贝起始指针，拷贝结束指针，拷贝到的起始指针）</span></span><br><span class="line">		<span class="keyword">return</span> arr;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="srand-rand"><a href="#srand-rand" class="headerlink" title="srand()  rand()"></a>srand()  rand()</h4><ul>
+<li>srand()  需要随机种子 srand(time(NULL))  需要<code>#include &lt;ctime&gt;</code></li>
+<li>rand()  返回值: 返回0至RAND_MAX之间的随机整数值，RAND_MAX的范围最小在32767之间。若用unsigned int 双字节是65535，四字节是4294967295的整数范围。且0-RAND_MAX每个数字被选中的机率是相同的。</li>
 </ul>
 <h2 id="基础容器"><a href="#基础容器" class="headerlink" title="基础容器"></a>基础容器</h2><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><ul>
 <li>计算数组长度</li>
@@ -799,8 +823,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/03/03/wx-applet/wxapplet-ui/wxapplet-ui/" rel="prev" title="微信小程序UI框架使用指南">
-      <i class="fa fa-chevron-left"></i> 微信小程序UI框架使用指南
+    <a href="/2021/03/20/tools/vstudio/vstudio/" rel="prev" title="visual studio的使用">
+      <i class="fa fa-chevron-left"></i> visual studio的使用
     </a></div>
       <div class="post-nav-item">
     <a href="/2021/07/27/Index/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6%E9%9D%A2%E8%AF%95/" rel="next" title="前端框架面试">
@@ -864,7 +888,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识点"><span class="nav-text">基础知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编译、链接的过程"><span class="nav-text">编译、链接的过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据类型"><span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装IDE"><span class="nav-text">安装IDE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vs2019快捷键"><span class="nav-text">vs2019快捷键</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础容器"><span class="nav-text">基础容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数组"><span class="nav-text">数组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#动态数组vector"><span class="nav-text">动态数组vector</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串"><span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#c中的字符串"><span class="nav-text">c中的字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#字符串的指针"><span class="nav-text">字符串的指针</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lt-string-h-gt-API"><span class="nav-text">&lt;string.h&gt;API</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-中字符串"><span class="nav-text">c++中字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符数组与数组"><span class="nav-text">字符数组与数组</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针"><span class="nav-text">指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见指针"><span class="nav-text">常见指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数组指针与指针数组"><span class="nav-text">数组指针与指针数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cosnt与指针"><span class="nav-text">cosnt与指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指向指针的指针"><span class="nav-text">指向指针的指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#易错指针"><span class="nav-text">易错指针</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指针的基本运算"><span class="nav-text">指针的基本运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#与–操作符"><span class="nav-text">++与–操作符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储区划分"><span class="nav-text">存储区划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#智能指针"><span class="nav-text">智能指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#auto-ptr"><span class="nav-text">auto_ptr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unique-ptr"><span class="nav-text">unique_ptr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shared-ptr"><span class="nav-text">shared_ptr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#weak-ptr"><span class="nav-text">weak_ptr</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用"><span class="nav-text">引用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面向对象"><span class="nav-text">面向对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程"><span class="nav-text">多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本使用"><span class="nav-text">基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#c-11多线程API"><span class="nav-text">c++11多线程API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程传参详解"><span class="nav-text">线程传参详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#引用和指针做参数"><span class="nav-text">引用和指针做参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#临时对象做参数"><span class="nav-text">临时对象做参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对象做参数"><span class="nav-text">对象做参数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#std-ref"><span class="nav-text">std::ref()</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#智能指针做参数"><span class="nav-text">智能指针做参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#成员函数做线程函数"><span class="nav-text">成员函数做线程函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际使用"><span class="nav-text">实际使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建多个线程"><span class="nav-text">创建多个线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据共享问题"><span class="nav-text">数据共享问题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#只读数据"><span class="nav-text">只读数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#有读有写的数据"><span class="nav-text">有读有写的数据</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#共享代码的保护"><span class="nav-text">共享代码的保护</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#互斥量、锁"><span class="nav-text">互斥量、锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#互斥量的使用"><span class="nav-text">互斥量的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#lock-和unlock-使用"><span class="nav-text">lock() 和unlock()使用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#std-lock-guard类模板使用"><span class="nav-text">std: : lock guard类模板使用</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#死锁"><span class="nav-text">死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#死锁-产生"><span class="nav-text">死锁 产生</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#死锁解决方案"><span class="nav-text">死锁解决方案</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#std-lock-模板"><span class="nav-text">std::lock()模板</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#lock-和lock-guard配合使用"><span class="nav-text">lock()和lock_guard配合使用</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unique-lock"><span class="nav-text">unique_lock()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特性"><span class="nav-text">特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambda"><span class="nav-text">Lambda</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#calloc-与-malloc"><span class="nav-text">calloc() 与 malloc()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#assert"><span class="nav-text">assert()</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识点"><span class="nav-text">基础知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编译、链接的过程"><span class="nav-text">编译、链接的过程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#pragma-once"><span class="nav-text">#pragma once</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#宏定义"><span class="nav-text">宏定义</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据类型"><span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装IDE"><span class="nav-text">安装IDE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vs2019快捷键"><span class="nav-text">vs2019快捷键</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#库函数"><span class="nav-text">库函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#std"><span class="nav-text">std</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#swap"><span class="nav-text">swap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#copy"><span class="nav-text">copy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#srand-rand"><span class="nav-text">srand()  rand()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础容器"><span class="nav-text">基础容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数组"><span class="nav-text">数组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#动态数组vector"><span class="nav-text">动态数组vector</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串"><span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#c中的字符串"><span class="nav-text">c中的字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#字符串的指针"><span class="nav-text">字符串的指针</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lt-string-h-gt-API"><span class="nav-text">&lt;string.h&gt;API</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-中字符串"><span class="nav-text">c++中字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符数组与数组"><span class="nav-text">字符数组与数组</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针"><span class="nav-text">指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见指针"><span class="nav-text">常见指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数组指针与指针数组"><span class="nav-text">数组指针与指针数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cosnt与指针"><span class="nav-text">cosnt与指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指向指针的指针"><span class="nav-text">指向指针的指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#易错指针"><span class="nav-text">易错指针</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指针的基本运算"><span class="nav-text">指针的基本运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#与–操作符"><span class="nav-text">++与–操作符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储区划分"><span class="nav-text">存储区划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#智能指针"><span class="nav-text">智能指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#auto-ptr"><span class="nav-text">auto_ptr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unique-ptr"><span class="nav-text">unique_ptr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shared-ptr"><span class="nav-text">shared_ptr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#weak-ptr"><span class="nav-text">weak_ptr</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用"><span class="nav-text">引用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面向对象"><span class="nav-text">面向对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程"><span class="nav-text">多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本使用"><span class="nav-text">基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#c-11多线程API"><span class="nav-text">c++11多线程API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程传参详解"><span class="nav-text">线程传参详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#引用和指针做参数"><span class="nav-text">引用和指针做参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#临时对象做参数"><span class="nav-text">临时对象做参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对象做参数"><span class="nav-text">对象做参数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#std-ref"><span class="nav-text">std::ref()</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#智能指针做参数"><span class="nav-text">智能指针做参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#成员函数做线程函数"><span class="nav-text">成员函数做线程函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际使用"><span class="nav-text">实际使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建多个线程"><span class="nav-text">创建多个线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据共享问题"><span class="nav-text">数据共享问题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#只读数据"><span class="nav-text">只读数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#有读有写的数据"><span class="nav-text">有读有写的数据</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#共享代码的保护"><span class="nav-text">共享代码的保护</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#互斥量、锁"><span class="nav-text">互斥量、锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#互斥量的使用"><span class="nav-text">互斥量的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#lock-和unlock-使用"><span class="nav-text">lock() 和unlock()使用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#std-lock-guard类模板使用"><span class="nav-text">std: : lock guard类模板使用</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#死锁"><span class="nav-text">死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#死锁-产生"><span class="nav-text">死锁 产生</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#死锁解决方案"><span class="nav-text">死锁解决方案</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#std-lock-模板"><span class="nav-text">std::lock()模板</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#lock-和lock-guard配合使用"><span class="nav-text">lock()和lock_guard配合使用</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unique-lock"><span class="nav-text">unique_lock()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特性"><span class="nav-text">特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambda"><span class="nav-text">Lambda</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#calloc-与-malloc"><span class="nav-text">calloc() 与 malloc()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#assert"><span class="nav-text">assert()</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -880,20 +904,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">85</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">76</span>
+        <span class="site-state-item-count">81</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -952,13 +976,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">449k</span>
+    <span title="站点总字数">691k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:48</span>
+    <span title="站点阅读时长">10:29</span>
 </div>
 
         
