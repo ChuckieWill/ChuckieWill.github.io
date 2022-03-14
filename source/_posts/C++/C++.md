@@ -17,6 +17,40 @@ categories:
 
 ![image-20210816181241344](C++/image-20210816181241344.png)
 
+#####  \#pragma once
+
+\#pragma once是一个比较常用的C/C++杂注，只要在头文件的最开始加入这条杂注，就能够保证头文件只被编译一次。
+
+\#pragma once是[编译器](https://baike.baidu.com/item/编译器)相关的，有的编译器支持，有的编译器不支持，具体情况请查看编译器API文档，不过现在大部分编译器都有这个杂注了。
+
+\#ifndef，#define，#endif是C/C++语言中的宏定义，通过宏定义避免文件多次编译。所以在所有支持C++语言的编译器上都是有效的，如果写的程序要跨平台，最好使用这种方式。
+
+ 
+
+具体写法：
+
+方式一：
+
+\#ifndef _SOMEFILE_H_
+
+\#define _SOMEFILE_H_
+
+.......... // 一些声明语句
+
+\#endif
+
+方式二：
+
+\#pragma once
+
+... ... // 一些声明语句
+
+#####  宏定义
+
+> [C/C++ 宏定义的常见使用](https://blog.csdn.net/u010977122/article/details/89416520)
+
+
+
 ####  数据类型
 
 * 1byte = 8bits
@@ -98,7 +132,10 @@ categories:
 	}
 ```
 
+####  srand()  rand()
 
+* srand()  需要随机种子 srand(time(NULL))  需要`#include <ctime>`
+* rand()  返回值: 返回0至RAND_MAX之间的随机整数值，RAND_MAX的范围最小在32767之间。若用unsigned int 双字节是65535，四字节是4294967295的整数范围。且0-RAND_MAX每个数字被选中的机率是相同的。
 
 ##  基础容器
 
@@ -2383,3 +2420,4 @@ int main() {
 ###  assert()
 
 > http://c.biancheng.net/ref/assert.html
+

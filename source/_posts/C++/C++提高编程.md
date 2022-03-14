@@ -158,7 +158,7 @@ int main() {
 总结：
 
 * 函数模板利用关键字 template
-* 使用函数模板有两种方式：自动类型推导、显示指定类型
+* 使用函数模板有两种方式：**自动类型推导、显示指定类型**
 * 模板的目的是为了提高复用性，将类型参数化
 
 
@@ -176,7 +176,7 @@ int main() {
 * 自动类型推导，必须推导出一致的数据类型T,才可以使用
 
 
-* 模板必须要确定出T的数据类型，才可以使用
+* 模板必须要确定出T的数据类型，才可以使用  
 
 
 
@@ -453,7 +453,7 @@ void test01()
 	//4、 如果函数模板可以产生更好的匹配,优先调用函数模板
 	char c1 = 'a';
 	char c2 = 'b';
-	myPrint(c1, c2); //调用函数模板
+	myPrint(c1, c2); //调用函数模板  调用普通函数需要隐式类型转换 而调用函数模板不需要， j
 }
 
 int main() {
@@ -750,7 +750,7 @@ void test01()
 //2、类模板在模板参数列表中可以有默认参数
 void test02()
 {
-	Person <string> p("猪八戒", 999); //类模板中的模板参数列表 可以指定默认参数
+	Person <string> p("猪八戒", 999); //类模板中的模板参数列表 可以指定默认参数  class AgeType = int  h
 	p.showPerson();
 }
 
@@ -1114,7 +1114,7 @@ int main() {
 解决：
 
 * 解决方式1：直接包含.cpp源文件
-* 解决方式2：将声明和实现写到同一个文件中，并更改后缀名为.hpp，hpp是约定的名称，并不是强制
+* 解决方式2：将声明和实现写到同一个文件中，并更改后缀名为.hpp，hpp是约定的名称，并不是强制, .hpp就表示这是一个类模板
 
 
 
@@ -1161,8 +1161,8 @@ void Person<T1, T2>::showPerson() {
 #include<iostream>
 using namespace std;
 
-//#include "person.h"
-#include "person.cpp" //解决方式1，包含cpp源文件
+//#include "person.h" //这里只引入了定义部分，实现部分都在person.cpp中，而后面的的类实例化和调用p.showPerson()都需要person.cpp中的部分，此时就会出现报错，无法连接外部命令，因为编译器自始至终都没有引入person.cpp中的部分
+#include "person.cpp" //解决方式1，包含cpp源文件，因为person.cpp中开头就有#include "person.h" 所以相当于.h和.cpp部分都引入了
 
 //解决方式2，将声明和实现写到一起，文件后缀名改为.hpp
 #include "person.hpp"
@@ -1204,7 +1204,7 @@ int main() {
 
 全局函数类内实现 - 直接在类内声明友元即可
 
-全局函数类外实现 - 需要提前让编译器知道全局函数的存在
+全局函数类外实现 - 需要提前让编译器知道全局函数的存在   实现的3的步骤
 
 
 
@@ -1213,12 +1213,14 @@ int main() {
 ```C++
 #include <string>
 
-//2、全局函数配合友元  类外实现 - 先做函数模板声明，下方在做函数模板定义，在做友元
+//1 全局函数配合友元  类外实现 - 先做类模板声明，因为下面的全局友元函数需要知道有Person类的存在，所以要先在这里声明
 template<class T1, class T2> class Person;
 
 //如果声明了函数模板，可以将实现写到后面，否则需要将实现体写到类的前面让编译器提前看到
 //template<class T1, class T2> void printPerson2(Person<T1, T2> & p); 
 
+
+//2 类外实现的全局友元函数  先在这里声明  后面在类内才能做友元函数
 template<class T1, class T2>
 void printPerson2(Person<T1, T2> & p)
 {
@@ -1234,8 +1236,10 @@ class Person
 		cout << "姓名： " << p.m_Name << " 年龄：" << p.m_Age << endl;
 	}
 
-
+	// 3 声明友元函数
 	//全局函数配合友元  类外实现
+    //要加一个空的参数模板列表<>
+    //这友元函数的实现需要在这个类前面
 	friend void printPerson2<>(Person<T1, T2> & p);
 
 public:
@@ -1280,7 +1284,7 @@ int main() {
 }
 ```
 
-总结：建议全局函数做类内实现，用法简单，而且编译器可以直接识别
+总结：没有特殊要求，建议全局函数做类内实现，用法简单，而且编译器可以直接识别
 
 
 
@@ -2472,8 +2476,7 @@ int main() {
 * `vector(n, elem);`                            //构造函数将n个elem拷贝给本身。
 * `vector(const vector &vec);`         //拷贝构造函数。
 
-
-
+* `vector<vector<bool>> g = vector<vector<bool>>(n, vector<bool>(n, false));`   //二维数组全部填充为false
 
 **示例：**
 
@@ -5757,6 +5760,37 @@ int main() {
 
 - 查找   ---  find    （返回的是迭代器）
 - 统计   ---  count  （对于map，结果为0或者1）
+
+
+
+**multimap中查找元素**
+
+```c++
+    pair<string, int> p[] = {{"a",1},
+                             {"c",3},
+                             {"b",2},
+                             {"d",4},
+                             {"a",6},
+                             {"a",9}};
+    multimap<string,int> mm(begin(p),end(p));
+    for(auto &q : mm)
+    {
+        cout<<q.first<<" "
+            <<q.second<<endl;
+    }
+       //第一种方法 find+count
+    string search_item("a");
+    auto entries = mm.count(search_item);
+    auto iter = mm.find(search_item);
+    while(entries)
+    {
+      cout<< iter->second << endl;
+      ++iter;
+     --entries;
+    }
+```
+
+
 
 
 

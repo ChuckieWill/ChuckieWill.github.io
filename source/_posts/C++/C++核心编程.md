@@ -1668,7 +1668,21 @@ int main() {
 
 #### 4.2.6 初始化列表
 
-
+> [初始化列表和直接赋值的区别](https://blog.csdn.net/c1348208475/article/details/105354323)
+>
+> [有关初始化列表和构造函数赋值的区别](https://www.freesion.com/article/31281119296/)
+>
+> 初始化列表是在类的成员变量初始化的时候就直接赋值了
+>
+> 类内部直接赋值，是先初始化，然后赋值
+>
+> 必须用初始化列表的情况：
+>
+> * **1.const成员或reference引用类型的成员。**const对象或引用类型只能初始化，不能对他们赋值。
+>   构造函数的函数体内只能做赋值而不是初始化，因此初始化const对象或引用的唯一机会是构造函数
+>   函数体之前的初始化列表中
+>
+> * 2.基类的构造函数都需要初始化列表；
 
 **作用：**
 
@@ -4736,6 +4750,12 @@ void test01()
 
 
 ## 5 文件操作
+
+> C中采用的主要是[文件指针](https://www.baidu.com/s?wd=文件指针&tn=44039180_cpr&fenlei=mv6quAkxTZn0IZRqIHckPjm4nH00T1YLnWbYPWf1njNBmWD1rH6z0ZwV5Hcvrjm3rH6sPfKWUMw85HfYnjn4nH6sgvPsT6KdThsqpZwYTjCEQLGCpyw9Uz4Bmy-bIi4WUvYETgN-TLwGUv3EnWfzPjRzPW04)的办法，C++中对文件的操作主要运用了“文件流”（即非标准的输入输出）的思想
+>
+> c中用FILE
+>
+> c++中用fstream
 
 
 
