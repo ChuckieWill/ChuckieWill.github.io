@@ -9,6 +9,8 @@ categories:
 
 ---
 
+
+
 #  GraphPi
 
 > [GraphPi论文](https://pacman.cs.tsinghua.edu.cn/~zjd/publication/sc20-graphpi/sc20-graphpi.pdf)
@@ -88,8 +90,8 @@ Schedule:
 在main函数中根据需要修改如下配置：
 
 ```
-int performance_modeling_type = 0;  //0:不使用性能模型， 1：使用
-int restricts_type = 0;             //0: 不使用限制，1：使用
-int use_in_exclusion_optimize = 0;  //0: 不使用包含排除优化，1：使用
+int performance_modeling_type = 0;  //0:不使用性能模型， 1：使用      选择1时需要提前输入三角形个数 
+int restricts_type = 0;             //0: 不使用限制，1：使用         选择1时系统可以自动判断有没有可以限制的，即可以判断图中是否存在同构
+int use_in_exclusion_optimize = 0;  //0: 不使用包含排除优化，1：使用   选择1时系统可以自动检测是否可以使用
 ```
 

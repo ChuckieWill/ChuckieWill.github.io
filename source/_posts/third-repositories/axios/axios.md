@@ -11,7 +11,12 @@ categories:
 
 ##  0 官网 
 
-[axios官网]( http://www.axios-js.com/zh-cn/ )
+> [axios官网]( http://www.axios-js.com/zh-cn/ )
+>
+> *  方法使用查看官网
+> * 具体应该场景的封装查看本笔记
+
+
 
 ##  1 安装
 
@@ -33,6 +38,134 @@ npm install axios --save
 - 客户端支持防御 [XSRF](http://en.wikipedia.org/wiki/Cross-site_request_forgery)
 
 ##  3 vue中使用axios
+
+> 主要讲封装的内容
+
+**目录**
+
+* 在src目录下新建`utils/resques.js`
+
+###  3.1 封装与使用
+
+**封装**
+
+```js
+//utils/resques.js
+import axios from 'axios'
+
+export const post = (url, data = {}) => {
+  return new Promise((resolve, reject) => {
+    axios.post(url, data, {
+      baseURL: 'https://www.fastmock.site/mock/ae8e9031947a302fed5f92425995aa19/jd',  //设置基础地址
+      headers: {
+        'Content-Type': 'application/json'     //设置提交的数据格式位json
+      }
+    }).then(res => {
+      console.log(res)
+      resolve(res.data)
+    }, err => {
+      reject(err)
+    })
+  })
+}
+
+```
+
+**使用**
+
+```vue
+<script>
+import { post } from '../../utils/request'
+export default {
+  name: 'Login',
+  setup () {
+    const handleLogin = () => {
+      post('/api/user/login', {
+        username: 'username1',
+        password: 'password1'
+      }).then(() => {
+        alert('成功')
+      }).catch(() => {
+        alert('失败')
+      })
+    }
+  }
+}
+</script>
+```
+
+###  3.2 实例化axios
+
+> [创建实例官网文档](http://www.axios-js.com/zh-cn/docs/#%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B)
+
+* 设置baseURL
+* 设置请求超时时间
+
+```js
+//utils/resques.js
+import axios from 'axios'
+
+const instance = axios.create({
+  baseURL: 'https://www.fastmock.site/mock/ae8e9031947a302fed5f92425995aa19/jd', //设置baseURL
+  timeout: 10000  //设置请求超时时间
+})
+
+export const get = (url, params = {}) => {
+  return new Promise((resolve, reject) => {
+    instance.get(url, { params }).then(res => {
+      console.log(res)
+      resolve(res.data)
+    }, err => {
+      reject(err)
+    })
+  })
+}
+
+export const post = (url, data = {}) => {
+  return new Promise((resolve, reject) => {
+    instance.post(url, data, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => {
+      console.log(res)
+      resolve(res.data)
+    }, err => {
+      reject(err)
+    })
+  })
+}
+```
+
+###  3.3 带参url
+
+####  3.3.1 get
+
+* url格式
+
+```js
+/api/shop/:id/products?tab=all   // tab = 'all' 或 'seckill' 或 'fruit'  id = 页数
+```
+
+* 传递`:id`方式的参数
+  * `${}` 方式传入
+
+
+```js
+const res = await get(`/api/shop/${shopId}/products`, {
+      tab: currentTab.value
+    })
+```
+
+* 传递`?params`方式的参数
+  * 键值对的形式传入，键就是定义的键,例如tab
+
+
+```js
+const res = await get(`/api/shop/${shopId}/products`, {
+      tab: currentTab.value
+    })
+```
 
 
 

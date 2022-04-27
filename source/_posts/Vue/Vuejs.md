@@ -139,6 +139,8 @@ npm install vue
 
 > [单页组件视频教程](https://www.bilibili.com/video/BV1Zy4y1K7SH?p=60)
 
+###  1.4 初始化项目
+
 
 
 ##  2 Vue中的MVVM
@@ -843,7 +845,21 @@ v-model.number="message"
 v-model.trim="message"
 ```
 
+##  9本地存储
 
+* 存: 任何位置直接使用
+
+```js
+localStorage.islogn = 'xxxx'
+```
+
+* 取： 任何位置直接使用
+
+```js
+const islogn localStorage.islogn
+或者
+const { isLogin } = localStorage
+```
 
 
 
@@ -1726,7 +1742,7 @@ this.$refs.scroll.$el.offsetTop
 
 
 
-#  Vue3
+#  四、Vue3
 
 > 源码：L264-code
 
@@ -1906,9 +1922,11 @@ npm uninstall vue-cli -g
 3. 启动项目
    `npm run serve`
 
-##  vue-router
+# 五、vue-router
 
 > [Vue-Router官方文档](https://next.router.vuejs.org/zh/)
+
+##  1 安装
 
 **脚手架创建项目时就安装vue-router**
 
@@ -1927,11 +1945,296 @@ npm uninstall vue-cli -g
 
 ![image-20210815162645470](Vuejs/image-20210815162645470.png)
 
+**使用过程中安装**
+
+```
+npm install vue-router@版本号
+```
+
+##  2 使用路由
+
+###  2.1 配置控制跳转
+
+* main.js中引入router
+
+```js
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+
+createApp(App).use(store).use(router).mount('#app')
+```
+
+* `/router/index.js`设置路由
+
+```js
+import Home from '../views/home/Home'
+import Login from '../views/login/Login'
+const routes = [
+  {  
+    path: '/',      //路由地址
+    name: 'Home',   //组件名
+    component: Home //组件名
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  }
+]
+```
+
+* app.js中使用路由
+
+```vue
+<template>
+  <router-view/>    //自动根据路由地址显示相应的组件
+</template>
+
+<script>
+export default {
+  name: 'App'
+}
+</script>
+```
+
+###  2.2 js控制跳转
+
+**跳转到指定页面**
+
+```vue
+<template>
+    <div class="wrapper__login-button"  @click="handleLogin">登录</div>
+</template>
+
+<script>
+import { useRouter } from 'vue-router'   //引入
+export default {
+  name: 'Login',
+  setup () {
+    const router = useRouter()           //实例化
+    const handleLogin = () => {
+      router.push({ name: 'Home' })      //设置要跳转的页面， Home是路由名
+    }
+    return { handleLogin }
+  }
+}
+</script>
+```
+
+**返回上一个页面**
+
+* `router.back()`
+
+```js
+import { useRouter } from 'vue-router'
+const useBackEffect = () => {
+  const router = useRouter()
+  const handleBack = () => {
+    router.back()
+  }
+  return { handleBack }
+}
+```
+
+###  2.3 标签控制跳转
+
+* ` <to="/shop"> </router-link>`
+* 去掉a标签的下划线
+
+```vue
+// 路由跳转不带参数的情况
+<template>
+  <div class="nearby">
+    <router-link to="/shop">
+      <ShopInfo />
+    </router-link>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.nearby{
+  a{
+    text-decoration: none;
+  }
+}
+</style>
+```
+
+###  2.4 路由参数
+
+####  2.4.1 传递参数
+
+**配置**
+
+```js
+const routes = [
+  {
+    path: '/shop/:id',  //参数名为：id
+    name: 'Shop',
+    component: () => import(/* webpackChunkName: "shop" */ '../views/shop/Shop')
+  }
+]
+```
+
+**js跳转带参**
+
+* 使用`router.push`方法，并用`${}`添加参数
+
+```vue
+<template>
+  <div class="nearby">
+    <ShopInfo v-for="item in nearbyList" :key="item._id" :item="item" @click="handleToShop(item._id)"/>
+  </div>
+</template>
+
+<script>
+import { useRouter } from 'vue-router'
+
+// 跳转到shop页面
+const useToShopEffect = () => {
+  const router = useRouter()
+  const handleToShop = (id) => {
+    router.push(`/shop/${id}`)
+  }
+  return { handleToShop }
+}
+
+export default {
+  name: 'Nearby',
+  components: { ShopInfo },
+  setup () {
+    return { nearbyList, handleToShop }
+  }
+}
+</script>
+```
+
+**标签跳转带参**
+
+* 通过`:to=" "`指定路径，并用`${}`添加参数
+
+```vue
+// 路由跳转不带参数的情况
+<template>
+  <div class="nearby">
+    <router-link v-for="item in nearbyList" :key="item._id" :to="`/shop/${item._id}`">
+      <ShopInfo :item="item" />
+    </router-link>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.nearby{
+  a{
+    text-decoration: none;
+  }
+}
+</style>
+```
+
+####  2.4.2 获取参数
+
+* 通过useRoute获取**当前路由**相关的信息，例如：**params**、**path**、**query**等
+  * 通过`route.params`获取路由带的参数
+
+```js
+import { useRoute } from 'vue-router'
+
+// 获取当前商铺数据
+const useShopInfoEffect = () => {
+  const route = useRoute()
+  console.log(route.params.id)
+}
+```
 
 
 
+##  3 路由守卫
 
-##  VueX
+####  全局守卫
+
+> * 任何路由每次跳转之前调用
+> * 使用场景：只有登录后才能正常跳转，如果没有登录，则会默认跳转到登录页面
+
+* `/router/index.js`中使用`router.beforeEach`设置全局路由守卫
+  * to : 路由跳转的目标路由
+  * from ： 路由跳转的原始路由
+  * next :  调用则表示允许跳转
+    * 接收跳转到的路由的组件名，则干预跳转的页面
+    * next(), 不传参数则表示不做干预，保持原来的跳转
+
+```js
+router.beforeEach((to, from ,next) => {
+  const { isLogin } = localStorage;  //用本地存储记录是否登录了
+  const { name } = to;
+  const isLoginOrRegister = (name === "Login" || name === "Register");
+  //如果登录了，或者路由是Login或者Register则跳转到相应页面不做干预，否则跳转到Login页面
+  (isLogin || isLoginOrRegister) ? next() : next({ name: 'Login'});  //接受将要跳转到的路由页面的组件名：Login
+})
+```
+
+####  单独守卫
+
+> * 跳转到当前路由之前调用
+> * 使用场景： 已经登录了，地址为登录页时，不应该显示登录页，而是自动跳转到首页
+
+* `/router/index.js`中的`routes`模块中使用`router.beforeEach`设置单独路由守卫
+
+```js
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    beforeEnter (to, from, next) {  //当路由跳转到login页面时调用
+      const isLogin = localStorage.isLogin  //是否登录
+      if (isLogin) {
+        next({ name: 'Home' })  //如果登录了则跳转到Home界面
+      } else {
+        next()  //如果没有登录则正常跳转，即跳转到Login页面
+      }
+      
+      //上面的部分可以简化为下面的两行代码
+      //const { isLogin } = localStorage
+      //isLogin ? next({ name: 'Home' }) : next()
+    }
+  }
+]
+```
+
+##  4 动态路由
+
+> 又叫异步路由
+>
+> 在需要展示页面的时候才加载相关资源
+
+* `/* webpackChunkName: "about" */ `: about  用于调试显示
+
+```js
+import Home from '../views/home/Home'
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home    //普通路由
+  },
+  {
+    path: '/shop',
+    name: 'Shop',
+    component: () => import(/* webpackChunkName: "shop" */ '../views/shop/Shop')   //动态路由
+  }
+]
+```
+
+
+
+# 六、VueX
 
 > [Vuex官方文档](https://next.vuex.vuejs.org/zh/index.html)
 
@@ -1942,4 +2245,70 @@ npm uninstall vue-cli -g
 3. **空格选择`Vuex`**
 
 <img src="Vuejs/image-20210815163117742.png" alt="image-20210815163117742" style="zoom:50%;" />
+
+#  七、插件
+
+###  normalize.css
+
+> 移动端不同浏览器的标签样式不一样
+>
+> normalize.css用于使得不同浏览器上标签样式一直  
+>
+> 类似css适配中用到的reset css
+
+* 安装
+
+```js
+npm install normalize.css --save
+```
+
+* 使用:  在main.js中引入即可
+
+```js
+import 'normalize.css'
+```
+
+
+
+# 八、开发常用操作
+
+###  `*`的方式写多个一样的标签
+
+```vue
+span.item*4
+
+
+```
+
+###  vue中全局引入样式
+
+* 在根目录下新建`style`文件，文件夹下可以新建`css、lcss、scss`的文件
+* 再在`style`下新建`index.css`将其它样式文件都引入到这个文件中，
+* 再在`main.js`中引入`index.css`即可,  使得在`main.js`中只会引入一次，不用每个都引入，因为所有要引入的样式文件都在`index.css`中引入了
+
+```js
+import './style/index.css'
+```
+
+###  vue中使用scss
+
+> [scss官网](https://www.sass.hk/)
+
+* 在创建项目时，选择安装css预处理： `CSS Pre-processors`
+* 在引入文件时同css只是文件名后缀为`.scss`
+* style部分添加`lang="scss"`
+
+```vue
+<style lang="scss">
+</style>
+```
+
+###  vue中scoped
+
+* scoped 表示当前样式只对当前组件有效
+
+```vue
+<style scoped>
+</style>
+```
 

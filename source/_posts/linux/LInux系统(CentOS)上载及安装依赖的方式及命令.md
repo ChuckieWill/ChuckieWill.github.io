@@ -1,5 +1,5 @@
 ---
-title: LInux系统(CentOS)上载及安装依赖的方式及命令
+title: LInux系统(CentOS)上下载及安装依赖的方式及命令
 date: 2021-11-20 10:46:17
 tags:
 - CentOS
@@ -9,7 +9,9 @@ categories:
 
 
 
-#  LInux系统(CentOS)上载及安装依赖的方式及命令
+#  LInux系统(CentOS)上下载及安装依赖的方式及命令
+
+> [vue项目部署到腾讯云轻量应用服务器](https://chuckiewill.github.io/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/)
 
 ##  方式一
 

@@ -23,7 +23,9 @@ categories:
 * promise的三个状态
   * pending 状态，不会触发then和catch
   * resolved状态，会触发后续的then回调函数，不会触发catch
-  * rejected状态，会触发后续的catch回调函数，不会触发then
+  * rejected状态，会触发后续的catch回调函数或者then的第二个回调函数
+    * 当同时有then的第二个回调函数和catch回调函数时，且是promise内部错误时，按就近原则，调用then的第二个回调函数
+    * 当同时有then的第二个回调函数和catch回调函数时，且不是promise内部错误时，例如网络中断，直接调用catch
 
 ```
 pending  fulfilled  rejected
@@ -99,14 +101,14 @@ let p1 = new Promise( (resolve, reject) => {
 
 let p2 = new Promise( (resolve, reject) => {
 	setTimeout( () => {
-    console.log('p2')
+    	console.log('p2')
 		resolve('p2')//执行成功后返回的值‘p2’
 	},1000)
 }) 
 
 let p3 = new Promise( (resolve, reject) => {
 	setTimeout( () => {
-    console.log('p3')
+    	console.log('p3')
 		resolve('p3')//执行成功后返回的值‘p3’
 	},3000)
 }) 
@@ -134,14 +136,14 @@ let p1 = new Promise( (resolve, reject) => {
 
 let p2 = new Promise( (resolve, reject) => {
 	setTimeout( () => {
-    console.log('p2')
+    	console.log('p2')
 		resolve('p2')//执行成功后返回的值‘p2’
 	},1000)
 }) 
 
 let p3 = new Promise( (resolve, reject) => {
 	setTimeout( () => {
-    console.log('p3')
+    	console.log('p3')
 		resolve('p3')//执行成功后返回的值‘p3’
 	},3000)
 }) 
@@ -321,6 +323,7 @@ async test(){
 * then同await,只处理Promise的resolved状态，**不能处理rejected和pending状态**
   * then接收pending状态，then不会触发，后续回调函数不会执行
   * then接收rejected状态，then不会触发，且此时没有处理内部返回的错误，**会报错**
+    * 除非有then的第二个回调函数，则可以处理rejected
 
 - await 处理 Promise的resolved状态，**不能处理rejected和pending状态**
 
@@ -576,5 +579,61 @@ async function test2 () {
 test2() //隔1s后打印1 再隔1s后打印4  再隔1s后打印9
 ```
 
+##  6 Promise中的then第二个参数和catch的区别
 
+1. 当错误是promise内部错误时，会按就近原则处理即：
+
+* 当Promise.then中有第二个回调函数时，执行then第二个函数
+
+```js
+let p=new Promise((resolve,reject)=>{
+    throw new Error('出错了')
+})
+p.then(()=>{},err=>{
+    console.log('reject'+err);
+}).catch(err=>{
+    console.log('catch'+err);
+})
+结果：rejectError: 出错了
+```
+
+* 当Promise.then中没有第二个回调函数时，执行catch
+
+```js
+let p=new Promise((resolve,reject)=>{
+    throw new Error('出错了')
+})
+p.then(()=>{}).catch(err=>{
+    console.log('catch'+err);
+})
+结果：catchError: 出错了
+```
+
+2. 当错误不是promise内部错误时，例如网络中断，则需要用catch来处理
+
+* 即使有then的第二个参数也不会进入，会直接进入catch
+
+3. 如果在then的第一个函数里抛出了异常，后面的catch能捕获到，而then的第二个函数捕获不到
+
+```js
+Promise.resolve('10')
+.then(res => {
+  console.log(res)
+  console.log('resolve')
+  throw new Error('hhhh')
+},err => {
+  console.log(err)
+  console.log('err')
+}).catch(erro =>{
+  console.log(erro)
+  console.log('reject')
+})
+
+//打印结果
+10
+resolve
+Error: hhhh
+    at F:\code\test-font\test.js:5:9
+reject
+```
 

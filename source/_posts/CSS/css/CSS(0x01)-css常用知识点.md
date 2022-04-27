@@ -22,8 +22,9 @@ categories:
 ###  3 阿里iconfont 字体图标
 
 * [imooc视频教程-imooc-music-4.3引入iconfont字体图标](https://coding.imooc.com/lesson/373.html#mid=27424)
-
 * [阿里iconfont官网]( https://www.iconfont.cn/ )
+
+####  3.1 微信小程序中使用
 
 *  页面内使用iconfont
 
@@ -83,6 +84,116 @@ categories:
     })
     
     ```
+
+####  3.2 vue中使用
+
+1. iconfont首页---资源管理---我的项目---新建项目
+2. 将需要的图标加入购物车，并将购物车的图标选择加入刚才创建的项目
+3. 进入新创建的项目，点击`下载至本地`
+4. 解压下载到本地的资源，打开其中的`iconfont.css`
+5. 在vue根目录下的`style`文件夹下新建`icnfont.css`文件，并将上面下载的`iconfont.css`文件中的如下代码拷贝过来，再在`style/index.css`中引入`iconfont.css`,  `style/index.css`会在`main.js`中引入，就保证了`iconfont.css`在全局的引入
+
+```css
+@font-face {
+  font-family: "iconfont"; /* Project id 3288115 */
+  src: url('iconfont.woff2?t=1648567317963') format('woff2'),  /*这里的url是本地的地址*/
+       url('iconfont.woff?t=1648567317963') format('woff'),
+       url('iconfont.ttf?t=1648567317963') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+```
+
+6. 再次进入iconfont官网我的项目中的新建的项目，点击`查看在线连接`，再点击`生成代码`，将生成代码的url部分替换上面`iconfont.css`中的url部分，即改成使用阿里云的素材而不是下载到本地的素材
+
+```css
+//在线代码  
+@font-face {
+  font-family: 'iconfont';  /* project id 3288115 */
+  src: url('');
+  src: url('?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_3288115_v6f6pih8jwj.woff2') format('woff2'), /*这里的url是阿里云的地址*/
+  url('//at.alicdn.com/t/font_3288115_v6f6pih8jwj.woff') format('woff'),
+  url('//at.alicdn.com/t/font_3288115_v6f6pih8jwj.ttf') format('truetype'),
+  url('#iconfont') format('svg');
+}
+
+//替换后的iconfont.css如下
+@font-face {
+  font-family: "iconfont"; /* Project id 3288115 */
+  src: url('');
+  src: url('?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_3288115_v6f6pih8jwj.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_3288115_v6f6pih8jwj.woff') format('woff'),
+  url('//at.alicdn.com/t/font_3288115_v6f6pih8jwj.ttf') format('truetype'),
+  url('#iconfont') format('svg');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+```
+
+7. 在main.js中全局引入iconfont.css
+
+```js
+import './style/iconfont.css'
+```
+
+8. 使用图标
+   * 用div标签包裹需要使用的图标，并且div标签的类名必须为`iconfont`
+   * 再次进入iconfont官网找项目，鼠标放到图标上，点击`复制代码`，复制的结果粘贴到div内容部分，即下面的`&#xe608;`
+
+```vue
+<div class="iconfont">&#xe608;</div>
+```
+
+9. 修改图标大小和颜色
+   * 修改图标大小
+   * 此时图标就是通过class=“iconfont”的div标签控制，所以要调整图标与其它元素的距离，也可以通过margin控制
+
+```css
+.iconfont{
+    font-size: **px;
+    margin: ...
+}
+```
+
+10. 注意，每次修改了iconfont官网项目中的图标后（添加了新的图标），需要重新生成在线连接，并将新的在线连接替换`./style/iconfont.css`中的地址连接, 替换部分如下：
+
+```css
+//替换的部分
+src: url('//at.alicdn.com/t/font_3288115_jaafkmyptyf.woff2?t=1648569184646') format('woff2'),
+     url('//at.alicdn.com/t/font_3288115_jaafkmyptyf.woff?t=1648569184646') format('woff'),
+     url('//at.alicdn.com/t/font_3288115_jaafkmyptyf.ttf?t=1648569184646') format('truetype');
+
+//替换后的iconfont.css
+@font-face {
+  font-family: "iconfont"; /* Project id 3288115 */
+  src: url('//at.alicdn.com/t/font_3288115_jaafkmyptyf.woff2?t=1648569184646') format('woff2'),
+  url('//at.alicdn.com/t/font_3288115_jaafkmyptyf.woff?t=1648569184646') format('woff'),
+  url('//at.alicdn.com/t/font_3288115_jaafkmyptyf.ttf?t=1648569184646') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+```
+
 
 
 # 一、选择器
@@ -870,11 +981,20 @@ cursor: pointer;//手型
 
 ##  0 盒子模型
 
-元素宽=内容宽+padding+border
+* 默认情况
+  * 元素宽=内容宽
+  * 元素高=内容高
 
-元素高=内容高+padding+border
+* 盒子模型
+  * 元素宽=内容宽+padding+border
+  * 元素高=内容高+padding+border
+  * margin左右不会重叠，**上下交界的部分会重叠**
 
-margin左右不会重叠，**上下交界的部分会重叠**
+```css
+box-sizing:border-box;
+```
+
+
 
 ## 1 flex布局
 
@@ -919,6 +1039,8 @@ margin左右不会重叠，**上下交界的部分会重叠**
     2、元素的高度、宽度、行高以及顶和底边距都可设置。
 
   * 常见内联块级元素：`<img>、<input>`
+  
+    * 设置为`display:block`后，就可以设置`margin:auto`
 
 ### 2.1 inline-block布局
 
@@ -1525,13 +1647,9 @@ top: 44px;         //top设置滑动到距离顶部多少时 脱离标准流(原
   }
 ```
 
-####  4.1.3 边框不占元素宽高
 
-```
-box-sizing:border-box;
-```
 
-####  4.1.4 块级元素居中
+####  4.1.3 块级元素居中
 
 ```
 //上下左右居中  
@@ -1663,6 +1781,14 @@ a:active {
 }
 ```
 
+###  5.1.2 去掉input自带样式
+
+```css
+border: none;
+outline: none;
+background: none;
+```
+
 
 
 ##  5.2 父元素的透明度设置影响子元素
@@ -1677,6 +1803,120 @@ a:active {
 
 * 为父元素设置`background: rgba(0,0,0,0.5)`。
 
+##  5.3 超过显示范围自适应
+
+```css
+overflow-y: auto;  //y
+```
+
+## 5.4 登录页面上下居中和input撑开宽度
+
+**登录页面上下居中**
+
+<img src="C:/Users/Chuckie/AppData/Roaming/Typora/typora-user-images/image-20220413232248859.png" alt="image-20220413232248859" style="zoom:50%;" />
+
+```vue
+<template>
+  <div class="wrapper">
+    <img class="wrapper__img" src="http://www.dell-lee.com/imgs/vue3/user.png" >
+    <div class="wrapper__input">
+      <input class="wrapper__input__content">
+    </div>
+    <div class="wrapper__input">
+      <input class="wrapper__input__content">
+    </div>
+    <div class="wrapper__login-button">登录</div>
+    <div class="wrapper__login-link">立即注册</div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Login'
+}
+</script>
+
+<style lang="scss" scoped>
+.wrapper{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+}
+</style>
+
+```
+
+**input撑开宽度**
+
+* 在input外面包裹一个div
+
+##  5.5 裂图问题
+
+> 问题：图片加载很慢的情况下，图片的位置就会出现图裂的效果
+>
+> 解决办法：通过v-show控制组件的显示，当图片加载完成后再显示组件
+
+```vue 
+// ShopInfo组件中需要展示图片， 则通过v-show="item.imgUrl"判断，当图片加载完成后再显示，这样图裂j
+<ShopInfo :item="item"  v-show="item.imgUrl"/>
+```
 
 
-###   
+
+
+
+# 六、浏览器特性
+
+## 6.1 浏览器默认样式
+
+###  6.1.1 浏览器默认最小字体
+
+> 浏览器默认最小字体是12px
+>
+> 当设置的字体小于12px时会按12px显示
+
+* 解决方案
+  * 例如要设置10px的字体
+
+```css
+<div class="doctor__title">订单</div> 
+
+.doctor__title{
+  font-size: .2rem;
+  transform: scale(.5, .5);//横向缩放50%  纵向缩放50%
+  transform-origin: center top;//横向缩放源点是中心，纵向缩放源点是顶部
+}
+```
+
+
+
+
+
+#  七、BEM
+
+> [BEM解决的问题](https://www.bemcss.com/#)
+>
+> [BEM命名规则](https://www.bemcss.com/#)
+>
+> [BEM教程](https://www.w3cplus.com/blog/tags/325.html)
+
+```
+BEM:
+block__element--Modifier
+block: 模块
+element：模块中的元素
+Modifier： 状态
+```
+
+```vue
+  <div class="doctor">
+    <span class="doctor__item doctor__item--active">
+      hello world
+    </span>
+  </div>
+
+//doctor__item--active  表示doctor模块下的item元素的active状态
+```
+

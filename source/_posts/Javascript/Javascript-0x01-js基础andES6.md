@@ -426,7 +426,9 @@ People.sayHi()//报错，因为没有实例化
 })()
 ```
 
+####  3.14 ?语法
 
+> [result?.data?. errno === 0 前端语法“?“的含义](https://blog.csdn.net/myt2000/article/details/121919820)
 
 
 

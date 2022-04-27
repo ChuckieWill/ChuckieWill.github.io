@@ -2525,6 +2525,12 @@ int main() {
 
 
 
+**定义指定长度的二维vector**
+
+```c++
+std::vector<std::vector<P_ID>> P_max_cov_adj(vertexNum_P, std::vector<P_ID>(vertexNum_P));
+```
+
 
 
 
@@ -5030,6 +5036,11 @@ int main() {
 * 清空   --- clear
 
 
+
+**insert()**返回值:
+
+* 1: 插入的元素的迭代器   `set.first`
+* 2：插入是否成功 ，成功为true， 否则为false  `set.second`
 
 
 

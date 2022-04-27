@@ -17,7 +17,13 @@ node:mRw8LZz1ulLPMf5U
 
 ###  1.1 node安装及下载
 
-* [node下载官网](https://nodejs.org/en/) 
+> [node.js官网](https://nodejs.org/en/) 
+>
+> [低版本下载地址](https://nodejs.org/en/download/releases/)
+>
+> [同一台电脑安装不同版本的vue，安装不同版本的NodeJs](https://zhuanlan.zhihu.com/p/403728681)
+
+* 问题
 
   * 若已安装node.js 但是终端node-v 显示不是内部命令  [解决方案](https://blog.csdn.net/qq_37248318/article/details/80839564?depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1&utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1 )
   * Vscode终端运行node命令，提示“'node' 不是内部或外部命令   [解决方案](https://blog.csdn.net/LINHONG_1994/article/details/103068943)

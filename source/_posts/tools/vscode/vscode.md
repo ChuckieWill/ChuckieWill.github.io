@@ -35,12 +35,12 @@ categories:
   * 让输入法在中英文标点符号之间来回进行切换
 * ctrl + /
   * 在代码当中快速打出注释
-
 * alt+shift+a
   * 多行注释
-
 * ctrl+f
   * 在文件中查找
+* 查看函数： ctrl + 点击要查看的函数
+* 查看完函数后返回原来的位置： alt + -
 
 
 
@@ -260,7 +260,7 @@ open in browser
         "<node_internals>/**"
       ]
     },
-    // ----2-----额配置默认调试入口文件------
+    // ----2-----配置默认调试入口文件------
     {
       "type": "node",
       "request": "launch",
@@ -313,7 +313,13 @@ open in browser
 * 5 ： 重启调试
 * 6 ： 停止调试
 
+###  3.2 vscode下调试运行c++
 
+> [vscode下调试运行c++ ](https://www.cnblogs.com/zhuzhenwei918/p/9057289.html)
+>
+> [win10安装MinGW-64安装版](https://blog.csdn.net/qq_44108889/article/details/120228107)
+>
+> [wingw-w64安装时 the file has been downloaded incorrectly!](https://blog.csdn.net/kramer_1711/article/details/119416512)
 
 ##  4 小技巧
 
