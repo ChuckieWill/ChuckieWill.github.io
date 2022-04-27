@@ -1694,12 +1694,9 @@
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">!(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="number">100</span></span><br><span class="line">  <span class="built_in">console</span>.log(res) <span class="comment">// 100</span></span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
+<h4 id="3-14-语法"><a href="#3-14-语法" class="headerlink" title="3.14 ?语法"></a>3.14 ?语法</h4><blockquote>
+<p><a href="https://blog.csdn.net/myt2000/article/details/121919820" target="_blank" rel="noopener">result?.data?. errno === 0 前端语法“?“的含义</a></p>
+</blockquote>
 <h2 id="4-阅读代码提示"><a href="#4-阅读代码提示" class="headerlink" title="4 阅读代码提示"></a>4 阅读代码提示</h2><blockquote>
 <p><a href="https://www.bilibili.com/video/BV1nJ411J7a2?p=27" target="_blank" rel="noopener">函数提示解释视频</a></p>
 </blockquote>
@@ -2121,7 +2118,11 @@
 <li>promise的三个状态<ul>
 <li>pending 状态，不会触发then和catch</li>
 <li>resolved状态，会触发后续的then回调函数，不会触发catch</li>
-<li>rejected状态，会触发后续的catch回调函数，不会触发then</li>
+<li>rejected状态，会触发后续的catch回调函数或者then的第二个回调函数<ul>
+<li>当同时有then的第二个回调函数和catch回调函数时，且是promise内部错误时，按就近原则，调用then的第二个回调函数</li>
+<li>当同时有then的第二个回调函数和catch回调函数时，且不是promise内部错误时，例如网络中断，直接调用catch</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -2145,9 +2146,9 @@
 
 
 
-<h3 id="1-2-promise-all"><a href="#1-2-promise-all" class="headerlink" title="1.2 promise.all"></a>1.2 promise.all</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">	setTimeout( <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'p1'</span>)</span><br><span class="line">		resolve(<span class="string">'p1'</span>)<span class="comment">//执行成功后返回的值‘p1’</span></span><br><span class="line">	&#125;,<span class="number">2000</span>)</span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">	setTimeout( <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p2'</span>)</span><br><span class="line">		resolve(<span class="string">'p2'</span>)<span class="comment">//执行成功后返回的值‘p2’</span></span><br><span class="line">	&#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p3 = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">	setTimeout( <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p3'</span>)</span><br><span class="line">		resolve(<span class="string">'p3'</span>)<span class="comment">//执行成功后返回的值‘p3’</span></span><br><span class="line">	&#125;,<span class="number">3000</span>)</span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.all([p1,p2,p3]).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">	sonsole.log(<span class="string">'全部完成'</span>)   <span class="comment">//只有p1,p2,p3都成功才会调用此处</span></span><br><span class="line">	<span class="built_in">console</span>.log(res)    <span class="comment">//res:['p1','p2','p3'] 即resolve返回的值</span></span><br><span class="line">&#125;).catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">	sonsole.log(<span class="string">'失败'</span>)</span><br><span class="line">	<span class="built_in">console</span>,log(err)    <span class="comment">// 即reject返回的值</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">.all的返回值res是一个数组  对应于 [p1,p2,p3]的返回值</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-promise-all"><a href="#1-2-promise-all" class="headerlink" title="1.2 promise.all"></a>1.2 promise.all</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">	setTimeout( <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'p1'</span>)</span><br><span class="line">		resolve(<span class="string">'p1'</span>)<span class="comment">//执行成功后返回的值‘p1’</span></span><br><span class="line">	&#125;,<span class="number">2000</span>)</span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">	setTimeout( <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    	<span class="built_in">console</span>.log(<span class="string">'p2'</span>)</span><br><span class="line">		resolve(<span class="string">'p2'</span>)<span class="comment">//执行成功后返回的值‘p2’</span></span><br><span class="line">	&#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p3 = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">	setTimeout( <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    	<span class="built_in">console</span>.log(<span class="string">'p3'</span>)</span><br><span class="line">		resolve(<span class="string">'p3'</span>)<span class="comment">//执行成功后返回的值‘p3’</span></span><br><span class="line">	&#125;,<span class="number">3000</span>)</span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.all([p1,p2,p3]).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">	sonsole.log(<span class="string">'全部完成'</span>)   <span class="comment">//只有p1,p2,p3都成功才会调用此处</span></span><br><span class="line">	<span class="built_in">console</span>.log(res)    <span class="comment">//res:['p1','p2','p3'] 即resolve返回的值</span></span><br><span class="line">&#125;).catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">	sonsole.log(<span class="string">'失败'</span>)</span><br><span class="line">	<span class="built_in">console</span>,log(err)    <span class="comment">// 即reject返回的值</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">.all的返回值res是一个数组  对应于 [p1,p2,p3]的返回值</span><br></pre></td></tr></table></figure>
 
-<h3 id="1-3-promise-race"><a href="#1-3-promise-race" class="headerlink" title="1.3 promise.race"></a>1.3 promise.race</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">	setTimeout( <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'p1'</span>)</span><br><span class="line">		resolve(<span class="string">'p1'</span>)<span class="comment">//执行成功后返回的值‘p1’</span></span><br><span class="line">	&#125;,<span class="number">2000</span>)</span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">	setTimeout( <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p2'</span>)</span><br><span class="line">		resolve(<span class="string">'p2'</span>)<span class="comment">//执行成功后返回的值‘p2’</span></span><br><span class="line">	&#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p3 = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">	setTimeout( <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'p3'</span>)</span><br><span class="line">		resolve(<span class="string">'p3'</span>)<span class="comment">//执行成功后返回的值‘p3’</span></span><br><span class="line">	&#125;,<span class="number">3000</span>)</span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.race([p1,p2,p3]).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">	sonsole.log(<span class="string">'完成'</span>)   <span class="comment">//只要p1,p2,p3一个成功完成就会调用此处</span></span><br><span class="line">	<span class="built_in">console</span>,log(res)    <span class="comment">//res 即resolve返回的值</span></span><br><span class="line">&#125;).catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">	sonsole.log(<span class="string">'失败'</span>)</span><br><span class="line">	<span class="built_in">console</span>,log(err)    <span class="comment">//err 即reject返回的值</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-promise-race"><a href="#1-3-promise-race" class="headerlink" title="1.3 promise.race"></a>1.3 promise.race</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">	setTimeout( <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'p1'</span>)</span><br><span class="line">		resolve(<span class="string">'p1'</span>)<span class="comment">//执行成功后返回的值‘p1’</span></span><br><span class="line">	&#125;,<span class="number">2000</span>)</span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">	setTimeout( <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    	<span class="built_in">console</span>.log(<span class="string">'p2'</span>)</span><br><span class="line">		resolve(<span class="string">'p2'</span>)<span class="comment">//执行成功后返回的值‘p2’</span></span><br><span class="line">	&#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p3 = <span class="keyword">new</span> <span class="built_in">Promise</span>( <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">	setTimeout( <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    	<span class="built_in">console</span>.log(<span class="string">'p3'</span>)</span><br><span class="line">		resolve(<span class="string">'p3'</span>)<span class="comment">//执行成功后返回的值‘p3’</span></span><br><span class="line">	&#125;,<span class="number">3000</span>)</span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.race([p1,p2,p3]).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">	sonsole.log(<span class="string">'完成'</span>)   <span class="comment">//只要p1,p2,p3一个成功完成就会调用此处</span></span><br><span class="line">	<span class="built_in">console</span>,log(res)    <span class="comment">//res 即resolve返回的值</span></span><br><span class="line">&#125;).catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">	sonsole.log(<span class="string">'失败'</span>)</span><br><span class="line">	<span class="built_in">console</span>,log(err)    <span class="comment">//err 即reject返回的值</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <h3 id="1-4-promise-规避回调地狱"><a href="#1-4-promise-规避回调地狱" class="headerlink" title="1.4 promise 规避回调地狱"></a>1.4 promise 规避回调地狱</h3><ul>
 <li>回调地狱</li>
@@ -2214,7 +2215,10 @@
 <h3 id="2-4-和-Promise-的关系"><a href="#2-4-和-Promise-的关系" class="headerlink" title="2.4 和 Promise 的关系"></a>2.4 和 Promise 的关系</h3><ul>
 <li>then同await,只处理Promise的resolved状态，<strong>不能处理rejected和pending状态</strong><ul>
 <li>then接收pending状态，then不会触发，后续回调函数不会执行</li>
-<li>then接收rejected状态，then不会触发，且此时没有处理内部返回的错误，<strong>会报错</strong></li>
+<li>then接收rejected状态，then不会触发，且此时没有处理内部返回的错误，<strong>会报错</strong><ul>
+<li>除非有then的第二个回调函数，则可以处理rejected</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -2277,7 +2281,29 @@
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 定时算乘法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">multi</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            resolve(num * num)</span><br><span class="line">        &#125;, <span class="number">1000</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 forEach ，是 1s 之后打印出所有结果，即 3 个值是一起被计算出来的</span></span><br><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">test1</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">const</span> nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">     nums.forEach(<span class="keyword">async</span> x =&gt; &#123;</span><br><span class="line">         <span class="keyword">const</span> res = <span class="keyword">await</span> multi(x);</span><br><span class="line">         <span class="built_in">console</span>.log(res);</span><br><span class="line">     &#125;)</span><br><span class="line"> &#125;</span><br><span class="line"> test1();<span class="comment">//隔1s后同时打印出1 4 9 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 for...of ，可以让计算挨个串行执行</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">test2</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> x <span class="keyword">of</span> nums) &#123;</span><br><span class="line">        <span class="comment">// 在 for...of 循环体的内部，遇到 await 会挨个串行计算</span></span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> multi(x) </span><br><span class="line">        <span class="built_in">console</span>.log(res)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">test2() <span class="comment">//隔1s后打印1 再隔1s后打印4  再隔1s后打印9</span></span><br></pre></td></tr></table></figure>
 
+<h2 id="6-Promise中的then第二个参数和catch的区别"><a href="#6-Promise中的then第二个参数和catch的区别" class="headerlink" title="6 Promise中的then第二个参数和catch的区别"></a>6 Promise中的then第二个参数和catch的区别</h2><ol>
+<li>当错误是promise内部错误时，会按就近原则处理即：</li>
+</ol>
+<ul>
+<li>当Promise.then中有第二个回调函数时，执行then第二个函数</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> p=<span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'出错了'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">p.then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;&#125;,err=&gt;&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'reject'</span>+err);</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'catch'</span>+err);</span><br><span class="line">&#125;)</span><br><span class="line">结果：rejectError: 出错了</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>当Promise.then中没有第二个回调函数时，执行catch</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> p=<span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'出错了'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">p.then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;&#125;).catch(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'catch'</span>+err);</span><br><span class="line">&#125;)</span><br><span class="line">结果：catchError: 出错了</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>当错误不是promise内部错误时，例如网络中断，则需要用catch来处理</li>
+</ol>
+<ul>
+<li>即使有then的第二个参数也不会进入，会直接进入catch</li>
+</ul>
+<ol start="3">
+<li>如果在then的第一个函数里抛出了异常，后面的catch能捕获到，而then的第二个函数捕获不到</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve(<span class="string">'10'</span>)</span><br><span class="line">.then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(res)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'resolve'</span>)</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'hhhh'</span>)</span><br><span class="line">&#125;,err =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'err'</span>)</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">erro</span> =&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(erro)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'reject'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//打印结果</span></span><br><span class="line"><span class="number">10</span></span><br><span class="line">resolve</span><br><span class="line"><span class="built_in">Error</span>: hhhh</span><br><span class="line">    at F:\code\test-font\test.js:<span class="number">5</span>:<span class="number">9</span></span><br><span class="line">reject</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -2517,7 +2543,7 @@
 <h3 id="1-3-单页组件"><a href="#1-3-单页组件" class="headerlink" title="1.3 单页组件"></a>1.3 单页组件</h3><blockquote>
 <p><a href="https://www.bilibili.com/video/BV1Zy4y1K7SH?p=60" target="_blank" rel="noopener">单页组件视频教程</a></p>
 </blockquote>
-<h2 id="2-Vue中的MVVM"><a href="#2-Vue中的MVVM" class="headerlink" title="2 Vue中的MVVM"></a>2 Vue中的MVVM</h2><ul>
+<h3 id="1-4-初始化项目"><a href="#1-4-初始化项目" class="headerlink" title="1.4 初始化项目"></a>1.4 初始化项目</h3><h2 id="2-Vue中的MVVM"><a href="#2-Vue中的MVVM" class="headerlink" title="2 Vue中的MVVM"></a>2 Vue中的MVVM</h2><ul>
 <li><p><a href="https://zh.wikipedia.org/wiki/MVVM" target="_blank" rel="noopener">MVVM维基百科</a></p>
 <p><img src="/2020/06/10/Vue/Vuejs/vue-mvvm.png" alt></p>
 </li>
@@ -2888,7 +2914,15 @@
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">v-model.lazy=<span class="string">"message"</span></span><br><span class="line">v-model.number=<span class="string">"message"</span></span><br><span class="line">v-model.trim=<span class="string">"message"</span></span><br></pre></td></tr></table></figure>
 
+<h2 id="9本地存储"><a href="#9本地存储" class="headerlink" title="9本地存储"></a>9本地存储</h2><ul>
+<li>存: 任何位置直接使用</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">localStorage.islogn = <span class="string">'xxxx'</span></span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>取： 任何位置直接使用</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> islogn localStorage.islogn</span><br><span class="line">或者</span><br><span class="line"><span class="keyword">const</span> &#123; isLogin &#125; = localStorage</span><br></pre></td></tr></table></figure>
 
 
 
@@ -3182,7 +3216,7 @@
 
 
 
-<h1 id="Vue3"><a href="#Vue3" class="headerlink" title="Vue3"></a>Vue3</h1><blockquote>
+<h1 id="四、Vue3"><a href="#四、Vue3" class="headerlink" title="四、Vue3"></a>四、Vue3</h1><blockquote>
 <p>源码：L264-code</p>
 </blockquote>
 <h2 id="不熟悉的特性"><a href="#不熟悉的特性" class="headerlink" title="不熟悉的特性"></a>不熟悉的特性</h2><h3 id="Non-Props"><a href="#Non-Props" class="headerlink" title="Non-Props"></a>Non-Props</h3><blockquote>
@@ -3236,10 +3270,10 @@
 <li><p>启动项目<br><code>npm run serve</code></p>
 </li>
 </ol>
-<h2 id="vue-router"><a href="#vue-router" class="headerlink" title="vue-router"></a>vue-router</h2><blockquote>
+<h1 id="五、vue-router"><a href="#五、vue-router" class="headerlink" title="五、vue-router"></a>五、vue-router</h1><blockquote>
 <p><a href="https://next.router.vuejs.org/zh/" target="_blank" rel="noopener">Vue-Router官方文档</a></p>
 </blockquote>
-<p><strong>脚手架创建项目时就安装vue-router</strong></p>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h2><p><strong>脚手架创建项目时就安装vue-router</strong></p>
 <ol>
 <li><code>vue create 项目名称</code></li>
 <li>选择<code>Manually select features</code>自定义安装的插件</li>
@@ -3256,7 +3290,107 @@
 <li>选择仅错误时提醒ESlint</li>
 </ol>
 <p><img src="/2020/06/10/Vue/Vuejs/image-20210815162645470.png" alt="image-20210815162645470"></p>
-<h2 id="VueX"><a href="#VueX" class="headerlink" title="VueX"></a>VueX</h2><blockquote>
+<p><strong>使用过程中安装</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install vue-router@版本号</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-使用路由"><a href="#2-使用路由" class="headerlink" title="2 使用路由"></a>2 使用路由</h2><h3 id="2-1-配置控制跳转"><a href="#2-1-配置控制跳转" class="headerlink" title="2.1 配置控制跳转"></a>2.1 配置控制跳转</h3><ul>
+<li>main.js中引入router</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App.vue'</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router'</span></span><br><span class="line"></span><br><span class="line">createApp(App).use(store).use(router).mount(<span class="string">'#app'</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>/router/index.js</code>设置路由</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'../views/home/Home'</span></span><br><span class="line"><span class="keyword">import</span> Login <span class="keyword">from</span> <span class="string">'../views/login/Login'</span></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;  </span><br><span class="line">    path: <span class="string">'/'</span>,      <span class="comment">//路由地址</span></span><br><span class="line">    name: <span class="string">'Home'</span>,   <span class="comment">//组件名</span></span><br><span class="line">    component: Home <span class="comment">//组件名</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/login'</span>,</span><br><span class="line">    name: <span class="string">'Login'</span>,</span><br><span class="line">    component: Login</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>app.js中使用路由</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;router-view&#x2F;&gt;    &#x2F;&#x2F;自动根据路由地址显示相应的组件</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#39;App&#39;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-js控制跳转"><a href="#2-2-js控制跳转" class="headerlink" title="2.2 js控制跳转"></a>2.2 js控制跳转</h3><p><strong>跳转到指定页面</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;wrapper__login-button&quot;  @click&#x3D;&quot;handleLogin&quot;&gt;登录&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; useRouter &#125; from &#39;vue-router&#39;   &#x2F;&#x2F;引入</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#39;Login&#39;,</span><br><span class="line">  setup () &#123;</span><br><span class="line">    const router &#x3D; useRouter()           &#x2F;&#x2F;实例化</span><br><span class="line">    const handleLogin &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">      router.push(&#123; name: &#39;Home&#39; &#125;)      &#x2F;&#x2F;设置要跳转的页面， Home是路由名</span><br><span class="line">    &#125;</span><br><span class="line">    return &#123; handleLogin &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>返回上一个页面</strong></p>
+<ul>
+<li><code>router.back()</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useRouter &#125; <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"><span class="keyword">const</span> useBackEffect = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> router = useRouter()</span><br><span class="line">  <span class="keyword">const</span> handleBack = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    router.back()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> &#123; handleBack &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-标签控制跳转"><a href="#2-3-标签控制跳转" class="headerlink" title="2.3 标签控制跳转"></a>2.3 标签控制跳转</h3><ul>
+<li><code>&lt;to=&quot;/shop&quot;&gt; &lt;/router-link&gt;</code></li>
+<li>去掉a标签的下划线</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 路由跳转不带参数的情况</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;nearby&quot;&gt;</span><br><span class="line">    &lt;router-link to&#x3D;&quot;&#x2F;shop&quot;&gt;</span><br><span class="line">      &lt;ShopInfo &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;router-link&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang&#x3D;&quot;scss&quot; scoped&gt;</span><br><span class="line">.nearby&#123;</span><br><span class="line">  a&#123;</span><br><span class="line">    text-decoration: none;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-路由参数"><a href="#2-4-路由参数" class="headerlink" title="2.4 路由参数"></a>2.4 路由参数</h3><h4 id="2-4-1-传递参数"><a href="#2-4-1-传递参数" class="headerlink" title="2.4.1 传递参数"></a>2.4.1 传递参数</h4><p><strong>配置</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/shop/:id'</span>,  <span class="comment">//参数名为：id</span></span><br><span class="line">    name: <span class="string">'Shop'</span>,</span><br><span class="line">    component: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "shop" */</span> <span class="string">'../views/shop/Shop'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p><strong>js跳转带参</strong></p>
+<ul>
+<li>使用<code>router.push</code>方法，并用<code>${}</code>添加参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;nearby&quot;&gt;</span><br><span class="line">    &lt;ShopInfo v-for&#x3D;&quot;item in nearbyList&quot; :key&#x3D;&quot;item._id&quot; :item&#x3D;&quot;item&quot; @click&#x3D;&quot;handleToShop(item._id)&quot;&#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; useRouter &#125; from &#39;vue-router&#39;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 跳转到shop页面</span><br><span class="line">const useToShopEffect &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">  const router &#x3D; useRouter()</span><br><span class="line">  const handleToShop &#x3D; (id) &#x3D;&gt; &#123;</span><br><span class="line">    router.push(&#96;&#x2F;shop&#x2F;$&#123;id&#125;&#96;)</span><br><span class="line">  &#125;</span><br><span class="line">  return &#123; handleToShop &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#39;Nearby&#39;,</span><br><span class="line">  components: &#123; ShopInfo &#125;,</span><br><span class="line">  setup () &#123;</span><br><span class="line">    return &#123; nearbyList, handleToShop &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>标签跳转带参</strong></p>
+<ul>
+<li>通过<code>:to=&quot; &quot;</code>指定路径，并用<code>${}</code>添加参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 路由跳转不带参数的情况</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;nearby&quot;&gt;</span><br><span class="line">    &lt;router-link v-for&#x3D;&quot;item in nearbyList&quot; :key&#x3D;&quot;item._id&quot; :to&#x3D;&quot;&#96;&#x2F;shop&#x2F;$&#123;item._id&#125;&#96;&quot;&gt;</span><br><span class="line">      &lt;ShopInfo :item&#x3D;&quot;item&quot; &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;router-link&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang&#x3D;&quot;scss&quot; scoped&gt;</span><br><span class="line">.nearby&#123;</span><br><span class="line">  a&#123;</span><br><span class="line">    text-decoration: none;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-4-2-获取参数"><a href="#2-4-2-获取参数" class="headerlink" title="2.4.2 获取参数"></a>2.4.2 获取参数</h4><ul>
+<li>通过useRoute获取<strong>当前路由</strong>相关的信息，例如：<strong>params</strong>、<strong>path</strong>、<strong>query</strong>等<ul>
+<li>通过<code>route.params</code>获取路由带的参数</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useRoute &#125; <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取当前商铺数据</span></span><br><span class="line"><span class="keyword">const</span> useShopInfoEffect = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> route = useRoute()</span><br><span class="line">  <span class="built_in">console</span>.log(route.params.id)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-路由守卫"><a href="#3-路由守卫" class="headerlink" title="3 路由守卫"></a>3 路由守卫</h2><h4 id="全局守卫"><a href="#全局守卫" class="headerlink" title="全局守卫"></a>全局守卫</h4><blockquote>
+<ul>
+<li>任何路由每次跳转之前调用</li>
+<li>使用场景：只有登录后才能正常跳转，如果没有登录，则会默认跳转到登录页面</li>
+</ul>
+</blockquote>
+<ul>
+<li><code>/router/index.js</code>中使用<code>router.beforeEach</code>设置全局路由守卫<ul>
+<li>to : 路由跳转的目标路由</li>
+<li>from ： 路由跳转的原始路由</li>
+<li>next :  调用则表示允许跳转<ul>
+<li>接收跳转到的路由的组件名，则干预跳转的页面</li>
+<li>next(), 不传参数则表示不做干预，保持原来的跳转</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span> ,next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; isLogin &#125; = localStorage;  <span class="comment">//用本地存储记录是否登录了</span></span><br><span class="line">  <span class="keyword">const</span> &#123; name &#125; = to;</span><br><span class="line">  <span class="keyword">const</span> isLoginOrRegister = (name === <span class="string">"Login"</span> || name === <span class="string">"Register"</span>);</span><br><span class="line">  <span class="comment">//如果登录了，或者路由是Login或者Register则跳转到相应页面不做干预，否则跳转到Login页面</span></span><br><span class="line">  (isLogin || isLoginOrRegister) ? next() : next(&#123; <span class="attr">name</span>: <span class="string">'Login'</span>&#125;);  <span class="comment">//接受将要跳转到的路由页面的组件名：Login</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="单独守卫"><a href="#单独守卫" class="headerlink" title="单独守卫"></a>单独守卫</h4><blockquote>
+<ul>
+<li>跳转到当前路由之前调用</li>
+<li>使用场景： 已经登录了，地址为登录页时，不应该显示登录页，而是自动跳转到首页</li>
+</ul>
+</blockquote>
+<ul>
+<li><code>/router/index.js</code>中的<code>routes</code>模块中使用<code>router.beforeEach</code>设置单独路由守卫</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/'</span>,</span><br><span class="line">    name: <span class="string">'Home'</span>,</span><br><span class="line">    component: Home</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/login'</span>,</span><br><span class="line">    name: <span class="string">'Login'</span>,</span><br><span class="line">    component: Login,</span><br><span class="line">    beforeEnter (to, <span class="keyword">from</span>, next) &#123;  <span class="comment">//当路由跳转到login页面时调用</span></span><br><span class="line">      <span class="keyword">const</span> isLogin = localStorage.isLogin  <span class="comment">//是否登录</span></span><br><span class="line">      <span class="keyword">if</span> (isLogin) &#123;</span><br><span class="line">        next(&#123; <span class="attr">name</span>: <span class="string">'Home'</span> &#125;)  <span class="comment">//如果登录了则跳转到Home界面</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        next()  <span class="comment">//如果没有登录则正常跳转，即跳转到Login页面</span></span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      <span class="comment">//上面的部分可以简化为下面的两行代码</span></span><br><span class="line">      <span class="comment">//const &#123; isLogin &#125; = localStorage</span></span><br><span class="line">      <span class="comment">//isLogin ? next(&#123; name: 'Home' &#125;) : next()</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-动态路由"><a href="#4-动态路由" class="headerlink" title="4 动态路由"></a>4 动态路由</h2><blockquote>
+<p>又叫异步路由</p>
+<p>在需要展示页面的时候才加载相关资源</p>
+</blockquote>
+<ul>
+<li><code>/* webpackChunkName: &quot;about&quot; */</code>: about  用于调试显示</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'../views/home/Home'</span></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/'</span>,</span><br><span class="line">    name: <span class="string">'Home'</span>,</span><br><span class="line">    component: Home    <span class="comment">//普通路由</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/shop'</span>,</span><br><span class="line">    name: <span class="string">'Shop'</span>,</span><br><span class="line">    component: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "shop" */</span> <span class="string">'../views/shop/Shop'</span>)   <span class="comment">//动态路由</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="六、VueX"><a href="#六、VueX" class="headerlink" title="六、VueX"></a>六、VueX</h1><blockquote>
 <p><a href="https://next.vuex.vuejs.org/zh/index.html" target="_blank" rel="noopener">Vuex官方文档</a></p>
 </blockquote>
 <p><strong>脚手架创建项目时就安装VueX</strong></p>
@@ -3266,6 +3400,47 @@
 <li><strong>空格选择<code>Vuex</code></strong></li>
 </ol>
 <img src="/2020/06/10/Vue/Vuejs/image-20210815163117742.png" alt="image-20210815163117742" style="zoom:50%;">
+
+<h1 id="七、插件"><a href="#七、插件" class="headerlink" title="七、插件"></a>七、插件</h1><h3 id="normalize-css"><a href="#normalize-css" class="headerlink" title="normalize.css"></a>normalize.css</h3><blockquote>
+<p>移动端不同浏览器的标签样式不一样</p>
+<p>normalize.css用于使得不同浏览器上标签样式一直  </p>
+<p>类似css适配中用到的reset css</p>
+</blockquote>
+<ul>
+<li>安装</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">npm install normalize.css --save</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用:  在main.js中引入即可</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'normalize.css'</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="八、开发常用操作"><a href="#八、开发常用操作" class="headerlink" title="八、开发常用操作"></a>八、开发常用操作</h1><h3 id="的方式写多个一样的标签"><a href="#的方式写多个一样的标签" class="headerlink" title="*的方式写多个一样的标签"></a><code>*</code>的方式写多个一样的标签</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">span.item*4</span><br></pre></td></tr></table></figure>
+
+<h3 id="vue中全局引入样式"><a href="#vue中全局引入样式" class="headerlink" title="vue中全局引入样式"></a>vue中全局引入样式</h3><ul>
+<li>在根目录下新建<code>style</code>文件，文件夹下可以新建<code>css、lcss、scss</code>的文件</li>
+<li>再在<code>style</code>下新建<code>index.css</code>将其它样式文件都引入到这个文件中，</li>
+<li>再在<code>main.js</code>中引入<code>index.css</code>即可,  使得在<code>main.js</code>中只会引入一次，不用每个都引入，因为所有要引入的样式文件都在<code>index.css</code>中引入了</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'./style/index.css'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="vue中使用scss"><a href="#vue中使用scss" class="headerlink" title="vue中使用scss"></a>vue中使用scss</h3><blockquote>
+<p><a href="https://www.sass.hk/" target="_blank" rel="noopener">scss官网</a></p>
+</blockquote>
+<ul>
+<li>在创建项目时，选择安装css预处理： <code>CSS Pre-processors</code></li>
+<li>在引入文件时同css只是文件名后缀为<code>.scss</code></li>
+<li>style部分添加<code>lang=&quot;scss&quot;</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;style lang&#x3D;&quot;scss&quot;&gt;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="vue中scoped"><a href="#vue中scoped" class="headerlink" title="vue中scoped"></a>vue中scoped</h3><ul>
+<li>scoped 表示当前样式只对当前组件有效</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;style scoped&gt;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -5296,12 +5471,11 @@
 </li>
 </ul>
 <h3 id="3-阿里iconfont-字体图标"><a href="#3-阿里iconfont-字体图标" class="headerlink" title="3 阿里iconfont 字体图标"></a>3 阿里iconfont 字体图标</h3><ul>
-<li><p><a href="https://coding.imooc.com/lesson/373.html#mid=27424" target="_blank" rel="noopener">imooc视频教程-imooc-music-4.3引入iconfont字体图标</a></p>
-</li>
-<li><p><a href="https://www.iconfont.cn/" target="_blank" rel="noopener">阿里iconfont官网</a></p>
-</li>
-<li><p>页面内使用iconfont</p>
-</li>
+<li><a href="https://coding.imooc.com/lesson/373.html#mid=27424" target="_blank" rel="noopener">imooc视频教程-imooc-music-4.3引入iconfont字体图标</a></li>
+<li><a href="https://www.iconfont.cn/" target="_blank" rel="noopener">阿里iconfont官网</a></li>
+</ul>
+<h4 id="3-1-微信小程序中使用"><a href="#3-1-微信小程序中使用" class="headerlink" title="3.1 微信小程序中使用"></a>3.1 微信小程序中使用</h4><ul>
+<li>页面内使用iconfont</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;1 在app.wxss中引入iconfont.wxss</span><br><span class="line">@import &quot;iconfont.wxss&quot;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;2 使用1</span><br><span class="line"> &#x2F;&#x2F;&lt;text class&#x3D;&quot;iconfont 阿里上的代码&quot;&gt;&lt;&#x2F;text&gt;</span><br><span class="line"> &lt;text class&#x3D;&quot;iconfont icon-shangyishou-yuanshijituantubiao&quot;&gt;&lt;&#x2F;text&gt;</span><br><span class="line">    使用2 </span><br><span class="line">   &lt;i class&#x3D;&quot;iconfont icon-fabu&quot;&gt;&lt;&#x2F;i&gt;</span><br></pre></td></tr></table></figure>
 
@@ -5319,11 +5493,54 @@
 <p>指南—自定义组件—组件模板和样式</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Component(&#123;</span><br><span class="line">  options: &#123;</span><br><span class="line">    styleIsolation: &#39;apply-shared&#39;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-2-vue中使用"><a href="#3-2-vue中使用" class="headerlink" title="3.2 vue中使用"></a>3.2 vue中使用</h4><ol>
+<li>iconfont首页—资源管理—我的项目—新建项目</li>
+<li>将需要的图标加入购物车，并将购物车的图标选择加入刚才创建的项目</li>
+<li>进入新创建的项目，点击<code>下载至本地</code></li>
+<li>解压下载到本地的资源，打开其中的<code>iconfont.css</code></li>
+<li>在vue根目录下的<code>style</code>文件夹下新建<code>icnfont.css</code>文件，并将上面下载的<code>iconfont.css</code>文件中的如下代码拷贝过来，再在<code>style/index.css</code>中引入<code>iconfont.css</code>,  <code>style/index.css</code>会在<code>main.js</code>中引入，就保证了<code>iconfont.css</code>在全局的引入</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">"iconfont"</span>; <span class="comment">/* Project id 3288115 */</span></span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">'iconfont.woff2?t=1648567317963'</span>) <span class="built_in">format</span>(<span class="string">'woff2'</span>),  <span class="comment">/*这里的url是本地的地址*/</span></span><br><span class="line">       <span class="built_in">url</span>(<span class="string">'iconfont.woff?t=1648567317963'</span>) <span class="built_in">format</span>(<span class="string">'woff'</span>),</span><br><span class="line">       <span class="built_in">url</span>(<span class="string">'iconfont.ttf?t=1648567317963'</span>) <span class="built_in">format</span>(<span class="string">'truetype'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.iconfont</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">"iconfont"</span> <span class="meta">!important</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">  <span class="attribute">font-style</span>: normal;</span><br><span class="line">  <span class="attribute">-webkit-font-smoothing</span>: antialiased;</span><br><span class="line">  <span class="attribute">-moz-osx-font-smoothing</span>: grayscale;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-</li>
+<ol start="6">
+<li>再次进入iconfont官网我的项目中的新建的项目，点击<code>查看在线连接</code>，再点击<code>生成代码</code>，将生成代码的url部分替换上面<code>iconfont.css</code>中的url部分，即改成使用阿里云的素材而不是下载到本地的素材</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">//在线代码  </span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">'iconfont'</span>;  <span class="comment">/* project id 3288115 */</span></span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">''</span>);</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">'?#iefix'</span>) <span class="built_in">format</span>(<span class="string">'embedded-opentype'</span>),</span><br><span class="line">  <span class="built_in">url</span>(<span class="string">'//at.alicdn.com/t/font_3288115_v6f6pih8jwj.woff2'</span>) <span class="built_in">format</span>(<span class="string">'woff2'</span>), <span class="comment">/*这里的url是阿里云的地址*/</span></span><br><span class="line">  <span class="built_in">url</span>(<span class="string">'//at.alicdn.com/t/font_3288115_v6f6pih8jwj.woff'</span>) <span class="built_in">format</span>(<span class="string">'woff'</span>),</span><br><span class="line">  <span class="built_in">url</span>(<span class="string">'//at.alicdn.com/t/font_3288115_v6f6pih8jwj.ttf'</span>) <span class="built_in">format</span>(<span class="string">'truetype'</span>),</span><br><span class="line">  <span class="built_in">url</span>(<span class="string">'#iconfont'</span>) <span class="built_in">format</span>(<span class="string">'svg'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//替换后的iconfont.css如下</span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">"iconfont"</span>; <span class="comment">/* Project id 3288115 */</span></span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">''</span>);</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">'?#iefix'</span>) <span class="built_in">format</span>(<span class="string">'embedded-opentype'</span>),</span><br><span class="line">  <span class="built_in">url</span>(<span class="string">'//at.alicdn.com/t/font_3288115_v6f6pih8jwj.woff2'</span>) <span class="built_in">format</span>(<span class="string">'woff2'</span>),</span><br><span class="line">  <span class="built_in">url</span>(<span class="string">'//at.alicdn.com/t/font_3288115_v6f6pih8jwj.woff'</span>) <span class="built_in">format</span>(<span class="string">'woff'</span>),</span><br><span class="line">  <span class="built_in">url</span>(<span class="string">'//at.alicdn.com/t/font_3288115_v6f6pih8jwj.ttf'</span>) <span class="built_in">format</span>(<span class="string">'truetype'</span>),</span><br><span class="line">  <span class="built_in">url</span>(<span class="string">'#iconfont'</span>) <span class="built_in">format</span>(<span class="string">'svg'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.iconfont</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">"iconfont"</span> <span class="meta">!important</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">  <span class="attribute">font-style</span>: normal;</span><br><span class="line">  <span class="attribute">-webkit-font-smoothing</span>: antialiased;</span><br><span class="line">  <span class="attribute">-moz-osx-font-smoothing</span>: grayscale;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>在main.js中全局引入iconfont.css</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'./style/iconfont.css'</span></span><br></pre></td></tr></table></figure>
+
+<ol start="8">
+<li>使用图标<ul>
+<li>用div标签包裹需要使用的图标，并且div标签的类名必须为<code>iconfont</code></li>
+<li>再次进入iconfont官网找项目，鼠标放到图标上，点击<code>复制代码</code>，复制的结果粘贴到div内容部分，即下面的<code>&amp;#xe608;</code></li>
 </ul>
 </li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div class&#x3D;&quot;iconfont&quot;&gt;&amp;#xe608;&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="9">
+<li>修改图标大小和颜色<ul>
+<li>修改图标大小</li>
+<li>此时图标就是通过class=“iconfont”的div标签控制，所以要调整图标与其它元素的距离，也可以通过margin控制</li>
 </ul>
+</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.iconfont</span>&#123;</span><br><span class="line">    <span class="attribute">font-size</span>: **px;</span><br><span class="line">    <span class="attribute">margin</span>: ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="10">
+<li>注意，每次修改了iconfont官网项目中的图标后（添加了新的图标），需要重新生成在线连接，并将新的在线连接替换<code>./style/iconfont.css</code>中的地址连接, 替换部分如下：</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">//替换的部分</span><br><span class="line">src: url('//at.alicdn.com/t/font_3288115_jaafkmyptyf.woff2?t=1648569184646') format('woff2'),</span><br><span class="line">     url('//at.alicdn.com/t/font_3288115_jaafkmyptyf.woff?t=1648569184646') format('woff'),</span><br><span class="line">     url('//at.alicdn.com/t/font_3288115_jaafkmyptyf.ttf?t=1648569184646') format('truetype');</span><br><span class="line"></span><br><span class="line">//替换后的iconfont.css</span><br><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">"iconfont"</span>; <span class="comment">/* Project id 3288115 */</span></span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">'//at.alicdn.com/t/font_3288115_jaafkmyptyf.woff2?t=1648569184646'</span>) <span class="built_in">format</span>(<span class="string">'woff2'</span>),</span><br><span class="line">  <span class="built_in">url</span>(<span class="string">'//at.alicdn.com/t/font_3288115_jaafkmyptyf.woff?t=1648569184646'</span>) <span class="built_in">format</span>(<span class="string">'woff'</span>),</span><br><span class="line">  <span class="built_in">url</span>(<span class="string">'//at.alicdn.com/t/font_3288115_jaafkmyptyf.ttf?t=1648569184646'</span>) <span class="built_in">format</span>(<span class="string">'truetype'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.iconfont</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">"iconfont"</span> <span class="meta">!important</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">  <span class="attribute">font-style</span>: normal;</span><br><span class="line">  <span class="attribute">-webkit-font-smoothing</span>: antialiased;</span><br><span class="line">  <span class="attribute">-moz-osx-font-smoothing</span>: grayscale;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <h1 id="一、选择器"><a href="#一、选择器" class="headerlink" title="一、选择器"></a>一、选择器</h1><h3 id="1-1选择器分类-——待完成"><a href="#1-1选择器分类-——待完成" class="headerlink" title="1.1选择器分类 ——待完成"></a>1.1选择器分类 ——待完成</h3><ul>
 <li>通用选择器<code>*{}</code></li>
 <li>元素(标签)选择器<code>a{}</code></li>
@@ -5679,9 +5896,25 @@
 
 
 
-<h1 id="三、布局"><a href="#三、布局" class="headerlink" title="三、布局"></a>三、布局</h1><h2 id="0-盒子模型"><a href="#0-盒子模型" class="headerlink" title="0 盒子模型"></a>0 盒子模型</h2><p>元素宽=内容宽+padding+border</p>
-<p>元素高=内容高+padding+border</p>
-<p>margin左右不会重叠，<strong>上下交界的部分会重叠</strong></p>
+<h1 id="三、布局"><a href="#三、布局" class="headerlink" title="三、布局"></a>三、布局</h1><h2 id="0-盒子模型"><a href="#0-盒子模型" class="headerlink" title="0 盒子模型"></a>0 盒子模型</h2><ul>
+<li><p>默认情况</p>
+<ul>
+<li>元素宽=内容宽</li>
+<li>元素高=内容高</li>
+</ul>
+</li>
+<li><p>盒子模型</p>
+<ul>
+<li>元素宽=内容宽+padding+border</li>
+<li>元素高=内容高+padding+border</li>
+<li>margin左右不会重叠，<strong>上下交界的部分会重叠</strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">box-sizing</span><span class="selector-pseudo">:border-box</span>;</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="1-flex布局"><a href="#1-flex布局" class="headerlink" title="1 flex布局"></a>1 flex布局</h2><blockquote>
 <p>用<code>display:flex</code>属性设置</p>
 </blockquote>
@@ -5721,6 +5954,9 @@
 <p>2、元素的高度、宽度、行高以及顶和底边距都可设置。</p>
 </li>
 <li><p>常见内联块级元素：<code>&lt;img&gt;、&lt;input&gt;</code></p>
+<ul>
+<li>设置为<code>display:block</code>后，就可以设置<code>margin:auto</code></li>
+</ul>
 </li>
 </ul>
 </li>
@@ -5933,9 +6169,9 @@
 <p><strong>语法：</strong></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; html</span><br><span class="line">&lt;ul class&#x3D;&quot;content&quot;&gt;</span><br><span class="line">    &lt;li&gt;分类列表1&lt;&#x2F;li&gt;</span><br><span class="line">    </span><br><span class="line">&#x2F;&#x2F;css</span><br><span class="line"> .content&#123;</span><br><span class="line">    height: 150px;             &#x2F;&#x2F;1 为父元素设置高度</span><br><span class="line">    background-color: red; </span><br><span class="line">    overflow: hidden;          &#x2F;&#x2F;2 将超出的内容隐藏     ----- 有步骤3 此步骤可省略  </span><br><span class="line">    overflow-y: scroll;        &#x2F;&#x2F;3 设置在y轴是可以滚动的  </span><br><span class="line">    overflow-x: scroll;        &#x2F;&#x2F;3 设置在x轴是可以滚动的</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="4-1-3-边框不占元素宽高"><a href="#4-1-3-边框不占元素宽高" class="headerlink" title="4.1.3 边框不占元素宽高"></a>4.1.3 边框不占元素宽高</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">box-sizing:border-box;</span><br></pre></td></tr></table></figure>
 
-<h4 id="4-1-4-块级元素居中"><a href="#4-1-4-块级元素居中" class="headerlink" title="4.1.4 块级元素居中"></a>4.1.4 块级元素居中</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;上下左右居中  </span><br><span class="line">position: absolute;</span><br><span class="line">left:50%;</span><br><span class="line">top: 50%;</span><br><span class="line">transform: translate(-50%, -50%)</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-1-3-块级元素居中"><a href="#4-1-3-块级元素居中" class="headerlink" title="4.1.3 块级元素居中"></a>4.1.3 块级元素居中</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;上下左右居中  </span><br><span class="line">position: absolute;</span><br><span class="line">left:50%;</span><br><span class="line">top: 50%;</span><br><span class="line">transform: translate(-50%, -50%)</span><br></pre></td></tr></table></figure>
 
 
 
@@ -5960,6 +6196,8 @@
 
 <h1 id="五、常见问题"><a href="#五、常见问题" class="headerlink" title="五、常见问题"></a>五、常见问题</h1><h2 id="5-1去掉标签自带样式"><a href="#5-1去掉标签自带样式" class="headerlink" title="5.1去掉标签自带样式"></a>5.1去掉标签自带样式</h2><h3 id="5-1-1-去掉a标签自带样式"><a href="#5-1-1-去掉a标签自带样式" class="headerlink" title="5.1.1 去掉a标签自带样式"></a>5.1.1 去掉a标签自带样式</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">a</span>标签去除默认样式</span><br><span class="line"><span class="comment">/*包含以下四种的链接*/</span></span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*正常的未被访问过的链接*/</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:link</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*已经访问过的链接*/</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:visited</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*鼠标划过(停留)的链接*/</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 正在点击的链接*/</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:active</span> &#123;</span><br><span class="line">    <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h3 id="5-1-2-去掉input自带样式"><a href="#5-1-2-去掉input自带样式" class="headerlink" title="5.1.2 去掉input自带样式"></a>5.1.2 去掉input自带样式</h3><figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">border</span>: <span class="selector-tag">none</span>;</span><br><span class="line"><span class="selector-tag">outline</span>: <span class="selector-tag">none</span>;</span><br><span class="line"><span class="selector-tag">background</span>: <span class="selector-tag">none</span>;</span><br></pre></td></tr></table></figure>
+
 
 
 <h2 id="5-2-父元素的透明度设置影响子元素"><a href="#5-2-父元素的透明度设置影响子元素" class="headerlink" title="5.2 父元素的透明度设置影响子元素"></a>5.2 父元素的透明度设置影响子元素</h2><p><strong>问题描述：</strong></p>
@@ -5973,7 +6211,53 @@
 <ul>
 <li>为父元素设置<code>background: rgba(0,0,0,0.5)</code>。</li>
 </ul>
-<h3 id><a href="#" class="headerlink" title></a></h3>]]></content>
+<h2 id="5-3-超过显示范围自适应"><a href="#5-3-超过显示范围自适应" class="headerlink" title="5.3 超过显示范围自适应"></a>5.3 超过显示范围自适应</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line">overflow-y: auto;  //y</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-4-登录页面上下居中和input撑开宽度"><a href="#5-4-登录页面上下居中和input撑开宽度" class="headerlink" title="5.4 登录页面上下居中和input撑开宽度"></a>5.4 登录页面上下居中和input撑开宽度</h2><p><strong>登录页面上下居中</strong></p>
+<img src="/2020/02/22/CSS/css/CSS(0x01)-css%E5%B8%B8%E7%94%A8%E7%9F%A5%E8%AF%86%E7%82%B9/Users/Chuckie/AppData/Roaming/Typora/typora-user-images/image-20220413232248859.png" alt="image-20220413232248859" style="zoom:50%;">
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;wrapper&quot;&gt;</span><br><span class="line">    &lt;img class&#x3D;&quot;wrapper__img&quot; src&#x3D;&quot;http:&#x2F;&#x2F;www.dell-lee.com&#x2F;imgs&#x2F;vue3&#x2F;user.png&quot; &gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;wrapper__input&quot;&gt;</span><br><span class="line">      &lt;input class&#x3D;&quot;wrapper__input__content&quot;&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;wrapper__input&quot;&gt;</span><br><span class="line">      &lt;input class&#x3D;&quot;wrapper__input__content&quot;&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;wrapper__login-button&quot;&gt;登录&lt;&#x2F;div&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;wrapper__login-link&quot;&gt;立即注册&lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#39;Login&#39;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang&#x3D;&quot;scss&quot; scoped&gt;</span><br><span class="line">.wrapper&#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">  top: 50%;</span><br><span class="line">  left: 0;</span><br><span class="line">  right: 0;</span><br><span class="line">  transform: translateY(-50%);</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>input撑开宽度</strong></p>
+<ul>
+<li>在input外面包裹一个div</li>
+</ul>
+<h2 id="5-5-裂图问题"><a href="#5-5-裂图问题" class="headerlink" title="5.5 裂图问题"></a>5.5 裂图问题</h2><blockquote>
+<p>问题：图片加载很慢的情况下，图片的位置就会出现图裂的效果</p>
+<p>解决办法：通过v-show控制组件的显示，当图片加载完成后再显示组件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; ShopInfo组件中需要展示图片， 则通过v-show&#x3D;&quot;item.imgUrl&quot;判断，当图片加载完成后再显示，这样图裂j</span><br><span class="line">&lt;ShopInfo :item&#x3D;&quot;item&quot;  v-show&#x3D;&quot;item.imgUrl&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="六、浏览器特性"><a href="#六、浏览器特性" class="headerlink" title="六、浏览器特性"></a>六、浏览器特性</h1><h2 id="6-1-浏览器默认样式"><a href="#6-1-浏览器默认样式" class="headerlink" title="6.1 浏览器默认样式"></a>6.1 浏览器默认样式</h2><h3 id="6-1-1-浏览器默认最小字体"><a href="#6-1-1-浏览器默认最小字体" class="headerlink" title="6.1.1 浏览器默认最小字体"></a>6.1.1 浏览器默认最小字体</h3><blockquote>
+<p>浏览器默认最小字体是12px</p>
+<p>当设置的字体小于12px时会按12px显示</p>
+</blockquote>
+<ul>
+<li>解决方案<ul>
+<li>例如要设置10px的字体</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">&lt;div class="doctor__title"&gt;订单&lt;/div&gt; </span><br><span class="line"></span><br><span class="line"><span class="selector-class">.doctor__title</span>&#123;</span><br><span class="line">  <span class="attribute">font-size</span>: .<span class="number">2rem</span>;</span><br><span class="line">  transform: scale(.5, .5);//横向缩放50%  纵向缩放50%</span><br><span class="line">  transform-origin: center top;//横向缩放源点是中心，纵向缩放源点是顶部</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="七、BEM"><a href="#七、BEM" class="headerlink" title="七、BEM"></a>七、BEM</h1><blockquote>
+<p><a href="https://www.bemcss.com/#" target="_blank" rel="noopener">BEM解决的问题</a></p>
+<p><a href="https://www.bemcss.com/#" target="_blank" rel="noopener">BEM命名规则</a></p>
+<p><a href="https://www.w3cplus.com/blog/tags/325.html" target="_blank" rel="noopener">BEM教程</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">BEM:</span><br><span class="line">block__element--Modifier</span><br><span class="line">block: 模块</span><br><span class="line">element：模块中的元素</span><br><span class="line">Modifier： 状态</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">  &lt;div class&#x3D;&quot;doctor&quot;&gt;</span><br><span class="line">    &lt;span class&#x3D;&quot;doctor__item doctor__item--active&quot;&gt;</span><br><span class="line">      hello world</span><br><span class="line">    &lt;&#x2F;span&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;doctor__item--active  表示doctor模块下的item元素的active状态</span><br></pre></td></tr></table></figure>
+
+]]></content>
       <categories>
         <category>css</category>
         <category>css</category>
@@ -7453,8 +7737,13 @@
     <url>/2020/03/02/node/node/node/</url>
     <content><![CDATA[<p>node:mRw8LZz1ulLPMf5U</p>
 <p>小程序：K57S1kGd4CLBz2dw</p>
-<h1 id="node"><a href="#node" class="headerlink" title="node"></a>node</h1><h2 id="1-node简介"><a href="#1-node简介" class="headerlink" title="1 node简介"></a>1 node简介</h2><h3 id="1-1-node安装及下载"><a href="#1-1-node安装及下载" class="headerlink" title="1.1 node安装及下载"></a>1.1 node安装及下载</h3><ul>
-<li><p><a href="https://nodejs.org/en/" target="_blank" rel="noopener">node下载官网</a> </p>
+<h1 id="node"><a href="#node" class="headerlink" title="node"></a>node</h1><h2 id="1-node简介"><a href="#1-node简介" class="headerlink" title="1 node简介"></a>1 node简介</h2><h3 id="1-1-node安装及下载"><a href="#1-1-node安装及下载" class="headerlink" title="1.1 node安装及下载"></a>1.1 node安装及下载</h3><blockquote>
+<p><a href="https://nodejs.org/en/" target="_blank" rel="noopener">node.js官网</a> </p>
+<p><a href="https://nodejs.org/en/download/releases/" target="_blank" rel="noopener">低版本下载地址</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/403728681" target="_blank" rel="noopener">同一台电脑安装不同版本的vue，安装不同版本的NodeJs</a></p>
+</blockquote>
+<ul>
+<li><p>问题</p>
 <ul>
 <li>若已安装node.js 但是终端node-v 显示不是内部命令  <a href="https://blog.csdn.net/qq_37248318/article/details/80839564?depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1&utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1" target="_blank" rel="noopener">解决方案</a></li>
 <li>Vscode终端运行node命令，提示“’node’ 不是内部或外部命令   <a href="https://blog.csdn.net/LINHONG_1994/article/details/103068943" target="_blank" rel="noopener">解决方案</a></li>
@@ -7539,7 +7828,13 @@
   <entry>
     <title>axios</title>
     <url>/2020/02/12/third-repositories/axios/axios/</url>
-    <content><![CDATA[<h1 id="一、axios基础"><a href="#一、axios基础" class="headerlink" title="一、axios基础"></a>一、axios基础</h1><h2 id="0-官网"><a href="#0-官网" class="headerlink" title="0 官网"></a>0 官网</h2><p><a href="http://www.axios-js.com/zh-cn/" target="_blank" rel="noopener">axios官网</a></p>
+    <content><![CDATA[<h1 id="一、axios基础"><a href="#一、axios基础" class="headerlink" title="一、axios基础"></a>一、axios基础</h1><h2 id="0-官网"><a href="#0-官网" class="headerlink" title="0 官网"></a>0 官网</h2><blockquote>
+<p><a href="http://www.axios-js.com/zh-cn/" target="_blank" rel="noopener">axios官网</a></p>
+<ul>
+<li>方法使用查看官网</li>
+<li>具体应该场景的封装查看本笔记</li>
+</ul>
+</blockquote>
 <h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install axios --save</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -7555,7 +7850,54 @@
 <li>自动转换 JSON 数据</li>
 <li>客户端支持防御 <a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery" target="_blank" rel="noopener">XSRF</a></li>
 </ul>
-<h2 id="3-vue中使用axios"><a href="#3-vue中使用axios" class="headerlink" title="3 vue中使用axios"></a>3 vue中使用axios</h2><ol>
+<h2 id="3-vue中使用axios"><a href="#3-vue中使用axios" class="headerlink" title="3 vue中使用axios"></a>3 vue中使用axios</h2><blockquote>
+<p>主要讲封装的内容</p>
+</blockquote>
+<p><strong>目录</strong></p>
+<ul>
+<li>在src目录下新建<code>utils/resques.js</code></li>
+</ul>
+<h3 id="3-1-封装与使用"><a href="#3-1-封装与使用" class="headerlink" title="3.1 封装与使用"></a>3.1 封装与使用</h3><p><strong>封装</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//utils/resques.js</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> post = <span class="function">(<span class="params">url, data = &#123;&#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    axios.post(url, data, &#123;</span><br><span class="line">      baseURL: <span class="string">'https://www.fastmock.site/mock/ae8e9031947a302fed5f92425995aa19/jd'</span>,  <span class="comment">//设置基础地址</span></span><br><span class="line">      headers: &#123;</span><br><span class="line">        <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span>     <span class="comment">//设置提交的数据格式位json</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(res)</span><br><span class="line">      resolve(res.data)</span><br><span class="line">    &#125;, err =&gt; &#123;</span><br><span class="line">      reject(err)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; post &#125; from &#39;..&#x2F;..&#x2F;utils&#x2F;request&#39;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#39;Login&#39;,</span><br><span class="line">  setup () &#123;</span><br><span class="line">    const handleLogin &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">      post(&#39;&#x2F;api&#x2F;user&#x2F;login&#39;, &#123;</span><br><span class="line">        username: &#39;username1&#39;,</span><br><span class="line">        password: &#39;password1&#39;</span><br><span class="line">      &#125;).then(() &#x3D;&gt; &#123;</span><br><span class="line">        alert(&#39;成功&#39;)</span><br><span class="line">      &#125;).catch(() &#x3D;&gt; &#123;</span><br><span class="line">        alert(&#39;失败&#39;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-实例化axios"><a href="#3-2-实例化axios" class="headerlink" title="3.2 实例化axios"></a>3.2 实例化axios</h3><blockquote>
+<p><a href="http://www.axios-js.com/zh-cn/docs/#%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B" target="_blank" rel="noopener">创建实例官网文档</a></p>
+</blockquote>
+<ul>
+<li>设置baseURL</li>
+<li>设置请求超时时间</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//utils/resques.js</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> instance = axios.create(&#123;</span><br><span class="line">  baseURL: <span class="string">'https://www.fastmock.site/mock/ae8e9031947a302fed5f92425995aa19/jd'</span>, <span class="comment">//设置baseURL</span></span><br><span class="line">  timeout: <span class="number">10000</span>  <span class="comment">//设置请求超时时间</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="keyword">get</span> = (url, params = &#123;&#125;) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    instance.get(url, &#123; params &#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(res)</span><br><span class="line">      resolve(res.data)</span><br><span class="line">    &#125;, err =&gt; &#123;</span><br><span class="line">      reject(err)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> post = <span class="function">(<span class="params">url, data = &#123;&#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    instance.post(url, data, &#123;</span><br><span class="line">      headers: &#123;</span><br><span class="line">        <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(res)</span><br><span class="line">      resolve(res.data)</span><br><span class="line">    &#125;, err =&gt; &#123;</span><br><span class="line">      reject(err)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-带参url"><a href="#3-3-带参url" class="headerlink" title="3.3 带参url"></a>3.3 带参url</h3><h4 id="3-3-1-get"><a href="#3-3-1-get" class="headerlink" title="3.3.1 get"></a>3.3.1 get</h4><ul>
+<li>url格式</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">/api/shop/:id/products?tab=all   <span class="comment">// tab = 'all' 或 'seckill' 或 'fruit'  id = 页数</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>传递<code>:id</code>方式的参数<ul>
+<li><code>${}</code> 方式传入</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> res = <span class="keyword">await</span> <span class="keyword">get</span>(`/api/shop/$&#123;shopId&#125;/products<span class="string">`, &#123;</span></span><br><span class="line"><span class="string">      tab: currentTab.value</span></span><br><span class="line"><span class="string">    &#125;)</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>传递<code>?params</code>方式的参数<ul>
+<li>键值对的形式传入，键就是定义的键,例如tab</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> res = <span class="keyword">await</span> <span class="keyword">get</span>(`/api/shop/$&#123;shopId&#125;/products<span class="string">`, &#123;</span></span><br><span class="line"><span class="string">      tab: currentTab.value</span></span><br><span class="line"><span class="string">    &#125;)</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<ol>
 <li>get方法——–传递数据用params</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import request from &#39;@&#x2F;utils&#x2F;request&#39;</span><br><span class="line">&#x2F;&#x2F;请求后端的基础地址</span><br><span class="line">const baseURL &#x3D; &#39;http:&#x2F;&#x2F;localhost:3000&#39;</span><br><span class="line"></span><br><span class="line">export function fetchList (params)&#123;</span><br><span class="line">    return request(&#123;</span><br><span class="line">        params, &#x2F;&#x2F;页面调用时传入的参数  在此处再传给后端</span><br><span class="line">        url:&#96;$&#123;baseURL&#125;&#x2F;playlist&#x2F;list&#96;,&#x2F;&#x2F;后端的&#96;$&#123;域名&#125;&#x2F;路由&#x2F;方法&#96;</span><br><span class="line">        method: &#39;get&#39; &#x2F;&#x2F;此处的请求方式get&quot;or&#39;post&#39;根据后端controller下方法路由设置而定    </span><br><span class="line">                      router.get&lt;&#x3D;&#x3D;&#x3D;&#x3D;&gt;&#39;get&#39;  router.post&lt;&#x3D;&#x3D;&#x3D;&#x3D;&gt;&#39;post&#39;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;再在页面中调用  fetchList方法  需要传入参数----在params中</span><br><span class="line">fetchList(&#123;</span><br><span class="line">                skip:this.playlist.length,  &#x2F;&#x2F;params中的参数</span><br><span class="line">                limit: this.count           &#x2F;&#x2F;params中的参数</span><br><span class="line">            &#125;).then((res) &#x3D;&gt; &#123;</span><br><span class="line">                console.log(res)</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
@@ -12517,61 +12859,52 @@
 <p>向右：tab  or  ctrl+]</p>
 <p>向左：shift+tab   or   ctrl+[</p>
 <ul>
-<li><p>! </p>
-<ul>
+<li>! <ul>
 <li>自动生成一套HTML代码</li>
 </ul>
 </li>
-<li><p>tab</p>
-<ul>
+<li>tab<ul>
 <li>增加选中行的缩进</li>
 </ul>
 </li>
-<li><p>tab+shift</p>
-<ul>
+<li>tab+shift<ul>
 <li>减小选中行的缩进</li>
 </ul>
 </li>
-<li><p>alt + b</p>
-<ul>
+<li>alt + b<ul>
 <li>快速在浏览器中浏览网页</li>
 </ul>
 </li>
-<li><p>ctrl + c</p>
-<ul>
+<li>ctrl + c<ul>
 <li>复制</li>
 </ul>
 </li>
-<li><p>ctrl + x</p>
-<ul>
+<li>ctrl + x<ul>
 <li>剪切</li>
 </ul>
 </li>
-<li><p>ctrl + v</p>
-<ul>
+<li>ctrl + v<ul>
 <li>粘贴</li>
 </ul>
 </li>
-<li><p>ctrl + .</p>
-<ul>
+<li>ctrl + .<ul>
 <li>让输入法在中英文标点符号之间来回进行切换</li>
 </ul>
 </li>
-<li><p>ctrl + /</p>
-<ul>
+<li>ctrl + /<ul>
 <li>在代码当中快速打出注释</li>
 </ul>
 </li>
-<li><p>alt+shift+a</p>
-<ul>
+<li>alt+shift+a<ul>
 <li>多行注释</li>
 </ul>
 </li>
-<li><p>ctrl+f</p>
-<ul>
+<li>ctrl+f<ul>
 <li>在文件中查找</li>
 </ul>
 </li>
+<li>查看函数： ctrl + 点击要查看的函数</li>
+<li>查看完函数后返回原来的位置： alt + -</li>
 </ul>
 <h2 id="1-插件配置"><a href="#1-插件配置" class="headerlink" title="1 插件配置"></a>1 插件配置</h2><h3 id="1-1-基础插件配置"><a href="#1-1-基础插件配置" class="headerlink" title="1.1 基础插件配置"></a>1.1 基础插件配置</h3><ul>
 <li>汉化</li>
@@ -12693,7 +13026,7 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"0.2.0"</span>,</span><br><span class="line">  <span class="string">"configurations"</span>: [</span><br><span class="line">    <span class="comment">// ----1-----将调试与node serv项目自动重启(nodemon)向结合的配置------</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"nodemon"</span>,</span><br><span class="line">      <span class="string">"runtimeExecutable"</span>: <span class="string">"nodemon"</span>,</span><br><span class="line">      <span class="string">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;/app.js"</span>,</span><br><span class="line">      <span class="string">"restart"</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="string">"console"</span>: <span class="string">"integratedTerminal"</span>,</span><br><span class="line">      <span class="string">"internalConsoleOptions"</span>: <span class="string">"neverOpen"</span>,</span><br><span class="line">      <span class="string">"skipFiles"</span>: [</span><br><span class="line">        <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ----2-----额配置默认调试入口文件------</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"Launch Program"</span>,</span><br><span class="line">      <span class="string">"skipFiles"</span>: [</span><br><span class="line">        <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;\\app.js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ----3-----配置调试当前文件------</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"当前文件"</span>,</span><br><span class="line">      <span class="string">"skipFiles"</span>: [</span><br><span class="line">        <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"program"</span>: <span class="string">"$&#123;file&#125;"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"0.2.0"</span>,</span><br><span class="line">  <span class="string">"configurations"</span>: [</span><br><span class="line">    <span class="comment">// ----1-----将调试与node serv项目自动重启(nodemon)向结合的配置------</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"nodemon"</span>,</span><br><span class="line">      <span class="string">"runtimeExecutable"</span>: <span class="string">"nodemon"</span>,</span><br><span class="line">      <span class="string">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;/app.js"</span>,</span><br><span class="line">      <span class="string">"restart"</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="string">"console"</span>: <span class="string">"integratedTerminal"</span>,</span><br><span class="line">      <span class="string">"internalConsoleOptions"</span>: <span class="string">"neverOpen"</span>,</span><br><span class="line">      <span class="string">"skipFiles"</span>: [</span><br><span class="line">        <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ----2-----配置默认调试入口文件------</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"Launch Program"</span>,</span><br><span class="line">      <span class="string">"skipFiles"</span>: [</span><br><span class="line">        <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;\\app.js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ----3-----配置调试当前文件------</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"当前文件"</span>,</span><br><span class="line">      <span class="string">"skipFiles"</span>: [</span><br><span class="line">        <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"program"</span>: <span class="string">"$&#123;file&#125;"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h5 id="3-1-2-1-配置node-serv项目自动重启与调试向结合"><a href="#3-1-2-1-配置node-serv项目自动重启与调试向结合" class="headerlink" title="3.1.2.1  配置node serv项目自动重启与调试向结合"></a>3.1.2.1  配置node serv项目自动重启与调试向结合</h5><ul>
 <li>此配置使得，当开启调试的时候，也会同时开启自动重启</li>
@@ -12714,6 +13047,11 @@
 <li>5 ： 重启调试</li>
 <li>6 ： 停止调试</li>
 </ul>
+<h3 id="3-2-vscode下调试运行c"><a href="#3-2-vscode下调试运行c" class="headerlink" title="3.2 vscode下调试运行c++"></a>3.2 vscode下调试运行c++</h3><blockquote>
+<p><a href="https://www.cnblogs.com/zhuzhenwei918/p/9057289.html" target="_blank" rel="noopener">vscode下调试运行c++ </a></p>
+<p><a href="https://blog.csdn.net/qq_44108889/article/details/120228107" target="_blank" rel="noopener">win10安装MinGW-64安装版</a></p>
+<p><a href="https://blog.csdn.net/kramer_1711/article/details/119416512" target="_blank" rel="noopener">wingw-w64安装时 the file has been downloaded incorrectly!</a></p>
+</blockquote>
 <h2 id="4-小技巧"><a href="#4-小技巧" class="headerlink" title="4 小技巧"></a>4 小技巧</h2><h3 id="4-1-同时添加多个光标"><a href="#4-1-同时添加多个光标" class="headerlink" title="4.1 同时添加多个光标"></a>4.1 同时添加多个光标</h3><p><strong>单个添加:</strong> 将光标放在一个位置，然后按住Alt键的时候用鼠标点击其他地方，点到的地方就会添加一个光标出来<br><strong>添加一整列:</strong> 按住Shift+Alt然后鼠标下拉，即可添加一整列光标</p>
 <h3 id="4-2-函数注释"><a href="#4-2-函数注释" class="headerlink" title="4.2 函数注释"></a>4.2 函数注释</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">语法：</span><br><span class="line"><span class="comment">/**回车</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">效果：</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 函数注释</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
 
@@ -13877,7 +14215,7 @@
 <li>将响应式对象( reactive封装）转换为普通对象(但对象中的值还具有响应式)</li>
 <li>对象的每个属性，都是 ref 对象</li>
 <li>两者（响应式对象和转换成的普通对象）保持引用关系, 即修改是联动了（修改响应式对象属性（state），普通对象属性也会修改）</li>
-<li>用toRefs(state)的目的时：在模板中使用state中的属性时不用再通过state.属性的方式获取，直接通过属性名就可以获取</li>
+<li>用toRefs(state)的目的是：在模板中使用state中的属性时不用再通过state.属性的方式获取，直接通过属性名就可以获取</li>
 <li>toRefs如果用于普通对象（非响应式对象），产出的结果不具备响应式</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;!-- 用toRefs后，就不用通过state.age, state.name这个繁琐的方式再获取了 --&gt;</span><br><span class="line">    &lt;p&gt;toRefs demo &#123;&#123;age&#125;&#125; &#123;&#123;name&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; ref, toRef, toRefs, reactive &#125; from &#39;vue&#39;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">    name: &#39;ToRefs&#39;,</span><br><span class="line">    setup() &#123;</span><br><span class="line">        const state &#x3D; reactive(&#123;</span><br><span class="line">            age: 20,</span><br><span class="line">            name: &#39;Chuckie&#39;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        const stateAsRefs &#x3D; toRefs(state) &#x2F;&#x2F; 将响应式对象，变成普通对象,但对象中的值还具有响应式</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; const &#123; age: ageRef, name: nameRef &#125; &#x3D; stateAsRefs &#x2F;&#x2F; 每个属性，都是 ref 对象</span><br><span class="line">        &#x2F;&#x2F; return &#123;</span><br><span class="line">        &#x2F;&#x2F;     ageRef,</span><br><span class="line">        &#x2F;&#x2F;     nameRef</span><br><span class="line">        &#x2F;&#x2F; &#125;</span><br><span class="line"></span><br><span class="line">        return stateAsRefs  &#x2F;&#x2F;具有响应式</span><br><span class="line"></span><br><span class="line">        return &#123;</span><br><span class="line">          ...state&#x2F;&#x2F;直接解构state后返回就不具备响应式了</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
@@ -13886,7 +14224,7 @@
 <li>reactive做对象的响应式，用ref做值类型响应式</li>
 <li>setup中返回toRefs(state)，或者toRef(state,‘’xxx’)</li>
 <li>ref的变量命名都用xxxRef</li>
-<li>合成函数返回响应式对象时，使用toRefs，便于使用方结构</li>
+<li>合成函数返回响应式对象时，使用toRefs，便于使用方解构</li>
 </ul>
 <p><img src="/2021/07/27/Index/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6%E9%9D%A2%E8%AF%95/image-20210809160820646.png" alt="image-20210809160820646"></p>
 <h4 id="进阶，深入理解"><a href="#进阶，深入理解" class="headerlink" title="进阶，深入理解"></a>进阶，深入理解</h4><ul>
@@ -14040,7 +14378,7 @@
 <li>两者都可监听data属性变化</li>
 <li>watch<ul>
 <li>需要开发者明确指定监听哪个属性</li>
-<li>深度监听时<strong>拿不到旧值</strong>，因为深度监听的对象时引用类型，oldValue和newValue指向同一个地址</li>
+<li>深度监听时<strong>拿不到旧值</strong>，因为深度监听的对象是引用类型，oldValue和newValue指向同一个地址</li>
 </ul>
 </li>
 <li>watchEffect <ul>
@@ -14049,7 +14387,7 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;p&gt;watch vs watchEffect&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;p&gt;&#123;&#123;numberRef&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;p&gt;&#123;&#123;name&#125;&#125; &#123;&#123;age&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; reactive, ref, toRefs, watch, watchEffect &#125; from &#39;vue&#39;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">    name: &#39;Watch&#39;,</span><br><span class="line">    setup() &#123;</span><br><span class="line">        const numberRef &#x3D; ref(100)</span><br><span class="line">        const state &#x3D; reactive(&#123;</span><br><span class="line">            name: &#39;chuckie&#39;,</span><br><span class="line">            age: 20,</span><br><span class="line">            a:&#123;</span><br><span class="line">              b:100</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        watchEffect(() &#x3D;&gt; &#123;</span><br><span class="line">            &#x2F;&#x2F; 初始化时，一定会执行一次（收集要监听的数据）</span><br><span class="line">            console.log(&#39;hello watchEffect&#39;)</span><br><span class="line">        &#125;)</span><br><span class="line">        watchEffect(() &#x3D;&gt; &#123;</span><br><span class="line">            console.log(&#39;state.name&#39;, state.name)&#x2F;&#x2F;name变化时触发</span><br><span class="line">        &#125;)</span><br><span class="line">        watchEffect(() &#x3D;&gt; &#123;</span><br><span class="line">            console.log(&#39;state.age&#39;, state.age)&#x2F;&#x2F;age变化时触发</span><br><span class="line">        &#125;)</span><br><span class="line">        watchEffect(() &#x3D;&gt; &#123;</span><br><span class="line">            &#x2F;&#x2F;以下任何一个变量变化都会触发下面的代码执行</span><br><span class="line">            console.log(&#39;state.age&#39;, state.age)</span><br><span class="line">            console.log(&#39;state.name&#39;, state.name)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        watch(numberRef, (newNumber, oldNumber) &#x3D;&gt; &#123;</span><br><span class="line">            console.log(&#39;ref watch&#39;, newNumber, oldNumber)</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F; , &#123;</span><br><span class="line">        &#x2F;&#x2F;     immediate: true &#x2F;&#x2F; 初始化之前就监听，可选</span><br><span class="line">        &#x2F;&#x2F; &#125;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">            numberRef.value &#x3D; 200</span><br><span class="line">        &#125;, 1500)</span><br><span class="line"></span><br><span class="line">        watch(</span><br><span class="line">            &#x2F;&#x2F; 第一个参数，确定要监听哪个属性</span><br><span class="line">            () &#x3D;&gt; state.a,</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F; 第二个参数，回调函数</span><br><span class="line">            (newAge, oldAge) &#x3D;&gt; &#123;</span><br><span class="line">                console.log(&#39;state watch&#39;, newAge, oldAge)&#x2F;&#x2F;深度监听时，newAge和oldAge的值相同，因为newAge, oldAge是引用类型，指向同一个地址</span><br><span class="line">            &#125;,</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F; 第三个参数，配置项</span><br><span class="line">            &#123;</span><br><span class="line">                immediate: true, &#x2F;&#x2F; 初始化之前就监听，可选</span><br><span class="line">                deep: true &#x2F;&#x2F; 深度监听</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">            state.a.b &#x3D; 25</span><br><span class="line">        &#125;, 1500)</span><br><span class="line"></span><br><span class="line">        return &#123;</span><br><span class="line">            numberRef,</span><br><span class="line">            ...toRefs(state)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;p&gt;watch vs watchEffect&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;p&gt;&#123;&#123;numberRef&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;p&gt;&#123;&#123;name&#125;&#125; &#123;&#123;age&#125;&#125;&lt;&#x2F;p&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; reactive, ref, toRefs, watch, watchEffect &#125; from &#39;vue&#39;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">    name: &#39;Watch&#39;,</span><br><span class="line">    setup() &#123;</span><br><span class="line">        const numberRef &#x3D; ref(100)</span><br><span class="line">        const state &#x3D; reactive(&#123;</span><br><span class="line">            name: &#39;chuckie&#39;,</span><br><span class="line">            age: 20,</span><br><span class="line">            a:&#123;</span><br><span class="line">              b:100</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        watchEffect(() &#x3D;&gt; &#123;</span><br><span class="line">            &#x2F;&#x2F; 初始化时，一定会执行一次（收集要监听的数据）</span><br><span class="line">            console.log(&#39;hello watchEffect&#39;)</span><br><span class="line">        &#125;)</span><br><span class="line">        watchEffect(() &#x3D;&gt; &#123;</span><br><span class="line">            console.log(&#39;state.name&#39;, state.name)&#x2F;&#x2F;name变化时触发</span><br><span class="line">            &#x2F;&#x2F; 也可以在这里调用一个函数，函数内部有响应式数据变化也会触发watchEffrctd</span><br><span class="line">        &#125;)</span><br><span class="line">        watchEffect(() &#x3D;&gt; &#123;</span><br><span class="line">            console.log(&#39;state.age&#39;, state.age)&#x2F;&#x2F;age变化时触发</span><br><span class="line">        &#125;)</span><br><span class="line">        watchEffect(() &#x3D;&gt; &#123;</span><br><span class="line">            &#x2F;&#x2F;以下任何一个变量变化都会触发下面的代码执行</span><br><span class="line">            console.log(&#39;state.age&#39;, state.age)</span><br><span class="line">            console.log(&#39;state.name&#39;, state.name)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        watch(numberRef, (newNumber, oldNumber) &#x3D;&gt; &#123;</span><br><span class="line">            console.log(&#39;ref watch&#39;, newNumber, oldNumber)</span><br><span class="line">        &#125;</span><br><span class="line">        &#x2F;&#x2F; , &#123;</span><br><span class="line">        &#x2F;&#x2F;     immediate: true &#x2F;&#x2F; 初始化之前就监听，可选</span><br><span class="line">        &#x2F;&#x2F; &#125;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">            numberRef.value &#x3D; 200</span><br><span class="line">        &#125;, 1500)</span><br><span class="line"></span><br><span class="line">        watch(</span><br><span class="line">            &#x2F;&#x2F; 第一个参数，确定要监听哪个属性</span><br><span class="line">            () &#x3D;&gt; state.a,</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F; 第二个参数，回调函数</span><br><span class="line">            (newAge, oldAge) &#x3D;&gt; &#123;</span><br><span class="line">                console.log(&#39;state watch&#39;, newAge, oldAge)&#x2F;&#x2F;深度监听时，newAge和oldAge的值相同，因为newAge, oldAge是引用类型，指向同一个地址</span><br><span class="line">            &#125;,</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F; 第三个参数，配置项</span><br><span class="line">            &#123;</span><br><span class="line">                immediate: true, &#x2F;&#x2F; 初始化之前就监听，可选</span><br><span class="line">                deep: true &#x2F;&#x2F; 深度监听</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">            state.a.b &#x3D; 25</span><br><span class="line">        &#125;, 1500)</span><br><span class="line"></span><br><span class="line">        return &#123;</span><br><span class="line">            numberRef,</span><br><span class="line">            ...toRefs(state)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
 
 <h2 id="setup获取实例"><a href="#setup获取实例" class="headerlink" title="setup获取实例"></a>setup获取实例</h2><p>9 setup 中如何获取组件实例?</p>
 <ul>
@@ -14211,9 +14549,12 @@
       </tags>
   </entry>
   <entry>
-    <title>LInux系统(CentOS)上载及安装依赖的方式及命令</title>
+    <title>LInux系统(CentOS)上下载及安装依赖的方式及命令</title>
     <url>/2021/11/20/linux/LInux%E7%B3%BB%E7%BB%9F(CentOS)%E4%B8%8A%E8%BD%BD%E5%8F%8A%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E7%9A%84%E6%96%B9%E5%BC%8F%E5%8F%8A%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h1 id="LInux系统-CentOS-上载及安装依赖的方式及命令"><a href="#LInux系统-CentOS-上载及安装依赖的方式及命令" class="headerlink" title="LInux系统(CentOS)上载及安装依赖的方式及命令"></a>LInux系统(CentOS)上载及安装依赖的方式及命令</h1><h2 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h2><blockquote>
+    <content><![CDATA[<h1 id="LInux系统-CentOS-上下载及安装依赖的方式及命令"><a href="#LInux系统-CentOS-上下载及安装依赖的方式及命令" class="headerlink" title="LInux系统(CentOS)上下载及安装依赖的方式及命令"></a>LInux系统(CentOS)上下载及安装依赖的方式及命令</h1><blockquote>
+<p><a href="https://chuckiewill.github.io/2020/06/10/Vue/vue%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E8%BD%BB%E9%87%8F%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8/" target="_blank" rel="noopener">vue项目部署到腾讯云轻量应用服务器</a></p>
+</blockquote>
+<h2 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h2><blockquote>
 <p> 以安装pcre依赖为例</p>
 </blockquote>
 <p>1 通过wget命令下载安装包</p>
@@ -14697,7 +15038,7 @@
 <p>源码需要做修改的部分查看—–&gt;<a href="https://github.com/thu-pacman/GraphPi#how-to-enable-your-own-dataset" target="_blank" rel="noopener">GraphPi-Github-how-to-enable-your-own-dataset</a></p>
 <h3 id="提升性能的配置"><a href="#提升性能的配置" class="headerlink" title="提升性能的配置"></a>提升性能的配置</h3><p>仍然在项目提供的案例上修改配置：<code>GraphPi/tianhe/baseline_test.cpp</code></p>
 <p>在main函数中根据需要修改如下配置：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">int performance_modeling_type &#x3D; 0;  &#x2F;&#x2F;0:不使用性能模型， 1：使用</span><br><span class="line">int restricts_type &#x3D; 0;             &#x2F;&#x2F;0: 不使用限制，1：使用</span><br><span class="line">int use_in_exclusion_optimize &#x3D; 0;  &#x2F;&#x2F;0: 不使用包含排除优化，1：使用</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">int performance_modeling_type &#x3D; 0;  &#x2F;&#x2F;0:不使用性能模型， 1：使用      选择1时需要提前输入三角形个数 </span><br><span class="line">int restricts_type &#x3D; 0;             &#x2F;&#x2F;0: 不使用限制，1：使用         选择1时系统可以自动判断有没有可以限制的，即可以判断图中是否存在同构</span><br><span class="line">int use_in_exclusion_optimize &#x3D; 0;  &#x2F;&#x2F;0: 不使用包含排除优化，1：使用   选择1时系统可以自动检测是否可以使用</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -18738,6 +19079,15 @@
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printVector</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; v)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator it = v.<span class="built_in">begin</span>(); it != v.<span class="built_in">end</span>(); it++) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; *it &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test01</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v1; <span class="comment">//无参构造</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		v1.push_back(i);</span><br><span class="line">	&#125;</span><br><span class="line">	printVector(v1);</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">v2</span><span class="params">(v1.<span class="built_in">begin</span>(), v1.<span class="built_in">end</span>())</span></span>;</span><br><span class="line">	printVector(v2);</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">v3</span><span class="params">(<span class="number">10</span>, <span class="number">100</span>)</span></span>;</span><br><span class="line">	printVector(v3);</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">v4</span><span class="params">(v3)</span></span>;</span><br><span class="line">	printVector(v4);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	test01();</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>总结：</strong>vector的多种构造方式没有可比性，灵活使用即可</p>
+<p><strong>定义指定长度的二维vector</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;P_ID&gt;&gt; <span class="title">P_max_cov_adj</span><span class="params">(vertexNum_P, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;P_ID&gt;(vertexNum_P))</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
 <h4 id="3-2-3-vector赋值操作"><a href="#3-2-3-vector赋值操作" class="headerlink" title="3.2.3 vector赋值操作"></a>3.2.3 vector赋值操作</h4><p><strong>功能描述：</strong></p>
 <ul>
 <li>给vector容器进行赋值</li>
@@ -19316,6 +19666,11 @@
 <li>插入   — insert</li>
 <li>删除   — erase</li>
 <li>清空   — clear</li>
+</ul>
+<p><strong>insert()</strong>返回值:</p>
+<ul>
+<li>1: 插入的元素的迭代器   <code>set.first</code></li>
+<li>2：插入是否成功 ，成功为true， 否则为false  <code>set.second</code></li>
 </ul>
 <h4 id="3-8-5-set查找和统计"><a href="#3-8-5-set查找和统计" class="headerlink" title="3.8.5 set查找和统计"></a>3.8.5 set查找和统计</h4><p><strong>功能描述：</strong></p>
 <ul>
@@ -20089,6 +20444,275 @@
       </categories>
       <tags>
         <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于c++开发的气象数据中心项目</title>
+    <url>/2022/03/14/C++/c++meteo/</url>
+    <content><![CDATA[<h2 id="c-meteo"><a href="#c-meteo" class="headerlink" title="c++meteo"></a>c++meteo</h2><p>开发环境</p>
+<ul>
+<li>CentOS7.x   ssh客户端SecureCRTvi</li>
+<li>MySQL 5.7客户端Navicat Premium</li>
+<li>gcc、g+＋</li>
+<li>字符集utf-8</li>
+</ul>
+<p>从课件中下载项目源代码文件project.tgz并上传到服务器;<br>用root权限在根目录下解压project.tgz，将生成/project目录;<br>把/project目录授权给任意普通用户，以普通权限进行项目开发</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>图数据挖掘的数据集</title>
+    <url>/2022/03/29/Graph/DataSet/</url>
+    <content><![CDATA[<h1 id="DataSet"><a href="#DataSet" class="headerlink" title="DataSet"></a>DataSet</h1><h3 id="无向图同构网络"><a href="#无向图同构网络" class="headerlink" title="无向图同构网络"></a>无向图同构网络</h3><blockquote>
+<p><a href="https://law.di.unimi.it/datasets.php" target="_blank" rel="noopener">https://law.di.unimi.it/datasets.php</a></p>
+</blockquote>
+<h3 id="无向图异构网络"><a href="#无向图异构网络" class="headerlink" title="无向图异构网络"></a>无向图异构网络</h3><p><img src="https://gitee.com/ChuckieWill/picture/raw/master/img/202203291445216.png" alt="image-20220329144505366"></p>
+<ul>
+<li>出处：GRAMI: Frequent subgraph and pattern mining in a single large graph     2014<ul>
+<li>Twitter : <a href="https://socialcomputing.asu.edu/datasets/Twitter" target="_blank" rel="noopener">https://socialcomputing.asu.edu/datasets/Twitter</a><ul>
+<li>顶点: 用户，     边: 用户之间有关系，    顶点标签：0~100高斯分布(图数据原本没有标签，自行添加)</li>
+</ul>
+</li>
+<li>Patents: <a href="http://datasets.syr.edu/pages/datasets.html" target="_blank" rel="noopener">http://datasets.syr.edu/pages/datasets.html</a>    <ul>
+<li><strong>亚利桑那州立大学提供，可用</strong>，还有多个数据集，（美国国家经济研究局（NBER）维护数据）   只有顶点和边</li>
+<li>顶点: 专利，     边: 引用专利，    顶点标签：论文中未提及</li>
+</ul>
+</li>
+<li>Aviation : <a href="http://ailab.wsu.edu/subdue" target="_blank" rel="noopener">http://ailab.wsu.edu/subdue</a><ul>
+<li><strong>可用</strong>        数据格式不一致    需要自己预处理</li>
+<li>三元组的形式，点为浮点数，属性为字母</li>
+</ul>
+</li>
+<li>MiCo : <a href="https://academic.research.microsoft.com" target="_blank" rel="noopener">https://academic.research.microsoft.com</a><ul>
+<li>顶点：作者，   边：合作作者（边上还标有合作的数量），   顶点标签：作者的领域</li>
+</ul>
+</li>
+<li>CiteSeer : <a href="https://cs.umd.edu/projects/linqs/projects/lbc" target="_blank" rel="noopener">https://cs.umd.edu/projects/linqs/projects/lbc</a><ul>
+<li>有向图</li>
+<li>顶点：出版物，   边：出版物之间有相似性（带标签 0~100 标签越小表示相似性越强），   顶点标签：计算机科学领域</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img src="/2022/03/29/Graph/DataSet/Users/Chuckie/AppData/Roaming/Typora/typora-user-images/image-20220329151429029.png" alt="image-20220329151429029" style="zoom: 50%;">
+
+<ul>
+<li>出处：Fractal: A General-Purpose Graph Patern Mining System      2019<ul>
+<li>MiCo: 出处：GRAMI: Frequent subgraph and pattern mining in a single large graph<ul>
+<li>顶点：作者，   边：合作作者，   顶点标签：作者的领域</li>
+</ul>
+</li>
+<li>Patents： <a href="https://www.nber.org/research/data/us-patents" target="_blank" rel="noopener">https://www.nber.org/research/data/us-patents</a><ul>
+<li><strong>可用， 美国国家经济研究局（NBER）</strong>      需要tpt文件格式的转换  直接文本打开是乱码</li>
+<li>顶点: 专利，     边: 引用专利，    顶点标签：专利发布的年份</li>
+</ul>
+</li>
+<li>Youtube ： <a href="https://netsg.cs.sfu.ca/youtubedata/" target="_blank" rel="noopener">https://netsg.cs.sfu.ca/youtubedata/</a><ul>
+<li><strong>可用，加拿大西蒙弗雷泽大学</strong>       数据很多  需要预处理只提取需要的数据</li>
+<li>顶点: 视频，     边: 视频之间有关联，    顶点标签：视频的等级和长度综合计算的结果</li>
+<li>2007年2月至2008年7月发布的视频</li>
+</ul>
+</li>
+<li>Wikidata： 出处：Wikidata:A Free Collaborative Knowledgebase     2014<ul>
+<li>顶点: 主体和对象，     边: 谓词，    顶点标签：不同类型的谓词</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Graph</category>
+      </categories>
+      <tags>
+        <tag>DataSet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Fractal的使用</title>
+    <url>/2022/04/12/Graph/Fractal/</url>
+    <content><![CDATA[<h1 id="Fractal"><a href="#Fractal" class="headerlink" title="Fractal"></a>Fractal</h1><blockquote>
+<p><a href="https://dl.acm.org/doi/10.1145/3299869.3319875" target="_blank" rel="noopener">Fractal论文</a></p>
+<p><a href="https://github.com/dccspeed/fractal" target="_blank" rel="noopener">Fractal-github</a></p>
+<p>以下操作都是基于Linux系统</p>
+</blockquote>
+<h2 id="配置Fractal"><a href="#配置Fractal" class="headerlink" title="配置Fractal"></a>配置Fractal</h2><p><strong>安装spark</strong></p>
+<blockquote>
+<p>Fractal是java开发的所以需要先在安装jdk</p>
+<p>Fractal是基于spark的所以需要先安装spark</p>
+</blockquote>
+<ul>
+<li>当前系统已经安装了jdk，所以<code>export JAVA_HOME=&lt;openjdk-8-installation-folder&gt;</code>这一步不需要<ul>
+<li>这一步的意思是定义jdk的环境变量</li>
+</ul>
+</li>
+<li><code>cd &lt;repositories-folder&gt;</code>: 新建一个文件夹,并cd到这个文件夹下</li>
+<li><code>wget https://archive.apache.org/dist/spark/spark-2.2.0/spark-2.2.0-bin-hadoop2.7.tgz</code>: 下载spark</li>
+<li><code>tar zxvf spark-2.2.0-bin-hadoop2.7.tgz</code>: 解压文件</li>
+<li><code>mv spark-2.2.0-bin-hadoop2.7 spark</code>:  将解压的文件夹重命名为spark</li>
+<li><code>rm spark-2.2.0-bin-hadoop2.7.tgz</code>: 删除压缩包</li>
+<li><code>cd spark</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export SPARK_HOME&#x3D;&#96;pwd&#96; 将当前路径设置为SPARK_HOME的环境变量</span><br></pre></td></tr></table></figure>
+
+<p><strong>构建Fractal</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &lt;repositories-folder&gt;                                     &#x2F;&#x2F;进入上面新建的文件夹</span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;dccspeed&#x2F;fractal.git            &#x2F;&#x2F;从github上拷贝下Fractal</span><br><span class="line">cd fractal                                                   </span><br><span class="line">export FRACTAL_HOME&#x3D;&#96;pwd&#96;                                    &#x2F;&#x2F;将当前路径设置为FRACTAL_HOME的环境变量</span><br><span class="line">.&#x2F;gradlew assemble                                           &#x2F;&#x2F;编译fractal</span><br></pre></td></tr></table></figure>
+
+<p><strong>编译错误</strong></p>
+<ul>
+<li>报错1</li>
+</ul>
+<p><img src="https://gitee.com/ChuckieWill/picture/raw/master/img/202204130959491.png" alt="image-20220413095919192"></p>
+<ul>
+<li>解决方案</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chomd +x gradlew</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>错误原因： gradlew没有权限</li>
+</ul>
+<ul>
+<li>报错2</li>
+</ul>
+<p><img src="https://gitee.com/ChuckieWill/picture/raw/master/img/202204131002621.png" alt="image-20220413100207400"></p>
+<ul>
+<li>解决方案</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">终端：vim .&#x2F;gradlew</span><br><span class="line">终端打开后直接输入：&#96;:set fileformat&#x3D;unix&#96;</span><br><span class="line">然后退出保存： &#96;:wq&#96;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>错误原因：gradlew的文件格式有问题（windows上的格式），通过<code>:set fileformat=unix</code>修改文件格式以符合linux系统</li>
+</ul>
+<ul>
+<li>报错3</li>
+</ul>
+<p><img src="https://gitee.com/ChuckieWill/picture/raw/master/img/202204131013678.png" alt="image-20220413101300174"></p>
+<ul>
+<li>错误原因：JAVA_HOME路径有问题</li>
+<li>解决方案：找到正确的jdk路径并再次设置JAVA_HOME<ul>
+<li>查看已经安装的jdk位置： <code>echo $JAVA_HOME</code></li>
+<li>重新设置JAVA_HOME： <code>export JAVA_HOME=&#39;/usr/lib/jvm/java-1.11.0-openjdk-amd64&#39;</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://gitee.com/ChuckieWill/picture/raw/master/img/202204131032921.png" alt="image-20220413103205892"></p>
+<p><strong>执行错误：</strong></p>
+<ul>
+<li>错误1</li>
+</ul>
+<p><img src="/2022/04/12/Graph/Fractal/Users/Chuckie/AppData/Roaming/Typora/typora-user-images/image-20220413105538796.png" alt="image-20220413105538796"></p>
+<ul>
+<li>错误原因：没有执行.sh文件的权限</li>
+<li>解决方案:<ul>
+<li>cd到bin目录下执行：<code>chmod u+x *.sh</code>  <ul>
+<li>这里的u 这里指文件所有者，+x 添加可执行权限，*.sh表示所有的sh文件</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>错误2</li>
+</ul>
+<p><img src="https://gitee.com/ChuckieWill/picture/raw/master/img/202204131100073.png" alt="image-20220413110016941"></p>
+<ul>
+<li>错误原因：fractal.sh文件格式问题</li>
+<li>解决方案：<ul>
+<li>cd到bin目录下执行：<code>vim fractal.sh</code></li>
+<li>vim打开后输入：<code>:set ff=unix</code></li>
+<li>然后保存退出：<code>:wq</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>错误3</strong></li>
+</ul>
+<p><img src="https://gitee.com/ChuckieWill/picture/raw/master/img/202204131607365.png" alt="image-20220413160714404"></p>
+<ul>
+<li>错误原因：jdk版本不对，需要安装jdk1.8</li>
+<li>解决方案：<ul>
+<li>Linux非root用户安装：在自己的目录下新件jvm文件夹，再将下载的jdk1.8安装包拖入jvm文件夹</li>
+<li>在jvm文件夹下解压安装包：<code>tar -zxvf jdk-8u151-linux-x64.tar.gz</code></li>
+<li>设置临时环境变量：<code>export JAVA_HOME=&#39;/home/wangyj/jvm/jdk1.8.0_151&#39;</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>jdk1.8资源</p>
+<p>链接：<a href="https://pan.baidu.com/s/1txqGI8wwmRqZeV0pbjg9xQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1txqGI8wwmRqZeV0pbjg9xQ</a><br>提取码：zukz</p>
+<p><a href="https://blog.csdn.net/weixin_44273302/article/details/113617259" target="_blank" rel="noopener">Linux非root用户安装JDK</a></p>
+</blockquote>
+<h2 id="使用Fractal"><a href="#使用Fractal" class="headerlink" title="使用Fractal"></a>使用Fractal</h2><h4 id="设置临时环境变量"><a href="#设置临时环境变量" class="headerlink" title="设置临时环境变量"></a><strong>设置临时环境变量</strong></h4><ul>
+<li>cd到项目根目录下/Fractal执行如下命令<ul>
+<li>使用已经安装好的jdk1.8， 如果没有安装请看：配置Fractal—执行错误—-错误3</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#39;&#x2F;home&#x2F;wangyj&#x2F;jvm&#x2F;jdk1.8.0_151&#39;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>cd到/Fractal/spark执行如下命令</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export SPARK_HOME&#x3D;&#96;pwd&#96; 将当前路径设置为SPARK_HOME的环境变量</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>cd到/Fractal/fractal执行如下命令</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">export FRACTAL_HOME&#x3D;&#96;pwd&#96;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>编译, 在/Fractal/fractal下执行</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew assemble</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="挖掘自带的模式图"><a href="#挖掘自带的模式图" class="headerlink" title="挖掘自带的模式图"></a><strong>挖掘自带的模式图</strong></h4><ul>
+<li>查看所有自带模式图</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;bin&#x2F;fractal.sh</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">可供选择的模式图：fsm|motifs|cliques|cliquesopt|gquerying|gqueryingnaive|kws</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看某个模式图执行参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">app&#x3D;cliques .&#x2F;bin&#x2F;fractal.sh</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ALGOPTION for &#39;cliques&#39;:</span><br><span class="line">   inputgraph&#x3D;&lt;file-path&gt;                  &#39;Input graph file path&#39;</span><br><span class="line">   steps&#x3D;1|2|...                           &#39;Extension steps. If the target subgraph has size k, then steps&#x3D;k-1&#39;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在数据集<code>citeseer-single-label.graph</code>上执行3个点的cliques挖掘</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">steps&#x3D;2 inputgraph&#x3D;$FRACTAL_HOME&#x2F;data&#x2F;citeseer-single-label.graph app&#x3D;cliques .&#x2F;bin&#x2F;fractal.sh</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="挖掘自定义模式图"><a href="#挖掘自定义模式图" class="headerlink" title="挖掘自定义模式图"></a>挖掘自定义模式图</h4><p><strong>命令</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">steps&#x3D;2 inputgraph&#x3D;$FRACTAL_HOME&#x2F;data&#x2F;citeseer-single-label.graph app&#x3D;gquerying query&#x3D;$FRACTAL_HOME&#x2F;data&#x2F;q6-house.graph .&#x2F;bin&#x2F;fractal.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>steps=n, 表示n步扩展</li>
+<li>inputgraph， 真实图地址</li>
+<li>query， 模式图地址</li>
+<li>app=gquerying， 表示是自定义模式图的挖掘</li>
+</ul>
+<p><strong>模式图格式</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;vertex id&gt; &lt;vertex label&gt; [&lt;neighbour id1&gt; &lt;neighbour id2&gt; ... &lt;neighbour id n&gt;]</span><br><span class="line"></span><br><span class="line">例如房子模式图</span><br><span class="line">0 1 1 4</span><br><span class="line">1 1 0 2 4</span><br><span class="line">2 1 1 3</span><br><span class="line">3 1 2 4</span><br><span class="line">4 1 0 1 3</span><br><span class="line"></span><br><span class="line">其中第二列都是1，表示标签都是1，即同构图，若标签不同则是y</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Graph</category>
+      </categories>
+      <tags>
+        <tag>图挖掘</tag>
+        <tag>Fractal</tag>
       </tags>
   </entry>
 </search>

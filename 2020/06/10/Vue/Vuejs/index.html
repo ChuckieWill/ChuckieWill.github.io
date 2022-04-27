@@ -44,7 +44,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/10/Vue/Vuejs/image-20210815162645470.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/10/Vue/Vuejs/image-20210815163117742.png">
 <meta property="article:published_time" content="2020-06-10T02:46:17.000Z">
-<meta property="article:modified_time" content="2021-11-11T01:13:43.021Z">
+<meta property="article:modified_time" content="2022-04-25T14:51:23.571Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="vue">
 <meta name="twitter:card" content="summary">
@@ -237,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-11 09:13:43" itemprop="dateModified" datetime="2021-11-11T09:13:43+08:00">2021-11-11</time>
+                <time title="修改时间：2022-04-25 22:51:23" itemprop="dateModified" datetime="2022-04-25T22:51:23+08:00">2022-04-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -255,14 +255,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>28k</span>
+              <span>33k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>25 分钟</span>
+              <span>30 分钟</span>
             </span>
 
         </div>
@@ -362,7 +362,7 @@
 <h3 id="1-3-单页组件"><a href="#1-3-单页组件" class="headerlink" title="1.3 单页组件"></a>1.3 单页组件</h3><blockquote>
 <p><a href="https://www.bilibili.com/video/BV1Zy4y1K7SH?p=60" target="_blank" rel="noopener">单页组件视频教程</a></p>
 </blockquote>
-<h2 id="2-Vue中的MVVM"><a href="#2-Vue中的MVVM" class="headerlink" title="2 Vue中的MVVM"></a>2 Vue中的MVVM</h2><ul>
+<h3 id="1-4-初始化项目"><a href="#1-4-初始化项目" class="headerlink" title="1.4 初始化项目"></a>1.4 初始化项目</h3><h2 id="2-Vue中的MVVM"><a href="#2-Vue中的MVVM" class="headerlink" title="2 Vue中的MVVM"></a>2 Vue中的MVVM</h2><ul>
 <li><p><a href="https://zh.wikipedia.org/wiki/MVVM" target="_blank" rel="noopener">MVVM维基百科</a></p>
 <p><img src="/2020/06/10/Vue/Vuejs/vue-mvvm.png" alt></p>
 </li>
@@ -733,7 +733,15 @@
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">v-model.lazy=<span class="string">"message"</span></span><br><span class="line">v-model.number=<span class="string">"message"</span></span><br><span class="line">v-model.trim=<span class="string">"message"</span></span><br></pre></td></tr></table></figure>
 
+<h2 id="9本地存储"><a href="#9本地存储" class="headerlink" title="9本地存储"></a>9本地存储</h2><ul>
+<li>存: 任何位置直接使用</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">localStorage.islogn = <span class="string">'xxxx'</span></span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>取： 任何位置直接使用</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> islogn localStorage.islogn</span><br><span class="line">或者</span><br><span class="line"><span class="keyword">const</span> &#123; isLogin &#125; = localStorage</span><br></pre></td></tr></table></figure>
 
 
 
@@ -1027,7 +1035,7 @@
 
 
 
-<h1 id="Vue3"><a href="#Vue3" class="headerlink" title="Vue3"></a>Vue3</h1><blockquote>
+<h1 id="四、Vue3"><a href="#四、Vue3" class="headerlink" title="四、Vue3"></a>四、Vue3</h1><blockquote>
 <p>源码：L264-code</p>
 </blockquote>
 <h2 id="不熟悉的特性"><a href="#不熟悉的特性" class="headerlink" title="不熟悉的特性"></a>不熟悉的特性</h2><h3 id="Non-Props"><a href="#Non-Props" class="headerlink" title="Non-Props"></a>Non-Props</h3><blockquote>
@@ -1081,10 +1089,10 @@
 <li><p>启动项目<br><code>npm run serve</code></p>
 </li>
 </ol>
-<h2 id="vue-router"><a href="#vue-router" class="headerlink" title="vue-router"></a>vue-router</h2><blockquote>
+<h1 id="五、vue-router"><a href="#五、vue-router" class="headerlink" title="五、vue-router"></a>五、vue-router</h1><blockquote>
 <p><a href="https://next.router.vuejs.org/zh/" target="_blank" rel="noopener">Vue-Router官方文档</a></p>
 </blockquote>
-<p><strong>脚手架创建项目时就安装vue-router</strong></p>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h2><p><strong>脚手架创建项目时就安装vue-router</strong></p>
 <ol>
 <li><code>vue create 项目名称</code></li>
 <li>选择<code>Manually select features</code>自定义安装的插件</li>
@@ -1101,7 +1109,107 @@
 <li>选择仅错误时提醒ESlint</li>
 </ol>
 <p><img src="/2020/06/10/Vue/Vuejs/image-20210815162645470.png" alt="image-20210815162645470"></p>
-<h2 id="VueX"><a href="#VueX" class="headerlink" title="VueX"></a>VueX</h2><blockquote>
+<p><strong>使用过程中安装</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vue-router@版本号</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-使用路由"><a href="#2-使用路由" class="headerlink" title="2 使用路由"></a>2 使用路由</h2><h3 id="2-1-配置控制跳转"><a href="#2-1-配置控制跳转" class="headerlink" title="2.1 配置控制跳转"></a>2.1 配置控制跳转</h3><ul>
+<li>main.js中引入router</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App.vue'</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router'</span></span><br><span class="line"></span><br><span class="line">createApp(App).use(store).use(router).mount(<span class="string">'#app'</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>/router/index.js</code>设置路由</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'../views/home/Home'</span></span><br><span class="line"><span class="keyword">import</span> Login <span class="keyword">from</span> <span class="string">'../views/login/Login'</span></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;  </span><br><span class="line">    path: <span class="string">'/'</span>,      <span class="comment">//路由地址</span></span><br><span class="line">    name: <span class="string">'Home'</span>,   <span class="comment">//组件名</span></span><br><span class="line">    component: Home <span class="comment">//组件名</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/login'</span>,</span><br><span class="line">    name: <span class="string">'Login'</span>,</span><br><span class="line">    component: Login</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>app.js中使用路由</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;router-view&#x2F;&gt;    &#x2F;&#x2F;自动根据路由地址显示相应的组件</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#39;App&#39;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-js控制跳转"><a href="#2-2-js控制跳转" class="headerlink" title="2.2 js控制跳转"></a>2.2 js控制跳转</h3><p><strong>跳转到指定页面</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;wrapper__login-button&quot;  @click&#x3D;&quot;handleLogin&quot;&gt;登录&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; useRouter &#125; from &#39;vue-router&#39;   &#x2F;&#x2F;引入</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#39;Login&#39;,</span><br><span class="line">  setup () &#123;</span><br><span class="line">    const router &#x3D; useRouter()           &#x2F;&#x2F;实例化</span><br><span class="line">    const handleLogin &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">      router.push(&#123; name: &#39;Home&#39; &#125;)      &#x2F;&#x2F;设置要跳转的页面， Home是路由名</span><br><span class="line">    &#125;</span><br><span class="line">    return &#123; handleLogin &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>返回上一个页面</strong></p>
+<ul>
+<li><code>router.back()</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useRouter &#125; <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"><span class="keyword">const</span> useBackEffect = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> router = useRouter()</span><br><span class="line">  <span class="keyword">const</span> handleBack = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    router.back()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> &#123; handleBack &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-标签控制跳转"><a href="#2-3-标签控制跳转" class="headerlink" title="2.3 标签控制跳转"></a>2.3 标签控制跳转</h3><ul>
+<li><code>&lt;to=&quot;/shop&quot;&gt; &lt;/router-link&gt;</code></li>
+<li>去掉a标签的下划线</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 路由跳转不带参数的情况</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;nearby&quot;&gt;</span><br><span class="line">    &lt;router-link to&#x3D;&quot;&#x2F;shop&quot;&gt;</span><br><span class="line">      &lt;ShopInfo &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;router-link&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang&#x3D;&quot;scss&quot; scoped&gt;</span><br><span class="line">.nearby&#123;</span><br><span class="line">  a&#123;</span><br><span class="line">    text-decoration: none;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-路由参数"><a href="#2-4-路由参数" class="headerlink" title="2.4 路由参数"></a>2.4 路由参数</h3><h4 id="2-4-1-传递参数"><a href="#2-4-1-传递参数" class="headerlink" title="2.4.1 传递参数"></a>2.4.1 传递参数</h4><p><strong>配置</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/shop/:id'</span>,  <span class="comment">//参数名为：id</span></span><br><span class="line">    name: <span class="string">'Shop'</span>,</span><br><span class="line">    component: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "shop" */</span> <span class="string">'../views/shop/Shop'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p><strong>js跳转带参</strong></p>
+<ul>
+<li>使用<code>router.push</code>方法，并用<code>${}</code>添加参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;nearby&quot;&gt;</span><br><span class="line">    &lt;ShopInfo v-for&#x3D;&quot;item in nearbyList&quot; :key&#x3D;&quot;item._id&quot; :item&#x3D;&quot;item&quot; @click&#x3D;&quot;handleToShop(item._id)&quot;&#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; useRouter &#125; from &#39;vue-router&#39;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 跳转到shop页面</span><br><span class="line">const useToShopEffect &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">  const router &#x3D; useRouter()</span><br><span class="line">  const handleToShop &#x3D; (id) &#x3D;&gt; &#123;</span><br><span class="line">    router.push(&#96;&#x2F;shop&#x2F;$&#123;id&#125;&#96;)</span><br><span class="line">  &#125;</span><br><span class="line">  return &#123; handleToShop &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#39;Nearby&#39;,</span><br><span class="line">  components: &#123; ShopInfo &#125;,</span><br><span class="line">  setup () &#123;</span><br><span class="line">    return &#123; nearbyList, handleToShop &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>标签跳转带参</strong></p>
+<ul>
+<li>通过<code>:to=&quot; &quot;</code>指定路径，并用<code>${}</code>添加参数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 路由跳转不带参数的情况</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;nearby&quot;&gt;</span><br><span class="line">    &lt;router-link v-for&#x3D;&quot;item in nearbyList&quot; :key&#x3D;&quot;item._id&quot; :to&#x3D;&quot;&#96;&#x2F;shop&#x2F;$&#123;item._id&#125;&#96;&quot;&gt;</span><br><span class="line">      &lt;ShopInfo :item&#x3D;&quot;item&quot; &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;router-link&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang&#x3D;&quot;scss&quot; scoped&gt;</span><br><span class="line">.nearby&#123;</span><br><span class="line">  a&#123;</span><br><span class="line">    text-decoration: none;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-4-2-获取参数"><a href="#2-4-2-获取参数" class="headerlink" title="2.4.2 获取参数"></a>2.4.2 获取参数</h4><ul>
+<li>通过useRoute获取<strong>当前路由</strong>相关的信息，例如：<strong>params</strong>、<strong>path</strong>、<strong>query</strong>等<ul>
+<li>通过<code>route.params</code>获取路由带的参数</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useRoute &#125; <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取当前商铺数据</span></span><br><span class="line"><span class="keyword">const</span> useShopInfoEffect = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> route = useRoute()</span><br><span class="line">  <span class="built_in">console</span>.log(route.params.id)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-路由守卫"><a href="#3-路由守卫" class="headerlink" title="3 路由守卫"></a>3 路由守卫</h2><h4 id="全局守卫"><a href="#全局守卫" class="headerlink" title="全局守卫"></a>全局守卫</h4><blockquote>
+<ul>
+<li>任何路由每次跳转之前调用</li>
+<li>使用场景：只有登录后才能正常跳转，如果没有登录，则会默认跳转到登录页面</li>
+</ul>
+</blockquote>
+<ul>
+<li><code>/router/index.js</code>中使用<code>router.beforeEach</code>设置全局路由守卫<ul>
+<li>to : 路由跳转的目标路由</li>
+<li>from ： 路由跳转的原始路由</li>
+<li>next :  调用则表示允许跳转<ul>
+<li>接收跳转到的路由的组件名，则干预跳转的页面</li>
+<li>next(), 不传参数则表示不做干预，保持原来的跳转</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span> ,next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; isLogin &#125; = localStorage;  <span class="comment">//用本地存储记录是否登录了</span></span><br><span class="line">  <span class="keyword">const</span> &#123; name &#125; = to;</span><br><span class="line">  <span class="keyword">const</span> isLoginOrRegister = (name === <span class="string">"Login"</span> || name === <span class="string">"Register"</span>);</span><br><span class="line">  <span class="comment">//如果登录了，或者路由是Login或者Register则跳转到相应页面不做干预，否则跳转到Login页面</span></span><br><span class="line">  (isLogin || isLoginOrRegister) ? next() : next(&#123; <span class="attr">name</span>: <span class="string">'Login'</span>&#125;);  <span class="comment">//接受将要跳转到的路由页面的组件名：Login</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="单独守卫"><a href="#单独守卫" class="headerlink" title="单独守卫"></a>单独守卫</h4><blockquote>
+<ul>
+<li>跳转到当前路由之前调用</li>
+<li>使用场景： 已经登录了，地址为登录页时，不应该显示登录页，而是自动跳转到首页</li>
+</ul>
+</blockquote>
+<ul>
+<li><code>/router/index.js</code>中的<code>routes</code>模块中使用<code>router.beforeEach</code>设置单独路由守卫</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/'</span>,</span><br><span class="line">    name: <span class="string">'Home'</span>,</span><br><span class="line">    component: Home</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/login'</span>,</span><br><span class="line">    name: <span class="string">'Login'</span>,</span><br><span class="line">    component: Login,</span><br><span class="line">    beforeEnter (to, <span class="keyword">from</span>, next) &#123;  <span class="comment">//当路由跳转到login页面时调用</span></span><br><span class="line">      <span class="keyword">const</span> isLogin = localStorage.isLogin  <span class="comment">//是否登录</span></span><br><span class="line">      <span class="keyword">if</span> (isLogin) &#123;</span><br><span class="line">        next(&#123; <span class="attr">name</span>: <span class="string">'Home'</span> &#125;)  <span class="comment">//如果登录了则跳转到Home界面</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        next()  <span class="comment">//如果没有登录则正常跳转，即跳转到Login页面</span></span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      <span class="comment">//上面的部分可以简化为下面的两行代码</span></span><br><span class="line">      <span class="comment">//const &#123; isLogin &#125; = localStorage</span></span><br><span class="line">      <span class="comment">//isLogin ? next(&#123; name: 'Home' &#125;) : next()</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-动态路由"><a href="#4-动态路由" class="headerlink" title="4 动态路由"></a>4 动态路由</h2><blockquote>
+<p>又叫异步路由</p>
+<p>在需要展示页面的时候才加载相关资源</p>
+</blockquote>
+<ul>
+<li><code>/* webpackChunkName: &quot;about&quot; */</code>: about  用于调试显示</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'../views/home/Home'</span></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/'</span>,</span><br><span class="line">    name: <span class="string">'Home'</span>,</span><br><span class="line">    component: Home    <span class="comment">//普通路由</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">'/shop'</span>,</span><br><span class="line">    name: <span class="string">'Shop'</span>,</span><br><span class="line">    component: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="comment">/* webpackChunkName: "shop" */</span> <span class="string">'../views/shop/Shop'</span>)   <span class="comment">//动态路由</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="六、VueX"><a href="#六、VueX" class="headerlink" title="六、VueX"></a>六、VueX</h1><blockquote>
 <p><a href="https://next.vuex.vuejs.org/zh/index.html" target="_blank" rel="noopener">Vuex官方文档</a></p>
 </blockquote>
 <p><strong>脚手架创建项目时就安装VueX</strong></p>
@@ -1111,6 +1219,47 @@
 <li><strong>空格选择<code>Vuex</code></strong></li>
 </ol>
 <img src="/2020/06/10/Vue/Vuejs/image-20210815163117742.png" alt="image-20210815163117742" style="zoom:50%;">
+
+<h1 id="七、插件"><a href="#七、插件" class="headerlink" title="七、插件"></a>七、插件</h1><h3 id="normalize-css"><a href="#normalize-css" class="headerlink" title="normalize.css"></a>normalize.css</h3><blockquote>
+<p>移动端不同浏览器的标签样式不一样</p>
+<p>normalize.css用于使得不同浏览器上标签样式一直  </p>
+<p>类似css适配中用到的reset css</p>
+</blockquote>
+<ul>
+<li>安装</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install normalize.css --save</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用:  在main.js中引入即可</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'normalize.css'</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="八、开发常用操作"><a href="#八、开发常用操作" class="headerlink" title="八、开发常用操作"></a>八、开发常用操作</h1><h3 id="的方式写多个一样的标签"><a href="#的方式写多个一样的标签" class="headerlink" title="*的方式写多个一样的标签"></a><code>*</code>的方式写多个一样的标签</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">span.item*4</span><br></pre></td></tr></table></figure>
+
+<h3 id="vue中全局引入样式"><a href="#vue中全局引入样式" class="headerlink" title="vue中全局引入样式"></a>vue中全局引入样式</h3><ul>
+<li>在根目录下新建<code>style</code>文件，文件夹下可以新建<code>css、lcss、scss</code>的文件</li>
+<li>再在<code>style</code>下新建<code>index.css</code>将其它样式文件都引入到这个文件中，</li>
+<li>再在<code>main.js</code>中引入<code>index.css</code>即可,  使得在<code>main.js</code>中只会引入一次，不用每个都引入，因为所有要引入的样式文件都在<code>index.css</code>中引入了</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'./style/index.css'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="vue中使用scss"><a href="#vue中使用scss" class="headerlink" title="vue中使用scss"></a>vue中使用scss</h3><blockquote>
+<p><a href="https://www.sass.hk/" target="_blank" rel="noopener">scss官网</a></p>
+</blockquote>
+<ul>
+<li>在创建项目时，选择安装css预处理： <code>CSS Pre-processors</code></li>
+<li>在引入文件时同css只是文件名后缀为<code>.scss</code></li>
+<li>style部分添加<code>lang=&quot;scss&quot;</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;style lang&#x3D;&quot;scss&quot;&gt;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="vue中scoped"><a href="#vue中scoped" class="headerlink" title="vue中scoped"></a>vue中scoped</h3><ul>
+<li>scoped 表示当前样式只对当前组件有效</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;style scoped&gt;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -1195,7 +1344,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Vue基础"><span class="nav-text">一、Vue基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Vue安装及使用"><span class="nav-text">1 Vue安装及使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-直接使用-lt-script-gt-引入"><span class="nav-text">1.1 直接使用&lt;script&gt;引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-npm及CLI安装"><span class="nav-text">1.2 npm及CLI安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-单页组件"><span class="nav-text">1.3 单页组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Vue中的MVVM"><span class="nav-text">2 Vue中的MVVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-传入Vue的options"><span class="nav-text">3 传入Vue的options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Vue生命周期"><span class="nav-text">4 Vue生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-生命周期各时间节点易错点"><span class="nav-text">4.1 生命周期各时间节点易错点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-vue-config-js配置"><span class="nav-text">5 vue.config.js配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Vue基础语法"><span class="nav-text">二、Vue基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-插值操作"><span class="nav-text">1 插值操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mustache语法（双大括号）"><span class="nav-text">mustache语法（双大括号）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-once"><span class="nav-text">v-once</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-html"><span class="nav-text">v-html</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-text"><span class="nav-text">v-text</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-pre"><span class="nav-text">v-pre</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-cloak"><span class="nav-text">v-cloak</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-绑定属性"><span class="nav-text">2 绑定属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#v-bind"><span class="nav-text">v-bind</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-bind绑定class"><span class="nav-text">v-bind绑定class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-bind绑定style"><span class="nav-text">v-bind绑定style</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-计算属性"><span class="nav-text">3 计算属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#computed"><span class="nav-text">computed</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#computed-VS-methods"><span class="nav-text">computed VS methods</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-watch"><span class="nav-text">4 watch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-事件监听"><span class="nav-text">5 事件监听</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#v-on"><span class="nav-text">v-on</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-on参数"><span class="nav-text">v-on参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-on-修饰符"><span class="nav-text">v-on 修饰符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DOM原生事件列表"><span class="nav-text">DOM原生事件列表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-条件判断"><span class="nav-text">6 条件判断</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#v-if、v-else-if、v-else"><span class="nav-text">v-if、v-else-if、v-else</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-if-VS-v-show"><span class="nav-text">v-if VS  v-show</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-遍历循环"><span class="nav-text">7 遍历循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#v-for"><span class="nav-text">v-for</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#key"><span class="nav-text">:key</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-双向绑定"><span class="nav-text">8 双向绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#v-model"><span class="nav-text">v-model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-model-radio"><span class="nav-text">v-model:radio</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-model-checkbox"><span class="nav-text">v-model:checkbox</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-model-select"><span class="nav-text">v-model:select</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-model修饰符"><span class="nav-text">v-model修饰符</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、Vue组件化开发"><span class="nav-text">三、Vue组件化开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-组件化开发基础内容"><span class="nav-text">1 组件化开发基础内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-注册组件"><span class="nav-text">1.1 注册组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-全局组件与局部组件"><span class="nav-text">1.2 全局组件与局部组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-父组件与子组件"><span class="nav-text">1.3 父组件与子组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-注册组件语法糖"><span class="nav-text">1.4 注册组件语法糖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-模板分离写法"><span class="nav-text">1.5 模板分离写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-组件数据存储"><span class="nav-text">1.6 组件数据存储</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-父子间通信"><span class="nav-text">2 父子间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-父级向子级传递"><span class="nav-text">2.1 父级向子级传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-子级向父级传递"><span class="nav-text">2.2 子级向父级传递</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-父子组件的直接访问"><span class="nav-text">3 父子组件的直接访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-父访问子"><span class="nav-text">3.1 父访问子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-children"><span class="nav-text">3.1.1 $children</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-refs"><span class="nav-text">3.1.2 $refs</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-子访问父"><span class="nav-text">3.2 子访问父</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-parent"><span class="nav-text">3.2.1 $parent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-root"><span class="nav-text">3.2.2 $root</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-非父子访问"><span class="nav-text">3.3 非父子访问</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-中央事件总线"><span class="nav-text">3.3.1 中央事件总线</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-插槽"><span class="nav-text">4 插槽</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#脚手架3中-配置文件别名"><span class="nav-text">脚手架3中 配置文件别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#混入"><span class="nav-text">混入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getters方法-gt-组件计算属性"><span class="nav-text">getters方法-&gt;组件计算属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#actions方法-gt-组件方法"><span class="nav-text">actions方法-&gt;组件方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#零碎知识点"><span class="nav-text">零碎知识点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue3"><span class="nav-text">Vue3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#不熟悉的特性"><span class="nav-text">不熟悉的特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Non-Props"><span class="nav-text">Non-Props</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-model-1"><span class="nav-text">v-model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Provide-Inject"><span class="nav-text">Provide &#x2F; Inject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#directive"><span class="nav-text">directive</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plugin"><span class="nav-text">plugin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue3中的动画"><span class="nav-text">Vue3中的动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新脚手架"><span class="nav-text">新脚手架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-router"><span class="nav-text">vue-router</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VueX"><span class="nav-text">VueX</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Vue基础"><span class="nav-text">一、Vue基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Vue安装及使用"><span class="nav-text">1 Vue安装及使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-直接使用-lt-script-gt-引入"><span class="nav-text">1.1 直接使用&lt;script&gt;引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-npm及CLI安装"><span class="nav-text">1.2 npm及CLI安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-单页组件"><span class="nav-text">1.3 单页组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-初始化项目"><span class="nav-text">1.4 初始化项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Vue中的MVVM"><span class="nav-text">2 Vue中的MVVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-传入Vue的options"><span class="nav-text">3 传入Vue的options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Vue生命周期"><span class="nav-text">4 Vue生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-生命周期各时间节点易错点"><span class="nav-text">4.1 生命周期各时间节点易错点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-vue-config-js配置"><span class="nav-text">5 vue.config.js配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Vue基础语法"><span class="nav-text">二、Vue基础语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-插值操作"><span class="nav-text">1 插值操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mustache语法（双大括号）"><span class="nav-text">mustache语法（双大括号）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-once"><span class="nav-text">v-once</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-html"><span class="nav-text">v-html</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-text"><span class="nav-text">v-text</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-pre"><span class="nav-text">v-pre</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-cloak"><span class="nav-text">v-cloak</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-绑定属性"><span class="nav-text">2 绑定属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#v-bind"><span class="nav-text">v-bind</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-bind绑定class"><span class="nav-text">v-bind绑定class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-bind绑定style"><span class="nav-text">v-bind绑定style</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-计算属性"><span class="nav-text">3 计算属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#computed"><span class="nav-text">computed</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#computed-VS-methods"><span class="nav-text">computed VS methods</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-watch"><span class="nav-text">4 watch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-事件监听"><span class="nav-text">5 事件监听</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#v-on"><span class="nav-text">v-on</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-on参数"><span class="nav-text">v-on参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-on-修饰符"><span class="nav-text">v-on 修饰符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DOM原生事件列表"><span class="nav-text">DOM原生事件列表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-条件判断"><span class="nav-text">6 条件判断</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#v-if、v-else-if、v-else"><span class="nav-text">v-if、v-else-if、v-else</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-if-VS-v-show"><span class="nav-text">v-if VS  v-show</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-遍历循环"><span class="nav-text">7 遍历循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#v-for"><span class="nav-text">v-for</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#key"><span class="nav-text">:key</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-双向绑定"><span class="nav-text">8 双向绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#v-model"><span class="nav-text">v-model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-model-radio"><span class="nav-text">v-model:radio</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-model-checkbox"><span class="nav-text">v-model:checkbox</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-model-select"><span class="nav-text">v-model:select</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v-model修饰符"><span class="nav-text">v-model修饰符</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9本地存储"><span class="nav-text">9本地存储</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、Vue组件化开发"><span class="nav-text">三、Vue组件化开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-组件化开发基础内容"><span class="nav-text">1 组件化开发基础内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-注册组件"><span class="nav-text">1.1 注册组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-全局组件与局部组件"><span class="nav-text">1.2 全局组件与局部组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-父组件与子组件"><span class="nav-text">1.3 父组件与子组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-注册组件语法糖"><span class="nav-text">1.4 注册组件语法糖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-模板分离写法"><span class="nav-text">1.5 模板分离写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-组件数据存储"><span class="nav-text">1.6 组件数据存储</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-父子间通信"><span class="nav-text">2 父子间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-父级向子级传递"><span class="nav-text">2.1 父级向子级传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-子级向父级传递"><span class="nav-text">2.2 子级向父级传递</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-父子组件的直接访问"><span class="nav-text">3 父子组件的直接访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-父访问子"><span class="nav-text">3.1 父访问子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-children"><span class="nav-text">3.1.1 $children</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-refs"><span class="nav-text">3.1.2 $refs</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-子访问父"><span class="nav-text">3.2 子访问父</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-parent"><span class="nav-text">3.2.1 $parent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-root"><span class="nav-text">3.2.2 $root</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-非父子访问"><span class="nav-text">3.3 非父子访问</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-中央事件总线"><span class="nav-text">3.3.1 中央事件总线</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-插槽"><span class="nav-text">4 插槽</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#脚手架3中-配置文件别名"><span class="nav-text">脚手架3中 配置文件别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#混入"><span class="nav-text">混入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getters方法-gt-组件计算属性"><span class="nav-text">getters方法-&gt;组件计算属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#actions方法-gt-组件方法"><span class="nav-text">actions方法-&gt;组件方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#零碎知识点"><span class="nav-text">零碎知识点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、Vue3"><span class="nav-text">四、Vue3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#不熟悉的特性"><span class="nav-text">不熟悉的特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Non-Props"><span class="nav-text">Non-Props</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-model-1"><span class="nav-text">v-model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Provide-Inject"><span class="nav-text">Provide &#x2F; Inject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#directive"><span class="nav-text">directive</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plugin"><span class="nav-text">plugin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue3中的动画"><span class="nav-text">Vue3中的动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新脚手架"><span class="nav-text">新脚手架</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、vue-router"><span class="nav-text">五、vue-router</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-安装"><span class="nav-text">1 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-使用路由"><span class="nav-text">2 使用路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-配置控制跳转"><span class="nav-text">2.1 配置控制跳转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-js控制跳转"><span class="nav-text">2.2 js控制跳转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-标签控制跳转"><span class="nav-text">2.3 标签控制跳转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-路由参数"><span class="nav-text">2.4 路由参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-传递参数"><span class="nav-text">2.4.1 传递参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2-获取参数"><span class="nav-text">2.4.2 获取参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-路由守卫"><span class="nav-text">3 路由守卫</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#全局守卫"><span class="nav-text">全局守卫</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单独守卫"><span class="nav-text">单独守卫</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-动态路由"><span class="nav-text">4 动态路由</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、VueX"><span class="nav-text">六、VueX</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七、插件"><span class="nav-text">七、插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#normalize-css"><span class="nav-text">normalize.css</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#八、开发常用操作"><span class="nav-text">八、开发常用操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#的方式写多个一样的标签"><span class="nav-text">*的方式写多个一样的标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue中全局引入样式"><span class="nav-text">vue中全局引入样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue中使用scss"><span class="nav-text">vue中使用scss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue中scoped"><span class="nav-text">vue中scoped</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1211,7 +1360,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">85</span>
+          <span class="site-state-item-count">88</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1224,7 +1373,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">81</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1283,13 +1432,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">691k</span>
+    <span title="站点总字数">710k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:29</span>
+    <span title="站点阅读时长">10:45</span>
 </div>
 
         
