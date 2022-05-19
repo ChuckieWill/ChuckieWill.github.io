@@ -9,6 +9,19 @@ categories:
 
  
 
+```js
+const cartList = store.state.cartList   情况1
+
+const { cartList } = toRefs(store.state)  情况2
+
+以上两者有什么区别
+为什么computed中情况2 不能监视数据的变化？？？？？？
+```
+
+* 模板中函数调用传参数时为什么要用箭头函数
+
+
+
 #  一、Vue基础
 
 > **[Vue官网-Vue2.x]( https://cn.vuejs.org/ )**
@@ -2046,7 +2059,7 @@ const useBackEffect = () => {
 // 路由跳转不带参数的情况
 <template>
   <div class="nearby">
-    <router-link to="/shop">
+    <router-link to="/shop">   // <router-link :to="{name: 'shop'}">   ||  <router-link :to="{path: '/shop'}"> 
       <ShopInfo />
     </router-link>
   </div>
@@ -2245,6 +2258,73 @@ const routes = [
 3. **空格选择`Vuex`**
 
 <img src="Vuejs/image-20210815163117742.png" alt="image-20210815163117742" style="zoom:50%;" />
+
+###  数据持久化
+
+> 将VueX的数据通过本地缓存持久化
+
+```js
+import { createStore } from 'vuex'
+
+// 将VueX数据存储到缓存中  每次修改VueX中数据后调用该方法
+const setLocalCartList = (state) => {
+  const { cartList } = state
+  const cartListString = JSON.stringify(cartList) // 将对象转换为字符串， 因为本地缓存不能存储对象
+  localStorage.cartList = cartListString
+}
+
+// 从本地缓存拿取数据初始化VueX
+const getLocalCartList = () => {
+  try {
+    return JSON.parse(localStorage.cartList)
+  } catch (e) {
+    return {}
+  }
+}
+
+export default createStore({
+  state: {
+    cartList: getLocalCartList()  // 从本地缓存中拿取数据
+    // cartList: {
+    //   shopId:{
+    //     shopName: '沃尔玛',
+    //     productList:{
+    //       productId:{
+    //         _id: '1',
+    //         name:'番茄250g/份',
+    //         imgUrl: 'http: / / www.dell-lee.com/ imgs/vue3/tomato.png',
+    //         sales: 10,
+    //         price: 33.6,
+    //         oldPrice: 39.6,
+    //         count: 2,  //加入购物车商品数量
+    //         check: false, // 购物车选中状态
+    //       }
+    //     }
+    //   }
+    // }
+  },
+  mutations: {
+    // 初始化商品名字
+    changeShopName (state, payload) {
+      const { shopId, shopName } = payload
+      const shopInfo = state.cartList[shopId] || {
+        shopName: '',
+        productList: {}
+      }
+      shopInfo.shopName = shopName
+      state.cartList[shopId] = shopInfo
+      setLocalCartList(state)   //  数据修改后要更新本地缓存
+    }
+  },
+  actions: {
+  },
+  modules: {
+  }
+})
+
+```
+
+
 
 #  七、插件
 

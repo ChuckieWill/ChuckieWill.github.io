@@ -1556,6 +1556,42 @@ box-sizing:border-box;
 </html>
 ```
 
+####  4.5 等比例缩放
+
+> 根据不同设备的宽度，等比例的缩放尺寸
+
+* 前提，使用rem单位，假设开发的尺寸是iphone6, 宽度为375px,   heml { font-size: 100px }  , 即1rem = 100px
+* vue中使用
+  * 在根目录下`/public/index.html`做如下添加
+
+```html
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <!-- 添加--start -->
+    <script>
+      var width = document.documentElement.clientWidth || document.body.clientWidth;  // 获取设备宽度
+      var ratio = width / 375;    // 计算比例
+      var fontSize = 100 * ratio; // 计算1rem等于多少px
+      document.getElementsByTagName('html')[0].style['font-size'] = fontSize + 'px';   // 设置html的font-size
+    </script>
+    <!-- 添加--end -->
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
+```
+
 
 
 

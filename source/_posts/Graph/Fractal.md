@@ -16,7 +16,7 @@ categories:
 >
 > 以下操作都是基于Linux系统
 
-
+![image-20220519111929049](Fractal/image-20220519111929049.png)
 
 ##  配置Fractal
 
