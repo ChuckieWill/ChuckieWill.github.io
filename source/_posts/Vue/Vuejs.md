@@ -420,14 +420,14 @@ jack ma------1
 
   * 为类名时带`引号`
 
-  ```html
+  ```vue
   //'active'、'line'为类名
-  <h2 class="title" :class=“['active’, 'line']">Hello World</h2>
+  <h2 class="title" :class="['active’, 'line']">Hello World</h2>
   ```
 
   * 为变量名时不带引号  
 
-  ```js
+  ```html
   <div id="app">
       <h1 :class="[active, line]">{{name}}</h1>
   </div>
@@ -437,7 +437,7 @@ jack ma------1
           el:'#app',
           data:{
               active : {color: red},
-              ling: {font-size: 10px}
+              line: {font-size: 10px}
           }
       })
   </script>
@@ -864,6 +864,11 @@ v-model.trim="message"
 
 ```js
 localStorage.islogn = 'xxxx'
+
+
+const cartListString = JSON.stringify(cartList) // 将对象转换为字符串， 因为本地缓存不能存储对象
+localStorage.cartList = cartListString
+
 ```
 
 * 取： 任何位置直接使用
@@ -872,6 +877,9 @@ localStorage.islogn = 'xxxx'
 const islogn localStorage.islogn
 或者
 const { isLogin } = localStorage
+
+
+JSON.parse(localStorage.cartList) // 将字符串转换为d
 ```
 
 
@@ -1810,7 +1818,7 @@ this.$refs.scroll.$el.offsetTop
   });
 
   app.component('counter1', {
-    // inheritAttrs: false, //不接受父元素传入的Non-Prop属性
+    // inheritAttrs: false, //不接受父元素传入的Non-Prop属性自动绑定再g
     // 子组件的根元素是单元素时，父组件传入的Non-Prop属性会自动添加到根元素上
     template: `
       <div>Counter</div>
@@ -1825,66 +1833,77 @@ this.$refs.scroll.$el.offsetTop
 
 ###  v-model
 
-> [v-model作用于子组件](https://v3.cn.vuejs.org/guide/component-custom-events.html#%E5%A4%84%E7%90%86-v-model-%E4%BF%AE%E9%A5%B0%E7%AC%A6)
+> 自定义组件上使用v-model
+>
+> [v-model作用于子组件](https://v3.cn.vuejs.org/guide/component-custom-events.html#v-model-%E5%8F%82%E6%95%B0) ---- 直接参考官方文档
 >
 > * 默认写法，单个v-model
 > * 多个绑定，多个v-model
 > * 处理v-model修饰符
 
+* 下面案例即默认情况
+
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>lesson 19</title>
-  <script src="https://unpkg.com/vue@next"></script>
-</head>
-<body>
-  <div id="root"></div>
-</body>
-<script>
-  const app = Vue.createApp({
-    data() {
-      return {
-        count: 'a',
-        name: 'chuckie'
-      }
-    },
-    template: `
-      <counter v-model:count.uppercase="count"  />
-    `
-  });
+<my-component v-model="bookTitle"></my-component>
+```
 
-  app.component('counter', {
-    props: {
-      count: String,
-      countModifiers: { //属性名+Modifiers  处理修饰符
-        default: ()=> ({}) //默认为空字符串
-      }
-    },
-    methods: {
-      handleClick() {
-        let newValue = this.count + 'b';
-        console.log(this.countModifiers.uppercase)
-        //uppercase是父组件传入的修饰符，判断是否传入，若传入则做对应的操作
-        //若没传入则是undefined
-        if(this.countModifiers.uppercase) {
-          newValue = newValue.toUpperCase();
+```vue
+app.component('my-component', {
+  props: {
+    modelValue: String
+  },
+  emits: ['update:title'],
+  template: `
+    <input
+      type="text"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)">
+  `
+})
+```
+
+* 关键有两点
+  * `:value="modelValue"`  绑定传入的属性
+  * `@input="$emit('update:modelValue', $event.target.value)"`  内容修改时传出修改的内容
+* 自定义组件响应式案例
+  * 实现输入框内容在组件内是双向绑定的，且与外部的变量也是双向绑定的，主要利用了computed的get和set函数
+
+
+```vue
+<template>
+  <div class="pb-3">
+    <input
+      v-model="inputRef.val"
+    >
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, reactive, computed } from 'vue'
+export default defineComponent({
+  name: 'ValidateInput',
+  props: {
+    modelValue: String
+  },
+  setup (props, context) {
+    const inputRef = reactive({
+      val: computed({
+        get: () => props.modelValue || '',
+        set: val => {
+          context.emit('update:modelValue', val) // 当inputRef.value.val变化时触发
         }
-        this.$emit('update:count', newValue);
-      },
-    },
-    template: `
-      <div @click="handleClick">{{count}}</div>
-    `
-  });
-
-  const vm = app.mount('#root');
+      })
+    })
+    return {
+      inputRef
+    }
+  }
+})
 </script>
-</html>
 
 ```
+
+
 
 ###   Provide / Inject
 
@@ -1904,6 +1923,304 @@ this.$refs.scroll.$el.offsetTop
 > [插件](https://v3.cn.vuejs.org/guide/plugins.html)
 >
 > 源码：plugin  (数据校验案例)
+
+###  defineComponent
+
+> 可以使得包裹的对象有类型提示， 例如打set 就会自动提示setup
+
+```js
+const compontent = defineComponent({
+    name: '',
+    props:{
+        msg:{
+            required: true, //要求一定是string类型
+            type: String
+        }
+    }
+})
+```
+
+###  setup参数
+
+```js
+const compontent = defineComponent({
+    name: '',
+    props:{
+        msg:{
+            required: true, //要求一定是string类型
+            type: String
+        }
+    }
+    setup(props, context){
+    	//props拿到的就是上面的props，props.m 就是自动提示propsmsg
+    	context.attrs
+    	context.slots
+    	context.emit
+    }
+})
+```
+
+###  Teleport
+
+> 传送门，即将一些弹窗组件挂载在别的地方，而不是嵌在当前组件中，这样弹窗组件样式和当前组件样式就不会相互影响
+
+#####  手动挂载
+
+定义弹窗组件
+
+* 通过标签`<teleport>`表明当前组件是传送门组件 通过`to`指明要挂载的位置
+
+```vue
+<template>
+<teleport to="#modal">
+  <div id="center" v-if="isOpen">
+    <h2><slot>this is a modal</slot></h2>
+    <button @click="buttonClick">Close</button>
+  </div>
+</teleport>
+</template>
+<script lang="ts">
+import { defineComponent } from 'vue'
+export default defineComponent({
+  props: {
+    isOpen: Boolean,
+  },
+  emits: {
+    'close-modal': null
+  },
+  setup(props, context) {
+    const buttonClick = () => {
+      context.emit('close-modal')
+    }
+    return {
+      buttonClick
+    }
+  }
+})
+</script>
+<style>
+  #center {
+    width: 200px;
+    height: 200px;
+    border: 2px solid black;
+    background: white;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -100px;
+    margin-top: -100px;
+  }
+</style>
+
+```
+
+挂载弹窗组件
+
+* 挂载位置：根目录/public/index.html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <div id="modal"></div>    <!-- 挂载弹窗组件 -->
+    <!-- built files will be auto injected -->
+  </body>
+</html>
+
+```
+
+使用弹窗组件
+
+* 直接在需要的位置使用即可, 需要引入组件
+
+```vue
+const modalIsOpen = ref(false)
+const openModal = () => {
+  modalIsOpen.value = true
+}
+const onModalClose = () => {
+  modalIsOpen.value = false
+}
+
+<button @click="openModal">Open Modal</button><br/>
+<modal :isOpen="modalIsOpen" @close-modal="onModalClose"> My Modal !!!!</modal>
+```
+
+#####  自动挂载
+
+> 应用场景：开发者在使用弹窗组件时，还需要去根目录/public/index.html手动挂载，这会非常麻烦，所以需要自动挂载，即使用组件时，组件自动去挂载
+
+* setup()生命周期是先于页面初始化的，所以可以在setup()直接拿到`document.body`并在其中添加挂载的节点，这样就完成了自动挂载
+* 注意：组件销毁前要移除挂载的这个节点，因为组件可能多次使用，只添加不移除就会导致document.body中有冗余的挂载节点
+
+```vue
+<template>
+<teleport to="#loader">  //挂载节点的id
+  <div>
+    组件内容
+  </div>
+</teleport>
+</template>
+<script lang="ts">
+import { defineComponent, onUnmounted } from 'vue'
+export default defineComponent({
+  setup () {
+    const node = document.createElement('div')  //新建节点 即组件要挂载的节点
+    node.id = 'loader'  //将新建节点的id设置为相应值
+    document.body.appendChild(node)  //将新节点添加到 document.body中
+    onUnmounted(() => {
+      document.body.removeChild(node) //组件销毁前要移除挂载的这个节点
+    })
+  }
+})
+</script>
+
+```
+
+
+
+###  Suspense
+
+> 等待异步组件时渲染一些额外内容，让应用有更好的用户体验
+
+**定义异步组件**
+
+* 在 setup 返回一个 Promise
+* 这个promise包裹的对象**自动具有响应式**
+
+```vue
+//AsyncShow.vue
+<template>
+  <img :src="result && result.message">
+</template>
+
+<script lang="ts">
+import axios from 'axios'
+import { defineComponent } from 'vue'
+export default defineComponent({
+  async setup() {
+    const rawData = await axios.get('https://dog.ceo/api/breeds/image')
+    return {
+      result: rawData.data
+    }
+  }
+})
+</script>
+```
+
+**使用异步组件**
+
+* `#default` : 展示异步组件，可以展示多个异步组件，且当多个异步组件都加载完成后才一起显示
+* `#fallback`: 在异步组件还没加载完成时展示的内容
+
+```vue
+<Suspense>
+  <template #default>
+    <async-show />
+    <dog-show />
+  </template>
+  <template #fallback>
+    <h1>Loading !...</h1>
+  </template>
+</Suspense>
+```
+
+**捕获异步组件的错误**
+
+* 通过`onErrorCaptured`捕获错误
+
+```vue
+<template>
+  <div id="app">
+    <p>{{error}}</p> // 将捕获的错误展示在页面上
+    <Suspense>
+      <template #default>
+        <div>
+          <async-show />
+          <dog-show />
+        </div>
+      </template>
+      <template #fallback>
+        <h1>Loading !...</h1>
+      </template>
+    </Suspense>
+  </div>
+</template>
+
+<script lang="ts">
+import { ref, onErrorCaptured } from 'vue'
+import AsyncShow from './components/AsyncShow.vue'
+import DogShow from './components/DogShow.vue'
+export default {
+  name: 'App',
+  components: {
+    AsyncShow,
+    DogShow,
+  },
+  setup() {
+    const error = ref(null)
+    onErrorCaptured((e: any) => {
+      error.value = e
+      return true  //错误是否向上传递
+    })
+    return {
+      error
+    }
+  }
+};
+</script>
+
+```
+
+###  PropType
+
+> 构造函数断言成一个类型
+
+```ts
+ //这里特别有一点，我们现在的 Array 是没有类型的，只是一个数组，我们希望它是一个 ColomnProps 的数组，那么我们是否可以使用了类型断言直接写成 ColomnProps[]，显然是不行的 ，因为 Array 是一个数组的构造函数不是类型，我们可以使用 PropType 这个方法，它接受一个泛型，将 Array 构造函数返回传入的泛型类型。
+type: Array as PropType<ColumnProps[]>,
+```
+
+
+
+##  父子间通信
+
+###  子级向父级传递
+
+> [emits](https://v3.cn.vuejs.org/guide/migration/emits-option.html#%E6%A6%82%E8%BF%B0)
+
+```vue
+<script lang="ts">
+import { defineComponent} from 'vue'
+export default defineComponent({
+  emits: ['file-uploaded', 'file-uploaded-error'], //组件内定义的向外部发送信息的事件名
+  setup (props, context) {
+      context.emit('file-uploaded')// 向外部发送事件，不传递参数
+      context.emit('file-uploaded-error', res)// 向外部发送事件，传递参数res
+  }
+})
+</script>
+```
+
+###  事件总线
+
+> [mitt](https://www.cnblogs.com/lshifu/p/16559944.html)
+
+* vue3取消了vue2中自带的事件总线$bus
+* vue3中通过第三方库mitt实现事件总线
+
+###  VueX实现
 
 
 
@@ -1973,7 +2290,7 @@ npm install vue-router@版本号
 ```js
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './router'  //注意是从下面的/router/index.js中引入
 
 createApp(App).use(store).use(router).mount('#app')
 ```
@@ -1981,20 +2298,21 @@ createApp(App).use(store).use(router).mount('#app')
 * `/router/index.js`设置路由
 
 ```js
-import Home from '../views/home/Home'
-import Login from '../views/login/Login'
+import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
-  {  
-    path: '/',      //路由地址
-    name: 'Home',   //组件名
-    component: Home //组件名
-  },
   {
-    path: '/login',
-    name: 'Login',
-    component: Login
+    path: '/',
+    name: 'Home',
+    component: () => import(/* webpackChunkName: "home" */ '../views/home/Home')
   }
 ]
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes
+})
+
+export default router
 ```
 
 * app.js中使用路由
@@ -2028,6 +2346,7 @@ export default {
     const router = useRouter()           //实例化
     const handleLogin = () => {
       router.push({ name: 'Home' })      //设置要跳转的页面， Home是路由名
+      //router.push('/home') 
     }
     return { handleLogin }
   }
@@ -2221,6 +2540,76 @@ const routes = [
 ]
 ```
 
+####  元信息
+
+> [官网](https://router.vuejs.org/zh/guide/advanced/meta.html)
+>
+> 使用场景仍然是权限控制
+
+* 其实元信息可以理解为标识需要同权限（要求）的路由，便于路由判断
+* 注意：'./router/index.ts'中使用store直接导入
+
+```ts
+//正确方式
+import store from '../store' 
+//错误方式 g
+import { useStore } from 'Vuex'
+const store = useStore() 
+```
+
+
+
+```ts
+import { createRouter, createWebHashHistory } from 'vue-router'
+import store from '../store'  
+const routes = [
+  {
+    path: '/',
+    name: 'Home',  // 登录与否都可以访问
+    component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: "home" */ '../views/Login.vue'),
+    meta: { redirectAlreadyLogin: true } // 元信息  必须非登录才可以访问 若已经登录则跳转到首页
+  },
+  {
+    path: '/column/:id',
+    name: 'ColumnDetail', // 登录与否都可以访问
+    component: () => import(/* webpackChunkName: "home" */ '../views/ColumnDetail.vue')
+  },
+  {
+    path: '/create',
+    name: 'CreatePost', 
+    component: () => import(/* webpackChunkName: "home" */ '../views/CreatePost.vue'),
+    meta: { requiredLogin: true } // 元信息  必须登录才可以访问 若未登录则跳转到登录页
+  }
+]
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes
+})
+
+router.beforeEach((to, from, next) => {
+  const { isLogin } = store.state.user
+  console.log(isLogin)
+  if (to.meta.requiredLogin && !isLogin) { // 有需要登录的元信息且当前未登录 则跳转到登录页
+    next({ name: 'Login' })
+  } else if (to.meta.redirectAlreadyLogin && isLogin) { // 有非登录的元信息且当前已经登录 则直接跳转到首页
+    next('/')
+  } else {
+    next()
+  }
+})
+
+export default router
+
+```
+
+
+
 ##  4 动态路由
 
 > 又叫异步路由
@@ -2251,6 +2640,16 @@ const routes = [
 
 > [Vuex官方文档](https://next.vuex.vuejs.org/zh/index.html)
 
+##  1安装
+
+**终端命令安装**
+
+```js
+npm install vuex --save
+```
+
+
+
 **脚手架创建项目时就安装VueX**
 
 1. `vue create 项目名称`
@@ -2259,7 +2658,378 @@ const routes = [
 
 <img src="Vuejs/image-20210815163117742.png" alt="image-20210815163117742" style="zoom:50%;" />
 
-###  数据持久化
+##  2 使用
+
+###  2.1 基本概念
+
+**main.js中注册使用**
+
+```js
+import { createApp } from 'vue'
+import App from './App.vue'
+import store from './store'
+
+createApp(App).use(store).mount('#app')
+```
+
+**store/index.js基础代码**
+
+```js
+import { createStore } from 'vuex'
+
+export default createStore({
+  state: {
+  },
+  mutations: {
+  },
+  getters: {
+  },
+  actions: {
+  },
+  modules: {
+  }
+})
+
+```
+
+###  2.2 数据支持ts
+
+* createStore支持泛型
+
+```ts
+import { createStore } from 'vuex'
+import { testData, testPosts, ColumnProps, PostProps } from '../testData'
+export interface UserProps {
+  isLogin: boolean;
+  name?: string;
+  id?: string;
+}
+export interface GlobalDataProps { // 泛型
+  columns: ColumnProps[];
+  posts: PostProps[];
+  user: UserProps;
+}
+export default createStore<GlobalDataProps>({
+  state: {
+    columns: testData,
+    posts: testPosts,
+    user: { isLogin: false }
+  }
+})
+```
+
+###  2.3 使用store数据
+
+```vue
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { useStore } from 'vuex'
+import { GlobalDataProps } from '../store' // GlobalDataProps数据类型
+
+export default defineComponent({
+  name: 'Home',
+  setup () {
+    const store = useStore<GlobalDataProps>() //支持泛型
+    const list = computed(() => store.state.columns)  // 用计算属性获取，才能实时获取变化的store数据
+    return { list }
+  }
+})
+</script>
+```
+
+
+
+###  2.4 mutations
+
+> 需要**修改**store中数据时 则需要在mutations中写方法进行修改，便于记录对store的每次修改
+>
+> [Mutation 必须是同步函数](https://vuex.vuejs.org/zh/guide/mutations.html#mutation-%E5%BF%85%E9%A1%BB%E6%98%AF%E5%90%8C%E6%AD%A5%E5%87%BD%E6%95%B0)
+
+**定义修改store中数据的方法**
+
+* 第一个参数为state, 即store中的state 
+* 第二个参数开始自定义，也可以没有
+
+```ts
+import { createStore } from 'vuex'
+export interface UserProps {
+  isLogin: boolean;
+  name?: string;
+  id?: string;
+}
+export interface GlobalDataProps {
+  user: UserProps;
+}
+export default createStore<GlobalDataProps>({
+  state: {
+    user: { isLogin: false }
+  },
+  mutations: {
+    login (state, user) {
+      state.user.isLogin = true
+      state.user.name = user.name
+      state.user.id = user.id
+    }
+  }
+})
+
+```
+
+**调用修改store数据的方法**
+
+* 使用`store.commit`调用mutations中的方法
+* 第一个参数为要调用的mutations中的方法名
+* 第二个参数为自定义的参数值
+
+```vue
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+export default defineComponent({
+  name: 'Login'
+  setup () {
+    const store = useStore()
+    store.commit('login', { name: 'chuckie', id: 1 })
+    }
+  }
+})
+</script>
+```
+
+###  2.5 getters
+
+> [官网教程](https://vuex.vuejs.org/zh/guide/getters.html)
+>
+> Getter使用场景：**获取**store中数据，且需要对store中的数据过滤时使用
+>
+> 类似computed，计算结果会缓存，只有当依赖值改变才会重新计算
+
+**定义**
+
+* 获取store数据不传参情况： 直接返回计算结果
+* 获取store数据传参情况： 返回一个函数，函数接受参数并计算结果返回
+
+```js
+import { createStore } from 'vuex'
+import { testData, testPosts, ColumnProps, PostProps } from '../testData'
+export interface UserProps {
+  isLogin: boolean;
+  name?: string;
+  id?: string;
+}
+export interface GlobalDataProps {
+  columns: ColumnProps[];
+  posts: PostProps[];
+  user: UserProps;
+}
+export default createStore<GlobalDataProps>({
+  state: {
+    columns: testData,
+    posts: testPosts,
+    user: { isLogin: false }
+  }
+  getters: {
+    getColumnsLen (state) {          //获取store数据不传参情况
+      return state.columns.length
+    },
+    getColumnById: (state) => (id: number) => { //获取store数据传参情况
+      return state.columns.find(c => c.id === id)
+    }
+  }
+})
+
+```
+
+**使用**
+
+* 通过`store.getters.方法`调用getters方法
+
+```vue
+<script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+import { useStore } from 'vuex'
+export default defineComponent({
+  name: 'ColumnDetail',
+  setup () {
+    const store = useStore()
+    const currentId = ref(0)
+    let columnLen = ref(0)
+    columnLen = store.getters.getColumnsLen  //获取不传参属性
+    const column = computed(() => store.getters.getColumnById(currentId)) //获取传参属性
+    return {
+      columnLen,
+      column
+    }
+  }
+})
+</script>
+```
+
+### 2.6 actions
+
+> Action 类似于 mutation，不同在于：
+>
+> - Action 提交的是 mutation，而不是直接变更状态
+> - Action 可以包含任意异步操作
+
+#####  单个action
+
+**定义**
+
+* actions中定义异步请求函数，函数中通过axios发送异步请求
+* 异步请求成功后，在回调里调用mutations中的方法修改store中的数据
+
+```ts
+import { createStore } from 'vuex'
+import axios from 'axios'
+
+export interface ImageProps {
+  _id?: string;
+  url?: string;
+  createdAt?: string;
+  fitUrl?: string;
+}
+export interface ColumnProps{
+  _id: string,
+  title: string,
+  avatar?: ImageProps,
+  description: string
+}
+export interface PostProps {
+  id: number;
+  title: string;
+  content: string;
+  image?: string;
+  createdAt: string;
+  columnId: number;
+}
+export interface GlobalDataProps {
+  columns: ColumnProps[];
+  posts: PostProps[];
+}
+export default createStore<GlobalDataProps>({
+  state: {
+    columns: [],
+    posts: []
+  },
+  mutations: { 
+    fetchColums (state, rawData) {          // 服务于actions修改store数据
+      state.columns = rawData.data.list
+    }
+  },
+  actions: {
+    fetchColums (context) {
+      axios.get('/columns').then(res => {      // 异步请求
+        context.commit('fetchColums', res.data)// 调用mutations 修改store数据
+      })
+    }
+  }
+})
+
+```
+
+**使用**
+
+```vue
+<script lang="ts">
+import { computed, defineComponent, onMounted } from 'vue'
+import { useStore } from 'vuex'
+import { GlobalDataProps } from '../store'
+
+export default defineComponent({
+  name: 'Home',
+  setup () {
+    const store = useStore<GlobalDataProps>()
+    onMounted(() => {
+      store.dispatch('fetchColums')    //  调用actions中方法发送异步请求
+    })
+    const list = computed(() => store.state.columns)
+    return { list }
+  }
+})
+</script>
+```
+
+##### **组合action**
+
+**定义**
+
+> 案例说明：
+>
+> * 先登录，再获取用户信息
+>
+> * 将这两个操作可以合并到一个action中
+
+```ts
+import { createStore } from 'vuex'
+import { instance, get, post } from '../utils/resques'
+
+export interface UserProps {
+  isLogin: boolean;
+  _id?: string;
+  email?: string;
+  nickName: string;
+  column?: number;
+}
+export interface GlobalDataProps {
+  token: string;
+  user: UserProps;
+}
+export default createStore<GlobalDataProps>({
+  state: {
+    token: '',
+    user: { isLogin: false, column: 1, nickName: 'chuckie!!!' }
+  },
+  mutations: {
+    login (state, rawData) {
+      console.log('login', rawData)
+      const { token } = rawData.data
+      state.token = token
+      console.log('login', token)
+      instance.defaults.headers.common.Authorization = token
+    },
+    fetchCurrentUser (state, rawData) {
+      console.log('fetchCurrentUser', rawData)
+      state.user = { isLogin: true, ...rawData.data }
+    }
+  },
+  actions: {
+    // 登录action
+    async login (context, payload) {
+      const data = await post('user/login', payload)
+      context.commit('login', data)
+      return data
+    },
+    // 获取用户信息action
+    async fetchCurrentUser (context) {
+      const data = await get('user/current')
+      context.commit('fetchCurrentUser', data)
+      return data
+    },
+    // 将以上两个action合并到组合action中提供给用户  用户调用loginAndFetch就会先调用login再调用fetchCurrentUser
+    loginAndFetch ({ dispatch }, loginData) {
+      return dispatch('login', loginData).then((res) => {
+        return dispatch('fetchCurrentUser')  // 只返回了fetchCurrentUser的结果， login的结果在res中没有处理
+      })
+    }
+  }
+})
+
+```
+
+**使用**
+
+```ts
+// payload是传递给login的参数 即上面接受的loginData
+store.dispatch('loginAndFetch', payload).then((res) => {
+  console.log(res) // 打印的是fetchCurrentUser请求的结果
+})
+```
+
+
+
+##  3 数据持久化
 
 > 将VueX的数据通过本地缓存持久化
 
@@ -2391,4 +3161,121 @@ import './style/index.css'
 <style scoped>
 </style>
 ```
+
+###  vue中引入本地资源
+
+* 通过 require('@/assets/....')
+
+```ts
+column.avatar = require('@/assets/column.jpg') //引入根目录下/assets/column.jpg
+```
+
+###  vue中的`<pre>`
+
+* 用`<pre>`展示vue对象内容到页面
+
+```vue
+<template>
+  <pre>{{route}}</pre>
+</template>
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { useRoute } from 'vue-router'
+export default defineComponent({
+  name: 'ColumnDetail',
+  setup () {
+    const route = useRoute()
+    return {
+      route
+    }
+  }
+})
+</script>
+<style scoped>
+
+</style>
+
+```
+
+![image-20220606213853218](Vuejs/image-20220606213853218.png)
+
+#### vue中开发环境获取
+
+在main.ts中通过以下代码可获取当前是开发版本还是上线版本
+
+```ts
+process.env.NODE_ENV === 'development' 表示是开发b
+```
+
+
+
+###  vue中组件的函数化调用
+
+* 1 位置是 main.ts中挂载的app实例
+* 2 位置是 组件函数化调用中创建的节点和挂载的vue实例(用组件创建)
+* 3 位置是2中的组件的传送门创建的node节点
+
+![image-20220629211158281](Vuejs/image-20220629211158281.png)
+
+* [createApp](https://v3.cn.vuejs.org/api/application-api.html#component)创建vue实例
+  * 第一个参数是组件
+  * 第二个参数是传入组件的参数
+* mount(): 挂载实例到node节点上  参数为node节点
+* unmount()：卸载实例
+
+```ts
+import { createApp } from 'vue'
+import Message from './Message.vue'
+export type MessageType = 'success' | 'error' | 'default'
+
+const createMessage = (message: string, type: MessageType, timeout = 2000) => {
+  // createApp创建vue实例，实例上挂载Message组件，message,type是传入组件的属性
+  const messageInstance = createApp(Message, {   
+    message,
+    type
+  })
+  const mountNode = document.createElement('div')  // 创建node节点
+  document.body.appendChild(mountNode)  // 将node节点添加到body中
+  messageInstance.mount(mountNode)      // 将创建的实例挂载到node节点上
+  setTimeout(() => {
+    messageInstance.unmount()     // 卸载vue实例
+    document.body.removeChild(mountNode)  // 移除node节点
+  }, timeout)
+}
+
+export default createMessage
+
+```
+
+###  vue中支持markdown渲染
+
+> [markdown-it](https://github.com/markdown-it/markdown-it)
+
+**安装markdown-it**
+
+```js
+// js环境
+npm install markdown-it --save
+// typescript环境
+npm i --save-dev @types/markdown-it
+```
+
+**使用**
+
+```vue
+<template>
+  <div v-html="currentHTML"></div>  // v-htm语法直接渲染转换好的html
+</template>
+
+<script lang="ts">
+    import MarkdownIt from 'markdown-it'  // 引入
+    const md = new MarkdownIt()  // 实例化
+    const contetntest = '###  123, **hhhh**, kkkk, ```jdfjadjlf```'  // 要转换的markdown文本
+    const content = md.render(contetntest) // render()方法将markdown文本转换成html文本
+</script>
+
+
+```
+
+
 

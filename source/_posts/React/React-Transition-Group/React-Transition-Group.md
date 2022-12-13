@@ -109,7 +109,7 @@ categories:
 
 * 案例：
 
-  ```js
+  ```jsx
   <TransitionGroup>
   	{ 
       	this.state.list.map((item, index) => {  

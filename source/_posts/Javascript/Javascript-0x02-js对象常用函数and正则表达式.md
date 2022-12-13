@@ -52,7 +52,7 @@ categories:
   * 参数：函数
 
     ```js
-    reduce((pre, cur, index, arr) => {
+    reduce((pre, cur, index, array) => {
         
     }, Initial)
     //initial: 传入的初始值即pre的初始值
@@ -64,7 +64,7 @@ categories:
     1、previousValue （上一次调用回调返回的值，或者是提供的初始值（initialValue））
     2、currentValue （数组中当前被处理的元素）
     3、index （当前元素在数组中的索引）
-    4、array （调用 reduce 的数组）
+    4、array （调用 reduce 的数组, 即原始数组）
     ```
 
   * 案例
@@ -119,10 +119,25 @@ categories:
        let set1 = new Set(nums1)
       // 使用filter时，若有{}则要加return
        return [...set1].filter(item => {return nums2.includes(item)})
-};
+  };
   ```
   
-  
+* indexOf()：  查找项的下标  , 返回查到第一个项的下标， 若没有找到则返回 -1
+
+* sort():  排序  返回排序好的数组
+
+  ```js
+  // 升序
+  const res = array.sort((a,b)=>{
+    return a-b
+  })
+  // 降序
+  const res = array.sort((a,b)=>{
+    return b-a
+  })
+  ```
+
+* push() :  向数组添加元素， 注意返回值是添加元素后的**数组长度**
 
 
 

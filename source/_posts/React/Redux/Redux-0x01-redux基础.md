@@ -722,7 +722,7 @@ export const getListChange = (list) => ({
 
 **使用：**
 
-```js
+```jsx
 //src/store/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';

@@ -221,7 +221,7 @@ src: url('//at.alicdn.com/t/font_3288115_jaafkmyptyf.woff2?t=1648569184646') for
 * 元素(标签)选择器、伪元素选择器    +1
 * 其它选择器+0
 * !important 优先级最高  **高于所有**
-* 元素属性优先级高   **高于ID选择器**
+* 元素属性优先级**高于ID选择器**
   * 即写在HTML标签的属性上`<div style="...."> </div>`
 * 相同权重后写的生效
 
@@ -1156,6 +1156,8 @@ box-sizing:border-box;
 
 #####  3.2.3 父元素高度塌陷（清除浮动）
 
+> float和position: absolute、fixed都会出现父元素高度塌陷的问题，本质是元素脱离了文档流
+
 * 设置float后，元素会脱离文档流，所以不能撑起父元素，此时就会出现常见问题：**父元素高度塌陷**
   * 高度塌陷的原因是：父元素没有设置高度，子元素脱离文档流后父元素不会去计算它的高度并调整高度
   * p1（绿色块）没有撑起container（红色块）
@@ -1270,7 +1272,7 @@ box-sizing:border-box;
 
 * 注意布局顺序
   * 若与设置float元素同级的元素是行内元素或行内块状元素，则不用考虑顺序
-  * 若与设置float元素同级的元素是块级元素则需要考虑顺序，因为块级元素独占一行，即是设置float的元素会脱离文档流，但是仍然无法覆盖块状元素，所以布局时需要将块级元素放在最后，例如下面的middle放在left和right后面
+  * 若与设置float元素同级的元素是块级元素则需要考虑顺序，因为块级元素独占一行，设置float的元素会脱离文档流，但没有脱离文本流，仍然无法覆盖块状元素，所以布局时需要将块级元素放在最后，例如下面的middle放在left和right后面
 
 ```html
 <!DOCTYPE html>
@@ -1328,7 +1330,7 @@ box-sizing:border-box;
 
 *  参照定位的元素（父元素）需要加入position:relative或position: absolute; 最好是加入relative
 *  参照定位的直接父元素如果没有设置relative或absolute，则会继续向上找，直到直到body标签
-*  该布局是脱离文档流的，也是脱离文本流的， *对别的元素不会造成影响*
+*  该布局是脱离文档流的，也是**脱离文本流**的， **对别的元素不会造成影响**
 *  由于该布局脱离了文档流，不能参照父元素的尺寸，所以不能使用`width:*%`百分比来设置宽高
 
  如果想为元素设置层模型中的绝对定位，需要设置**position:absolute**(表示绝对定位)，这条语句的作用将元素**从文档流中拖出来**，然后使用left、right、top、bottom属性相对于其最接近的一个具有定位属性的父包含块进行绝对定位。如果不存在这样的包含块，则相对于body元素，即相对于**浏览器窗口**。 
@@ -1336,13 +1338,13 @@ box-sizing:border-box;
 #####  3.3.2  **相对定位**(position: relative) 
 
 * 该布局仍然是在正常文档流中的，即占有正常文档流的位置
-* 只是相对于文档流中自己的位置有偏移  *对别的元素是有影响的*
+* 只是相对于文档流中自己的位置有偏移  **对别的元素是有影响的**
 
  如果想为元素设置层模型中的相对定位，需要设置position:relative（表示相对定位），它通过left、right、top、bottom属性确定元素在**正常文档流中**的偏移位置。相对定位完成的过程是首先按static(float)方式生成一个元素(并且元素像层一样浮动了起来)，然后相对于**以前的位置移动，**移动的方向和幅度由left、right、top、bottom属性确定，偏移前的位置保留不动。 
 
 #####  3.3.3  **固定定位**(position: fixed) 
 
-* 该布局是脱离文档流的也是脱离文本流的
+* 该布局是脱离文档流的也是**脱离文本流**的
 * 该布局是相对于浏览器窗口定位的
 
  fixed：表示固定定位，与absolute定位类型类似，但它的相对移动的坐标是视图（**屏幕内的网页窗口**）本身。由于视图本身是固定的，它不会随浏览器窗口的滚动条滚动而变化，除非你在屏幕中移动浏览器窗口的屏幕位置，或改变浏览器窗口的显示大小，因此固定定位的元素会始终位于浏览器窗口内视图的某个位置，不会受文档流动影响 
@@ -1356,6 +1358,11 @@ box-sizing:border-box;
 > [菜鸟教程z-index](https://www.runoob.com/cssref/pr-pos-z-index.html)
 
 **注意：z-index 只作用于使用了定位元素(position:absolute, position:relative, or position:fixed)的容器**
+
+- z-index堆叠上下文只有在postion:relative/absolute/fixed脱离文档流控制时才生效，static时无效。
+- 当父元素和子元素都处于堆叠上下文时，子元素继承父元素的优先级，故父元素大的就大，如果父元素没有处于堆叠上下文时，即z-index:auto;或者position:static;时，子元素不会继承父元素的优先级。
+- z-index为0时依然处于堆叠上下文中，比负值高，比正值低。
+- z-index为负值时不仅会处于z-index为0和正值元素的后面，还会处于非堆叠元素的后面。
 
 ## 4 响应式布局
 
@@ -1425,6 +1432,30 @@ box-sizing:border-box;
   }
   ```
 
+#####  4.2.2 vue中清楚浏览器默认样式
+
+#####  normalize.css
+
+> 移动端不同浏览器的标签样式不一样
+>
+> normalize.css用于使得不同浏览器上标签样式一直  
+>
+> 类似css适配中用到的reset css
+
+* 安装
+
+```js
+npm install normalize.css --save
+```
+
+* 使用:  在main.js中引入即可
+
+```js
+import 'normalize.css'
+```
+
+
+
 #### 4.3 宽高自适应
 
 ##### 4.3.1 自适应屏宽高
@@ -1442,7 +1473,7 @@ box-sizing:border-box;
 
 ```
 .content{
-	height: calc(100% - 98px)  //100%是设备的整个视图界面的高度（内容高度  要舍去padding margin）
+	height: calc(100% - 98px)  //100%是`.content父元素`的高度（内容高度  要舍去padding margin）
 }
 ```
 
@@ -1575,7 +1606,7 @@ box-sizing:border-box;
     <title><%= htmlWebpackPlugin.options.title %></title>
     <!-- 添加--start -->
     <script>
-      var width = document.documentElement.clientWidth || document.body.clientWidth;  // 获取设备宽度
+      var width = document.documentElement.clientWidth || document.body.clientWidth;  // 获取body宽度,即设备宽度
       var ratio = width / 375;    // 计算比例
       var fontSize = 100 * ratio; // 计算1rem等于多少px
       document.getElementsByTagName('html')[0].style['font-size'] = fontSize + 'px';   // 设置html的font-size
@@ -1899,7 +1930,12 @@ export default {
 <ShopInfo :item="item"  v-show="item.imgUrl"/>
 ```
 
+##  5.6 图片充满父容器
 
+> [object-fit](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit)
+
+* 可以自适应父容器长宽的变化
+* object-fit: cover;  保持长宽比例  长或者宽正好和父容器相同，另一个则大于父容器，部分不显示
 
 
 

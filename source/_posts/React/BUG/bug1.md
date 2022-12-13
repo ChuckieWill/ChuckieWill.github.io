@@ -14,7 +14,7 @@ categories:
 
 * 开启了**严格模式**
 
-```js
+```jsx
 ReactDOM.render(
   <React.StrictMode>
     <TodoList />

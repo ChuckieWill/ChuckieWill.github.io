@@ -114,7 +114,7 @@ alt健可以快速切换放大和缩小
 
   [https://www.jianshu.com/p/c8ea4e7e9a6b]
 
-
+删除切片选区：ctrl + h
 
 ###  7 剪切工具实现切图
 

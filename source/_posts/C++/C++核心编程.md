@@ -1672,17 +1672,136 @@ int main() {
 >
 > [有关初始化列表和构造函数赋值的区别](https://www.freesion.com/article/31281119296/)
 >
-> 初始化列表是在类的成员变量初始化的时候就直接赋值了
+> 初始化列表是在类的成员变量**初始化的时候就直接赋值**了
 >
 > 类内部直接赋值，是先初始化，然后赋值
 >
 > 必须用初始化列表的情况：
 >
-> * **1.const成员或reference引用类型的成员。**const对象或引用类型只能初始化，不能对他们赋值。
->   构造函数的函数体内只能做赋值而不是初始化，因此初始化const对象或引用的唯一机会是构造函数
->   函数体之前的初始化列表中
+> * **1.成员类型是没有默认构造函数的类。**
 >
-> * 2.基类的构造函数都需要初始化列表；
+>   若没有提供显示初始化式，则编译器隐式使用成员类型的默认构造函数，若类没有默认构造函数，则编译器尝试使用默认构造函数将会失败。
+>
+> * **2.const成员或reference引用类型的成员。**
+>
+>   const对象或引用类型只能初始化，不能对他们赋值。
+>   构造函数的函数体内只能做赋值而不是初始化，因此初始化const对象或引用的唯一机会是构造函数函数体之前的初始化列表中
+>
+> * 3.基类的构造函数都需要初始化列表；
+
+**初始化列表初始化对象和直接赋值初始化对象区别**
+
+* 如果没有显示指明初始化列表，就会先按照默认值初始化一遍，再执行函数体内的操作。把赋值操作放在函数体内，相当于初始化了一次，赋值了一次，如果是基本类型还好，如果是一些复杂类型，那就比较影响效率.
+
+```c++
+template<typename item>
+class MinHeap
+{
+private:
+  item* id;
+  int size;
+public:
+  MinHeap(int n){
+    cout<<"MinHeap: 有参构造函数..."<<endl;
+    this->size = n;
+    id = new item[n];
+  }
+    
+  MinHeap(){
+    id = NULL; // 配合析构
+    cout<<"MinHeap: 默认构造函数..."<<endl;
+  }
+    
+  MinHeap(const MinHeap& mp){
+    cout<<"MinHeap: 拷贝构造函数..."<<endl;
+
+    size = mp.size;
+    id = new item[mp.size];
+    for(int i = 0; i< mp.size; ++i){
+      id[i] = mp.id[i];
+    }
+  }
+  ~MinHeap(){
+    cout<<"~MinHeap: 析构函数..."<<endl;
+    // 需要判断id是否初始化过，如果时是通过默认构造函数初始化的，则没有开辟堆空间，直接进行下面的操作会报错
+    // delete[] id;
+    // 所以需要先判断id是否分配空间了
+    if(id != NULL){
+      cout<<"~MinHeap: 析构函数...id开辟了空间"<<endl;
+      delete[] id;
+      id = NULL;
+    }else{
+      cout<<"~MinHeap: 析构函数...id没有开辟空间"<<endl;
+    }
+  }
+};
+
+// 直接赋值初始化对象
+class Test1
+{
+private:
+  MinHeap<int> mp;
+  int size;
+
+public:
+  Test1(int n){
+    size = n;
+    // mp(MinHeap<int>(n)
+    mp = MinHeap<int>(n); // 有参构造并赋值给mp,然后就地销毁     MinHeap<int>(n)匿名对象
+    
+  }
+};
+
+// 初始化列表初始化对象
+class Test2
+{
+private:
+  MinHeap<int> mp;
+  int size;
+
+public:
+  Test2(int n): mp(MinHeap<int>(n){
+    size = n;
+    // mp = MinHeap<int>(n);
+    
+  }
+};
+
+int main(){
+  int n 
+  Test1 t1(n);
+  // 打印结果
+    // MinHeap: 默认构造函数...
+    // MinHeap: 有参构造函数...
+    // ~MinHeap: 析构函数...
+    // ~MinHeap: 析构函数...
+
+  Test2 t2(n);
+  // 打印结果
+    // MinHeap: 有参构造函数...
+    // ~MinHeap: 析构函数...
+  
+  int n = 10;
+  MinHeap<int> mp(n);
+  MinHeap<int> mp1(mp);
+  MinHeap<int> mp2 = mp;
+  // 打印结果
+  // MinHeap: 有参构造函数...
+  // MinHeap: 拷贝构造函数...
+  // MinHeap: 拷贝构造函数...
+  // ~MinHeap: 析构函数...
+  // ~MinHeap: 析构函数...
+  // ~MinHeap: 析构函数...
+
+
+
+}
+
+```
+
+
+
+
 
 **作用：**
 

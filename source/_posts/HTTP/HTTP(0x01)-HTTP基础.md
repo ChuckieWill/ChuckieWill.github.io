@@ -54,6 +54,8 @@ categories:
 
 ##  1.4 URI、URL、URN
 
+> [Node.js v18.2.0 documentation](https://nodejs.org/api/url.html#url_the_whatwg_url_api)
+
 **定义：**
 
 * URI: 统一资源标识符，它包括：URL、URN
@@ -63,6 +65,8 @@ categories:
 **URL格式：**
 
 * protocol :// hostname[:port] / path / [;parameters] [?query]#fragment
+
+![image-20220531223255251](HTTP(0x01)-HTTP基础/image-20220531223255251.png)
 
 **URL格式说明：**
 
@@ -217,13 +221,13 @@ console.log('server listening on 8887')
 
 **ETag**
 
-* `ETag`判断服务端数据是否修改的方法是：**数据签名**，及对数据进行例如哈希计算的方式计算出一个唯一的值，只要数据发发生改变这个值就会变化，通过比较这个值即可判断数据是否修改了，次验证相对`Last-Modified`更严格
+* `ETag`判断服务端数据是否修改的方法是：**数据签名**，及对数据进行例如哈希计算的方式计算出一个唯一的值，只要数据发发生改变这个值就会变化，通过比较这个值即可判断数据是否修改了，其验证相对`Last-Modified`更严格
 
 * `ETag`验证流程
   * 浏览器第一次向服务端发送请求，在服务端返回的文件头中就会包括`ETag=777` (777是虚拟的数据唯一签名)，浏览器会将这个数据签名保存在`If-None-Match`属性中
-  * 下一次浏览器访问服务端时就会将`If-None-Match=777`在文件头中发送给服务端，服务端会将`If-None-Match`和实时的`ETag`比较，如果不同就说明数据变化了，则返回浏览器新的数据及更新后的`ETag`, 如果相同则说明数据发送了变化，返回`304`(因为304表示Not Modified 数据没有修改)，浏览器识别304后会忽略返回主体（事实上此时分会主体中也没有太多数据，验证的本质就是减少数据的传递，而此时根本不需要传数据）中的数据直接缓存取数据。
+  * 下一次浏览器访问服务端时就会将`If-None-Match=777`在文件头中发送给服务端，服务端会将`If-None-Match`和实时的`ETag`比较，如果不同就说明数据变化了，则返回浏览器新的数据及更新后的`ETag`, 如果相同则说明数据没有变化，返回`304`(因为304表示Not Modified 数据没有修改)，浏览器识别304后会忽略返回主体（事实上此时返回主体中也没有太多数据，验证的本质就是减少数据的传递，而此时根本不需要传数据）中的数据直接从缓存中取数据。
 
-* 一下是浏览器>=第二次向服务端发送请求，服务端返回的结果
+* 下面是浏览器>=第二次向服务端发送请求，服务端返回的结果
 
 ![image-20200922155159908](HTTP(0x01)-HTTP基础/image-20200922155159908.png)
 
@@ -298,7 +302,7 @@ console.log('server listening on 8887')
 **理解HTTP长连接**
 
 * HTTP是建立在TCP连接之上的
-* HTTP2.0开始，一个TCP的建立对应多个HTPP, 且可以是永久建立，即HTTP内容传输完成后，TCP连接任然保持建立，*效率高（减少了TCP建立的次数，从而减小了三次握手等产生的资源消耗）
+* HTTP2.0开始，一个TCP的建立对应多个HTPP, 且可以是永久建立，即HTTP内容传输完成后，TCP连接任然保持建立，*效率高（减少了TCP建立的次数，从而减小了三次握手等产生的资源消耗）*
 * **THHP长连接就是指的TCP的永久建立**，当传输任务完成后，TCP任然保持连接，当有HTTP传输时直接利用这个建立好的TCP连接，不用再次三次挥手建立TCP连接，以此减少资源的消耗（TCP永久建立也有时间设置，超过某个时间段任然没有HTTP传输，TCP连接也会自动释放）
 
 
@@ -417,5 +421,53 @@ console.log('server listening on 8888')
 
 
 
+#  六、web权限认证
 
+**Cookie的方式**
+
+* 服务器需要保存session
+* 不利于集群服务器，因为各个服务器之间要通信获取session
+
+![image-20220623220005045](HTTP(0x01)-HTTP基础/image-20220623220005045.png)
+
+**Token的方式**
+
+> * token是基于[JWT](https://jwt.io/)
+> * 直接通过算法计算，不需要存储唯一标识
+
+* 1 登录接口(邮箱，密码登录) 获取 token
+* 2 将token添加到请求头`common.Authorization`中，每次请求都携带
+
+```ts
+import { createStore } from 'vuex'
+import { instance, get, post } from '../utils/resques'
+
+export interface GlobalDataProps {
+  token: string;
+}
+export default createStore<GlobalDataProps>({
+  state: {
+    token: ''
+  },
+  mutations: {
+    login (state, rawData) {
+      const { token } = rawData.data
+      state.token = token
+      instance.defaults.headers.common.Authorization = token  // 将token添加到请求头中，每次请求都携带
+    }
+  },
+  actions: {
+    async login (context, payload) {
+      const data = await post('user/login', payload) //获取 token
+      context.commit('fetchPosts', data)
+      return data
+    }
+  }
+})
+
+```
+
+
+
+![image-20220623220048377](HTTP(0x01)-HTTP基础/image-20220623220048377.png)
 

@@ -16,7 +16,7 @@ categories:
 >
 > 以下操作都是基于Linux系统
 
-![image-20220519111929049](Fractal/image-20220519111929049.png)
+
 
 ##  配置Fractal
 
@@ -53,7 +53,7 @@ export FRACTAL_HOME=`pwd`                                    //将当前路径�
 
 * 报错1
 
-![image-20220413095919192](https://gitee.com/ChuckieWill/picture/raw/master/img/202204130959491.png)
+![image-20220413095919192](Fractal/202204130959491.png)
 
 * 解决方案
 
@@ -67,7 +67,7 @@ export FRACTAL_HOME=`pwd`                                    //将当前路径�
 
 * 报错2
 
-![image-20220413100207400](https://gitee.com/ChuckieWill/picture/raw/master/img/202204131002621.png)
+![image-20220413100207400](Fractal/202204131002621.png)
 
 * 解决方案
 
@@ -83,14 +83,14 @@ export FRACTAL_HOME=`pwd`                                    //将当前路径�
 
 * 报错3
 
-![image-20220413101300174](https://gitee.com/ChuckieWill/picture/raw/master/img/202204131013678.png)
+![image-20220413101300174](Fractal/202204131013678.png)
 
 * 错误原因：JAVA_HOME路径有问题
 * 解决方案：找到正确的jdk路径并再次设置JAVA_HOME
   * 查看已经安装的jdk位置： `echo $JAVA_HOME`
   * 重新设置JAVA_HOME： `export JAVA_HOME='/usr/lib/jvm/java-1.11.0-openjdk-amd64'`
 
-![image-20220413103205892](https://gitee.com/ChuckieWill/picture/raw/master/img/202204131032921.png)
+![image-20220413103205892](Fractal/202204131032921.png)
 
 
 
@@ -98,7 +98,7 @@ export FRACTAL_HOME=`pwd`                                    //将当前路径�
 
 * 错误1
 
-![image-20220413105538796](C:/Users/Chuckie/AppData/Roaming/Typora/typora-user-images/image-20220413105538796.png)
+![image-20220413105538796](Fractal/image-20220413105538796.png)
 
 * 错误原因：没有执行.sh文件的权限
 * 解决方案:
@@ -109,7 +109,7 @@ export FRACTAL_HOME=`pwd`                                    //将当前路径�
 
 * 错误2
 
-![image-20220413110016941](https://gitee.com/ChuckieWill/picture/raw/master/img/202204131100073.png)
+![image-20220413110016941](Fractal/202204131100073.png)
 
 * 错误原因：fractal.sh文件格式问题
 * 解决方案：
@@ -121,7 +121,7 @@ export FRACTAL_HOME=`pwd`                                    //将当前路径�
 
 * **错误3**
 
-![image-20220413160714404](https://gitee.com/ChuckieWill/picture/raw/master/img/202204131607365.png)
+![image-20220413160714404](Fractal/202204131607365.png)
 
 * 错误原因：jdk版本不对，需要安装jdk1.8
 * 解决方案：

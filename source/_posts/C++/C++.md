@@ -53,11 +53,31 @@ categories:
 
 ####  数据类型
 
+> 菜鸟教程c++数据类型：https://www.runoob.com/cplusplus/cpp-data-types.html
+>
+> 数据类型最大可以表示范围：https://www.acwing.com/blog/content/475/
+
 * 1byte = 8bits
 * short类型  2byte    存储范围[-2^15, 2^15-1]  [ -32768 , 32767]
 * int 类型      4byte
 
 ![image-20210907142129928](C++/image-20210907142129928.png)
+
+![image-20221118142430669](C++/image-20221118142430669.png)
+
+* 单位换算
+
+```
+1Byte＝8bit
+位：位(bit，缩写为b）是存储器的最小单位，可以表示一位二进制数．
+字节：1字节（Byte，缩写为B）由8个位组成，即1Byte＝8bit，是存储器的基本单位，通常被作为一个存储单元．
+　另外，还使用千字节（KB）、兆字节（MB）、吉字节（GB）甚至太字节（TB），他们之间的换算关系为：
+1KB＝1024B
+1MB＝1024KB
+1GB＝1024MB
+1TB＝1024GB
+有些人为了方便，就取第一个英文字。比如MB取M，KB取K，GB取G其实不太正确，你在电脑上就不会见到有M、K、G的只有MB、KB、GB
+```
 
 
 
@@ -112,6 +132,10 @@ categories:
 * 代码整体往左移动：
 
   选中需要移动的代码：按 shift + tab键 
+
+####  gcc与g++区别
+
+> [gcc与g++的区别](https://blog.csdn.net/wuzheyan2008/article/details/119715526)
 
 ##  库函数
 
@@ -240,7 +264,7 @@ int main()
 
 > [c标准库`<string.h>`](https://www.runoob.com/cprogramming/c-standard-library-string-h.html)
 >
-> * **以下函数都是由安全问题的，会出现缓存区溢出的问题**
+> * **以下函数都是有安全问题的，会出现缓存区溢出的问题**
 >   * 推荐使用安全函数：strcpy_s()...等
 > * stelen的效率可以提升，strlen是遍历判断'\0'的位置计算长度，但其实可以在创建字符串的时候就用一个变量存储字符串长度，用空间换时间
 
@@ -428,6 +452,12 @@ int main()
 
 
 ## 指针
+
+###  嵌入式指针
+
+> 使用场景：内存分配，内存管理
+
+> https://blog.csdn.net/qq_42604176/article/details/113871565
 
 ###  常见指针
 
@@ -964,6 +994,8 @@ int main()
 ##  多线程
 
 > [课程笔记](https://blog.csdn.net/qq_38231713/category_10001159.html)
+>
+> 视频链接： https://www.bilibili.com/video/BV1Yb411L7ak?p=1&vd_source=7230a052308bbb41976f248d2c778e3a
 
 **为什么要用多线程**
 
@@ -981,8 +1013,8 @@ int main()
 * 可执行程序
   * windows: 扩展名为.exe的文件
   * Linux: ls -la  后缀为rwx（x执行权限）
-* 进程： 运行起来的可执行程序
-* 线程
+* 进程： 运行起来的可执行程序  资源分配的基本单元
+* 线程  程序执行的基本单元
   * 每个进程（执行起来的可执行程序），都有一个主线程，这个主线程是唯一的。
     * 当执行可执行程序，产生一个进程后，这个主线程就随着这个进程启动起来了。
     * ctrl+f5运行这个程序的时候，实际上是进程的主线程来执行（调用)这个main函数中的代码。
@@ -2421,3 +2453,1099 @@ int main() {
 
 > http://c.biancheng.net/ref/assert.html
 
+
+
+#  STL
+
+* 用下面的方式替代迭代器的使用
+
+```c++
+for(atuo a : res)
+for(atuo& a : res)
+```
+
+
+
+* 容器自带的算法就只能用自带的
+  * list自带sort就只能用自带的，不能用全局算法中的sort
+  * 全局算法中的sort依赖于数组形式的结构，但list是链表形式的结构，所以list不能用，只能用自带的sort
+* 使用分配器
+
+```c++
+vector<string,_gnu_cxx::__pool_alloc<string>> vec;
+```
+
+* 容器sizeof
+  * queue 和 stack内置的是一个deque， 所以大小和deque一样
+  * set和map内置红黑树，大小即红黑树的大小
+
+
+```c++
+array<int, 10> a; // 40  元素个数*元素大小
+cout<<sizeof(a)<<endl; // 40
+array<int, 8> a; // 32
+cout<<sizeof(a)<<endl; // 32
+
+vector<int> vec;  // 24  头指针  尾指针  容量尾指针  3*8 = 24
+cout<<sizeof(vec)<<endl;
+
+list<int> lis;  // 24
+cout<<sizeof(lis)<<endl;
+
+forward_list<double> flist;  // 8
+cout<<sizeof(flist)<<endl; // 8
+
+deque<int> deq; // 80 两个迭代器，每个迭代器有3个标志位和一个指针 2*4  本身有一个控制指针和控制容量 （2*4+2）*8 = 80
+cout<<sizeof(deq)<<endl; // 80
+
+queue<int> q; // 80
+cout<<sizeof(q)<<endl; // 80
+
+stack<int> s; // 80
+cout<<sizeof(s)<<endl; // 80
+
+
+set<double> set; // 48  红黑树 左指针 右指针 父指针 节点颜色
+cout<<sizeof(set)<<endl; // 48
+
+map<int, int> map; // 48
+cout<<sizeof(map)<<endl; // 48
+
+map<int, vector<R_ID>>  mp; // 48
+
+unordered_map<int, vector<R_ID>>  mp; //56
+unordered_map<int, int> umap; // 56
+cout<<sizeof(umap)<<endl; // 56
+```
+
+
+
+
+
+##  vector
+
+> [解决vector.capacity() > vector.size()导致内存空间浪费的问题](https://blog.csdn.net/ganfanren00001/article/details/122024121)
+
+* vector的动态增长是倍数增长，压入1时开辟2，压入2时开辟4，压入3不开辟，压入4开辟8，，，
+  * vector相对array存储相同的元素**内存空间会更大**，因为vector.capacity() > vector.size(), vector会开辟更多空间，用于动态添加元素
+  * vector每次动态扩容，都会拷贝构造和析构，**开销也会很大**
+
+* 解决vector.capacity() > vector.size()导致内存空间浪费的问题
+  * 这里使用vector(vec1)构造了一个临时对象，前面讲过，构造函数可以时新构造的容器的capacity缩小为size值
+  * 然后调用这个临时容器的swap，将其与vec1互换内存地址，临时容器就变成了有冗余容量的容器，vec1经过变换后变成了容量capacity和size相等的容器
+  * 没有分配标识符的临时vector在下一句立刻被析构释放。
+  * vec1的容量被成功缩小
+
+```c++
+vector<int>(vec1).swap(vec1);
+```
+
+
+
+##  map
+
+* multimap和unordered_multimap不可用[]作insert,  map和unordered_map可以用[]作insert  
+* mp[i] 操作值时，初始值是什么？
+  * mp[i]时，若i在map中不存在，则会先创造这个mp[i]这个数据对,再返回mp[i]
+* 只要使用mp[i], 就会构造mp[i], 初始值应该为容器数据类型的默认值（即 int(), string(), char()）
+  * 作判断、作左值、作右值都会构造mp[i]、打印
+* 默认按键的升序排列
+  * 修改为键的降序：`multimap<int, char,greater<int>> count;`
+
+
+```c++
+multimap<int, int> temp;
+temp.insert({1,1}); // 正确
+temp[1] = 1; //错误
+
+map<int, int> temp;
+temp.insert({1,1}); // 正确
+temp[1] = 1; // 正确
+unordered_map<int, vector<int>> temp1;
+temp1.insert({1, {1,2,2}});
+temp1[1].push_back(1); // 正确
+
+
+  int n = 10;
+  // unordered_map<int, vector<R_ID>>  mp;
+  map<int, vector<R_ID>>  mp;
+
+  for(int i = 0; i < n; ++i ){
+    mp[i].push_back(i);
+  }
+  for(auto& a : mp){
+    cout<<a.first<<endl;
+  }
+  if(mp[1].size()){
+    cout<<"1 has...."<<endl;
+  }
+  if(mp[11].size()){  // 可以正常判断
+    cout<<"11 has...."<<endl;
+  }
+  cout<<sizeof(mp)<<endl;
+
+
+// map[]的使用
+  map<int,int> mp1;
+  map<int, string> mp2;
+  map<int, char> mp3;
+  map<int, vector<int>> mp4;
+
+  // 作判断
+  if(mp1[1] == 0){}
+  if(mp2[1] == "123"){} //mp2[1]初始化为string()
+  if(mp3[1] == 'c'){} //mp3[1]初始化为char()
+  if(mp1[2]){} // 未报错
+  //if(mp2[1]){} // 报错，本质应该是值的数据类型是否可以转换为bool类型  string不能强制转换为bool
+  //if(mp4[1]){} // 报错，vector不能强制转换为bool
+
+  // 作左值
+  mp1[3] = 3;
+  mp2[2] = "test";
+  mp3[2] = 't';
+
+  // 作右值
+  int x = mp1[4];
+
+  // 打印
+  cout<<mp1[5]<<endl; // 0
+
+  cout<<"------mp1-------"<<endl;
+  for(auto& a : mp1){
+    cout<<a.first<<": "<<a.second<<endl;
+  }
+  cout<<"------mp2-------"<<endl;
+  for(auto& a : mp2){
+    cout<<a.first<<": "<<a.second<<endl;
+  }
+  cout<<"------mp3-------"<<endl;
+  for(auto& a : mp3){
+    cout<<a.first<<": "<<a.second<<endl;
+  }
+
+    cout<<int()<<endl; // 0
+    cout<<string()<<endl; // ""
+    cout<<char()<<endl; // ''
+
+  // 打印结果
+  // ------mp1-------
+  // 1: 0
+  // 2: 0
+  // 3: 3
+  // 4: 0
+  // 5: 0
+  // ------mp2-------
+  // 1: 
+  // 2: test
+  // ------mp3-------
+  // 1: 
+  // 2: t
+```
+
+## unordered_map
+
+* 系统分配的篮子大小为53(质数，gcc2.9编译器处理的情况是53)
+* 篮子是用vector实现的，只是扩容策略不是两倍扩容，而是写死的质数扩容
+  * 压入元素个数大于篮子大小时篮子扩容，扩容一般是当前大小2倍左右的一个质数大小
+
+##  priority_queue
+
+* 默认是最大堆
+* 改为最小堆
+
+```C++
+priority_queue<int, vector<int>, greater<int>>
+```
+
+* 自定义比较函数
+
+```c++
+// 个位数大的在前
+bool myCom(int a, int b){
+  return a%10 < b%10;
+}
+
+priority_queue<int, vector<int>, decltype(myCom)> pq(myCom);
+```
+
+#  lambda
+
+> Lambda[表达式](https://so.csdn.net/so/search?q=表达式&spm=1001.2101.3001.7020)是现代C++在C ++ 11和更高版本中的一个新的语法糖 ，在C++11、C++14、C++17和C++20中Lambda表达的内容还在不断更新。 lambda表达式（也称为lambda函数）是在调用或作为函数参数传递的位置处定义匿名函数对象的便捷方法。通常，lambda用于封装传递给算法或异步方法的几行代码 
+>
+> C++ Lambda表达式详解: https://blog.csdn.net/qq_37085158/article/details/124626913
+
+#  文件读写
+
+> https://cloud.tencent.com/developer/article/2078816
+>
+> https://blog.csdn.net/qq_41906863/article/details/103876416
+
+#  TBB
+
+> https://www.cnblogs.com/ybqjymy/p/13679446.html
+>
+> https://www.ngui.cc/el/1408858.html?action=onClick
+>
+> C++高性能编程笔记: https://www.zhihu.com/column/c_1477236044101353472
+>
+> C++高性能编程视频： https://www.bilibili.com/video/BV1Ya411q7y4/?spm_id_from=333.788&vd_source=7230a052308bbb41976f248d2c778e3a
+>
+> 官网：https://link.springer.com/chapter/10.1007/978-1-4842-4398-5_2
+>
+> 超线程对内存密集型的计数效果更好（内存密集型就是计算少的）
+
+**安装TBB**
+
+* Ubuntu:
+
+  ``` 
+   sudo apt-get install libtbb-dev
+  ```
+
+* Arch Linux:
+
+```
+sudo pacman -S tbb
+```
+
+* windows
+
+```
+.\vcpkg install tbb:x64-windows
+```
+
+* Mac Os
+
+```
+.\vcpkg install tbb:x64-macos
+```
+
+* other: https://blog.csdn.netlweixin_42973508/article/details/111681426
+
+##  基本使用
+
+###  TBB API
+
+![image-20221207175920556](C++/image-20221207175920556.png)
+
+####  任务组
+
+> tbb默认创建与核心一样的线程数
+
+![image-20221207180438060](C++/image-20221207180438060.png)
+
+####  parallel_invoke
+
+![image-20221207180601166](C++/image-20221207180601166.png)
+
+* parallel_invoke允许传入多个任务，同时执行，自动等待所有任务执行完成  （使用任务组需要手动设置等待任务完成）
+  * 将查找拆分为两部分，并行查找
+
+![image-20221207181733395](C++/image-20221207181733395.png)
+
+
+
+* 串行改并行
+
+![image-20221207182147456](C++/image-20221207182147456.png)
+
+![image-20221207182207317](C++/image-20221207182207317.png)
+
+####  parallel_for
+
+![image-20221207182524728](C++/image-20221207182524728.png)
+
+* 低级接口，不分块，但是效率可能低一点，因为内部不会优化
+
+![image-20221207182952555](C++/image-20221207182952555.png)
+
+####  parallel_for_each
+
+* 支持迭代器区间
+* 参数是迭代器的引用 ， 上面parallel_for中参数是索引，需要通过a[i]修改值，而这里直接通过f这个引用就可以修改
+* 下面的案例是直接给数组的每个元素赋值为32
+
+![image-20221207183134250](C++/image-20221207183134250.png)
+
+####  二维区间上的for循环：blocked_range2d
+
+![image-20221207183613034](C++/image-20221207183613034.png)
+
+####  三维区间上的for循环：blocked_range3d
+
+![image-20221207183928726](C++/image-20221207183928726.png)
+
+####  parallel_reduce
+
+>  缩并  有数据依赖
+
+* 原始数据依赖案例
+
+![image-20221207184047545](C++/image-20221207184047545.png)
+
+* 任务组
+  * 时间复杂度：`O(n/c+c)    n是任务数，c是线程数`
+
+![image-20221207184330376](C++/image-20221207184330376.png)
+
+* parallel_reduce
+  * 时间复杂度：`O(logn)   n是任务数`  因为会一直缩并下去
+
+![image-20221207184919473](C++/image-20221207184919473.png)
+
+![image-20221207184745841](C++/image-20221207184745841.png)
+
+####  parallel_deterministic_reduce
+
+* 保证每次每个块分配的任务一样，不再是动态分配
+
+![image-20221207185206934](C++/image-20221207185206934.png)
+
+####  parallel_scan
+
+* 扫描
+* 需要记录前i个计算结果
+* 不是很懂，待学习
+
+![image-20221207185544945](C++/image-20221207185544945.png)
+
+####  任务域
+
+* 可以指定多少个线程执行
+
+![image-20221207192309187](C++/image-20221207192309187.png)
+
+####  嵌套for循环
+
+* n比较小，没有核心数量多
+
+![image-20221207192411750](C++/image-20221207192411750.png)
+
+####  筛选
+
+* 满足条件则记录
+* concurrent_vector是tbb提供的vector
+* a.grow_by()是对数组进行指定大小的扩容
+* 因为concurrent_vector中有锁，所以计算结果先压入局部数组，最后再压入concurrent_vector中
+  * 这里应该要求块中有多个任务，否则一个任务一个局部数组没有意义
+
+![image-20221207194229185](C++/image-20221207194229185.png)
+
+![image-20221207194659818](C++/image-20221207194659818.png)
+
+
+
+###  递归并行
+
+```c++
+```
+
+
+
+
+
+###  使用笔记
+
+* 设置线程数
+* 获取线程数
+
+* parallel_reduce使用
+  * type是贯穿始终的计算结果的数据类型 可以是int则计算结果是累加  也可以是vector则计算结果压入数组
+  * vec是整个任务数组
+  * vectype是任务数组中元素的数据类型
+  * init 是块的初始值  int则设置为0  vector则设置为空数组(`vector<int>()`)
+  * 块中的for循环表示：一个块中可能分配多个任务，每个任务计算的结果给temp 
+  * temp用于收集单个块中所有任务计算的结果，temp将返回给下面的串行合并
+  * 串行函数用于合并每个并行块计算的结果 合并后返回即是最终结果
+
+```c++
+#include <iostream>
+#include <vector>
+#include <tbb/tbb.h>
+#include <tbb/blocked_range.h>
+#include <tbb/parallel_reduce.h>
+
+using namespace std;
+using namespace tbb;
+//设置线程数
+int ThreadNum = 56;
+tbb::task_scheduler_init init(ThreadNum);
+//获取线程数
+auto numprocs = this_task_arena::max_concurrency();
+cout<<"thread: "<<numprocs<<endl;
+
+type result = parallel_reduce(blocked_range<vectype>(vec.begin(), vec.end()),
+  // 下面是并行部分 一个块交给一个核心
+  init ,[](const blocked_range<vectype>& r, type temp)->type{
+    for(auto a = r.begin(); a!=r.end(); a++){
+      //使用a计算 结果给temp
+    }
+    return temp;
+  },
+
+  // 下面是串行的 合并每个块的结果                   
+  [](type x, type y)->type{ // 这里的x,y就是每个块返回的结果，在这里将这些块的数组合并就是最终的结果
+    // 将x y合并并返回  
+    return x;  // 假设合并到x  x就是最终返回结果
+  }
+  // ,
+  // simple_partitioner{}  // 使得每个块都只分配一个任务
+
+  );
+```
+
+**任务分配策略**
+
+* 拿到vec后tbb会将任务分配给块，一个块交给一个核心处理  `blocked_range<vectype>(vec.begin(), vec.end())`
+  * 假设vec中有32个任务，机器有4个核心，则每个块分配8个任务，这8个任务在一个核心上是轮询执行的（这是tbb的优化）
+  * 这个任务分配是动态的，根据任务和核心设置
+* tbb采用工作窃取法，保证核心不空闲
+  * 一个块分配多个任务，这些任务就是一个局部的任务队列
+  * 当某个核心的任务都执行完后，就会去其它核心查看任务队列中是否还有任务，有则窃取过来执行
+  * 但是这种方式还是存在不均衡的情况
+
+![image-20221124203620266](C++/image-20221124203620266.png)
+
+* 手动设置每个块分配的任务
+  * 每个块负责一个任务似乎比上面的工作窃取法性能更好可能时粒度分的更细了
+  * simple_partitioner{}  和 static_partitioner{} 都可以指定块的任务数
+
+```c++
+simple_partitioner{}  // 使得每个块都只分配一个任务  如果线程是4 总任务数是32则会分为32个块 这些块排队给线程执行 这种粒度更小 性能似乎更好
+static_partitioner{}  // 默认情况：固定每个块的任务数=总任务数/线程数 
+
+// 指定区间粒度 指定每个负责16个任务 假设总任务数是32则会创建2个线程
+type result = parallel_reduce(blocked_range<vectype>(vec.begin(), vec.end(), 16),
+      // 下面是并行部分 一个块交给一个核心
+      init ,[](const blocked_range<vectype>& r, type temp)->type{
+        // ....
+      },
+      ,static_partitioner{}
+      // , simple_partitioner{} 
+
+      );
+```
+
+
+
+
+
+**注意初始值**
+
+```c++
+tbb::task_scheduler_init init(ThreadNum);  // 设置线程数
+
+// 第二个参数：(unsigned long long)0  表示每个块的累加起始值，注意数据类型，在累加数据类型很大的情况下要设置可容纳的数据类型，否则会累加越界
+unsigned long long finalAns = parallel_reduce(blocked_range<size_t>(0, minMatchID_PMR_num), (unsigned long long)0, [&](blocked_range<size_t> r, unsigned long long ans)
+                                        {        
+                                            for(int i=r.begin();i!=r.end();++i){
+                                                // unsigned long long count = ;
+                                                // cout<<"count: "<<count<<endl;
+                                                // if(count > 0){
+                                                //   cout<<"before: "<<ans<<endl;
+                                                  ans+=Multithreaded_search(i);
+                                                //   cout<<"count: "<<count<<endl;
+                                                //   cout<<"after: "<<ans<<endl;
+                                                // }
+                                            }
+                                            // cout<<"sum: "<<ans<<endl;
+                                            return ans;  // 这里计算的是块的累加结果，每个块从0开始累加
+                                        },
+                                        // plus<long long>()
+
+                                          [](unsigned long long x, unsigned long long y)->unsigned long long{
+                                            return x+y;  
+                                          } // 这里是对每个块的结果进行求和，这里是串行执行
+                                        );
+```
+
+####  计算结果压入vector
+
+```c++
+#include <iostream>
+#include <vector>
+#include <tbb/tbb.h>
+#include <tbb/blocked_range.h>
+#include <tbb/parallel_reduce.h>
+
+using namespace std;
+using namespace tbb;
+
+// g++ tbb.cpp -ltbb -o tbbb
+int main()
+{
+    vector<int> vec;
+    for(int i=0; i<10000; i++)
+        vec.push_back(i);
+    int ThreadNum = 56;
+    tbb::task_scheduler_init init(ThreadNum);
+
+    vector<int> result = parallel_reduce(blocked_range<vector<int>::iterator>(vec.begin(), vec.end()),
+      // 下面每个块是并行的  
+      // vector<int>() 是块的起始值 设置为空vector
+      vector<int>(),[](const blocked_range<vector<int>::iterator>& r, vector<int> init)->vector<int>{
+		// init是每个块的存储位置，计算的结果都压入init  块执行完成后返回
+        for(auto a = r.begin(); a!=r.end(); a++){
+          // cout<<*a<<endl;
+          // 方式1
+          // init.push_back(*a);
+          // 方式2
+          // for(int i = 0; i < 10; ++i){
+          //  init.push_back(*a * i);
+          //}
+          // 方式3
+          vector<int> temp;
+          for(int i = 0; i < 10; ++i){
+            temp.push_back(*a * i);
+          }
+          init.insert(init.end(), temp.begin(), temp.end());
+        }
+        // cout<<"block: "<<init<<endl;
+        return init;
+      },
+      // plus<long long>()
+                                         
+      // 下面是串行的 合并每个块的结果                   
+      [](vector<int> x, vector<int> y)->vector<int>{ // 这里的x,y就是每个块返回的结果，在这里将这些块的数组合并就是最终的结果
+        x.insert(x.end(), y.begin(), y.end());
+        return x;
+      }
+      // ,
+      // simple_partitioner{}  // 使得每个块都只分配一个任务
+
+      );
+      // cout<<"result:"<<result<<endl;
+      for(auto& a: result){
+        cout<<a<<endl;
+      }
+    return 0;
+}
+```
+
+
+
+
+
+
+
+#  Linux
+
+##  安装g++
+
+> [Ubuntu18.04中安装gcc、g++编译器 /运行c文件、c++文件【超详细图文教程】] : https://blog.csdn.net/weixin_43290551/article/details/125970965
+>
+> [快速升级到g++11和gcc11] : https://blog.csdn.net/weixin_37726222/article/details/124002454
+
+#  常用
+
+##  常用函数
+
+* reverse  
+* 复杂度:恰好交换 `(last - first)/2` 次
+
+```c++
+int a[] = {4, 5, 6, 7};
+std::reverse(std::begin(a), std::end(a));
+```
+
+* find
+
+```c++
+    std::vector<int> v{0, 1, 2, 3, 4};
+ 
+    auto result1 = std::find(std::begin(v), std::end(v), n1);
+```
+
+* sort
+
+```c++
+#include <algorithm>
+std::sort(s.begin(), s.end(), std::greater<int>());
+```
+
+* C++中的__builtin_popcount()
+
+> https://blog.csdn.net/weixin_44915226/article/details/105367005
+
+```c++
+该函数是C++自带的库函数，内部实现是用查表实现的。
+作用：统计数字在二进制下“1”的个数。
+int a = 2   
+int num = __builtin_popcount(a)  // num = 1   2的二进制是10
+```
+
+* tie()
+  * 解包，类似js中的解构
+
+> https://blog.csdn.net/lllzzzhhh2589/article/details/121584299
+
+```c++
+struct S {
+    int n;
+    std::string s;
+    float d;
+    bool operator<(const S& rhs) const {
+        // 比较 n 与 rhs.n,
+        // 而后为 s 与 rhs.s,
+        // 而后为 d 与 rhs.d
+        return std::tie(n, s, d) < std::tie(rhs.n, rhs.s, rhs.d);
+    }
+};
+
+S value{42, "Test", 3.14};
+
+int i;
+double d;
+string s;
+
+tie(i, d, s) = t3;
+
+cout << i << " " << d << " " << s << endl;
+//打印： 42 3.14 Test
+```
+
+
+
+##  位运算
+
+> https://blog.csdn.net/m0_64183293/article/details/122519405
+>
+> GCC自带的一些builtin内建函数 ：https://blog.csdn.net/tjcwt2011/article/details/118154919
+
+* C++中的__builtin_popcount()
+
+> https://blog.csdn.net/weixin_44915226/article/details/105367005
+
+```c++
+该函数是C++自带的库函数，内部实现是用查表实现的。
+作用：统计数字在二进制下“1”的个数。
+```
+
+* __builtin_ctz
+  * 这个函数作用是返回输入数二进制表示从最低位开始(右起)的连续的0的个数；如果传入0则行为未定义
+
+##  查看Linux内存消耗
+
+```
+sudo du -sh /home/wangyj
+du -sh /home/wangyj
+```
+
+
+
+#  算法
+
+> 最大公因数：辗转相除法：https://blog.csdn.net/qq_36834256/article/details/79381912
+
+* 686 
+  * 哈希解法待学习
+* 17 
+  * 回溯法解题待学习（官方）
+  * 进位表法
+  * 队列法（阿秀）
+
+**哈希表**
+
+* 204 计算质数
+  * 埃氏筛
+  * 线性筛：目标是用每一个合数的最小质因数来删除这个合数
+    * [线性筛生成质数的超详细理解](https://blog.csdn.net/fly_view/article/details/123806701)
+
+```c++
+int countPrimes(int n) {
+    vector<int> primes;
+    vector<int> isPrime(n, 1);
+    for (int i = 2; i < n; ++i) {
+        if (isPrime[i]) {
+            primes.push_back(i);
+        }
+        for (int j = 0; j < primes.size() && i * primes[j] < n; ++j) {
+            isPrime[i * primes[j]] = 0;
+            if (i % primes[j] == 0) {  // 确保是最小质因数来删除这个合数
+                break;
+            }
+        }
+    }
+    return primes.size();
+}
+```
+
+
+
+* #### [205. 同构字符串](https://leetcode.cn/problems/isomorphic-strings/)
+
+  * 记录映射关系
+  * 比较第一次出现的位置
+
+* 645
+
+  * 数学方法求解
+    * sum(nums) - sum(set(nums)) = 重复的数字    set表示去重
+    * (1 + len(nums)) * len(nums) /2 - sum(set(nums)) = 丢失的数字        (1 + len(nums)) * len(nums) / 2表示等差数列求和
+
+* 720 
+  * 字典树解法(待学习)
+
+##  字符串
+
+> [ASCII码一览表](http://c.biancheng.net/c/ascii/)
+
+```c++
+INT_MAX = 2^31-1;
+INT_MIN = -2^31
+```
+
+**字符串转int**
+
+atoi()和stoi()
+
+>[atoi()和stoi()的区别](https://www.jianshu.com/p/e700ac920249)
+
+* atoi()和stoi()函数都是只转换字符串的数字部分，如果遇到其它字符的话则停止转换
+
+```c++
+#include <cstdio>
+#include <iostream>
+#include <string>
+using namespace std;
+int main(){
+    char str[] = {'1','2','a','3'};
+    string str1 = "12aa3";
+    //遇到了'a'字符，停止数字转换
+    cout << atoi(str) << endl;   // 打印 12
+    //遇到了'a'字符，停止数字转换
+    cout << stoi(str1) << endl;  // 打印 12
+}
+
+
+```
+
+**string转char**
+
+c_str()
+
+>[C++中的 c_str() 函数](https://blog.csdn.net/YXXXYX/article/details/119957061)
+
+```c++
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int main() {
+	const char *ptr;
+	string s = "12345";
+    ptr = s.c_str();
+    cout << "s改变前ptr为：" << ptr << endl;
+    s = "66666";
+    cout << "s改变后ptr为：" << ptr << endl;
+    return 0;
+}
+```
+
+**int转string**
+
+to_string()
+
+**大小写字符转换**
+
+[tolower/toupper](https://blog.csdn.net/laozhuxinlu/article/details/51539737?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-51539737-blog-105710187.pc_relevant_3mothn_strategy_recovery&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-51539737-blog-105710187.pc_relevant_3mothn_strategy_recovery&utm_relevant_index=1) 
+
+```c++
+#include<ctype.h>   // c++中使用不用引入头文件
+```
+
+**判断字符数字**
+
+* isalnum函数用于判断字符是否为字母（a-z和A-Z）或数字（0-9）
+
+isalnum
+
+```c++
+#include<ctype.h> // c++中使用不用引入头文件
+```
+
+
+
+##  数值
+
+```c++
+1e9+7 // 10^9+7  一个比较大的质数
+```
+
+**取绝对值**
+
+abs()
+
+**使用最大最小值**
+
+```c++
+<limits.h>
+LONG_MIN
+L
+```
+
+
+
+#  待
+
+* 构造参数列表
+* 红黑树
+* 哈希表
+* 计算，数字类型的默认转换
+
+#  Q&A
+
+###  对象开辟堆区注意事项
+
+> 对象内使用需要开辟堆区空间的对象时最好的解决方案是不要调用默认构造函数，**直接用初始化列表初始化**，不要在构造函数中初始化
+
+**构造函数和析构函数注意事项**
+
+* 由于对象需要开辟堆区，在析构时需要释放堆区，但是如果是通过默认构造函数初始化对象，就没有开辟堆区，所以在析构时就会对没有开辟空间的地址执行释放空间的操作，这就会导致程序奔溃
+* 解决方案是在析构时判断是否开辟过堆区空间，若没有开辟过堆区空间(默认构造)则不执行释放堆区空间的操作
+  * 需要在默认构造函数中设置堆区指针为NULL，便于析构时判断是否开辟过堆区空间，默认情况下指针并不是NULL
+
+**拷贝构造函数注意事项**
+
+* 对于堆指针的初始化一定要谨慎，要判断原对象是否开辟过堆空间，若开辟过才进行深拷贝，否则也要将指针初始化为NULL
+
+**对象开辟堆区的情况，最好重载运算符，避免浅拷贝导致的内存访问出错**
+
+* 默认构造一个对象，将有参构造的一个临时对象通过等号运算符赋值给默认构造的对象时，由于是浅拷贝，就会导致默认构造函数在析构时析构的时临时对象的堆地址，但临时对象已经释放过堆区了，这就会导致堆区的多次释放，产生错误
+
+**待解决问题：”=“号运算符重载后不适用于临时对象的赋值**
+
+```c++
+template<typename item>
+class MinHeap
+{
+private:
+  item* id;
+  int size;
+public:
+  MinHeap(int n){
+    cout<<"MinHeap: 有参构造函数..."<<endl;
+    this->size = n;
+    id = new item[n];
+  }
+    
+  MinHeap(){
+    cout<<"MinHeap: 默认构造函数..."<<endl;
+  }
+    
+  MinHeap(const MinHeap& mp){
+    cout<<"MinHeap: 拷贝构造函数..."<<endl;
+
+    size = mp.size;
+    count = mp.count;
+    if(mp.id != NULL){ // mp的id有开辟堆空间才需要执行下面操作，否则直接执行下面操作会报错，因为取地址时会报错
+      id = new item[mp.size];
+      for(int i = 0; i< mp.size; ++i){
+        id[i] = mp.id[i];
+      }
+    }else{
+      id = NULL;  // 若mp的id为NULL,则也要初始化为NULL
+    }
+  }
+  MinHeap& operator=(MinHeap& mp){
+    cout<<"MinHeap: = 运算符重载..."<<endl;
+    size = mp.size;
+    count = mp.count;
+    if(id != NULL){ // 本对象已经开辟过堆区
+      delete[] id;  // 先释放本对象开辟的堆区
+      if(mp.id != NULL){ // mp的id有开辟堆空间才需要执行下面操作，否则直接执行下面操作会报错，因为取地址时会报错
+        id = new item[mp.size];
+        for(int i = 0; i< mp.size; ++i){
+          id[i] = mp.id[i];
+        }
+      }else{
+        id = NULL;  // 若mp的id为NULL,则也要初始化为NULL
+      }
+    }else{
+      if(mp.id != NULL){ // mp的id有开辟堆空间才需要执行下面操作，否则直接执行下面操作会报错，因为取地址时会报错
+        id = new item[mp.size];
+        for(int i = 0; i< mp.size; ++i){
+          id[i] = mp.id[i];
+        }
+      }
+    }
+    
+    return *this;
+  }
+  ~MinHeap(){
+    cout<<"~MinHeap: 析构函数..."<<endl;
+
+    delete[] id;
+  }
+};
+
+// 直接赋值初始化对象
+class Test1
+{
+private:
+  MinHeap<int> mp;
+  int size;
+
+public:
+  Test1(int n){
+    size = n;
+    // mp(MinHeap<int>(n)
+    mp = MinHeap<int>(n); // 有参构造并赋值给mp,然后就地销毁     MinHeap<int>(n)匿名对象
+    
+  }
+};
+
+// 初始化列表初始化对象
+class Test2
+{
+private:
+  MinHeap<int> mp;
+  int size;
+
+public:
+  Test2(int n): mp(MinHeap<int>(n){
+    size = n;
+    // mp = MinHeap<int>(n);
+    
+  }
+};
+
+int main(){
+  // 注意事项1： 构造和析构注意事项，结合初始化列表和赋值初始化对比理解
+  int n = 10
+  Test1 t1(n);
+  // 打印结果
+    // MinHeap: 默认构造函数...
+    // MinHeap: 有参构造函数...
+    // ~MinHeap: 析构函数...
+    // ~MinHeap: 析构函数...
+
+  Test2 t2(n);
+  // 打印结果
+    // MinHeap: 有参构造函数...
+    // ~MinHeap: 析构函数...
+  
+  // 注意事项2： 拷贝构造函数注意事项
+  MinHeap<int> mp(n);
+  MinHeap<int> mp1(mp);  // 调用拷贝构造函数初始化
+  MinHeap<int> mp2 = mp; // 调用拷贝构造函数初始化
+  // 打印结果
+  // MinHeap: 有参构造函数...
+  // MinHeap: 拷贝构造函数...
+  // MinHeap: 拷贝构造函数...
+  // ~MinHeap: 析构函数...
+  // ~MinHeap: 析构函数...
+  // ~MinHeap: 析构函数...
+
+  // 注意事项3： 操作符的重载，下面的情况是操作符没重载的情况
+  MinHeap<int> m3;  // 默认构造
+  mp3 = MinHeap<int>(n);  // 不会调用拷贝构成初始化，而是”=“的赋值操作， 区别于上面的等号拷贝构造的初始化
+  // 打印结果
+    // MinHeap: 默认构造函数...
+    // MinHeap: 有参构造函数...
+    // ~MinHeap: 析构函数...
+    // ~MinHeap: 析构函数...id开辟了空间
+    // ~MinHeap: 析构函数...
+    // ~MinHeap: 析构函数...id开辟了空间
+    // free(): double free detected in tcache 2
+    // Aborted (core dumped)
+    
+    
+  // 注意事项4：运算符重载
+  MinHeap<int> mp4;
+  // MinHeap<int> mp5(n);  
+
+  mp4 = MinHeap<int>(n); // 编译报错
+  // mp4 = mp5;  // 编译成功，调用的自己重载的=
+}
+```
+
+
+
+
+
+###  返回值const引用  待解决
+
+```c++
+  class NestedInteger {
+    public:
+      // Return true if this NestedInteger holds a single integer, rather than a nested list.
+      bool isInteger() const;
+ 
+      // Return the single integer that this NestedInteger holds, if it holds a single integer
+      // The result is undefined if this NestedInteger holds a nested list
+      int getInteger() const;
+ 
+      // Return the nested list that this NestedInteger holds, if it holds a nested list
+      // The result is undefined if this NestedInteger holds a single integer
+      const vector<NestedInteger> &getList() const;
+  };
+
+
+// 栈
+class NestedIterator {
+private:
+  stack<pair<vector<NestedInteger>::iterator, vector<NestedInteger>::iterator>> st; 
+public:
+    NestedIterator(vector<NestedInteger> &nestedList) {
+      // st.push({nestedList.begin(), nestedList.end()});
+        st.emplace(nestedList.begin(), nestedList.end());
+    }
+    
+    int next() {
+        return st.top().first++->getInteger();
+    }
+    
+    bool hasNext() {
+      while (!st.empty())
+      {
+        auto& p = st.top();
+        if(p.first == p.second){
+          st.pop();
+          continue;
+        }
+        if(p.first->isInteger()){
+          return true;
+        }
+        auto& ft = p.first++->getList();
+        // st.push({ft.begin(), ft.end()});  返回的vector引用是const   // 不可行--------------------------
+        st.emplace(ft.begin(), ft.end());    //  可行
+      }
+      return false;
+    }
+};
+```
+
+
+
+#  八股文
+
+说说内联函数和宏函数的区别
+
+简述C+＋从代码到可执行二进制文件的过程
+
+简述一下atomic (原子操作)内存顺序
+
+> https://blog.csdn.net/WilliamCode/article/details/126139289
+
+内存对齐
+
+> 案例1：https://blog.csdn.net/weixin_40775703/article/details/104941508
+>
+> 案例2：https://blog.csdn.net/qq_39397165/article/details/119745975
+
+* 编译器默认对齐数
+  * 64位  对齐数：8
+  * 32位  对齐数：4
+* 内存对齐规则
+  * 结构体成员对齐规则，对齐数= min(编译器默认对齐数，结构体当前成员变量大小)
+  * 结构体本身对齐规则，对齐数= min(编译器默认对齐数,   结构体成员中最长类型变量大小)的整数倍
+  * 嵌套结构体对齐规则，把嵌套结构体视为成员变量即可，大小即为结构体大小
+
+说说C 如何 实现C+ 语言中的重载
+
+ 简述下向上转 和向下转型 对象
+
+移动构造函数
+
+> https://blog.csdn.net/weixin_44788542/article/details/126284429

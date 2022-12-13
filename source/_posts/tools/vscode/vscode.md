@@ -41,6 +41,7 @@ categories:
   * 在文件中查找
 * 查看函数： ctrl + 点击要查看的函数
 * 查看完函数后返回原来的位置： alt + -
+* html直接在浏览器打开：alt + b 
 
 
 
@@ -161,8 +162,10 @@ open in browser
 ###  2.4 设置vue模板快捷生成
 
 > 教程：https://blog.csdn.net/weixin_44157964/article/details/105602639
+>
+> 教程(vue3等)：https://blog.csdn.net/m0_51431448/article/details/122989261
 
-* 首选项-----用户片段-----vue
+* 文件---首选项-----用户片段-----vue
 
 ![image-20211111095757475](vscode/image-20211111095757475.png)
 
@@ -215,7 +218,92 @@ open in browser
 }
 ```
 
+```js
+{
+  "Print to v2": {
+    "prefix": "vue2",
+    "body": [
+      "<template>",
+      "  <div>\n",
+      "  </div>",
+      "</template>",
+      "<script>",
+      "export default {",
+      "  data() {",
+      "    return {\n",
+      "    }",
+      "  },",
+      "  mounted(){\n",
+      "  },",
+      "  computed:{\n",
+      "  },",
+      "  methods:{\n",
+      "  },",
+      "}",
+      "</script>",
+      "<style scoped>\n",
+      "</style>",
+      "$2"
+    ],
+    "description": "Log output to console"
+  },
+  "Print to v3": {
+      "prefix": "vue3",
+      "body": [
+        "<template>",
+        "  <div></div>",
+        "</template>",
+        "<script lang=\"ts\">",
+        "import { defineComponent } from 'vue'",
+        "export default defineComponent({",
+        "  components: {\n",
+        "  },",
+        "  props: {\n",
+        "  },",
+        "  setup (props, context) {\n",
+        "  }",
+        "})",
+        "</script>",
+        "<style scoped>\n",
+        "</style>",
+      ],
+      "description": "Log output to console"
+    },
+    "Print to setup": {
+      "prefix": "setup",
+      "body": [
+        "<template>",
+        "  <div></div>",
+        "</template>",
+        "<script setup>\n",
+        "</script>",
+        "<style scoped>\n",
+        "</style>",
+      ],
+      "description": "Log output to console"
+    }
+}
+```
+
+
+
 使用：`输入vue+tab键`即可自动补全
+
+###  2.5 设置vue模板对ts自动补全支持
+
+```js
+"vetur.experimental.templateInterpolationService": true
+```
+
+
+
+![image-20220524212212158](vscode/image-20220524212212158.png)
+
+![image-20220524212249784](vscode/image-20220524212249784.png)
+
+![image-20220524212309871](vscode/image-20220524212309871.png)
+
+
 
 ## 3 配置
 

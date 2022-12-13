@@ -94,6 +94,73 @@ export default {
 </script>
 ```
 
+###  3.2 配置默认值
+
+> [配置默认值官网文档](http://www.axios-js.com/zh-cn/docs/#%E9%85%8D%E7%BD%AE%E9%BB%98%E8%AE%A4%E5%80%BC)
+
+* 全局默认配置
+
+```js
+axios.defaults.baseURL = 'https://api.example.com';
+axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+// 若要访问: https://api.example.com/colums  因为已经设置的了默认baseURL，所以访问时只url只用传入path
+axios.get('/colums').then((res) => {....})
+```
+
+* 实例化自定义配置
+
+```js
+// Set config defaults when creating the instance
+const instance = axios.create({
+  baseURL: 'https://api.example.com'
+});
+
+// Alter defaults after instance has been created
+instance.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+
+```
+
+
+
+###  3.3 拦截器
+
+> [拦截器官网](http://www.axios-js.com/zh-cn/docs/#%E6%8B%A6%E6%88%AA%E5%99%A8)
+
+* 分为请求拦截器和相应拦截器
+
+```js
+// 使用场景案例1
+// 访问地址：http://apis.imooc.com/api/columns?icode=C6A6C4086133360B
+// 每个url访问都要加上icode的身份码，很麻烦， 则可以利用请求拦截器，将请求的url添加上icode
+
+axios.defaults.baseURL = 'http://apis.imooc.com/api/'
+axios.interceptors.request.use( config =>{    // 请求拦截器
+    // 将icode添加到get请求的参数中
+	config.params = { ... config.params, icode: 'C6A6C4086133360B'}  //... config.params是保留原本的get请求参数
+    return config
+})
+axios.get( '/columns' ).then( resp => {
+    console.log(resp.data)
+})
+
+// 使用场景案例2
+// 所有网络请求时都需要添加加载的提示，则在vuex中定义全局变量，有请求时为true,请求结束后为false
+
+axios.interceptors.request.use(config => {
+  store.commit('setLogin', true)  // 发送请求时，设置为true ， 页面则相应的显示加载提示
+  return config
+})
+axios.interceptors.response.use(config => {
+  store.commit('setLogin', false) // 请求响应时，设置为false， 页面则相应的b显示加载提示
+  return config
+})
+
+```
+
+
+
 ###  3.2 实例化axios
 
 > [创建实例官网文档](http://www.axios-js.com/zh-cn/docs/#%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B)
@@ -167,50 +234,10 @@ const res = await get(`/api/shop/${shopId}/products`, {
     })
 ```
 
+#  二、fetch
 
-
-
-
-1. get方法--------传递数据用params
-
-```
-import request from '@/utils/request'
-//请求后端的基础地址
-const baseURL = 'http://localhost:3000'
-
-export function fetchList (params){
-    return request({
-        params, //页面调用时传入的参数  在此处再传给后端
-        url:`${baseURL}/playlist/list`,//后端的`${域名}/路由/方法`
-        method: 'get' //此处的请求方式get"or'post'根据后端controller下方法路由设置而定    
-                      router.get<====>'get'  router.post<====>'post'
-    })
-}
-
-
-
-//再在页面中调用  fetchList方法  需要传入参数----在params中
-fetchList({
-                skip:this.playlist.length,  //params中的参数
-                limit: this.count           //params中的参数
-            }).then((res) => {
-                console.log(res)
-            })
-```
-
-2. post方法-----------传递数据用data
-
-```
-//向数据库更新歌单列表某个歌单的信息
-export function update (params){
-    return request({
-        data:{
-            ...params
-        }, //页面调用时传入的参数  在此处再传给后端
-        url:`${baseURL}/playlist/updatePlaylist`,//后端的`${域名}/路由/方法`
-        method: 'post' //此处的请求方式get"or'post'根据后端controller下方法路由设置而定  
-                       router.get<====>'get'  router.post<====>'post'
-    })
-}
-```
-
+> https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch
+>
+> https://www.ruanyifeng.com/blog/2020/12/fetch-tutorial.html
+>
+> https://blog.csdn.net/qq_53225741/article/details/125239106

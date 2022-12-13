@@ -1243,6 +1243,8 @@ module.exports = router
 
 ###  6.4 token校验
 
+> [jsonwebtoken官网](https://jwt.io/)
+
 **校验流程：**
 
 1. 参数校验 （校验器源码：app/validators/validator.js -NotEmptyValidator）

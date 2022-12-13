@@ -99,7 +99,7 @@ categories:
    * 在需要使用的位置使用一下语法使用
    * icon标识: 在iconfont官网-我的项目-图标下方可以看到  
 
-   ```js
+   ```html
    <i calssName="iconfont">icon标识;</i>
    ```
 

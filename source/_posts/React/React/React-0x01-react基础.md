@@ -165,7 +165,7 @@ constructor(props) {
 
 * 子组件使用父组件传入的数据 ---  解构后使用
 
-  ```js
+  ```jsx
    //原始写法
    this.props.itemDel(this.props.index)
    
@@ -190,7 +190,7 @@ constructor(props) {
 
 * `setState()`传入函数不再是传入对象
 
-  ```js
+  ```jsx
   //传入对象形式
   this.setState({
       属性： 值
@@ -211,7 +211,7 @@ constructor(props) {
 
   * 案例1
 
-    ```js
+    ```jsx
     const value = e.target.value   // 注意现在外面定义 再用 不要直接在setState中用
     this.setState(() => {
       return {
@@ -228,7 +228,7 @@ constructor(props) {
 
   * 案例2 
 
-    ```js
+    ```jsx
     //传入对象写法
     this.setState({
       list: [...this.state.list, this.state.inputValue],
@@ -244,7 +244,7 @@ constructor(props) {
 
   * 案例3
 
-    ```js
+    ```jsx
     //传入对象写法
     const list = [...this.state.list]
     list.splice(index, 1)
@@ -275,7 +275,7 @@ constructor(props) {
 *  --9--: 循环数组 注意绑定`key`值
 *  --10--: 修改Reat组件中的数据 需要通过this.setState({})函数来修改
 
-```js
+```jsx
 import React, {Component, Fragment} from 'react'
 
 class TodoList extends Component {
@@ -599,7 +599,7 @@ this.setState(() => {
 
   * 通信方式和普通的组件之间通信一样
 
-  ```js
+  ```jsx
   //容器组件 
   import React, {Component} from 'react'
   import TodoListUI from './TodoListUI'
@@ -655,7 +655,7 @@ this.setState(() => {
 
 * UI组件改为无状态组件的前后对比
 
-  ```js
+  ```jsx
   //UI 组件
   import React, {Component, Fragment} from 'react'
   
@@ -749,7 +749,7 @@ this.setState(() => {
 * 解决方案：
 
   * 在子组件`shouldComponentUpdate()`函数中判断数据A是否变化，若没有变化则返回false，后续刷新就不会再执行了。
-  * 当当父组件数据B变化时，子组件判断数据A没有变化，则不会执行后续刷新，从而避免了性能损耗。
+  * 当父组件数据B变化时，子组件判断数据A没有变化，则不会执行后续刷新，从而避免了性能损耗。
 
   ```js
   //nextProps,nextState 可以拿到修改后的数据

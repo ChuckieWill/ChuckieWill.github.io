@@ -30,7 +30,7 @@ npm install react-router-dom --save
   * `exact`： 只有路径完全匹配时才会显示
   * `component`： 配置路由对应的组件
 
-```js
+```jsx
 import React, { Component } from 'react';
 import Header from './common/header';
 import Home from './pages/home';
@@ -75,13 +75,13 @@ export default App;
 * 路由路径的定义：
   * `path`: '路由路径'
 
-```js
+```jsx
 <Route path='/detail' exact component={Detail}></Route>
 ```
 
 * 使用`Link`标签的组件必须被`<BrowserRouter>`包裹
 
-```js
+```jsx
 //导入
 import { Link } from 'react-router-dom';
 
@@ -118,7 +118,7 @@ this.props.history.push('/admin/' + params)    //params:参数内容
 
 * 定义路由既传参名称
 
-  ```js
+  ```jsx
   <Route path='/路径/:参数名' exact component={组件名}></Route>
    
   //案例
@@ -127,7 +127,7 @@ this.props.history.push('/admin/' + params)    //params:参数内容
 
 * 传递参数
 
-  ```js
+  ```jsx
   <Link to={'/路径/' + 参数值}>
       
   //案列
@@ -152,7 +152,7 @@ this.props.history.push('/admin/' + params)    //params:参数内容
 
 * 定义路由既传参名称
 
-  ```js
+  ```jsx
   <Route path='/路径' exact component={组件名}></Route>
    
   //案例
@@ -161,7 +161,7 @@ this.props.history.push('/admin/' + params)    //params:参数内容
 
 * 传递参数
 
-  ```js
+  ```jsx
   <Link to={'/路径?id=' + 参数值}>
       
   //案列

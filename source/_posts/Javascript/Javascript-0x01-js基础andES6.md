@@ -430,6 +430,83 @@ People.sayHi()//报错，因为没有实例化
 
 > [result?.data?. errno === 0 前端语法“?“的含义](https://blog.csdn.net/myt2000/article/details/121919820)
 
+####  3.15 var let const
+
+* var和let const 的区别
+
+  * var 和let是变量，可修改;const是常量，不可修改;
+
+
+  * let const 有块级作用域，var没有
+
+  * var是 ES5语法，let const是ES6语法;var有变量提升
+
+```js
+// 变量提升 ES5
+console.log(a) // undefined
+var a = 200
+
+var a
+console.log(a) // undefined
+a = 200
+
+//上面两种写法一样，类似函数声明
+
+console.log(b)//报错，b没有声明，因为let没有变量提升
+let b = 100
+```
+
+* var 和 let 在闭包中的不同
+  * var是函数作用域，var定义的变量在for的块之外，所以不能形成闭包
+  * let 是块级作用域， 在一个for的块中就会形成闭包
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div>0</div>
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+  <div>4</div>
+  <script>
+    var nodes = document.getElementsByTagName('div');
+    var length = nodes.length;
+    for (let i = 0; i < length; i++) {
+      nodes[i].onclick = function () {
+        alert(i);
+      };
+    }
+    
+    // 该方式不能实现点击几就弹出数字几
+    // for (var i = 0; i < length; i++) {
+    //   nodes[i].onclick = function () {
+    //     alert(i);
+    //   };
+    // }
+
+    // 以上方式就相当于
+    // let a 
+    // for ( i = 0; i < length; i++) {
+    //   nodes[i].onclick = function () {
+    //     alert(i);
+    //   };
+    // }
+
+  </script>
+</body>
+
+</html>
+```
+
 
 
 
@@ -477,10 +554,10 @@ People.sayHi()//报错，因为没有实例化
 * ES5之前没有块级作用域的概念（if  for都没有块级作用域   但是function有块级作用域），所以很多时候必须借助function作用域解决引用块级外变量的问题
 * ES6加入了let和const 都有了块级作用域  
 
-```
+```js
 //ES5
 var btns = document.getElementsByTagName('button')
-//for没有块级作用域  会报错
+//for没有块级作用域  不能实现点击几就弹出几，最后弹出
 for(var i= 0;i<btns.length;i++){
     btns[i].addEventListener('click',function(){
         console.log('第'+i+'个按钮被点击')
@@ -512,7 +589,7 @@ for(let i =0;i<btns.length;i++){
 
   * 定义的对象不能修改  但是对象内的属性可以修改
 
-    ```
+    ```js
     //修改const 对象中的属性不报错
     
     const config = {
@@ -829,3 +906,12 @@ name1='why', name2='code',  name3='maxthon'
 ##  8 类 class
 
 > [js类中实例方法、静态方法、原型方法的区别](https://blog.csdn.net/qiuqiula_/article/details/100138750?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param)
+
+##  9 Object.keys, for in, Object.getOwnPropertyNames, Reflect.ownKeys 区别
+
+* for in，遍历全部可枚举属性，原型属性。不包括不可枚举属性，Symbol
+* Object.keys()，获取自身可枚举属性。不包括不可枚举属性，原型属性，Symbol
+* Object.getOwnPropertyNames，获取自身全部属性名称，包括不可枚举属性。不包括Symbol，不包括原型
+* Reflect.ownKeys，获取自身全部属性名称，包括不可枚举属性，Symbol。不包括原型（其实就是Object.getOwnPropertyNames与Object.getOwnPropertySymbols之和）
+
+![image-20220817155344566](Javascript-0x01-js基础andES6/image-20220817155344566.png)
