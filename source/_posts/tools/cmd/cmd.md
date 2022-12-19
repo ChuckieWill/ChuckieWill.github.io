@@ -51,3 +51,7 @@ categories:
 ###  5 查看windows可激活次数
 
 ![image-20200803143405809](cmd/image-20200803143405809.png)
+
+###  6 生成密钥链接服务器
+
+> https://blog.csdn.net/BGD2020/article/details/122294088

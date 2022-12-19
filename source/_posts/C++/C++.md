@@ -3549,3 +3549,26 @@ public:
 移动构造函数
 
 > https://blog.csdn.net/weixin_44788542/article/details/126284429
+
+虚析构函数
+
+> https://blog.csdn.net/qq_15821883/article/details/105540175
+
+* 使得基类指针可以调用派生类的析构函数
+* 如果基类析构函数不是虚析构函数，在基类指针delete的时候只会调用基类的析构函数，不会调用派生类的析构函数，就会导致派生类的内存泄露
+
+1.3.33仿函数
+
+> C++ 仿函数为何而生:https://zhuanlan.zhihu.com/p/362323211 
+
+> C++中的explicit详解: https://blog.csdn.net/k6604125/article/details/126524992
+
+友元函数
+
+>  C++友元函数: https://blog.csdn.net/weixin_59179454/article/details/127574320
+
+1.3.36 虚函数表里存放的内容是什么时候写进去的？
+
+> https://www.bilibili.com/read/cv12864050/
+
+1.4.10 STL 容器动态链接可能产生的问题
