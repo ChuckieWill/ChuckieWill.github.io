@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/09/02/HTTP/HTTP(0x02)-TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/20190626224448626.png">
 <meta property="og:image" content="http://yoursite.com/2020/09/02/HTTP/HTTP(0x02)-TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/20190626224528388.png">
 <meta property="article:published_time" content="2020-09-02T02:43:17.000Z">
-<meta property="article:modified_time" content="2021-07-13T10:34:33.644Z">
+<meta property="article:modified_time" content="2022-12-19T05:24:57.078Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="HTTP">
 <meta property="article:tag" content="TCP">
@@ -228,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-13 18:34:33" itemprop="dateModified" datetime="2021-07-13T18:34:33+08:00">2021-07-13</time>
+                <time title="修改时间：2022-12-19 13:24:57" itemprop="dateModified" datetime="2022-12-19T13:24:57+08:00">2022-12-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -422,7 +422,7 @@
 <li>断开连接也需要客户端和服务端都发送断开连接请求(FIN)和确认收到断开连接请求(ACK)，这就需要4次报文，而不同于建立连接（在第二次握手中可以同时发送ACK和SYN两个状态码），在断开连接过程中，服务端收到客户端断开连接请求后，只表明客户端再没有数据发送给服务端了，但是服务端任然还有数据需要发送给客户端，所以服务端先给客户端发送一个确认ACK报文，继续向客户端发送数据，数据发送完后再发送断开连接的请求，所以，4次报文只能单独4次来发送，所以必须是4次挥手。</li>
 </ul>
 <h4 id="【问题5】-为什么不能一次握手建立连接？"><a href="#【问题5】-为什么不能一次握手建立连接？" class="headerlink" title="【问题5】 为什么不能一次握手建立连接？"></a>【问题5】 为什么不能一次握手建立连接？</h4><ul>
-<li>TCP是面向连接的，一定是确保双方可以收到消息，所以至少需要一问一答2次挥手。若只1次握手，客户端是无法知道客户端是否收到连接请求，也就无法建立稳定、可靠的连接。</li>
+<li>TCP是面向连接的，一定是确保双方可以收到消息，所以至少需要一问一答2次挥手。若只1次握手，客户端是无法知道服务端端是否收到连接请求，也就无法建立稳定、可靠的连接。</li>
 </ul>
 <h4 id="【问题6】-只2次握手会出现的问题？"><a href="#【问题6】-只2次握手会出现的问题？" class="headerlink" title="【问题6】 只2次握手会出现的问题？"></a>【问题6】 只2次握手会出现的问题？</h4><blockquote>
 <p>《计算机网络》中列举的例子:</p>
@@ -539,20 +539,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-count">84</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -601,7 +601,7 @@
 <div class="copyright">
   
   &copy; 2020 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="/images/me.png"></i>
   </span>
@@ -611,13 +611,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">627k</span>
+    <span title="站点总字数">864k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">9:30</span>
+    <span title="站点阅读时长">13:06</span>
 </div>
 
         
