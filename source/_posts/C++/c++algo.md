@@ -4609,13 +4609,159 @@ int minCost11(vector<vector<int>>& cost){
 
 * 392 · 打劫房屋
 
-**最长序列型动态规划**
-
-
-
-
+**最长序列型动态规**
 
 **划分型动态规划**
+
+* lint  513
+* **lint 108**
+  * 每次i, j 都固定后再对[j,i-1]判断回文则会导致时间复杂度为n^3
+  * 先记录s中的所有回文串，时间复杂度n*n
+    * 从中心点向两边扩展
+      * 奇数情况，n个点可以作为中心点
+      * 偶数情况，n-1个点可作为中心点
+
+```c++
+//优化前
+F[i] = min(F[j] + 1)  [j,i-1]是回文  0<=j<i
+F[0] = -1
+
+//优化后
+F[i] = min(F[j] + 1)  isPalin[j,i-1]==true  0<=j<i
+F[0] = -1 
+用isPalin记录是回文串的区间
+    
+bool isHui(string s){
+  int i = 0;
+  int j = s.length()-1;
+  while (i < j)
+  {
+    if(s[i] != s[j]) return false;
+    ++i;
+    --j;
+  }
+  return true;
+}
+
+void createPalin(string s, vector<vector<bool>>& isPalin){
+  int n = s.length();
+  // 奇数情况
+  for(int c = 0; c < n; ++c){
+    int i = c;
+    int j = c;
+    // 从中兴向两边扩展
+    while (i>=0 && j < n && s[i] == s[j])
+    {
+      isPalin[i][j] = true;
+      --i;
+      ++j;
+    }
+    
+  }
+  //偶数情况
+  for(int c = 0; c < n-1; ++c){
+    int i = c;
+    int j = c+1;
+    while (i >=0 && j < n && s[i] == s[j])
+    {
+      isPalin[i][j] = true;
+      --i;
+      ++j;
+    }
+    
+  }
+
+}
+
+int lint108(string s){
+  //1 提前不记录回文
+//   F[i] = min(F[j] + 1)  [j,i-1]是回文  0<=j<i
+//   F[0] = -1
+  int n = s.length();
+  vector<int> F(n+1);
+  F[0] = -1;
+  for(int i = 1; i <=n; ++i){
+    int res = INT32_MAX;
+    for(int j = 0; j < i; ++j){
+      if(isHui(s.substr(j, i-j)))
+        res = min(res, F[j] + 1);
+    }
+    F[i] = res;
+  }
+  return F[n];
+
+  // 2 提前记录回文
+  int n = s.length();
+  vector<vector<bool>> isPalin(n, vector<bool>(n, false));
+  createPalin(s, isPalin);
+  vector<int> F(n+1);
+  F[0] = -1;
+  for(int i = 1; i <=n; ++i){
+    int res = INT32_MAX;
+    for(int j = 0; j < i; ++j){
+      if(isPalin[j][i-j])
+        res = min(res, F[j] + 1);
+    }
+    F[i] = res;
+  }
+  return F[n];
+}
+```
+
+* lint 437
+  * k>= n时，直接返回数组最大值即可
+  * k < n时， 一个人至少处理一本书
+
+```c++
+// 考虑k，n关系
+k<n时
+F[k][i] = min(max(F[k-1][j], sum[j, i-1]))  k-1<j<i
+F[0][0] = 0
+F[0][1---n] = +无穷
+F[1---k][0] = 0 
+
+
+// 下面是不考虑k，n关系的处理
+F[k][i] = min(max(F[k-1][j], sum[j, i-1]))  0<=j<=i
+F[0][0] = 0
+F[0][1---n] = +无穷
+F[1---k][0] = 0 
+    
+int lint437(vector<int> A, int k){
+// F[k][i] = min(max(F[k-1][j], sum[j, i-1]))  0<=j<i
+// F[0][0] = 0
+// F[0][1---n] = +无穷
+// F[1---k][0] = 0  
+
+  int n = A.size();
+
+  // 人数大于书时，只需要n个人即可
+  if(k > n){
+    k = n;
+  }
+
+  vector<vector<int>> F(k+1, vector<int>(n+1));
+  F[0][0] = 0;
+  for(int i = 1; i <= n; ++i){
+    F[0][i] = INT32_MAX;
+  }
+  for(int c = 1; c <= k; ++c){
+    F[c][0] = 0;
+    int sum = 0;
+    for(int i = 1; i <= n; ++i){
+      F[k][i] = INT32_MAX;
+      for(int j = i; j > 0; --j){
+        F[k][i] = min(F[k][i], max(F[k-1][j], sum));
+        if(j > 0)
+          sum += A[j-1];
+      }
+    }
+  }
+  return F[k][n]; 
+}
+```
+
+**博弈型动态规划**
 
 
 
@@ -4684,7 +4830,7 @@ public:
   * 特别注意：调f[i-j]的时候是对i-j的继续拆分，不包括i-j本身  所以需要`max(j*f[i-j], j*(i-j)`
 * 279 [ 完全平方数](https://leetcode.cn/problems/perfect-squares/)
   * 上面学习过，查看以前的记录
-  * `f[j] = min(f[j=i*i] + 1)  1<=i*i<=j`
+  * `f[j] = min(f[j-i*i] + 1)  1<=i*i<=j`
   * f[0] = 0
 * 91 [ 解码方法](https://leetcode.cn/problems/decode-ways/)
   * 官答更简洁  学习

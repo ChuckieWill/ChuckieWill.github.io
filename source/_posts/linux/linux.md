@@ -46,5 +46,10 @@ sed '1i\hello' test.txt > tmp; mv -f tmp test.txt
  scp -i ~/.ssh/vikingship.pem -r *  root@121.199.70.72:/var/www/zhihu
 ```
 
+##### Xshell XFTP链接
 
+* 密钥密码是密钥生成的时候设置的，如果生成密钥是一路回车，那密钥密码就是空（不输入即可）
+* 本地密钥文件是不带后缀的id_rsa文件
+
+![image-20230112133716636](linux/image-20230112133716636.png)
 
