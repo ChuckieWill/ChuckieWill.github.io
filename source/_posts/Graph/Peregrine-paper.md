@@ -161,9 +161,9 @@ class Pattern{
 
 
 
-![image-20210926112806738](Peregrine/image-20210926112806738.png)
+![image-20210926112806738](Peregrine-paper/image-20210926112806738.png)
 
-![image-20210926114153271](Peregrine/image-20210926114153271.png)
+![image-20210926114153271](Peregrine-paper/image-20210926114153271.png)
 
 ####  3.1.1 反边
 
@@ -179,18 +179,18 @@ m是真实图中与模式图中某个顶点匹配的所有点集
 
 
 
-![image-20210926114204843](Peregrine/image-20210926114204843.png)
+![image-20210926114204843](Peregrine-paper/image-20210926114204843.png)
 
 ####  3.1.2 反顶点
 
 * 在一个社交网络图中提取只有一个共同朋友的朋友对(u1，u3)
 * 反顶点用于模型中顶点共享邻域之间的约束。
 
-![image-20211018113524358](Peregrine/image-20211018113524358.png)
+![image-20211018113524358](Peregrine-paper/image-20211018113524358.png)
 
 * 有反顶点的模式图  在匹配的时候反顶点不参与匹配
 
-![image-20210926114215492](Peregrine/image-20210926114215492.png)
+![image-20210926114215492](Peregrine-paper/image-20210926114215492.png)
 
 
 
@@ -202,7 +202,7 @@ is an edge-induced match ofp′.
 
 ###  3.2 Peregrine中的模式感知挖掘程序
 
-![image-20210926142224685](Peregrine/image-20210926142224685.png)
+![image-20210926142224685](Peregrine-paper/image-20210926142224685.png)
 
 ####  3.2.1 FSM:反单调性和标签发现
 
@@ -234,9 +234,9 @@ ExplorationPlan generatePlan(Pattern p) {
 
 
 
-![image-20210927174250162](Peregrine/image-20210927174250162.png)
+![image-20210927174250162](Peregrine-paper/image-20210927174250162.png)
 
-![image-20210928084631295](Peregrine/image-20210928084631295.png)
+![image-20210928084631295](Peregrine-paper/image-20210928084631295.png)
 
 ###  4.1 直接匹配给定的模式
 
@@ -296,9 +296,9 @@ AggregationVal match(Graph G,Pattern p,Func f) {
 
 
 
-![image-20210928171419870](Peregrine/image-20210928171419870.png) 
+![image-20210928171419870](Peregrine-paper/image-20210928171419870.png) 
 
-![image-20210928172524364](Peregrine/image-20210928172524364.png)
+![image-20210928172524364](Peregrine-paper/image-20210928172524364.png)
 
 
 

@@ -220,10 +220,6 @@ categories:
 
     * RStream[37]是第一个单机核心外图挖掘系统。RStream采用GRAS编程模型，该模型结合了GAS模型和关系代数来支持多种挖掘算法。然而，RStream中输入图的子图和边的连接仍然是一个昂贵的操作。子图的边缘诱导探索也使一些挖掘问题复杂化，如基序计数和集团发现
 
-  * 图同构检查库
-
-    * 
-
 * **GraphPi**: High Performance Graph Pattern Matching through Effective Redundancy Elimination
 
   * SC 20
@@ -255,8 +251,6 @@ categories:
       * 虽然Fractal在模式匹配用例中使用了对称破坏，但其他应用程序（如FSM和基序计数）不受对称破坏的指导，因此它们最终会进行不必要的探索
       * AutoMine也没有对任何用例使用对称破坏，要求用户在枚举模式时通过单独检查每个匹配来过滤重复匹配
     * ASAP[22]是一个用于近似图挖掘的可编程**分布式系统**，其中用户基于采样边和顶点编写程序，以推理模式的概率计数
-  * 专门构建的图形挖掘解决方案：
-    * 
   * 图形处理系统：
     *  [11, PowerGraph:14, GraphX:15, DistTC:21, GraphOne:29, Pregel:32, GraphBolt:33, 42, Chaos:45, GPS:46, Ligra:48, KickStarter:ASPIRE:CoRAL:54–56, Gemini:62]
 
@@ -305,7 +299,6 @@ categories:
       * Sun等人[48]设计了LIGHT系统，该系统延迟了图案顶点的物化，并将候选集计算转换为寻找最小集覆盖以消除冗余
     * **分布式**子图匹配系统努力优化用于匹配的模式分解[6，31，41，44，49]，最小化机器间通信[19，54]，或改善负载平衡[8]
     * 几乎所有的子图匹配系统都使用Grochow和Kellis[18]提出的**对称破缺技术**
-    * GraphZero总结。。。。。。。。。。。。。。。。。
   * 图形挖掘系统：
     * Arabesque[50]是第一个支持高级界面的分布式图形挖掘系统，用户可以方便地指定和挖掘模式。
     * 然后，提出了具有优化内存消耗[G-miner 11]、深度优先搜索[Fractal:14]、核外处理[Rstream:53，Kaleido:59]或近似挖掘支持[ASAP:25，Approxg:38]的多个图挖掘系统
@@ -316,13 +309,10 @@ categories:
     * GraphIt[58]使用户能够用算法语言描述图形算法，以及如何用调度语言优化算法。这种分离允许用户专注于算法设计，并将优化任务分配给编译器。
     * Green Marl[23]、SociaLite[43]和Abelian[16]可以自动并行化和优化图算法，但与GraphIt相比，它们可以探索的优化空间要小得多
     * Pai和Pingali[40]提出了一套编译器优化技术，以有效地将图形算法映射到GPU架构
-  * 方向优化
-    * 
 
 * **Pangolin**: An Efficient and Flexible Graph Mining System on CPU and GPU.
 
   * VLDB 20  5
-  * GPM应用：..............................
   * GPM框架：
     * Fractal
     * AutoMine
@@ -350,7 +340,6 @@ categories:
       * GraphZero[40]通过引入对称破坏来避免过度计数，从而改进了AutoMine
       * GraphPi[50]通过更好的冗余消除性能模型进一步改进了GraphZero
       * Peregrine是最先进的高级GPM系统
-  * GPM 算法......................................
 
 * **FINGERS**: exploiting fine-grained parallelism in graph mining accelerators
 
