@@ -1,6 +1,6 @@
 ---
 title: GraphPi的使用
-date: 2022-03-02 15:43:17
+date: 2022-05-02 15:43:17
 tags:
 - GraphPi
 - 图挖掘
@@ -82,6 +82,11 @@ Schedule:
 * `../dataset/wiki-vote_input`:  数据集文件地址， 自定义
 
 源码需要做修改的部分查看----->[GraphPi-Github-how-to-enable-your-own-dataset](https://github.com/thu-pacman/GraphPi#how-to-enable-your-own-dataset)
+
+* 修改3个文件
+  * include/dataloader.h
+  * src/common.cpp
+  * src/dataloader.h
 
 ###  提升性能的配置
 

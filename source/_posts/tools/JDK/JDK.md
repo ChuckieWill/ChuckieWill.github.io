@@ -16,6 +16,10 @@ categories:
 >[win10安装流程、环境配置、安装成功检测](https://blog.csdn.net/xuejiaguniang/article/details/86331557 )
 >
 >[win7安装流程、环境配置、安装成功检测]( https://baijiahao.baidu.com/s?id=1630229511923551996&wfr=spider&for=pc )
+>
+>[Linux非root用户安装JDK](https://blog.csdn.net/weixin_44273302/article/details/113617259)
+>
+>[Fractal中使用JDK案例](https://chuckiewill.github.io/2022/04/12/Graph/Fractal/)
 
 
 
@@ -24,4 +28,6 @@ categories:
 ```
 cmd中输入：set path="%JAVA_HOME%\bin"
 ```
+
+
 

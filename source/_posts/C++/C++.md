@@ -2540,6 +2540,12 @@ cout<<sizeof(umap)<<endl; // 56
 vector<int>(vec1).swap(vec1);
 ```
 
+**resize、assign、reserve区别**
+
+>  resize 和 assign: https://www.dianjilingqu.com/629188.html
+>
+> assign resize reserve: https://blog.51cto.com/u_4135183/2822759
+
 ### map
 
 * multimap和unordered_multimap不可用[]作insert,  map和unordered_map可以用[]作insert  
@@ -3034,6 +3040,12 @@ int main()
 > [Ubuntu18.04中安装gcc、g++编译器 /运行c文件、c++文件【超详细图文教程】] : https://blog.csdn.net/weixin_43290551/article/details/125970965
 >
 > [快速升级到g++11和gcc11] : https://blog.csdn.net/weixin_37726222/article/details/124002454
+>
+> 查看版本：https://www.cnblogs.com/liujiaxin2018/p/16695558.html
+>
+> 
+
+
 
 ##  Screen
 
@@ -3065,7 +3077,19 @@ std::reverse(std::begin(a), std::end(a));
 
 ```c++
 #include <algorithm>
-std::sort(s.begin(), s.end(), std::greater<int>());
+std::sort(s.begin(), s.end(), std::greater<int>());// 按降序，  默认是升序
+
+// 自定义比较函数
+bool compare(vector<int>& a, vector<int>& b){
+  if(a[0] != b[0]){
+    return a[0] < b[0]; // 起始点小的在前
+  }else{
+    return a[1] < b[1]; // 起始点相同的情况下，终止点小的在前
+  }
+}
+vector<vector<int>>& intervals;// 存储的是顶点对  [[1,2],[2,3],[3,4],[1,3]]
+sort(intervals.begin(), intervals.end(), compare);
+
 ```
 
 * C++中的__builtin_popcount()
@@ -3136,7 +3160,9 @@ sudo du -sh /home/wangyj
 du -sh /home/wangyj
 ```
 
+##  时间相关
 
+> 
 
 #  算法
 
@@ -3208,6 +3234,7 @@ atoi()和stoi()
 >[atoi()和stoi()的区别](https://www.jianshu.com/p/e700ac920249)
 
 * atoi()和stoi()函数都是只转换字符串的数字部分，如果遇到其它字符的话则停止转换
+* 只返回有效数字 0123返回123
 
 ```c++
 #include <cstdio>
@@ -3221,8 +3248,63 @@ int main(){
     cout << atoi(str) << endl;   // 打印 12
     //遇到了'a'字符，停止数字转换
     cout << stoi(str1) << endl;  // 打印 12
+    
+  string s = "0123";
+  int n = stoi(s);
+  cout<<s<<endl; // 0123
+  cout<<n<<endl; // 123
+    
+  string s = "0";
+  int n = stoi(s);
+  cout<<s<<endl;//0
+  cout<<n<<endl;//0
 }
 
+
+class Solution {
+public:
+  vector<string> res;
+  bool isTrue(string s){
+    if(s.length() > 1 && s[0] == '0') return false;//
+    int it = stoi(s);
+    if(it >=0 && it <= 255){
+      return true;
+    }
+    return false;
+  }
+  void dfs(string& s, int index, int need, vector<string>&  pre){
+    if(need == 0){ // 最后一层长度一定满足条件
+      string last = s.substr(index);
+      if(!isTrue(last)) return;
+      string temp = "";
+      for(auto& s : pre){
+        temp = temp + s + ".";
+      }
+      temp += last;
+      res.push_back(temp);
+      return;
+    }
+    for(int i = index; i<index+3 && i <s.length(); ++i){
+      int len = s.length() - i-1;
+      // cout<<"len: "<<len<<endl;
+      // cout<<"need: "<<need<<"   need*3: "<<need*3<<endl;
+      if(len>= need && len <= need*3){
+        string cur = s.substr(index, i-index+1);
+        if(!isTrue(cur)) return;
+        pre.push_back(cur);
+        dfs(s, i+1, need-1, pre);
+        pre.pop_back();
+      }
+    }
+  }
+  vector<string> restoreIpAddresses(string s) {
+    int len = s.length();
+    if(len < 4 || len > 12) return {};
+    vector<string> pre;
+    dfs(s, 0, 3, pre);
+    return res;
+  }
+};
 
 ```
 
@@ -3270,6 +3352,25 @@ isalnum
 #include<ctype.h> // c++中使用不用引入头文件
 ```
 
+**string移除最后一个元素**
+
+```c++
+string s = "string!";
+s.pop_back(); // c++11 新语法
+```
+
+**string追加char**
+
+```c++
+string s = "abc";
+char c = 'd';
+// 方式1
+s += c;
+cout<<s<<endl;
+// 方式2
+s.push_back(c);
+```
+
 
 
 ##  数值
@@ -3290,7 +3391,22 @@ LONG_MIN
 L
 ```
 
+## vector
 
+**空vector**
+
+```c++
+vector<int> res = {};
+vector<int> func(){
+    return {}; // 返回空字符串
+}
+```
+
+
+
+#  性能
+
+* lambda写法比调用函数性能好
 
 #  待
 
@@ -3676,6 +3792,61 @@ gdb test
 >
 > 系统解释：https://blog.csdn.net/www_dong/article/details/113532077
 
+2.54 说说多路IO复用技术有哪些，区别是什么
+
+> * IO多路复用：I/O是指网络I/O,多路指多个TCP连接(即socket或者channel）,复用指复用一个或几个线程。意思说一个或一组线程处理多个TCP连接。最大优势是减少系统开销小，不必创建过多的进程/线程，也不必维护这些进程/线程。
+> * IO多路复用使用两个系统调用(select/poll/epoll和recvfrom)，blocking IO只调用了recvfrom；select/poll/epoll 核心是可以同时处理多个connection，而不是更快，所以连接数不高的话，性能不一定比多线程+阻塞IO好,多路复用模型中，每一个socket，设置为non-blocking,阻塞是被select这个函数block，而不是被socket阻塞的
+>
+> https://www.shuzhiduo.com/A/MyJx7qXXzn/
+>
+> https://blog.csdn.net/liyaomeng/article/details/107891133
+
+2.57 简述同步与异步的区别，阻塞与非阻塞的区别
+
+> https://blog.csdn.net/liyaomeng/article/details/107891133
+
+2.58 BIO NIO有什么区别
+
+> https://blog.csdn.net/lzb348110175/article/details/98941378
+
+3.3 简述域名解析过程，本机如何干预域名解析
+
+> 有图：https://baijiahao.baidu.com/s?id=1754073275573332761&wfr=spider&for=pc
+
+3.5 简述网关的作用是什么，同一网段的主机如何通信
+
+> 子网掩码的使用：https://blog.csdn.net/m0_51292856/article/details/128557189
+>
+> https://blog.csdn.net/AutumnGingkgo/article/details/122392220
+>
+> https://blog.csdn.net/xuhao0258/article/details/118051122?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-118051122-blog-122392220.pc_relevant_landingrelevant&spm=1001.2101.3001.4242.1&utm_relevant_index=3
+
+3.6 简述CSRF攻击的思想以及解决方法
+
+> https://blog.csdn.net/weixin_44052462/article/details/122988438
+>
+> 为什么token可以防止CSRF，但cookie不行：https://blog.csdn.net/JinYJ2014/article/details/122931481
+>
+> * cookie是自动携带的，但是token是需要手动设置每次访问都携带的
+>
+> Cookie、session和token的区别：https://blog.csdn.net/inthat/article/details/103967592
+
+3.28 简述 TCP 协议的延迟 ACK 和累计应答
+
+> **累计应答：** 对应发送的包都要进行应答，但不是一个个应答，而是会**应答某个之前的ID**,这个ID前边的已经接收完毕。
+>
+> https://blog.csdn.net/q473203506/article/details/122908332
+
+3.31 说说端到端，点到点的区别
+
+> https://blog.csdn.net/weixin_46437478/article/details/107089472
+
+3.40 简述 HTTPS 的加密与认证过程
+
+> 流程：https://blog.csdn.net/m0_52256357/article/details/126910921
+>
+> 解释：https://blog.csdn.net/lamperouge_conan/article/details/109575631
+
 #  操作系统
 
 **进程与线程**
@@ -4027,3 +4198,17 @@ man netstat | more
 ![image-20230109135327435](C++/image-20230109135327435.png)
 
 **文件系统**
+
+#  分布式
+
+Hadoop
+
+> https://blog.csdn.net/m0_46914845/article/details/125762491
+
+Spark
+
+> https://blog.csdn.net/qinlingheshang/article/details/123232539
+
+Hadoop和Spark的对比
+
+> https://blog.csdn.net/Swofford/article/details/125305625

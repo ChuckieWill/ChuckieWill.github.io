@@ -7,15 +7,19 @@ categories:
 - [Graph]
 ---
 
+
+
 #  DataSet
 
 ###  无向图同构网络
 
-> https://law.di.unimi.it/datasets.php
+> LWA: https://law.di.unimi.it/datasets.php
+>
+> SNAP: http://snap.stanford.edu/index.html
 
 ###  无向图异构网络
 
-![image-20220329144505366](https://gitee.com/ChuckieWill/picture/raw/master/img/202203291445216.png)
+![](DataSet/202203291445216.png)
 
 * 出处：GRAMI: Frequent subgraph and pattern mining in a single large graph     2014
   * Twitter : https://socialcomputing.asu.edu/datasets/Twitter
@@ -32,7 +36,7 @@ categories:
     * 有向图
     * 顶点：出版物，   边：出版物之间有相似性（带标签 0~100 标签越小表示相似性越强），   顶点标签：计算机科学领域
 
-<img src="C:/Users/Chuckie/AppData/Roaming/Typora/typora-user-images/image-20220329151429029.png" alt="image-20220329151429029" style="zoom: 50%;" />
+![](DataSet/image-20220329151429029.png)
 
 * 出处：Fractal: A General-Purpose Graph Patern Mining System      2019
   * MiCo: 出处：GRAMI: Frequent subgraph and pattern mining in a single large graph
