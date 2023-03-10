@@ -218,6 +218,43 @@ int main() {
 }
 ```
 
+###  希尔排序
+
+> https://blog.csdn.net/yuan2019035055/article/details/120246584
+>
+> **希尔排序**（Shell Sort）是[插入排序](https://so.csdn.net/so/search?q=插入排序&spm=1001.2101.3001.7020)的一种。也称缩小增量排序，是直接插入排序算法的一种更高效的改进版本。希尔排序是**非稳定**排序算法。
+>
+> 时间复杂度：最坏：O(n^2)   比选择和插入排序快
+
+```c++
+template<typename T>
+void shellSort(T arr[], int n){
+  for(int step = n/2; step >0; step /= 2){
+    for(int i = 0; i < step; i++){
+      for(int j = i + step; j < n; j += step){
+        T temp = arr[j];
+        int m;
+        for(m = j-step; m >= 0 && arr[m] > temp; m -= step){
+          arr[m+step] = arr[m];
+        }
+        arr[m+step] = temp;  // 上面循环结束时m又-step了
+      }
+    }
+  }
+}
+
+int main (){
+  int vec[] = {12,34,5,632,5,689,34,67,89};
+  shellSort(vec, 9);
+  for(int i = 0; i < 9; i++){
+    cout<<vec[i]<<" ";
+  }
+  cout<<endl;
+}
+```
+
+
+
 ###  归并排序
 
 > * 时间复杂度：O(n*logn)
@@ -5210,7 +5247,7 @@ bool solution(vector<int> a){
 // j = 0 不考虑 f[i][j-1] and s2[j-1] == s3[i+j-1]
 ```
 
-* lint 119
+* lint 119 编辑距离
   * 记录操作次数，比较大小，没有想到比较大小，复习
   * 初始化出错，复习
 
@@ -5258,7 +5295,7 @@ bool solution(vector<int> a){
 // f[1,,,m] = 0;
 ```
 
-* lint 154
+* lint 154  正则表达式匹配
   * 下次考虑从s[n-1]作为最后一步考虑，不对正则预处理
 
 ```c++
@@ -5648,7 +5685,7 @@ int solution(string s){
 }
 ```
 
-* lint436
+* lint436 最大正方形
   * 注意`f[i][j]`记录的内容，`f[i][j]可以为0`
   * 递推公式结合图更好理解，复习
 
@@ -6134,3 +6171,181 @@ public:
 
 * 3
   * 复习，容易错
+
+* 4 [寻找两个正序数组的中位数](https://leetcode.cn/problems/median-of-two-sorted-arrays/)
+  * 二分查找
+  * 复习，思路分析，代码逻辑
+
+* 5 [最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/)
+  * lint 108 加强版
+
+* 10 [正则表达式匹配](https://leetcode.cn/problems/regular-expression-matching/)
+
+```c++
+class Solution {
+public:
+  bool isMatch(string s, string p) {
+    // f[i][j] 记录s前i个元素是否可以被p的前j个元素匹配  记录bool
+    // f[i][j] = f[i-1][j-1]  s[i-1] == p[j-1] || p[j-1] == '.'
+    //         = f[i-1][j]    p[j-1] == '*' && (p[j-2] == s[i-1] || p[j-2] == '.')
+    //         = f[i][j-2]    p[j-1] == '*'  // 因为".*" "s[i-1]*"可以匹配0个，即可以不用
+    // 初始化
+    // f[0][0] = true;
+    // f[0][1---m] = f[0][j-2] && p[j-1] == '*' // 可以匹配0个
+    // f[1---n][0] = false;
+
+    int n = s.size();
+    int m = p.size();
+    vector<vector<bool>> f(n+1, vector<bool>(m+1, false));
+    f[0][0] = true;
+    for(int i = 1; i <= n; ++i){
+      f[i][0] = false;
+    }
+    for(int j = 1; j <= m; ++j){
+      if(p[j-1] == '*'){
+        f[0][j] = f[0][j-2];
+      }else{
+        f[0][j] = false;
+      }
+    }
+
+    for(int i = 1; i <= n; ++i){
+      for(int j = 1; j <= m; ++j){
+        if(p[j-1] == '*'){
+          f[i][j] = f[i][j-2];
+          if(p[j-2] == s[i-1] || p[j-2] == '.'){
+            f[i][j] = f[i][j] || f[i-1][j];
+          }
+        }else{
+          f[i][j] = f[i-1][j-1] && (s[i-1] == p[j-1] || p[j-1] == '.');
+        }
+      }
+    }
+    return f[n][m];
+  }
+};
+```
+
+* 11
+* 15
+* 17
+* 19
+* 20
+* 21
+* 22 [括号生成](https://leetcode.cn/problems/generate-parentheses/)
+* 23 
+* 31 [下一个排列](https://leetcode.cn/problems/next-permutation/)
+  * 策略：要变大，且变为大的中最小的
+    * 变大，则得在后面元素中找到比当前元素大的元素
+    * 变为大的中最小的则当前元素尽可能靠右
+
+* 32 [ 最长有效括号](https://leetcode.cn/problems/longest-valid-parentheses/)
+  * 巧妙，待复习，看解析
+  * 栈方法和非栈方法都很巧妙
+* 33 [搜索旋转排序数组](https://leetcode.cn/problems/search-in-rotated-sorted-array/)
+  * 二分，待优化，代码不简洁
+* 34 [在排序数组中查找元素的第一个和最后一个位置](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/)
+  * 学习如何二分查找找到第一个大于等于target的位置，第一个大于target的位置
+
+* 39
+* 42 [接雨水](https://leetcode.cn/problems/trapping-rain-water/)
+  * 不会，看解析，先理解动态规划，再理解双指针
+  * 复习复习复习
+* 46
+* 48 [旋转图像](https://leetcode.cn/problems/rotate-image/)
+  * 巧妙，记忆
+* 49
+* 53 [ 最大子数组和](https://leetcode.cn/problems/maximum-subarray/)
+  * 不会，看解析，动态规划不会
+* 55 [跳跃游戏](https://leetcode.cn/problems/jump-game/)
+  * 贪心，看代码更易理解
+
+* 56 [合并区间](https://leetcode.cn/problems/merge-intervals/)
+* 62
+* 64
+* 70
+* 72 [ 编辑距离](https://leetcode.cn/problems/edit-distance/)
+  * 初始化放在外面单独处理性能更好
+  * min时用临时变量记录比每次使用f[i][j]性能更好
+
+```c++
+class Solution {
+public:
+  int minDistance(string w1, string w2) {
+    int n = w1.size();
+    int m = w2.size();
+    // f[i][j] 记录w1的前i个元素变为w2的前j个元素的最少操作次数
+    // f[i][j] =  min(f[i-1][j-1] 相等 ,f[i-1][j] +1 删除, f[i-1][j-1]+1 替换, f[i][j-1]+1 插入) 
+    // 初始化
+    // f[0][0,,j,,m] = j  插入
+    // f[0,,i,,n][0] = i  删除
+    vector<vector<int>> f(n+1, vector<int>(m+1));
+    // 放在外面单独处理性能更好
+    for(int i = 0; i <=n; ++i){
+        f[i][0] = i;
+    }
+    for(int j = 0; j <=m; ++j){
+        f[0][j] = j;
+    }
+    for(int i = 1; i <= n; ++i){
+      for(int j = 1 ; j <= m; ++j){
+        // if(i == 0){
+        //   f[i][j] = j;
+        //   continue;
+        // }
+        // if(j == 0){
+        //   f[i][j] = i;
+        //   continue;
+        // }
+        // 用临时变量记录比每次使用f[i][j]性能更好
+        int left = f[i-1][j] + 1;
+        int right = f[i][j-1] + 1;
+        int lr = f[i-1][j-1] + 1;
+        if(w1[i-1] == w2[j-1]) lr -= 1;
+        f[i][j] = min(lr, min(left, right));
+        // f[i][j] = f[i-1][j] + 1;
+        // f[i][j] = min(f[i][j], f[i-1][j-1]+1);
+        // f[i][j] = min(f[i][j], f[i][j-1]+1);
+
+        // if(w1[i-1] == w2[j-1]){
+        //   f[i][j] = min(f[i][j], f[i-1][j-1]);
+        // }
+      }
+    }
+    return f[n][m];
+  }
+};
+```
+
+* 75
+* 76
+* 78
+* 79
+* 84 [ 柱状图中最大的矩形](https://leetcode.cn/problems/largest-rectangle-in-histogram/)
+  * 单调栈，第一次学习，复习
+* 85 [最大矩形](https://leetcode.cn/problems/maximal-rectangle/)
+  * 84升级版，复习
+
+* 94
+* 96 [不同的二叉搜索树](https://leetcode.cn/problems/unique-binary-search-trees/)
+  * 动态规划，不太懂，复习
+
+
+
+
+
+#  牛客面经
+
+1. 怎么判断链表相交
+2. 怎么判断链表有环
+3. 怎么找到环入口地址？为什么这么找？怎么证明
+4. 怎么判断两个有环链表是否相交？
+
+求链表的中间结点 
+
+* 快慢指针
+* https://blog.csdn.net/xiaoyubuhuiqiche/article/details/128163249
+
+在二叉树中找路径最长的两个点
+
+* dfs, 并维护一个长度为2的队列，每次递归到底，深度更深则将该点加入队首，并判断队列长度是否大于2，若大于则删除队尾

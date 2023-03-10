@@ -12,14 +12,15 @@ date: 2020-06-25 22:24:19
 **华中科技大学  计算机科学与技术学院  硕士**
 
 * 计算机科学与技术专业
-
+* 研究方向：图挖掘方法研究
+* 核心课程：分布式系统、深度学习、数据挖掘与知识发现
 * GPA排名： 3.595/5.0  
 * 荣誉：校一等奖学金、校二等奖学金
 
 **武汉理工大学  计算机科学与技术学院  学士**
 
 * 软件工程专业
-
+* 核心课程：离散数学、操作系统、计算机组成与体系结构、数据结构
 * GPA排名： 3.885/5.0  
 * 专业排名： 5/41 
 * 荣誉： 校三等奖学金、院三好学生、国家励志奖学金
@@ -47,19 +48,17 @@ date: 2020-06-25 22:24:19
 **通用图挖掘系统设计与开发**
 
 * 项目描述：针对大规模图结构数据（如社交平台中将每个用户作为点，用户间关系作为边的社交图）在其中挖掘所有特定模式并输出。个人负责设计并实现底层数据结构、图分割算法、图挖掘算法等。
-
 * 主要工作：
   * 设计了基于选择度的匹配顺序生成方案，类似贪心算法，确保挖掘过程中每层扩展都产生最少的分支，极大地减少了中间结果集的产生。
   * 设计了基于等价点的自同构去重方案，在模式图预处理中进行等价点计算，生成等价点严格排序数组， 在挖掘过程中识别并剪枝自同构实例，减少冗余计算。
   * 设计了基于模式分割的挖掘方案，计算出模式图中具有约束包含关系的边组，并将每组中约束包含关系弱的边分割掉，得到简化模式图，基于此简化模式图挖掘，即可极大地缩减挖掘任务。
+* 项目成果：
+  * 一篇论文在投: PMiner: A Directed Graph Mining System with Pattern Reduction（VLDB’23）学生一作
 
-* 个人收获：对于协作完成一个项目的过程有了更加深刻的体会，同时意识到底层数据结构设计至关重要，当涉及到百亿级及以上规模数据时，常见的数据结构可能出现错误，需要提前考虑好系统可能运行的极限数据集。
-
-* 项目成果：目前一篇论文在投: PMiner: A Directed Graph Mining System with Pattern Reduction（VLDB’23）
 
 **国家级大学生创新创业训练计划 创业实践类**
 
-* 担任项目负责人 ，项目为期两年(2019.03---2021.03) 
+* 担任项目负责人 ，项目为期三年(2018.03---2021.03) 
 * 项目中主要负责团队管理、资源对接、部分产品设计、部分原型图绘制、前端开发、部分后端开发
 * 项目产品技术概要
   * 产品主要为微信小程序
@@ -102,7 +101,7 @@ date: 2020-06-25 22:24:19
 * 了解C++11、C++14及以后版本的新特性并能进行使用
 * 熟悉常见数据结构及算法，如各类排序算法（快速排序、归并排序、堆排序等）
 * 熟悉Linux环境下常用命令级相关工具的使用(gcc、vim、git等）
-* 熟悉[JavaScript](https://chuckiewill.github.io/categories/Javascript/) ，[Vue](https://chuckiewill.github.io/categories/vue/)/[React](https://chuckiewill.github.io/categories/react/) 框架，[微信小程序开发](https://chuckiewill.github.io/categories/wxapplet/) ，Node.js
+* 熟悉[JavaScript](https://chuckiewill.github.io/categories/Javascript/) ，[Vue](https://chuckiewill.github.io/categories/vue/)/[React](https://chuckiewill.github.io/categories/react/) 框架，[微信小程序开发](https://chuckiewill.github.io/categories/wxapplet/) ，了解TypeScript 、Node.js
 
 <br/>
 

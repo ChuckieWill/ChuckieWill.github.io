@@ -26,12 +26,6 @@ categories:
 * **CIKM**  数据库／数据挖掘／内容检索 B类会议
 * **TODS **(ACM Trans) 数据库/数据挖掘/内容检索 A类期刊
 
-##  论文
-
-> https://xxxxyu.github.io/
->
-> undirected
-
 ### **软件**
 
 ####  基于CPU
@@ -399,3 +393,4 @@ categories:
     * CPU[Emptyheaded(2017) 2, Graph-flow(2017) 55，Graphzero(2021)73，Graphpi 93，aDFS(2021) 104]
       * Graphzero(文中描述是子图匹配)、Graphpi(文中描述是GPM) 不包含频繁子图的挖掘  
     * GPU[Gpu-accelerated subgraph enumeration on partitioned graphs(SIGMOD ’20) 42， Exploiting reuse for gpu subgraph enumeration(2020) 43，Gsi: Gpu-friendly subgraph isomorphism(2020) 117]
+

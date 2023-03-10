@@ -1,5 +1,5 @@
 ---
-title: GraphPi的使用
+title: GraphPi论文梳理
 date: 2022-07-12 15:43:17
 tags:
 - GraphPi

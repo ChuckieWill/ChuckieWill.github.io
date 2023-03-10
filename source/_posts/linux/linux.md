@@ -12,6 +12,10 @@ categories:
 
 #  linux
 
+#####  cmake
+
+> https://blog.csdn.net/qq_41375609/article/details/110535697
+
 #####  shell脚本
 
 ```sh

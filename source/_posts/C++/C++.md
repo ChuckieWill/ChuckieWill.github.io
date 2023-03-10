@@ -2461,6 +2461,55 @@ int main() {
 
 ## STL
 
+> [STL六大组件之一——适配器（adapters）](https://blog.csdn.net/C0631xjn_/article/details/128616275)
+
+###  六大部件
+
+容器
+
+算法
+
+分配器
+
+迭代器
+
+仿函数
+
+* 本质是类，只是使用形式类似函数，在类内部重载了函数执行运算符
+
+适配器
+
+* 容器适配器
+  * stack、queue 、priority_queue 都不是容器，而是deque容器的适配器
+
+* 迭代器适配器
+* 仿函数适配器
+  * bind2nd  绑定第二个参数
+  * not1 取反
+
+
+
+迭代器begin和cbegin的区别
+
+https://blog.csdn.net/u010987458/article/details/70949112
+
+`greater<int>()和less<int>()的使用`
+
+https://blog.csdn.net/qq_21997625/article/details/76662113
+
+bind2nd
+
+https://www.jianshu.com/p/12860aea987b
+
+```c++
+  vector<int> vec = {12,34,5,632,5,689,34,67,89};
+  cout<<count_if(vec.begin(), vec.end(), not1(bind2nd(less<int>(), 40)))<<endl; // 4
+```
+
+
+
+
+
 * 用下面的方式替代迭代器的使用
 
 ```c++
@@ -2522,13 +2571,75 @@ unordered_map<int, int> umap; // 56
 cout<<sizeof(umap)<<endl; // 56
 ```
 
+###  array
+
+> array不同于其它容器，其它容器是类，有构造函数，array是结构体
+
+```c++
+  array<int, 100> arr;
+  cout<<sizeof(arr)<<endl; // 100
+```
+
+**元素访问**
+
+| [at](https://zh.cppreference.com/w/cpp/container/array/at)(C++11) | 访问指定的元素，同时进行越界检查 (公开成员函数) |
+| ------------------------------------------------------------ | ----------------------------------------------- |
+| [operator[\]](https://zh.cppreference.com/w/cpp/container/array/operator_at)(C++11) | 访问指定的元素 (公开成员函数)                   |
+| [front](https://zh.cppreference.com/w/cpp/container/array/front)(C++11) | 访问第一个元素 (公开成员函数)                   |
+| [back](https://zh.cppreference.com/w/cpp/container/array/back)(C++11) | 访问最后一个元素 (公开成员函数)                 |
+| [data](https://zh.cppreference.com/w/cpp/container/array/data)(C++11) | 直接访问底层数组 (公开成员函数)                 |
+
+data
+
+* 返回底层数组首地址，不是begin，begin是迭代器，是对首地址封装，概念不同
+* 但实质上是data和begin是一样的，在vector和array中迭代器的性质和直接返回的底层数组首地址一样
+* https://www.bbsmax.com/A/KE5QybbZ5L/
+* https://www.5axxw.com/questions/content/zaxg8g
+
+**迭代器**
+
+| [begincbegin](https://zh.cppreference.com/w/cpp/container/array/begin)(C++11) | 返回指向起始的迭代器 (公开成员函数)     |
+| ------------------------------------------------------------ | --------------------------------------- |
+| [endcend](https://zh.cppreference.com/w/cpp/container/array/end)(C++11) | 返回指向末尾的迭代器 (公开成员函数)     |
+| [rbegincrbegin](https://zh.cppreference.com/w/cpp/container/array/rbegin)(C++11) | 返回指向起始的逆向迭代器 (公开成员函数) |
+| [rendcrend](https://zh.cppreference.com/w/cpp/container/array/rend)(C++11) | 返回指向末尾的逆向迭代器 (公开成员函数) |
+
+**容量**
+
+| [empty](https://zh.cppreference.com/w/cpp/container/array/empty)(C++11) | 检查容器是否为空 (公开成员函数)       |
+| ------------------------------------------------------------ | ------------------------------------- |
+| [size](https://zh.cppreference.com/w/cpp/container/array/size)(C++11) | 返回容纳的元素数 (公开成员函数)       |
+| [max_size](https://zh.cppreference.com/w/cpp/container/array/max_size)(C++11) | 返回可容纳的最大元素数 (公开成员函数) |
+
+size=max_size
+
+* max_size官网有解释：因为每个 `std::array<T, N>` 都是固定大小容器，故 `max_size` 返回的值等于 `N` （亦为 [size](https://zh.cppreference.com/w/cpp/container/array/size) 所返回的值）
+
+**操作**
+
+| [fill](https://zh.cppreference.com/w/cpp/container/array/fill)(C++11) | 以指定值填充容器 (公开成员函数) |
+| ------------------------------------------------------------ | ------------------------------- |
+| [swap](https://zh.cppreference.com/w/cpp/container/array/swap)(C++11) | 交换内容 (公开成员函数)         |
+
+fill
+
+* 填充数组中的每个元素为指定的值： `arr.fill(10)  数组中每个元素都变为10`
+* http://www.manongjc.com/detail/31-ektcxzoezjrjuag.html
+
 ### vector
 
-> [解决vector.capacity() > vector.size()导致内存空间浪费的问题](https://blog.csdn.net/ganfanren00001/article/details/122024121)
+size、max_size、capacity
 
-* vector的动态增长是倍数增长，压入1时开辟2，压入2时开辟4，压入3不开辟，压入4开辟8，，，
-  * vector相对array存储相同的元素**内存空间会更大**，因为vector.capacity() > vector.size(), vector会开辟更多空间，用于动态添加元素
-  * vector每次动态扩容，都会拷贝构造和析构，**开销也会很大**
+* size: 当前容器中的元素个数
+* capacity： 当前已经分配的空间大小，因为vector是动态扩容的
+* max_size： 理论上可以容纳的元素个数，即内存分配有关
+* size<=capacity<=max_size
+
+> [解决vector.capacity() > vector.size()导致内存空间浪费的问题](https://blog.csdn.net/ganfanren00001/article/details/122024121)
+>
+> * 存在这个问题的原因：vector的动态增长是倍数增长，压入1时开辟2，压入2时开辟4，压入3不开辟，压入4开辟8，，，
+>   * vector相对array存储相同的元素**内存空间会更大**，因为vector.capacity() > vector.size(), vector会开辟更多空间，用于动态添加元素
+>   * vector每次动态扩容，都会拷贝构造和析构，**开销也会很大**
 
 * 解决vector.capacity() > vector.size()导致内存空间浪费的问题
   * 这里使用vector(vec1)构造了一个临时对象，前面讲过，构造函数可以时新构造的容器的capacity缩小为size值
@@ -2537,14 +2648,255 @@ cout<<sizeof(umap)<<endl; // 56
   * vec1的容量被成功缩小
 
 ```c++
-vector<int>(vec1).swap(vec1);
+    vector<int> vec;
+    for(int i = 0; i < 100; ++i){
+      vec.push_back(i);
+    }
+
+    cout<<vec.size()<<endl;     // 100
+    cout<<vec.capacity()<<endl; // 128
+    cout<<vec.max_size()<<endl; // 4611686018427387903
+
+    vector<int>(vec).swap(vec);  // vector<int>(vec)表示用vec构造一个临时对象
+    
+    cout<<vec.size()<<endl;     // 100
+    cout<<vec.capacity()<<endl; // 100
+    cout<<vec.max_size()<<endl; // 4611686018427387903
 ```
 
-**resize、assign、reserve区别**
+* [shrink_to_fit](https://zh.cppreference.com/w/cpp/container/vector/shrink_to_fit)
+  * c++11开始支持的的自带解决vector.capacity() > vector.size()问题的函数
+  * 时间复杂度：至多与容器大小成线性。
+
+* 两种方式对比性能
+  * shrink_to_fit更快, 基本是另一种方法的1.2--1.6倍
+  * 原因可能是：构造函数需要开辟空间，然后移动，然后删除临时空间，开销更大
+
+```c++
+void testCreate(){
+    vector<int> vec;
+    int n = 100000000;
+    for(int i = 0; i < n; ++i){
+      vec.push_back(i);
+    }
+
+    cout<<vec.size()<<endl;
+    cout<<vec.capacity()<<endl;
+
+    clock_t startTime = clock();
+    vector<int>(vec).swap(vec);
+    clock_t endTime = clock();
+    cout << "runtime: " << double(endTime - startTime) / CLOCKS_PER_SEC << " s"<<endl;
+
+    cout<<vec.size()<<endl;
+    cout<<vec.capacity()<<endl;
+}
+
+void testShrinkTF(){
+    vector<int> vec;
+    int n = 100000000;
+    for(int i = 0; i < n; ++i){
+      vec.push_back(i);
+    }
+
+    cout<<vec.size()<<endl;
+    cout<<vec.capacity()<<endl;
+
+    clock_t startTime = clock();
+    vec.shrink_to_fit();
+    clock_t endTime = clock();
+    cout << "runtime: " << double(endTime - startTime) / CLOCKS_PER_SEC << " s"<<endl;
+
+    cout<<vec.size()<<endl;
+    cout<<vec.capacity()<<endl;
+}
+
+int main(){
+  testCreate();
+  testShrinkTF();
+}
+
+// 打印结果
+// testCreate
+100000000
+134217728
+runtime: 0.590234 s
+100000000
+100000000
+// testShrinkTF   
+100000000
+134217728
+runtime: 0.370269 s
+100000000
+```
+
+
+
+**resize、assign、reserve、clear区别**
 
 >  resize 和 assign: https://www.dianjilingqu.com/629188.html
 >
-> assign resize reserve: https://blog.51cto.com/u_4135183/2822759
+>  assign resize reserve: https://blog.51cto.com/u_4135183/2822759
+>
+>  关键点： capacity只能扩大不能缩小
+>
+>  总结：
+>
+>  * assign： size、capacity都修改  必须填充   直接重置
+>  * resize:  修改size ，扩展部分可填充 
+>  * reserve:  修改capacity  
+>  * clear:  修改size为0
+
+* resize
+  * 修改size大小，并且修改部分由第二个参数填充，若没有传第二个参数则填充为：类型()  int型就填充为0
+  * 对capacity不影响，capacity仍然按动态扩容的策略更新
+
+```c++
+  vector<int> v = {1,2,3};
+
+  cout<<v.size()<<endl; // 3
+  cout<<v.capacity()<<endl; // 3
+  v.resize(5);
+  for (const auto& el: v) cout << el << ' '; // 1 2 3 0 0 
+  cout<<endl;
+  cout<<v.size()<<endl; // 5
+  cout<<v.capacity()<<endl; // 6  动态扩容
+
+  v.resize(2);
+  for (const auto& el: v) cout << el << ' '; // 1 2
+  cout<<endl;
+  cout<<v.size()<<endl; // 2
+  cout<<v.capacity()<<endl; // 6
+
+  v.resize(6, 4);
+  for (const auto& el: v) cout << el << ' '; // 1 2 4 4 4 4 
+  cout<<endl;
+  cout<<v.size()<<endl; // 6
+  cout<<v.capacity()<<endl; // 6
+```
+
+* assign： 用于初始化
+  * 修改时，第二次填充的参数必填，否则报错
+  * 同时修改size和capacity,  就是初始化，一开始给定的 多少开辟的capacity就是多大
+  * 如果缩小则capacity不变
+
+```c++
+  vector<int> v = {1,2,3};
+
+  cout<<v.size()<<endl; // 3
+  cout<<v.capacity()<<endl; // 3
+  v.assign(5, 3); // 第二个参数必填
+  for (const auto& el: v) cout << el << ' '; // 3 3 3 3 3 
+  cout<<endl;
+  cout<<v.size()<<endl; // 5
+  cout<<v.capacity()<<endl; // 5
+
+  v.assign(2, 4);
+  for (const auto& el: v) cout << el << ' '; // 4 4
+  cout<<endl;
+  cout<<v.size()<<endl; // 2
+  cout<<v.capacity()<<endl; // 5
+
+  v.assign(11, 5);
+  for (const auto& el: v) cout << el << ' '; // 5 5 5 5 5 5 5 5 5 5 5 
+  cout<<endl;
+  cout<<v.size()<<endl; // 11
+  cout<<v.capacity()<<endl; // 11
+```
+
+* reserve
+  * 修改capacity大小，且只能扩大不能缩小capacity
+  * 对size不影响
+
+```c++
+  vector<int> v = {1,2,3};
+
+  cout<<v.size()<<endl; // 3
+  cout<<v.capacity()<<endl; // 3
+  v.reserve(5); 
+  for (const auto& el: v) cout << el << ' '; // 1 2 3 
+  cout<<endl;
+  cout<<v.size()<<endl; // 3
+  cout<<v.capacity()<<endl; // 5
+
+  v.reserve(2);
+  for (const auto& el: v) cout << el << ' '; // 1 2 3 
+  cout<<endl;
+  cout<<v.size()<<endl; // 3
+  cout<<v.capacity()<<endl; // 5
+
+  v.reserve(11);
+  for (const auto& el: v) cout << el << ' '; // 1 2 3  
+  cout<<endl;
+  cout<<v.size()<<endl; // 3
+  cout<<v.capacity()<<endl; // 11
+
+```
+
+* clear
+  * 改变size为0
+  * 对capacity无影响
+
+```c++
+  vector<int> v = {1,2,3};
+
+  cout<<v.size()<<endl; // 3
+  cout<<v.capacity()<<endl; // 3
+  v.clear(); 
+  for (const auto& el: v) cout << el << ' '; // 
+  cout<<endl;
+  cout<<v.size()<<endl; // 0
+  cout<<v.capacity()<<endl; // 3
+```
+
+> [emplace_back/emplace 与 push_back/insert 效率的详细比较](https://blog.csdn.net/nirendao/article/details/114859295)
+>
+> emplace_back/emplace传入的参数不是容器的数据类型，而是构造容器数据类型的参数，原地构造，相对push_back/insert少了一次移动构造或拷贝构造
+>
+> * push_back/insert是右值参数时，少一次移动构造
+> * push_back/insert是左值参数时，少一次拷贝构造
+
+```c++
+struct President
+{
+    std::string name;
+    std::string country;
+    int year;
+ 
+    President(std::string p_name, std::string p_country, int p_year)
+        : name(std::move(p_name)), country(std::move(p_country)), year(p_year)
+    {
+        std::cout << "I am being constructed.\n";
+    }
+    President(President&& other) // 右值应用，移动构造
+        : name(std::move(other.name)), country(std::move(other.country)), year(other.year)
+    {
+        std::cout << "I am being moved.\n";
+    }
+    President& operator=(const President& other) = default;  // 左值引用 ， 拷贝构造
+};
+
+int main()
+{
+    std::vector<President> elections;
+    std::cout << "emplace_back:\n";
+    elections.emplace_back("Nelson Mandela", "South Africa", 1994);
+ 
+    std::vector<President> reElections;
+    std::cout << "\npush_back:\n";
+    reElections.push_back(President("Franklin Delano Roosevelt", "the USA", 1936));
+}
+
+// 打印
+emplace_back:
+I am being constructed.
+ 
+push_back:
+I am being constructed.
+I am being moved.
+```
+
+
 
 ### map
 
@@ -2671,6 +3023,52 @@ bool myCom(int a, int b){
 
 priority_queue<int, vector<int>, decltype(myCom)> pq(myCom);
 ```
+
+###  相关知识点
+
+####  move 左值 右值
+
+> http://www.manongjc.com/detail/23-dciaudkgcqpkulj.html
+
+**左值 右值**
+
+* 左值是表达式结束后依然存在的持久对象(代表一个在内存中占有确定位置的对象)
+
+* 右值是表达式结束时不再存在的临时对象(不在内存中占有确定位置的表达式）
+
+**move**
+
+待完成
+
+####  迭代器移动
+
+> [C++ STL prev()和next()函数用法详解](http://c.biancheng.net/view/7384.html)
+
+迭代的++是对++运算符重载了的
+
+it += 2 不一定等于两次it++  
+
+* 线性容器可以这样用，但是非线性容器则会报错
+
+next(it, 2)表示往后移动2个单位, 并将移动后的迭代器返回，原迭代器不变
+
+```c++
+  vector<int> v = {11,12,13,14,15,16,17,18};
+
+  auto it = v.begin();
+  cout<<*it<<endl; // 11
+  ++it;
+  cout<<*it<<endl;// 12
+  it += 2; // 线性容器可以这样用，但是非线性容器则会报错,例如set, unordered_set
+  cout<<*it<<endl;// 14
+  next(it, 3);
+  cout<<*it<<endl;// 14
+  cout<<*(next(it, 3))<<endl; // 17
+  auto it1 = next(it, 3);
+  cout<<*it1<<endl;// 17
+```
+
+
 
 #  lambda
 
@@ -3090,6 +3488,14 @@ bool compare(vector<int>& a, vector<int>& b){
 vector<vector<int>>& intervals;// 存储的是顶点对  [[1,2],[2,3],[3,4],[1,3]]
 sort(intervals.begin(), intervals.end(), compare);
 
+// lambda写法
+sort(intervals.begin(), intervals.end(), [](vector<int>& a, vector<int>& b){
+  if(a[0] != b[0]){
+    return a[0] < b[0]; // 起始点小的在前
+  }else{
+    return a[1] < b[1]; // 起始点相同的情况下，终止点小的在前
+  }
+});
 ```
 
 * C++中的__builtin_popcount()
@@ -3402,11 +3808,18 @@ vector<int> func(){
 }
 ```
 
+数组反转
+
+```c++
+reverse(vector.begin(), vector.end());
+```
+
 
 
 #  性能
 
 * lambda写法比调用函数性能好
+* 
 
 #  待
 
@@ -3724,6 +4137,8 @@ public:
 2.6 说说静态库和动态库怎么制作及如何使用，区别是什么
 
 > https://blog.csdn.net/fightingtingting/article/details/125437706
+>
+> c++: https://blog.csdn.net/mzc_love/article/details/128158943
 
 2.7 简述GDB常见的调试命令，什么是条件断点，多进程下如何调试
 
@@ -3771,7 +4186,17 @@ gdb test
 >
 > union: https://blog.csdn.net/std7879/article/details/125001689
 
+2.26 请你说说什么是孤儿进程，什么是僵尸进程，如何解决僵尸进程
+
+> 危害： https://blog.csdn.net/a745233700/article/details/120715371
+
 2.27 说说什么是守护进程，如何实现
+
+> 待学习
+
+2.44 说说什 是信号量， 有什 作用
+
+> https://blog.csdn.net/weixin_43914272/article/details/108317212
 
 2.52  简述Linux零拷贝的原理
 
@@ -3791,6 +4216,42 @@ gdb test
 > 简单解释：https://www.jianshu.com/p/c9190109c7d8
 >
 > 系统解释：https://blog.csdn.net/www_dong/article/details/113532077
+>
+> 视频教程：https://www.bilibili.com/video/BV1qJ411w7du/?spm_id_from=333.337.search-card.all.click&vd_source=7230a052308bbb41976f248d2c778e3a
+>
+> seclect、poll 阻塞函数
+>
+> redis、nginx、java(N2O)都是使用epoll
+
+select
+
+* 优点(相较于自己实现)：
+  * 所有任务一次传给内核态，如果是自己实现，需要一个个判断，每个判断是否有数据传来都要切换到内核态
+* 缺点：
+  * 1 由于bitmap数据结构的特性，最多只能支持1024个请求
+  * 2 rset不能重用，没有都要遍历重置
+  * 3 仍然有用户态内核态的切换
+  * 4 内核态返回，需要O(n)时间复杂度找到有数据的请求是哪个
+
+![image-20230309165501713](C++/image-20230309165501713.png)
+
+poll
+
+* 优点(相较于select):
+  * 支持更多请求，因为pollfds数组是没有上限的
+  * 不用重置pollfds，只用每次修改revent即可
+* 缺点：
+  * 仍然没有解决select中提到的3，4缺点
+
+![image-20230309170205226](C++/image-20230309170205226.png)
+
+epoll
+
+* 优点：
+  * epfd是用户态和内核态共享的，所以解决了用户态和内核态切换的开销
+  * 内核态在轮询的时候，会对有数据的请求进行重排，即有数据的请求放到epfd前面，并且有返回值，返回值为有数据的请求个数，这样就可以只用遍历有数据的请求了，解决了O(N)复杂度的遍历
+
+![image-20230309171645814](C++/image-20230309171645814.png)
 
 2.54 说说多路IO复用技术有哪些，区别是什么
 
@@ -3804,6 +4265,10 @@ gdb test
 2.57 简述同步与异步的区别，阻塞与非阻塞的区别
 
 > https://blog.csdn.net/liyaomeng/article/details/107891133
+
+* 阻塞与非阻塞指的是用户态的程序执行是否阻塞
+* 同步与异步指的是同时是否能处理多个任务，同步只能处理一个，异步可以处理多个
+  * 多路IO复用技术(select、poll、epoll)就是异步阻塞的，阻塞是因为select、poll、epoll调用的时候代码是阻塞的，得等待系统态返回，异步是指可以同时处理多个任务
 
 2.58 BIO NIO有什么区别
 
