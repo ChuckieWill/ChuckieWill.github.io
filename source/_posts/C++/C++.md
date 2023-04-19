@@ -4188,6 +4188,8 @@ public:
 > 具体使用： https://blog.csdn.net/xubaocai0379/article/details/125876595
 >
 > https://blog.csdn.net/brahmsjiang/article/details/79318149
+>
+> 查看变量值：https://blog.csdn.net/wohu1104/article/details/125069987
 
 ```c
 // test.c
@@ -4736,13 +4738,59 @@ Hadoop和Spark的对比
 
 #  c++
 
+####  GDB调试
+
+> 查看变量值（结构体、数组，对象等）：https://blog.csdn.net/wohu1104/article/details/125069987
+
 ####  const的使用
 
 > https://blog.csdn.net/qq_41902325/article/details/124274072
 >
 > https://blog.csdn.net/limengshi138392/article/details/122078477
 
-const修饰成员函数
+const修饰成员函数:  对于类的成员函数，若指定其为const类型，则表明其是一个常函数，不能修改类的成员变量，类的常对象只能访问类的常成员函数；
+
+####  智能指针
+
+> https://blog.csdn.net/solstice/article/details/8547547
+
+内部实现
+
+线程安全
+
+####  vector存储对象
+
+> https://blog.csdn.net/Think88666/article/details/89408890
+>
+> https://blog.csdn.net/weixin_42322256/article/details/125068306
+
+vector存储对象扩容时，也是完全拷贝对象，push_back和emplace_back对比
+
+####  虚函数表和虚函数指针
+
+> https://blog.csdn.net/qq_43142509/article/details/126365313
+>
+> https://www.nowcoder.com/discuss/415213368640909312?sourceSSR=users
+
+虚函数表创建时刻
+
+虚函数指针创建时刻
+
+虚函数表属于类还是实例
+
+####  阿里二面
+
+new的第二参数，传入指针，结合vector，先开辟空间再用new构造
+
+父类析构函数没有定义为析构函数，如何保证子类可以正常析构，使用share_ptr、template解决   share_ptr的delete参数
+
+如何解决share_ptr的高频访问，在多线程的情况下，实现原子性，，，，
+
+编程规范，传入(const &)传出参数
+
+
+
+
 
 #  数据库
 
@@ -4839,7 +4887,7 @@ string、list、hash、set、zset
 * 读写分离
 * 主节点负责数据的写入和数据同步
   * 先生成RDB文件发给从节点，后续有写入修改则记录操作命令，并将命令发给从节点进行数据同步
-  * 操作命令发给从节点的同时写入一个命令缓冲区并用游标激励写入的位置（主记录写入游标，从记录各自的读游标，即读到哪儿了）
+  * 操作命令发给从节点的同时写入一个命令缓冲区并用游标记录写入的位置（主记录写入游标，从记录各自的读游标，即读到哪儿了）
     * 从节点挂掉后重启，只需要在缓存区读命令更新即可，不要重新从主节点获取RDB文件，从缓存区读命令的标志是之前读命令的游标位置
 * 从节点负责数据的读
 * 如果主节点挂掉了就由从节点顶替
@@ -4864,6 +4912,11 @@ string、list、hash、set、zset
 * 每个节点都有一个从节点，当当前节点挂掉后则由从节点顶替
 
 4 acid
+
+* 原子性
+* 一致性
+* 隔离性
+* 持久性
 
 5 三范式
 
@@ -5161,6 +5214,118 @@ struct MANAGER{
 #  网络编程
 
 [select中的fd_set](https://blog.csdn.net/Fuel_Ming/article/details/122931926)
+
+####  TCP通信流程
+
+```
+	server:
+		1. socket()	创建socket
+
+		2. bind()	绑定服务器地址结构
+
+		3. listen()	设置监听上限
+
+		4. accept()	阻塞监听客户端连接
+
+		5. read(fd)	读socket获取客户端数据
+
+		6. 小--大写	toupper()
+
+		7. write(fd)
+
+		8. close();
+
+	client:
+
+		1. socket()	创建socket
+
+		2. connect();	与服务器建立连接
+
+		3. write()	写数据到 socket
+
+		4. read()	读转换后的数据。
+
+		5. 显示读取结果
+
+		6. close()
+
+```
+
+####  UDP通信流程
+
+```
+	recv()/send() 只能用于 TCP 通信。 替代 read、write
+
+	accpet(); ---- Connect(); ---被舍弃
+
+	server：
+
+		lfd = socket(AF_INET, STREAM, 0);	SOCK_DGRAM --- 报式协议。
+
+		bind();
+
+		listen();  --- 可有可无
+
+		while（1）{
+
+			read(cfd, buf, sizeof) --- 被替换 --- recvfrom（） --- 涵盖accept传出地址结构。
+            小-- 大
+				
+			write();--- 被替换 --- sendto（）---- connect
+		}
+		close();
+
+client：
+
+		connfd = socket(AF_INET, SOCK_DGRAM, 0);
+
+		sendto（‘服务器的地址结构’， 地址结构大小）
+
+		recvfrom（）
+
+		写到屏幕
+
+		close();
+
+
+
+ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,struct sockaddr *src_addr, socklen_t *addrlen);
+
+					sockfd： 套接字
+
+					buf：缓冲区地址
+
+					len：缓冲区大小
+
+					flags： 0
+
+					src_addr：（struct sockaddr *）&addr 传出。 对端地址结构
+
+					addrlen：传入传出。
+
+				返回值： 成功接收数据字节数。 失败：-1 errn。 0： 对端关闭。
+
+
+
+ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,const struct sockaddr *dest_addr, socklen_t addrlen);
+
+					sockfd： 套接字
+
+					buf：存储数据的缓冲区
+
+					len：数据长度
+
+					flags： 0
+
+					src_addr：（struct sockaddr *）&addr 传入。 目标地址结构
+
+					addrlen：地址结构长度。
+
+				返回值：成功写出数据字节数。 失败 -1， errno		
+
+```
+
+
 
 ####  tcp第三次握手失败
 
