@@ -761,6 +761,72 @@ int main()
 }
 ```
 
+* 使用已有指针创建
+  * 原始指针赋值给unique_ptr后应该置空，不能让原始指针还能修改对象
+
+```c++
+Cat* p1 = new Cat("ok");
+unique_ptr up1(p1);
+
+p1->setCont("okk");  // 此时p1还能使用，且可以修改对象，修改后up1访问也会改变， 这明显是不符合独占的
+up1->print(); // okk
+
+// 赋值给up1后应该置空
+p1 = nullptr;
+```
+
+* 作为函数参数
+  * 一般使用const &
+
+```c++
+#include<iostream>
+#include<bits/stdc++.h>
+
+using namespace std;
+
+class Cat{
+private:
+  string name;
+public:
+  Cat(){
+    cout<<"Cat()"<<endl;
+  }
+  Cat(const string& name):name(name){
+    cout<<"Cat(const string& name):name(name)"<<endl;
+  }
+  string getName(){
+    return name;
+  }
+  void setName(const string& name){
+    this->name = name;
+  }
+  ~Cat(){
+    cout<<"~Cat()"<<endl;
+  }
+};
+
+void func(unique_ptr<Cat> cat){
+  cout<<cat->getName()<<endl;
+}
+
+void func2(const unique_ptr<Cat>& cat){
+  cout<<cat->getName()<<endl;
+}
+
+
+
+int main(){
+  unique_ptr<Cat> cat(new Cat("Tom"));
+  // func(move(cat));
+  // cout<<cat->getName()<<endl; // 报错，因为所有权已经转给func了
+  func2(cat);
+  cout<<cat->getName()<<endl; // 成功，因为func2是const引用，不会改变cat的所有权
+  return 0;
+}
+```
+
+
+
 ####  shared_ptr
 
 * 介绍
@@ -796,6 +862,58 @@ int main()
     return 0;
 }
 ```
+
+* 原始指针构造
+  * 原始指针构造完应该置nullptr， 避免原始指针对数据的修改
+
+```c++
+class Cat{
+private:
+  string name;
+public:
+  Cat(){
+    cout<<"Cat()"<<endl;
+  }
+  Cat(const string& name):name(name){
+    cout<<"Cat(const string& name):name(name)"<<endl;
+  }
+  string getName(){
+    return name;
+  }
+  void setName(const string& name){
+    this->name = name;
+  }
+  ~Cat(){
+    cout<<"~Cat()"<<endl;
+  }
+};
+
+int main(){
+  Cat* p1 = new Cat("okk");
+  shared_ptr<Cat> p2{p1};
+  cout<<"p2.use_count()="<<p2.use_count()<<endl;  // 1
+  // delete p1;
+  cout<<p1->getName()<<endl;
+  cout<<p2->getName()<<endl;
+  p1->setName("okkkkk");
+  p1 = nullptr;
+  cout<<"p2.use_count()="<<p2.use_count()<<endl; // 2
+
+  cout<<p2->getName()<<endl;
+  return 0;
+}
+
+// 打印
+Cat(const string& name):name(name)
+p2.use_count()=1
+okk
+okk
+p2.use_count()=1
+okkkkk
+~Cat()
+```
+
+
 
 ####  weak_ptr
 
@@ -4778,9 +4896,243 @@ vector存储对象扩容时，也是完全拷贝对象，push_back和emplace_bac
 
 虚函数表属于类还是实例
 
+####  placement new
+
+> [侯捷内存管理1-12]()
+>
+> placement: 安置
+>
+> 只要是带小括号的用法都是placement new ： new(ptr)
+>
+> 系统自带的是传入指针的用法，即已经开辟了空间，并用指针ptr指向这个空间，则可以通过new(ptr) Foo(1, 2)来在已经开辟空间的地址上调用构造函数
+>
+> placement new本质上是对 operator new的重载，添加了第二参数或更多参数
+
+**题目** 阿里二面
+
+vector先开辟空间，然后再调用构造函数初始化
+
+* new底层是默认的operator new，只有第一个默认参数
+* new()底层是对operator new重载了，添加了第二参数，第一参数默认是对象的大小
+
+![image-20230420205210767](C++/image-20230420205210767.png)
+
+![image-20230420205013208](C++/image-20230420205013208.png)
+
+```c++
+class A{
+public:
+  int id;
+  A():id(0){
+    cout<<"default ctor.this: "<<this<<" id="<<id<<endl;
+  }
+  A(int id):id(id){
+    cout<<"ctor.this: "<<this<<" id="<<id<<endl;
+  }
+  A& operator=(const A& other){
+    cout<<"operator=().this: "<<this<<" id="<<id<<endl;
+    id = other.id;
+    return *this;
+  }
+  ~A(){
+    cout<<"dtor.this: "<<this<<" id="<<id<<endl;
+  }
+};
+// g++ -o place placement_new.cpp 
+int main()
+{
+  int size = 3;
+  A* buf = new A[size];
+
+  A* tmp = buf;
+
+  cout<<"buf="<<buf<<" tmp="<<tmp<<endl;
+
+  for(int i = 0; i <size; i++){
+    new(tmp) A(i);
+    tmp++;
+  }
+
+  cout<<"buf="<<buf<<" tmp="<<tmp<<endl;
+
+  delete[] buf;
+  return 0;
+}
+
+// 打印
+default ctor.this: 0x55c8c80f5e78 id=0
+default ctor.this: 0x55c8c80f5e7c id=0
+default ctor.this: 0x55c8c80f5e80 id=0
+buf=0x55c8c80f5e78 tmp=0x55c8c80f5e78
+ctor.this: 0x55c8c80f5e78 id=0
+ctor.this: 0x55c8c80f5e7c id=1
+ctor.this: 0x55c8c80f5e80 id=2
+buf=0x55c8c80f5e78 tmp=0x55c8c80f5e84
+dtor.this: 0x55c8c80f5e80 id=2
+dtor.this: 0x55c8c80f5e7c id=1
+dtor.this: 0x55c8c80f5e78 id=0
+    
+// new()  结合vector用法
+int main(){
+  int size = 3;
+  vector<A> vec(size); // 调用3次默认构造函数    vector会自动调用每个对象的析构函数
+  for(int i = 0; i < size; i++){
+    new(&vec[i]) A(i); // 调用有参构造函数
+  }
+  return 0;
+}
+
+// 打印
+default ctor.this: 0x55f6ac63ee70 id=0
+default ctor.this: 0x55f6ac63ee74 id=0
+default ctor.this: 0x55f6ac63ee78 id=0
+ctor.this: 0x55f6ac63ee70 id=0
+ctor.this: 0x55f6ac63ee74 id=1
+ctor.this: 0x55f6ac63ee78 id=2
+dtor.this: 0x55f6ac63ee70 id=0
+dtor.this: 0x55f6ac63ee74 id=1
+dtor.this: 0x55f6ac63ee78 id=2
+ 
+// 相对与new()的方式，会多一次临时对象的创建和销毁，还会多一次等值拷贝构造，但是会少一次有参构造
+// 相对来说性能是更差的
+int main(){
+  int size = 3;
+  vector<A> vec(size);
+  for(int i = 0; i < size; i++){
+    vec[i] = A(i);
+  }
+  return 0;
+}
+
+// 打印
+default ctor.this: 0x5563d7c09e70 id=0
+default ctor.this: 0x5563d7c09e74 id=0
+default ctor.this: 0x5563d7c09e78 id=0
+ctor.this: 0x7ffebb7eb044 id=0
+operator=().this: 0x5563d7c09e70 id=0
+dtor.this: 0x7ffebb7eb044 id=0
+ctor.this: 0x7ffebb7eb044 id=1
+operator=().this: 0x5563d7c09e74 id=0
+dtor.this: 0x7ffebb7eb044 id=1
+ctor.this: 0x7ffebb7eb044 id=2
+operator=().this: 0x5563d7c09e78 id=0
+dtor.this: 0x7ffebb7eb044 id=2
+dtor.this: 0x5563d7c09e70 id=0
+dtor.this: 0x5563d7c09e74 id=1
+dtor.this: 0x5563d7c09e78 id=2
+```
+
+####  delete[] 与 delete
+
+* delete会干两件事
+  * 调用一次析构函数
+  * 释放开辟的空间
+* delete[] 会干两件事
+  * 调用多次析构函数，即调用数组中每个对象的析构函数
+  * 释放开辟的空间
+* new T[]   但调用delete可能出错
+  * 如果T是基本数据类型，即开辟的空间没有指针指向其它地方，直接delete可以正常释放开辟的空间
+  * 如果T是对象，因为对象中可能也开辟了堆数据，用指针指向，需要在析构函数中释放指针指向的空间，如果调用的是delete则只会调用一次析构函数，则有些对象的析构函数没有调用，对象中开辟的堆数据就没有在析构函数中释放，则会导致内存泄漏
+    * 如果对象中没有开辟对数据指向其它地方，只调用delete，理论上也是可以释放空间，不会导致内存泄漏的，但是如果对象有析构函数，这种写法仍然会执行报错，
+      * 对象中没有开辟堆数据，且没有写析构函数，则使用delete是可以成功执行的，且不会有内存泄漏
+      * 对象中没有开辟堆数据，但有写析构函数，则使用delete，执行会报错
+        * 写了析构函数，在开辟的空间中会标注需要析构的次数，如果使用delete只调用一次析构，和之前标注的次数不一致，则会导致报错
+    * 对象中有开辟堆数据
+      * 对象中有开辟堆数据，且没有写析构函数，则使用delete是可以成功执行的，但会导致内存泄漏
+      * 对象中有开辟堆数据，且有写析构函数，则使用delete，执行会报错
+
+```c++
+// 有析构函数
+class A{ // 没有指针，没有开辟新的内存，只是一个简单的类
+public:
+  int a;
+  A():a(0){
+    cout<<"A create"<<endl;
+  }
+  ~A(){
+    cout<<"A delete"<<endl;
+  }
+};
+
+class B{
+public:
+  int* pi;
+  B(){
+    pi = new int(10);
+    cout<<"B create"<<endl;
+  }
+  ~B(){
+    cout<<"B delete"<<endl;
+    delete pi;
+  }
+};
+
+int main(){
+  A* p = new A[3];
+  // delete p; // 执行报错
+  delete[] p;
+
+  B* p2 = new B[3];
+  // delete p2; // 执行报错
+  delete[] p2;
+
+  int* p3 = new int[3];
+  // delete p3; // 执行成功
+  delete[] p3; // 执行成功
+
+  return 0;
+}
+
+
+// 没有析构函数
+class A{ // 没有指针，没有开辟新的内存，只是一个简单的类
+public:
+  int a;
+  A():a(0){
+    cout<<"A create"<<endl;
+  }
+  // ~A(){
+  //   cout<<"A delete"<<endl;
+  // }
+};
+
+class B{
+public:
+  int* pi;
+  B(){
+    pi = new int(10);
+    cout<<"B create"<<endl;
+  }
+  // ~B(){
+  //   cout<<"B delete"<<endl;
+  //   delete pi;
+  // }
+};
+
+int main(){
+  A* p = new A[3];
+  delete p; // 执行通过，不会导致内存泄漏
+  // delete[] p;
+
+  B* p2 = new B[3];
+  delete p2; // 执行通过，但是会导致内存泄漏   因为b中开辟了堆数据
+  // delete[] p2;
+
+  int* p3 = new int[3];
+  // delete p3; // 执行成功
+  delete[] p3; // 执行成功
+
+  return 0;
+}
+```
+
+
+
+
+
 ####  阿里二面
 
-new的第二参数，传入指针，结合vector，先开辟空间再用new构造
+operator new的第二参数，传入指针，结合vector，先开辟空间再用new()构造
 
 父类析构函数没有定义为析构函数，如何保证子类可以正常析构，使用share_ptr、template解决   share_ptr的delete参数
 
@@ -4788,7 +5140,21 @@ new的第二参数，传入指针，结合vector，先开辟空间再用new构�
 
 编程规范，传入(const &)传出参数
 
-
+> https://cloud.tencent.com/developer/article/2240964
+>
+> https://www.jianshu.com/p/d625150cdffc
+>
+> https://blog.csdn.net/weixin_43862847/article/details/126493820
+>
+> https://blog.csdn.net/weixin_41504987/article/details/124396989
+>
+> https://blog.csdn.net/u012477435/article/details/106875121/
+>
+> https://blog.csdn.net/jiangfuqiang/article/details/8292906
+>
+> https://blog.csdn.net/GreatTang/article/details/125814259?spm=1001.2101.3001.6650.2&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-2-125814259-blog-8292906.235%5Ev30%5Epc_relevant_default_base&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-2-125814259-blog-8292906.235%5Ev30%5Epc_relevant_default_base&utm_relevant_index=3	
+>
+> https://blog.csdn.net/weixin_43606861/article/details/116121511?spm=1001.2101.3001.6650.5&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-5-116121511-blog-125814259.235%5Ev30%5Epc_relevant_default_base&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-5-116121511-blog-125814259.235%5Ev30%5Epc_relevant_default_base&utm_relevant_index=8
 
 
 
