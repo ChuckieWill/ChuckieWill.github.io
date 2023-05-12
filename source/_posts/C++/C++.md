@@ -1,10 +1,4 @@
 ---
-ja
-
-
-
-
-
 title: C++
 date: 2021-07-06 10:43:17
 tags:
@@ -12,6 +6,8 @@ tags:
 categories:
 - [C++]
 ---
+
+
 
 #  C++
 
@@ -3157,6 +3153,10 @@ auto cmp = [](ListNode* l1, ListNode* l2){
 priority_queue<ListNode*, vector<ListNode*>, decltype(cmp)> pq(cmp); // decltype 用于数据类型的推导
 ```
 
+###  set、map
+
+* set、map在循环时，set的值和map的key是不能修改的
+
 ###  相关知识点
 
 ####  move 左值 右值
@@ -4224,7 +4224,7 @@ public:
 
 内存对齐
 
-> 案例1：https://blog.csdn.net/weixin_40775703/article/details/104941508
+> 案例1：https://blog.csdn.net/weixin_40775703/article/details/104941508  **重要**
 >
 > 案例2：https://blog.csdn.net/qq_39397165/article/details/119745975
 
@@ -4233,8 +4233,91 @@ public:
   * 32位  对齐数：4
 * 内存对齐规则
   * 结构体成员对齐规则，对齐数= min(编译器默认对齐数，结构体当前成员变量大小)
-  * 结构体本身对齐规则，对齐数= min(编译器默认对齐数,   结构体成员中最长类型变量大小)的整数倍
+  * 结构体本身对齐规则，对齐数= min(编译器默认对齐数,   结构体成员中最长类型变量大小)
   * 嵌套结构体对齐规则，把嵌套结构体视为成员变量即可，大小即为结构体大小
+* 对于类的某个实例（对象）而言，**成员函数、静态变量**都不会占空间，只有**成员变量占空间**，而只考虑成员变量的类相当于一个结构体
+
+```c++
+// 结构体成员对齐案例
+#include<iostream>
+using namespace std;
+struct S1
+{
+	char c1;
+	char c2;
+	int i1;
+};
+struct S2
+{
+  char c1;  // min{编译器默认对齐数，该成员变量大小} = min(8, 1) = 1   存在[0]位置
+  int i1;   // min{编译器默认对齐数，该成员变量大小} = min(8, 4) = 4   存在[4,7]位置  因为int要对齐4的倍数，所以[1,3]空
+  char c2;  // min{编译器默认对齐数，该成员变量大小} = min(8, 1) = 1   存在[8]位置
+};
+// 原数据占用空间为9， 但s2最大对齐数为4 所以[9,11]空   总大小为12   9补齐为4的倍数
+struct S3
+{
+	char c1;  // min{编译器默认对齐数，该成员变量大小} = min(8, 1) = 1   存在[0]位置
+  double d1;  // min{编译器默认对齐数，该成员变量大小} = min(8, 8) = 8   存在[8,15]位置  因为double要对齐8的倍数，所以[1,7]空
+	int i1;  // min{编译器默认对齐数，该成员变量大小} = min(8, 4) = 4   存在[16,19]位置
+	char c2; // min{编译器默认对齐数，该成员变量大小} = min(8, 1) = 1   存在[20]位置
+};
+// 原数据占用空间为21， 但s3最大对齐数为8 所以[21,23]空   总大小为24   21补齐为8的倍数
+
+struct S4 { 
+  int a[5]; // 20
+  char b;  // 21
+  double c; // 对齐数为8 所以[22,23]空，填充[24,31]
+}; 
+// 原数据占用空间为32
+int main()
+{
+	cout <<"sizeof(S1)"<< sizeof(S1)<<endl; // 8
+	cout << "sizeof(S2)"<<sizeof(S2)<<endl; // 12
+	cout << "sizeof(S3)"<<sizeof(S3)<<endl; // 24
+  cout << "sizeof(S4)"<<sizeof(S4)<<endl; // 32
+	return 0;
+}
+```
+
+```c++
+// 嵌套结构体
+#include<iostream>
+using namespace std;
+struct S0
+{
+  int i1;
+  int i2;
+};
+struct S1
+{
+	double d1;
+	double d2;
+};
+struct S2
+{
+	char c1; // min(8, 1) = 1   [0]
+	S1 s1; // min(8, 8) = 8  [8,23]  结构体的对齐数为min(编译器默认对齐数,   结构体成员中最长类型变量大小)
+	char c2; // min(8, 1) = 1  [24]
+};
+struct S4
+{
+  char c1; // min(8, 1) = 1   [0]
+	S0 s0; // min(8, 4) = 4  [4, 11] 结构体的对齐数为min(编译器默认对齐数,   结构体成员中最长类型变量大小)
+	char c2; // min(8, 1) = 1  [12]
+};
+// 本身大小13 最大对齐数为4  补齐[14, 15]  13 --> 16
+int main()
+{
+  cout << "sizeof(S0):"<<sizeof(S0)<<endl; // 8
+	cout <<"sizeof(S1):"<< sizeof(S1)<<endl; // 16
+	cout << "sizeof(S2):"<<sizeof(S2)<<endl; // 32
+  cout << "sizeof(S4):"<<sizeof(S4)<<endl; // 16
+	return 0;
+}
+
+```
+
+
 
 说说C 如何 实现C+ 语言中的重载
 
@@ -5126,7 +5209,211 @@ int main(){
 }
 ```
 
+####  shared_ptr与析构
 
+* 父类的析构函数没有定义位虚析构，多态情况下如何在析构的时候可以调用对应的子类的析构函数
+* shared_ptr默认就可以做到
+* 父类指针只能调用虚函数，子类的非虚函数不能调用
+
+```c++
+#include <iostream>
+#include <string>
+#include <memory>
+using namespace std;
+
+class Base
+{
+public:
+    int* m_i;
+    Base(int i) :m_i(new int(i)) {}
+
+    virtual void print()
+    {
+        cout << "Base" << endl;
+    }
+
+    ~Base()
+    // virtual ~Base()
+    {
+        cout << "~Base" << endl;
+        delete m_i;
+    }
+};
+
+class Child : public Base
+{
+public:
+    int* m_j;
+    Child(int i, int j) :Base(i), m_j(new int(j)) {}
+
+    void print()
+    {
+        cout << "Child" << endl;
+    }
+    
+    void fun(){
+      cout << "fun" << endl;
+    }
+
+    ~Child()
+    {
+        cout << "~Child" << endl;
+        delete m_j;
+    }
+};
+
+
+int main()
+{
+    Base *p = new Child(1, 2);
+    p->print();
+    delete p;
+
+    // Child
+    // ~Base
+
+
+    shared_ptr<Base> p0(new Child(1, 2), [](Base* p) {delete p; });
+    p0->print();
+
+    // Child
+    // ~Base
+
+
+    shared_ptr<Base> p1(new Child(1, 2), [](Child* p) {delete p; });
+    p1->print();
+
+    // Child
+    // ~Child
+    // ~Base
+
+    shared_ptr<Base> p2(new Child(1, 2));   // 默认析构的就是p1的lambda表达式的情况
+    p2->print();
+
+    // Child
+    // ~Child
+    // ~Base
+    
+    Base* b = new Child(1, 2);
+    b->print();
+    b->fun(); // 报错 父类指针只能调用虚函数，子类的非虚函数不能调用
+    b->~Child(); // 报错 父类指针只能调用虚函数，子类的非虚函数不能调用
+    
+    Child* b1 = new Child(1, 2);
+    b1->print();
+    b1->fun(); 
+    b1->~Child(); // 析构函数是可以自己调用的，构造函数不能
+    return 0;
+}
+
+
+```
+
+####  多态指针转型
+
+> [向上转型（子类指针赋值给父类指针）](https://blog.csdn.net/weixin_44997886/article/details/104610140)
+>
+> [dynamic_cast](https://blog.csdn.net/liranke/article/details/5145787)
+
+dynamic_cast
+
+* 虚继承时，向下转型必须使用dynamic_cast
+* 非虚继承时，可以直接通过(子类*)强制转换
+
+```c++
+#include <iostream>
+#include <string>
+#include <memory>
+using namespace std;
+
+class Base
+{
+public:
+    int* m_i;
+    Base(int i) :m_i(new int(i)) {}
+
+    virtual void print()
+    {
+        cout << "Base" << endl;
+    }
+
+    ~Base()
+    // virtual ~Base()
+    {
+        cout << "~Base" << endl;
+        delete m_i;
+    }
+};
+
+// class Child : virtual public Base // 虚继承
+class Child : public Base
+{
+public:
+    int* m_j;
+    Child(int i, int j) :Base(i), m_j(new int(j)) {}
+
+    void print()
+    {
+        cout << "Child" << endl;
+    }
+
+    void fun(){
+      cout<<"self: "<<this<<endl;
+      cout << "fun" << endl;
+    }
+    ~Child()
+    {
+        cout << "~Child" << endl;
+        delete m_j;
+    }
+};
+
+int main(){
+  Child* a = new Child(1, 2);
+  a->print();
+  a->fun();
+  cout<<"a: "<<a<<endl;
+  Base* b = a;
+  b->print();
+  // b->fun(); // error
+  cout<<"b: "<<b<<endl;
+  Child* c = dynamic_cast<Child*>(b);
+  // Child* c = (Child*)b;  // 虚继承时这种写法对，只能用dynamic_cast方式， 不是虚继承时可以这样转化
+  c->print();
+  c->fun();
+  cout<<"c: "<<c<<endl;
+  // delete a;  // 结果同b  但Child的析构函数会被调用
+  delete b;
+  // delete c; // 结果同b  但Child的析构函数会被调用
+  return 0;
+}
+
+// 打印
+Child
+self: 0x55d576a7fe70
+fun
+a: 0x55d576a7fe70
+Child
+b: 0x55d576a7fe70
+Child
+self: 0x55d576a7fe70
+fun
+c: 0x55d576a7fe70
+~Base
+```
+
+####  内存共享
+
+> https://blog.csdn.net/weixin_42483745/article/details/123781769
+>
+> https://blog.csdn.net/m0_50662680/article/details/127734782
+>
+> https://blog.csdn.net/Young_Bobooo/article/details/121975632
+>
+> mmap与shm的区别：https://blog.csdn.net/weixin_44233369/article/details/96431640
+>
+> 1、mmap保存到实际硬盘，实际存储并没有反映到主存上。优点：储存量可以很大（多于主存），缺点：进程间读取和写入速度要比主存的要慢。
+> 2、shm保存到物理存储器（主存），实际的储存量直接反映到主存上。优点，进程间访问速度（读写）比磁盘要快；缺点，储存量不能非常大（多于主存）
 
 
 
@@ -5134,7 +5421,7 @@ int main(){
 
 operator new的第二参数，传入指针，结合vector，先开辟空间再用new()构造
 
-父类析构函数没有定义为析构函数，如何保证子类可以正常析构，使用share_ptr、template解决   share_ptr的delete参数
+父类析构函数没有定义为虚析构函数，如何保证子类可以正常析构，使用share_ptr、template解决   share_ptr的删除器(default_delete)
 
 如何解决share_ptr的高频访问，在多线程的情况下，实现原子性，，，，
 
@@ -5697,7 +5984,7 @@ ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,const struct s
 
 > [详细解释](https://www.zhihu.com/question/36495943?sort=created)
 >
-> 在建立 TCP 连接时，如果第三次握手的 ACK，服务端无法收到，则服务端就会短暂处于 `SYN_RECV` 状态，而客户端会处于 `ESTABLISHED` 状态。
+> 在建立 TCP 连接时，如果第三次握手的 ACK丢失，服务端无法收到，则服务端就会短暂处于 `SYN_RECV` 状态，而客户端会处于 `ESTABLISHED` 状态。
 >
 > 由于服务端一直收不到 TCP 第三次握手的 ACK，则会一直重传 SYN、ACK 包，直到重传次数超过 `tcp_synack_retries` 值（默认值 5 次）后，服务端就会断开 TCP 连接。
 >

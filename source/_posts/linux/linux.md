@@ -12,6 +12,10 @@ categories:
 
 #  linux
 
+#####  解压
+
+> [zip](https://www.cnblogs.com/chinareny2k/archive/2010/01/05/1639468.html)
+
 #####  cmake
 
 > https://blog.csdn.net/qq_41375609/article/details/110535697
