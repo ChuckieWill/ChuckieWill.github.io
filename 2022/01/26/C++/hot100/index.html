@@ -28,7 +28,7 @@
 <meta property="og:description" content="hot 100 1  两数之和  时间复杂度O（n）,空间O（n） 哈希map, find, count(时间复杂度都为O(1), 最坏情况为O(n))   2 两数相加 链表  初始化pre,每次相加包括pre, 整除10更新pre   3 无重复字符的最长子串  滑动窗口+hashset   4 寻找两个正序数组的中位数  二分查找，边界，各种情况分析，易错，复习   5  最长回文子串  从">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-26T06:43:17.000Z">
-<meta property="article:modified_time" content="2023-05-10T02:15:29.856Z">
+<meta property="article:modified_time" content="2023-05-13T09:17:32.394Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="算法总结">
 <meta name="twitter:card" content="summary">
@@ -220,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-10 10:15:29" itemprop="dateModified" datetime="2023-05-10T10:15:29+08:00">2023-05-10</time>
+                <time title="修改时间：2023-05-13 17:17:32" itemprop="dateModified" datetime="2023-05-13T17:17:32+08:00">2023-05-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,14 +238,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>14k</span>
+              <span>19k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>13 分钟</span>
+              <span>17 分钟</span>
             </span>
 
         </div>
@@ -1186,10 +1186,8 @@
 <p>两个字符串是否相等，直接用s == t判断， 比自己比较快</p>
 </blockquote>
 <ul>
-<li><p>offer 专项 033 <a href="https://leetcode.cn/problems/sfvd7V/" target="_blank" rel="noopener"> 变位词组</a></p>
-</li>
-<li><p>offer 专项 035 <a href="https://leetcode.cn/problems/569nqc/" target="_blank" rel="noopener"> 最小时间差</a></p>
-<ul>
+<li>offer 专项 033 <a href="https://leetcode.cn/problems/sfvd7V/" target="_blank" rel="noopener"> 变位词组</a></li>
+<li>offer 专项 035 <a href="https://leetcode.cn/problems/569nqc/" target="_blank" rel="noopener"> 最小时间差</a><ul>
 <li>时间格式转化： 各位操作比用substr+stoi的效率高</li>
 </ul>
 </li>
@@ -1253,15 +1251,11 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;	</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;number(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">	iota(number.<span class="built_in">begin</span>(), number.<span class="built_in">end</span>(), <span class="number">66</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; number[i] &lt;&lt; <span class="string">" "</span>;		<span class="comment">//输出：66 67 68 69 70 71 72 73 74 75</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	system(<span class="string">"pause"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p>atoi()和stoi()</p>
-</li>
-<li><p><a href="https://blog.csdn.net/VariatioZbw/article/details/125257536" target="_blank" rel="noopener">accumulate</a></p>
-<ul>
+<li><a href="https://blog.csdn.net/VariatioZbw/article/details/125257536" target="_blank" rel="noopener">accumulate</a><ul>
 <li>类似js中reduce</li>
 </ul>
 </li>
-<li><p><a href="https://blog.csdn.net/weixin_44162361/article/details/115790452" target="_blank" rel="noopener">memset</a></p>
-<ul>
+<li><a href="https://blog.csdn.net/weixin_44162361/article/details/115790452" target="_blank" rel="noopener">memset</a><ul>
 <li><code>void *memset(void *s, int c, size_t n);</code><ul>
 <li>s指向要填充的内存块。</li>
 <li>c是要被设置的值。</li>
@@ -1271,7 +1265,42 @@
 </li>
 </ul>
 </li>
+<li>reverse  </li>
+<li>复杂度:恰好交换 <code>(last - first)/2</code> 次</li>
 </ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[] = &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>&#125;;</span><br><span class="line"><span class="built_in">std</span>::reverse(<span class="built_in">std</span>::<span class="built_in">begin</span>(a), <span class="built_in">std</span>::<span class="built_in">end</span>(a));</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>find</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v&#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">auto</span> result1 = <span class="built_in">std</span>::<span class="built_in">find</span>(<span class="built_in">std</span>::<span class="built_in">begin</span>(v), <span class="built_in">std</span>::<span class="built_in">end</span>(v), n1);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>sort</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="built_in">std</span>::sort(s.<span class="built_in">begin</span>(), s.<span class="built_in">end</span>(), <span class="built_in">std</span>::greater&lt;<span class="keyword">int</span>&gt;());<span class="comment">// 按降序，  默认是升序</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 自定义比较函数</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; a, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(a[<span class="number">0</span>] != b[<span class="number">0</span>])&#123;</span><br><span class="line">    <span class="keyword">return</span> a[<span class="number">0</span>] &lt; b[<span class="number">0</span>]; <span class="comment">// 起始点小的在前</span></span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a[<span class="number">1</span>] &lt; b[<span class="number">1</span>]; <span class="comment">// 起始点相同的情况下，终止点小的在前</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; intervals;<span class="comment">// 存储的是顶点对  [[1,2],[2,3],[3,4],[1,3]]</span></span><br><span class="line">sort(intervals.<span class="built_in">begin</span>(), intervals.<span class="built_in">end</span>(), compare);</span><br><span class="line"></span><br><span class="line"><span class="comment">// lambda写法</span></span><br><span class="line">sort(intervals.<span class="built_in">begin</span>(), intervals.<span class="built_in">end</span>(), [](<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; a, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; b)&#123;</span><br><span class="line">  <span class="keyword">if</span>(a[<span class="number">0</span>] != b[<span class="number">0</span>])&#123;</span><br><span class="line">    <span class="keyword">return</span> a[<span class="number">0</span>] &lt; b[<span class="number">0</span>]; <span class="comment">// 起始点小的在前</span></span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a[<span class="number">1</span>] &lt; b[<span class="number">1</span>]; <span class="comment">// 起始点相同的情况下，终止点小的在前</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>C++中的__builtin_popcount()</li>
+</ul>
+<blockquote>
+<p><a href="https://blog.csdn.net/weixin_44915226/article/details/105367005" target="_blank" rel="noopener">https://blog.csdn.net/weixin_44915226/article/details/105367005</a></p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">该函数是C++自带的库函数，内部实现是用查表实现的。</span><br><span class="line">作用：统计数字在二进制下“<span class="number">1</span>”的个数。</span><br><span class="line"><span class="keyword">int</span> a = <span class="number">2</span>   </span><br><span class="line"><span class="keyword">int</span> num = __builtin_popcount(a)  <span class="comment">// num = 1   2的二进制是10</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>tie()<ul>
+<li>解包，类似js中的解构</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><a href="https://blog.csdn.net/lllzzzhhh2589/article/details/121584299" target="_blank" rel="noopener">https://blog.csdn.net/lllzzzhhh2589/article/details/121584299</a></p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">S</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> s;</span><br><span class="line">    <span class="keyword">float</span> d;</span><br><span class="line">    <span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> S&amp; rhs) <span class="keyword">const</span> &#123;</span><br><span class="line">        <span class="comment">// 比较 n 与 rhs.n,</span></span><br><span class="line">        <span class="comment">// 而后为 s 与 rhs.s,</span></span><br><span class="line">        <span class="comment">// 而后为 d 与 rhs.d</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">std</span>::tie(n, s, d) &lt; <span class="built_in">std</span>::tie(rhs.n, rhs.s, rhs.d);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">S value&#123;<span class="number">42</span>, <span class="string">"Test"</span>, <span class="number">3.14</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">double</span> d;</span><br><span class="line"><span class="built_in">string</span> s;</span><br><span class="line"></span><br><span class="line">tie(i, d, s) = t3;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">" "</span> &lt;&lt; d &lt;&lt; <span class="string">" "</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">//打印： 42 3.14 Test</span></span><br></pre></td></tr></table></figure>
+
+
+
 <h1 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h1><h2 id="STL"><a href="#STL" class="headerlink" title="STL"></a>STL</h2><h3 id="stack、vector、list、queue常用方法"><a href="#stack、vector、list、queue常用方法" class="headerlink" title="stack、vector、list、queue常用方法"></a>stack、vector、list、queue常用方法</h3><p>stack</p>
 <ul>
 <li><p>top</p>
@@ -1373,7 +1402,89 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">多个测试用例，每个测试用例一行。</span><br><span class="line">每行通过,隔开，有n个字符，n＜<span class="number">100</span></span><br><span class="line"></span><br><span class="line">输入例子：</span><br><span class="line">a,c,bb</span><br><span class="line">f,dddd</span><br><span class="line">nowcoder</span><br><span class="line">输出例子：</span><br><span class="line">a,bb,c</span><br><span class="line">dddd,f</span><br><span class="line">nowcoder</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> <span class="built_in">line</span>;</span><br><span class="line">    <span class="keyword">while</span> (getline(<span class="built_in">cin</span>, <span class="built_in">line</span>)) &#123;</span><br><span class="line">        <span class="function"><span class="built_in">istringstream</span> <span class="title">iss</span><span class="params">(<span class="built_in">line</span>)</span></span>;</span><br><span class="line">        <span class="built_in">string</span> s;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; vec;</span><br><span class="line">        <span class="keyword">while</span> (getline(iss, s, <span class="string">','</span>)) &#123;</span><br><span class="line">            vec.push_back(s);</span><br><span class="line">        &#125;</span><br><span class="line">        sort(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; vec.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i != vec.<span class="built_in">size</span>() - <span class="number">1</span>)</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; vec[i] &lt;&lt; <span class="string">","</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; vec[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="保留小数点后n位"><a href="#保留小数点后n位" class="headerlink" title="保留小数点后n位"></a>保留小数点后n位</h2><blockquote>
+<h2 id="字符串-1"><a href="#字符串-1" class="headerlink" title="字符串"></a>字符串</h2><blockquote>
+<p><a href="http://c.biancheng.net/c/ascii/" target="_blank" rel="noopener">ASCII码一览表</a></p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INT_MAX = <span class="number">2</span>^<span class="number">31</span><span class="number">-1</span>;</span><br><span class="line">INT_MIN = <span class="number">-2</span>^<span class="number">31</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>字符串转int</strong></p>
+<p>atoi()和stoi()</p>
+<blockquote>
+<p><a href="https://www.jianshu.com/p/e700ac920249" target="_blank" rel="noopener">atoi()和stoi()的区别</a></p>
+</blockquote>
+<ul>
+<li>atoi()和stoi()函数都是只转换字符串的数字部分，如果遇到其它字符的话则停止转换</li>
+<li>只返回有效数字 0123返回123</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> str[] = &#123;<span class="string">'1'</span>,<span class="string">'2'</span>,<span class="string">'a'</span>,<span class="string">'3'</span>&#125;;</span><br><span class="line">    <span class="built_in">string</span> str1 = <span class="string">"12aa3"</span>;</span><br><span class="line">    <span class="comment">//遇到了'a'字符，停止数字转换</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; atoi(str) &lt;&lt; <span class="built_in">endl</span>;   <span class="comment">// 打印 12</span></span><br><span class="line">    <span class="comment">//遇到了'a'字符，停止数字转换</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; stoi(str1) &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">// 打印 12</span></span><br><span class="line">    </span><br><span class="line">  <span class="built_in">string</span> s = <span class="string">"0123"</span>;</span><br><span class="line">  <span class="keyword">int</span> n = stoi(s);</span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;s&lt;&lt;<span class="built_in">endl</span>; <span class="comment">// 0123</span></span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;n&lt;&lt;<span class="built_in">endl</span>; <span class="comment">// 123</span></span><br><span class="line">    </span><br><span class="line">  <span class="built_in">string</span> s = <span class="string">"0"</span>;</span><br><span class="line">  <span class="keyword">int</span> n = stoi(s);</span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;s&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//0</span></span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;n&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; res;</span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">isTrue</span><span class="params">(<span class="built_in">string</span> s)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(s.length() &gt; <span class="number">1</span> &amp;&amp; s[<span class="number">0</span>] == <span class="string">'0'</span>) <span class="keyword">return</span> <span class="literal">false</span>;<span class="comment">//</span></span><br><span class="line">    <span class="keyword">int</span> it = stoi(s);</span><br><span class="line">    <span class="keyword">if</span>(it &gt;=<span class="number">0</span> &amp;&amp; it &lt;= <span class="number">255</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="built_in">string</span>&amp; s, <span class="keyword">int</span> index, <span class="keyword">int</span> need, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp;  pre)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(need == <span class="number">0</span>)&#123; <span class="comment">// 最后一层长度一定满足条件</span></span><br><span class="line">      <span class="built_in">string</span> last = s.substr(index);</span><br><span class="line">      <span class="keyword">if</span>(!isTrue(last)) <span class="keyword">return</span>;</span><br><span class="line">      <span class="built_in">string</span> temp = <span class="string">""</span>;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span>&amp; s : pre)&#123;</span><br><span class="line">        temp = temp + s + <span class="string">"."</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      temp += last;</span><br><span class="line">      res.push_back(temp);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = index; i&lt;index+<span class="number">3</span> &amp;&amp; i &lt;s.length(); ++i)&#123;</span><br><span class="line">      <span class="keyword">int</span> len = s.length() - i<span class="number">-1</span>;</span><br><span class="line">      <span class="comment">// cout&lt;&lt;"len: "&lt;&lt;len&lt;&lt;endl;</span></span><br><span class="line">      <span class="comment">// cout&lt;&lt;"need: "&lt;&lt;need&lt;&lt;"   need*3: "&lt;&lt;need*3&lt;&lt;endl;</span></span><br><span class="line">      <span class="keyword">if</span>(len&gt;= need &amp;&amp; len &lt;= need*<span class="number">3</span>)&#123;</span><br><span class="line">        <span class="built_in">string</span> cur = s.substr(index, i-index+<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span>(!isTrue(cur)) <span class="keyword">return</span>;</span><br><span class="line">        pre.push_back(cur);</span><br><span class="line">        dfs(s, i+<span class="number">1</span>, need<span class="number">-1</span>, pre);</span><br><span class="line">        pre.pop_back();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">restoreIpAddresses</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = s.length();</span><br><span class="line">    <span class="keyword">if</span>(len &lt; <span class="number">4</span> || len &gt; <span class="number">12</span>) <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; pre;</span><br><span class="line">    dfs(s, <span class="number">0</span>, <span class="number">3</span>, pre);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>string转char</strong></p>
+<p>c_str()</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/YXXXYX/article/details/119957061" target="_blank" rel="noopener">C++中的 c_str() 函数</a></p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">char</span> *ptr;</span><br><span class="line">	<span class="built_in">string</span> s = <span class="string">"12345"</span>;</span><br><span class="line">    ptr = s.c_str();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"s改变前ptr为："</span> &lt;&lt; ptr &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    s = <span class="string">"66666"</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"s改变后ptr为："</span> &lt;&lt; ptr &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>int转string</strong></p>
+<p>to_string()</p>
+<p><strong>大小写字符转换</strong></p>
+<p><a href="https://blog.csdn.net/laozhuxinlu/article/details/51539737?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-51539737-blog-105710187.pc_relevant_3mothn_strategy_recovery&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-51539737-blog-105710187.pc_relevant_3mothn_strategy_recovery&utm_relevant_index=1" target="_blank" rel="noopener">tolower/toupper</a> </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;ctype.h&gt;   // c++中使用不用引入头文件</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>判断字符数字</strong></p>
+<ul>
+<li>isalnum函数用于判断字符是否为字母（a-z和A-Z）或数字（0-9）</li>
+</ul>
+<p>isalnum</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;ctype.h&gt; // c++中使用不用引入头文件</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>string移除最后一个元素</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s = <span class="string">"string!"</span>;</span><br><span class="line">s.pop_back(); <span class="comment">// c++11 新语法</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>string追加char</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s = <span class="string">"abc"</span>;</span><br><span class="line"><span class="keyword">char</span> c = <span class="string">'d'</span>;</span><br><span class="line"><span class="comment">// 方式1</span></span><br><span class="line">s += c;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;s&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">// 方式2</span></span><br><span class="line">s.push_back(c);</span><br></pre></td></tr></table></figure>
+
+<h2 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h2><blockquote>
+<p><a href="https://blog.csdn.net/m0_64183293/article/details/122519405" target="_blank" rel="noopener">https://blog.csdn.net/m0_64183293/article/details/122519405</a></p>
+<p>GCC自带的一些builtin内建函数 ：<a href="https://blog.csdn.net/tjcwt2011/article/details/118154919" target="_blank" rel="noopener">https://blog.csdn.net/tjcwt2011/article/details/118154919</a></p>
+</blockquote>
+<ul>
+<li>C++中的__builtin_popcount()</li>
+</ul>
+<blockquote>
+<p><a href="https://blog.csdn.net/weixin_44915226/article/details/105367005" target="_blank" rel="noopener">https://blog.csdn.net/weixin_44915226/article/details/105367005</a></p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">该函数是C++自带的库函数，内部实现是用查表实现的。</span><br><span class="line">作用：统计数字在二进制下“<span class="number">1</span>”的个数。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>__builtin_ctz<ul>
+<li>这个函数作用是返回输入数二进制表示从最低位开始(右起)的连续的0的个数；如果传入0则行为未定义</li>
+</ul>
+</li>
+</ul>
+<h2 id="数值"><a href="#数值" class="headerlink" title="数值"></a>数值</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1e9</span>+<span class="number">7</span> <span class="comment">// 10^9+7  一个比较大的质数</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>取绝对值</strong></p>
+<p>abs()</p>
+<p><strong>使用最大最小值</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;limits.h&gt;</span><br><span class="line">LONG_MIN</span><br><span class="line">L</span><br></pre></td></tr></table></figure>
+
+<p><strong>二进制1个数</strong></p>
+<blockquote>
+<p><a href="https://leetcode.cn/problems/hamming-distance/" target="_blank" rel="noopener">三种求二进制1个数的办法</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 __builtin_popcount</span><br><span class="line">2 x &gt;&gt; 1  x &amp; 1   右移，末尾和1与</span><br><span class="line">3 x &#x3D; x &amp; (x-1)</span><br></pre></td></tr></table></figure>
+
+<p><strong>位与位异或位或</strong></p>
+<blockquote>
+<p><a href="https://blog.csdn.net/m0_37782602/article/details/122863949" target="_blank" rel="noopener">https://blog.csdn.net/m0_37782602/article/details/122863949</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">位与 &amp;  0&amp;0&#x3D;0; 0&amp;1&#x3D;0; 1&amp;0&#x3D;0; 1&amp;1&#x3D;1;</span><br><span class="line">位异或 ^ 0^0&#x3D;0； 0^1&#x3D;1； 1^0&#x3D;1； 1^1&#x3D;0；</span><br><span class="line">位或 |  0|0&#x3D;0； 0|1&#x3D;1； 1|0&#x3D;1； 1|1&#x3D;1；</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Brian Kernighan 算法的原理是：对于任意整数x, 令 x = x &amp; (x<span class="number">-1</span>) 该运算将 x 的二进制表示的最后一个 <span class="number">1</span> 变成 <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>保留小数点后n位</strong></p>
+<blockquote>
 <p><a href="https://zhidao.baidu.com/question/1431242996370114299.html" target="_blank" rel="noopener">https://zhidao.baidu.com/question/1431242996370114299.html</a></p>
 </blockquote>
 <ul>
@@ -1495,7 +1606,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hot-100"><span class="nav-text">hot 100</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#剑指offer-专项突破"><span class="nav-text">剑指offer(专项突破)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#每日一题"><span class="nav-text">每日一题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题型"><span class="nav-text">题型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#链表"><span class="nav-text">链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树"><span class="nav-text">树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单调栈"><span class="nav-text">单调栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回溯"><span class="nav-text">回溯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#差分数组"><span class="nav-text">差分数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学"><span class="nav-text">数学</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线段树"><span class="nav-text">线段树</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PS"><span class="nav-text">PS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能"><span class="nav-text">性能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数"><span class="nav-text">函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用"><span class="nav-text">常用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#STL"><span class="nav-text">STL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stack、vector、list、queue常用方法"><span class="nav-text">stack、vector、list、queue常用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意点"><span class="nav-text">注意点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出"><span class="nav-text">输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#数据对"><span class="nav-text">数据对</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#多行数据"><span class="nav-text">多行数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#多个字符串"><span class="nav-text">多个字符串</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保留小数点后n位"><span class="nav-text">保留小数点后n位</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#面试"><span class="nav-text">面试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#约瑟夫环"><span class="nav-text">约瑟夫环</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#快速幂溢出问题"><span class="nav-text">快速幂溢出问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最短路径"><span class="nav-text">最短路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#差分数组-1"><span class="nav-text">差分数组</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hot-100"><span class="nav-text">hot 100</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#剑指offer-专项突破"><span class="nav-text">剑指offer(专项突破)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#每日一题"><span class="nav-text">每日一题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题型"><span class="nav-text">题型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#链表"><span class="nav-text">链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树"><span class="nav-text">树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单调栈"><span class="nav-text">单调栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回溯"><span class="nav-text">回溯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#差分数组"><span class="nav-text">差分数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学"><span class="nav-text">数学</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串"><span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线段树"><span class="nav-text">线段树</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PS"><span class="nav-text">PS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能"><span class="nav-text">性能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数"><span class="nav-text">函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用"><span class="nav-text">常用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#STL"><span class="nav-text">STL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stack、vector、list、queue常用方法"><span class="nav-text">stack、vector、list、queue常用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意点"><span class="nav-text">注意点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出"><span class="nav-text">输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#数据对"><span class="nav-text">数据对</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#多行数据"><span class="nav-text">多行数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#多个字符串"><span class="nav-text">多个字符串</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串-1"><span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位运算"><span class="nav-text">位运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数值"><span class="nav-text">数值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#面试"><span class="nav-text">面试</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#约瑟夫环"><span class="nav-text">约瑟夫环</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#快速幂溢出问题"><span class="nav-text">快速幂溢出问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最短路径"><span class="nav-text">最短路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#差分数组-1"><span class="nav-text">差分数组</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1511,7 +1622,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-count">104</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1583,13 +1694,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">992k</span>
+    <span title="站点总字数">998k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:02</span>
+    <span title="站点阅读时长">15:07</span>
 </div>
 
         
