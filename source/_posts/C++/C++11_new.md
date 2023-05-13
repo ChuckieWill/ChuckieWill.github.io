@@ -593,11 +593,227 @@ std::forward<T>(t);
 
 ###  智能指针
 
+####  auto_ptr
+
+* c++17后移除
+* 问题：独占指针，但是可以赋值，**赋值后再使用原来的指针则会报错**
+* 由new 创建堆区内容，auto_ptr指向这个堆区内容，在auto_ptr指针销毁时，他所指向的堆区也会自动被delete 掉。
+* 所有权转移:不小心把它传递给另外的智能指针，原来的指针就不再拥有这个对象了。在拷贝/赋值过程中，会直接剥夺指针对原对象对内存的控制权，
+  转交给新对象，然后再将原对象指针置为nullptr
+
+```c++
+#include <memory>
+#include <iostream>
+using namespace std;
+int main()
+{
+  // auto_ptr
+  auto_ptr<int> p1(new int(10));
+  auto_ptr<int> p2 = p1;
+  // p2 = p1;
+  // cout << *p1 << endl; // error
+  cout << *p2 << endl;  // 正常
+	return 0;
+}
+```
+
+#### unique_ptr
+
+> [使用踩坑](https://blog.csdn.net/qq_42518956/article/details/107490356)
+
+* unique_ptr是专属所有权所以unique_ptr管理的内存，只能被一个对象持有，不支持复制和赋值。
+* 移动语义: unique_ptr禁止了拷贝语义，但有时我们也需要能够转移所有权于是提供了移动语义，即可以使用std.move()进行控制所有权的转移。
+
+**初始化**
+
+```c++
+#include <iostream>
+#include <memory>
+using namespace std;
+
+unique_ptr<int> func()
+{
+    return unique_ptr<int>(new int(520));
+}
+
+int main()
+{
+    // 通过构造函数初始化
+    unique_ptr<int> ptr1(new int(10));
+    cout << "ptr1: "<< *ptr1 << endl;
+    // unique_ptr<int> ptr4 = ptr1; // error  编译器禁止拷贝
+
+    // 通过转移所有权的方式初始化
+    unique_ptr<int> ptr2 = move(ptr1);
+    cout << "ptr2: "<< *ptr2 << endl;
+    // cout << "ptr1: "<< *ptr1 << endl;  // error  执行报错，ptr1已经没有了    也会报错？？？？
+    // 通过函数返回值初始化  同 move 都是用右值初始化，右值初始化后，右值就没有了
+    unique_ptr<int> ptr3 = func();
+    cout << "ptr3: "<< *ptr3 << endl;
+    // 通过reset函数重置
+    ptr3.reset(new int(1024));
+    cout << "ptr3: "<< *ptr3 << endl;
+    return 0;
+}
+```
+
+**踩坑**
+
+* move后，用原来的指针也会报错，感觉和auto_ptr一样
+* 用一个原指针通过move初始化两个指针，编译不出错，但执行出错
+  * ptr1已经转移所有权给ptr2  ptr1为空指针  再转移所有权给ptr3  ptr3为空指针  执行出错
+
+```c++
+#include <iostream>
+#include <memory>
+using namespace std;
+
+class Test
+{
+private:
+  int* a_;
+  int b_;
+public:
+  // 默认构造函数
+  Test():a_(new int(0)), b_(0){
+    cout<<this<<" :Test default constructor"<<endl;
+  }
+  // 有参构造函数
+  Test(int a, int b):a_(new int(a)), b_(b){
+    cout<<this<<" :Test constructor"<<endl;
+  }
+  // 拷贝构造函数
+  Test(const Test& t):a_(new int(*t.a_)), b_(t.b_){
+    cout<<this<<" :Test copy constructor"<<endl;
+  }
+  // 移动构造函数
+  Test(Test&& t):a_(t.a_), b_(t.b_){
+    cout<<this<<" :Test move constructor"<<endl;
+    t.a_ = nullptr;
+    t.b_ = 0;
+  }
+  // 析构函数
+  ~Test(){
+    cout<<this<<" :Test destructor"<<endl;
+    delete a_;
+  }
+  void print(){
+    cout<<"print: "<<"a: "<<*a_<<" b: "<<b_<<endl;
+  }
+
+};
+
+int main()
+{
+    // 通过构造函数初始化
+    unique_ptr<Test> ptr1(new Test(1,2));
+    cout<<"ptr1: ";
+    ptr1->print();
+    // unique_ptr<int> ptr4 = ptr1; // error  编译器禁止拷贝
+
+    // 通过转移所有权的方式初始化
+    unique_ptr<Test> ptr2 = move(ptr1);
+    unique_ptr<Test> ptr3 = move(ptr1);
+    cout<<"ptr2: ";
+    ptr2->print();
+    // cout<<"ptr3: ";
+    // ptr3->print();  // 执行出错  ptr1已经转移所有权给ptr2  ptr1为空指针  再转移所有权给ptr3  ptr3为空指针  执行出错
+    // cout<<"ptr1: ";
+    // ptr1->print();  // error ptr1已经转移所有权 不能再使用  ??? 也报错
+    
+    return 0;
+}
+
+// 打印
+0x55812a6afe70 :Test constructor
+ptr1: print: a: 1 b: 2
+ptr2: print: a: 1 b: 2
+0x55812a6afe70 :Test destructor
+```
+
+
+
+
+
 ####  shared_ptr
+
+
 
 
 
 #  c++11 STL
 
 ##  emplace
+
+* `vec.push_back(Test()) 和 vec.emplace_back(Test())`  一样， 都是临时对象一次构造一次析构，一次移动构造
+* `vec.push_back(t) 和 vec.emplace_back(t)` 一样，都是一次拷贝构造(不算已有对象的构造和析构)，t是已经存在的对象
+* `vec.emplace_back(8, 108)` 的方式传入临时对象`Test(8,108)`时， 才只调用一次有参构造， 这种方式才不同于`push_back`， 效率更高
+* 总结：只有传入临时对象，且是以构建对象的参数传入时，`emplace_back`才会效率高于`push_back`
+
+```c++
+#include <iostream>
+#include <vector>
+using namespace std;
+
+
+class Test
+{
+private:
+  int* a_;
+  int b_;
+public:
+  // 默认构造函数
+  Test():a_(new int(0)), b_(0){
+    cout<<this<<" :Test default constructor"<<endl;
+  }
+  // 有参构造函数
+  Test(int a, int b):a_(new int(a)), b_(b){
+    cout<<this<<" :Test constructor"<<endl;
+  }
+  // 拷贝构造函数
+  Test(const Test& t):a_(new int(*t.a_)), b_(t.b_){
+    cout<<this<<" :Test copy constructor"<<endl;
+  }
+  // 移动构造函数
+  Test(Test&& t):a_(t.a_), b_(t.b_){
+    cout<<this<<" :Test move constructor"<<endl;
+    t.a_ = nullptr;
+    t.b_ = 0;
+  }
+  // 析构函数
+  ~Test(){
+    cout<<this<<" :Test destructor"<<endl;
+    delete a_;
+  }
+  void print(){
+    cout<<"print: "<<"a: "<<*a_<<" b: "<<b_<<endl;
+  }
+
+};
+
+int main(){
+  vector<Test> vec;
+  for(int i = 0; i < 3; i++){
+    vec.push_back(Test(i, i + 100));
+  }
+  cout<<"vec.capacity: "<<vec.capacity()<<endl;
+  cout<<"vec.size: "<<vec.size()<<endl;
+
+  // cout<<"--------push_back----------"<<endl;
+  // 1 临时对象
+  // vec.push_back(Test(4, 104));  // 调用移动构造函数       临时对象一次构造一次析构，一次移动构造
+  // 2 已有对象
+  // Test t(5, 105);
+  // vec.push_back(t);  // 调用拷贝构造函数                  一次拷贝构造(不算已有对象的构造和析构)
+
+  cout<<"--------emplace_back----------"<<endl;
+  // 1 临时对象 
+  // vec.emplace_back(Test(6, 106));  // 调用移动构造函数    临时对象一次构造一次析构，一次移动构造   同 push_back
+  // 2 已有对象
+  // Test t(7, 107);
+  // vec.emplace_back(t);  // 调用拷贝构造函数               一次拷贝构造(不算已有对象的构造和析构)  同 push_back
+  // 3 临时对象直接参数传递
+  vec.emplace_back(8, 108);  // 调用有参构造函数             一次有参构造                          不同   push_back  高效    
+}
+```
 

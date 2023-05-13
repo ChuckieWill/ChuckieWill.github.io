@@ -12,6 +12,23 @@ categories:
 
 #  linux
 
+#####  Screen
+
+> 用于将linux上的任务在后台执行，即使ssh断开也可以在后台继续执行
+>
+> https://www.elecfans.com/emb/202212051948505.html
+
+#####  安装g++
+
+> [Ubuntu18.04中安装gcc、g++编译器 /运行c文件、c++文件【超详细图文教程】] : https://blog.csdn.net/weixin_43290551/article/details/125970965
+>
+> [快速升级到g++11和gcc11] : https://blog.csdn.net/weixin_37726222/article/details/124002454
+>
+> 查看版本：https://www.cnblogs.com/liujiaxin2018/p/16695558.html
+>
+
+
+
 #####  解压
 
 > [zip](https://www.cnblogs.com/chinareny2k/archive/2010/01/05/1639468.html)
@@ -150,6 +167,13 @@ free -m | sed -n '2p' | awk '{print "used mem is "$3"M,total mem is "$2"M,used p
 
 ```
 cat /proc/meminfo
+```
+
+#####  查看Linux内存消耗
+
+```
+sudo du -sh /home/wangyj
+du -sh /home/wangyj
 ```
 
 
