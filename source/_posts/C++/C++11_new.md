@@ -1,6 +1,6 @@
 ---
 title: C++11新特性
-date: 2022-08-06 10:43:17
+date: 2022-02-06 10:43:17
 tags:
 - C++11
 categories:
@@ -12,6 +12,30 @@ categories:
 > [爱编程的大丙B站-c++11学习笔记](https://blog.csdn.net/Jiangtagong/article/details/119698713)
 >
 > [爱编程的大丙个人博客-c++11](https://subingwen.cn/cplusplus/)
+
+###  alignas
+
+> [alignas](https://blog.csdn.net/m0_68070522/article/details/124537265)
+
+* alignas设置的大小是整体的对齐大小
+
+```c++
+struct alignas(32) test4{
+	char c;
+	int  i;
+	double d;
+};
+// 上面正常大小是16  但设置了最小对齐数为32  所以大小补齐到32的倍数，即大小为32
+
+struct alignas(4) Info2 {
+  uint8_t a;
+  uint32_t b;
+  uint8_t c;
+};
+// 上面正常大小为：2 + 2 + 2 = 6 但对齐数为：4， 所以大小补齐到4的倍数，即大小为4
+```
+
+
 
 ###  原始字面量
 
@@ -203,7 +227,9 @@ int main()
 
 函数返回临时对象，外部接收时，直接是使用了函数内部构造的对象，地址都完全一样，这个过程没有调用拷贝构造和移动构造
 
-* 出现这种请求可能时编译器自动把外部的变量看作了一个右值引用接收了这函数返回的将亡值，续命了将亡值，所以没有拷贝动作
+* **即使发生NRV优化的情况下，Linux+ g++的环境是不管值返回方式还是引用方式返回的方式都不会发生拷贝构造函数，而Windows + VS2019在值返回的情况下发生拷贝构造函数，引用返回方式则不发生拷贝构造函数**
+  * [阿秀：什么情况下会调用拷贝构造函数](https://interviewguide.cn/notes/03-hunting_job/02-interview/01-01-02-basic.html#_40%E3%80%81%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BC%9A%E8%B0%83%E7%94%A8%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0)
+
 
 反而是对返回的临时对象，使用move后再构造，会调用移动构造
 
@@ -556,7 +582,7 @@ int main()
 {
     Test t;
     cout<<"==================="<<endl;
-    Test t2 = move(t);  // 将t转化为一个右值，用这右值使得调用移动构造函数来构造t2
+    Test t2 = move(t);  // 将t转化为一个右值，用这右值使得调用拷贝构造函数来构造t2
     Test t3 = t;       // 调用拷贝构造函数
     cout<<"==================="<<endl;
     cout << "t3.m_num: " << *t3.m_num << endl;
@@ -583,7 +609,7 @@ destruct Test class ...
 ####  forward
 
 * 当T为左值引用类型时，t将被转换为T类型的左值
-* 当T不是左值引用类型时，t将被转换为T类型的右值
+* 当T不是左值引用类型时，t将被转换为T类型的右值，T为左值或左值引用也会被转换成右值
 
 ```c++
 std::forward<T>(t);
@@ -744,6 +770,8 @@ ptr2: print: a: 1 b: 2
 #  c++11 STL
 
 ##  emplace
+
+> [源码分析](https://zhuanlan.zhihu.com/p/213853588?utm_id=0)
 
 * `vec.push_back(Test()) 和 vec.emplace_back(Test())`  一样， 都是临时对象一次构造一次析构，一次移动构造
 * `vec.push_back(t) 和 vec.emplace_back(t)` 一样，都是一次拷贝构造(不算已有对象的构造和析构)，t是已经存在的对象

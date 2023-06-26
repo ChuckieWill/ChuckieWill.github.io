@@ -14,6 +14,9 @@ categories:
 
 2 对象默认提供哪些方法
 
+3 C++---全局对象、局部对象、静态对象 ???
+4 进程同步方式： 信号量，管程，互斥锁
+
 #  c++
 
 ###  对象开辟堆区注意事项
@@ -341,6 +344,197 @@ public:
 
 #  八股文
 
+##  阿秀
+
+###  语言
+
+12、被free回收的内存是立即返还给操作系统吗？
+
+13、宏定义和函数有何区别
+
+>  [宏函数和普通函数的区别](https://blog.csdn.net/macrossdzh/article/details/4481583?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-4481583-blog-115370781.235^v35^pc_relevant_anti_vip&spm=1001.2101.3001.4242.1&utm_relevant_index=3)
+>
+> 关键：宏只是简单的文本替换，没有类型检测
+
+14、宏定义和typedef区别
+
+> [typedef char* p_char 和 #define p_char char * 的区别](https://blog.csdn.net/qq_36580990/article/details/122462976)
+>
+> 关键：宏只是简单的文本替换，没有类型检测, 发生在预处理阶段
+>
+> typedef定义类型别名, 有类型检测，发生在编译阶段
+
+18、a和&a有什么区别
+
+> [指针数组和数组指针](https://blog.csdn.net/qq_48757526/article/details/124686346)
+>
+> [重点看：关于指针数组与数组指针详解（知识点全面）](https://blog.csdn.net/lirendada/article/details/122931987?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-122931987-blog-124686346.235^v35^pc_relevant_anti_vip&spm=1001.2101.3001.4242.1&utm_relevant_index=3)
+
+```c++
+int main(){
+    int a[10] = {1,2,3,4,5,6,7,8,9}; 
+    cout<<a<<endl;  // 0x7ffdc1d33c60
+    cout<<*a<<endl; // 1
+    cout<<*(a+1)<<endl; // 2
+    int (*p)[10] = &a; // 二维数组的指针 *(p+1)就越界了
+    cout<<*p<<endl;  // 0x7ffdc1d33c60  相当于a   就是首地址
+    cout<<(*p)[0]<<endl;  // 1          相当于a[0]
+    cout<<*(*p)<<endl;  // 1            相当于*a
+    // cout<<*(*(p+1))<<endl; // 越界
+
+
+    int *p1 = a;  // 此时p1就等同于a      **关键点a就是一个指针， a给p赋值就是把a本身的值给p**  a和p1都是变量名，通过查表找到的地址就是数组的首地址，也就是他们本身就是数组的首地址
+    cout<<p1<<endl;  // 0x7ffdc1d33c60
+    cout<<*p1<<endl; // 1 
+    return 0;
+}
+
+
+int main(){
+    int a[3][4] = { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} };
+    int (*p)[4] = a;   // 此时p就是a  相当于p就是a的别名
+    // a[i][j] == p[i][j] == *(a[i]+j) == *(p[i]+j) == *(*(a+i)+j) == *(*(p+i)+j)
+    return 0;
+}
+
+```
+
+26、数组名和指针（这里为指向数组首元素的指针）区别？
+
+* 数组名就是一根常指针， 指向不可变
+* 但是数组名可以像指针一样使用
+* **当数组名当做形参传递给调用函数后，就失去了原有特性，退化成一般指针，多了自增、自减操作，但sizeof运算符不能再得到原数组的大小了**
+
+```c++
+int main(){
+    int a[10] = {1,2,3,4,5,6,7,8,9}; 
+    int b[10] = {1,2,3,4,5,6,7,8,9}; 
+    // a = b; // error a是一个常量指针，不能赋值
+    cout<<a<<endl;  // 0x7ffdc1d33c60
+    cout<<*a<<endl; // 1
+    cout<<*(a+1)<<endl; // 2
+    return 0;
+}
+```
+
+33、C++中的重载、重写（覆盖）和隐藏的区别
+
+* 重写是针对虚函数
+  * 函数名和参数类型，参数个数必须完全相同
+  * 父类指针可以正常调用子类的重写函数
+* 隐藏是针对非虚函数
+  * 函数名相同则父类同名函数被隐藏
+  * *父类指针**不能**正常调用子类的隐藏父类的函数，父类指针只能调用父类被隐藏的函数*   多态的情况下
+
+```c++
+// 父类
+class A {
+public:
+    virtual void fun(int a) { // 虚函数
+        cout << "This is A fun " << a << endl;
+    }  
+    void add(int a, int b) {
+        cout << "This is A add " << a + b << endl;
+    }
+};
+
+// 子类
+class B: public A {
+public:
+    void fun(int a) override {  // 覆盖
+        cout << "this is B fun " << a << endl;
+    }
+    void add(int a) {   // 隐藏
+        cout << "This is B add " << a + a << endl;
+    }
+};
+
+int main() {
+    // 基类指针指向派生类对象时，基类指针可以直接调用到派生类的覆盖函数，也可以通过 :: 调用到基类被覆盖
+    // 的虚函数；而基类指针只能调用基类的被隐藏函数，无法识别派生类中的隐藏函数。
+
+    A *p = new B();
+    p->fun(1);      // 调用子类 fun 覆盖函数
+    p->A::fun(1);   // 调用父类 fun
+    p->add(1, 2);
+    // p->add(1);      // 错误，识别的是 A 类中的 add 函数，参数不匹配
+    // p->B::add(1);   // 错误，无法识别子类 add 函数
+
+    B b;
+    b.add(1);       // 调用子类 add 函数
+    // b.add(1, 2);    // 调用父类 add 函数  不能正常调用
+    return 0;
+}
+```
+
+39、volatile、mutable和explicit关键字的用法
+
+> [C++中的explicit详解](https://blog.csdn.net/k6604125/article/details/126524992)
+
+42、C++的异常处理的方法
+
+> [typeid](https://blog.csdn.net/m0_37345402/article/details/105041937)
+
+65、C++的四种强制转换reinterpret_cast/const_cast/static_cast /dynamic_cast
+
+> 参考：面试问题：c++: 多态指针转型
+
+* **reinterpret_cast**：用于类型之间进行强制转换
+* **const_cast**： 修改类型的const或volatile属性
+* **static_cast**
+  * 父子类之间转换
+    * 向上转型，安全
+    * 向下转型，不安全，转型成功，但使用子类独有数据时可能因为未初始化而报错
+  * 用于基本数据类型之间的转换
+  * 把空指针转换成目标类型的空指针
+  * 把任何类型的表达式转换成void类型
+* **dynamic_cast**
+  * 父子类之间转换
+    * 向上转型，安全
+    * 向下转型，安全，转型成功返回相应的指针(基类指针确实指向一个派生类)，转成不成功则返回nullptr，便于判断进行后续操作
+
+71、静态类型和动态类型，静态绑定和动态绑定的介绍
+
+* 看原文
+
+75、 怎样判断两个浮点数是否相等
+
+> [为什么不能用==](https://blog.csdn.net/rick_geek/article/details/102728105)
+>
+> * 0.1， 0.2，0.4，0.6，0.8，0.3，0.7，0.9都是无法精确表示
+> * 小数部分乘2取整，直到小数部分为0
+>
+> [判断方法](https://blog.csdn.net/WHY995987477/article/details/100175872)
+>
+> * abs(a-b) 和 eps比较
+> * if (!(a > b || a < b))
+
+77、C++中的指针参数传递和引用参数传递有什么区别？底层原理你知道吗
+
+78、类如何实现只能静态分配和只能动态分配
+
+88、为什么模板类一般都是放在一个h文件中
+
+100、你知道strcpy和memcpy的区别是什么吗
+
+> [C/C++ memcpy的实现](https://blog.csdn.net/qq_42330920/article/details/123660241)
+
+105、你知道const char* 与string之间的关系是什么吗
+
+###  计算机网络
+
+43、Cookie和session的区别
+
+> [Cookie和session的区别](https://blog.csdn.net/m0_65421722/article/details/127813102)
+
+44、DDos 攻击了解吗？
+
+> [什么是DDos](https://mp.weixin.qq.com/s?__biz=MzIwOTcyNjA3Mw==&mid=2247508943&idx=1&sn=d21d59a31de70bd5592204f8650e1d2b&chksm=976d9cd9a01a15cfc0d63b6001b047cf1e0aa9fe4252cac182cfff5735590a1eb28462757074&scene=27)
+>
+> [如何防御ddos攻击？](https://blog.csdn.net/xyyaq/article/details/123727315)
+
+##  面试宝典
+
 说说内联函数和宏函数的区别
 
 简述C+＋从代码到可执行二进制文件的过程
@@ -508,48 +702,6 @@ int main()
 > https://blog.csdn.net/fightingtingting/article/details/125437706
 >
 > c++: https://blog.csdn.net/mzc_love/article/details/128158943
-
-2.7 简述GDB常见的调试命令，什么是条件断点，多进程下如何调试
-
-> 概要：https://blog.csdn.net/challenglistic/article/details/128109026
->
-> 具体使用： https://blog.csdn.net/xubaocai0379/article/details/125876595
->
-> https://blog.csdn.net/brahmsjiang/article/details/79318149
->
-> 查看变量值：https://blog.csdn.net/wohu1104/article/details/125069987
-
-```c
-// test.c
-#include <stdio.h>
-#define N 100
-int func(int num){
-    num += 10;
-    return num;
-}
-int main(){
-    for(int i = 0; i < N; i++){
-        printf("current number is : %d\n", func(i));
-    }
-    return 0;
-}
-```
-
-```c
-gcc test.c -g -o test
-gdb test
-b 31 // 31行打断点
-run // 开始调试
-next //执行下一条语句
-kill //结束调试
-list 8//显示第八行 
-list add //显示add函数
-quit //推出gdb
-    
-
-g++ test.cpp -g -o test
-gdb test
-```
 
 2.8 说说什么是大端小端，如何判断大端小端
 
@@ -1488,6 +1640,7 @@ int main()
     std::vector<President> elections;
     std::cout << "emplace_back:\n";
     elections.emplace_back("Nelson Mandela", "South Africa", 1994);
+    // elections.emplace_back(President("Nelson Mandela", "South Africa", 1994));   这种方式同下面的push_back
  
     std::vector<President> reElections;
     std::cout << "\npush_back:\n";
@@ -2118,14 +2271,55 @@ struct MANAGER{
 ####  GDB调试
 
 > 查看变量值（结构体、数组，对象等）：https://blog.csdn.net/wohu1104/article/details/125069987
-
-####  const的使用
-
-> https://blog.csdn.net/qq_41902325/article/details/124274072
 >
-> https://blog.csdn.net/limengshi138392/article/details/122078477
+> GDB处理core dumped: https://www.freesion.com/article/20821302350/
+>
+> https://blog.csdn.net/jackhh1/article/details/124434307
 
-const修饰成员函数:  对于类的成员函数，若指定其为const类型，则表明其是一个常函数，不能修改类的成员变量，类的常对象只能访问类的常成员函数；
+> 概要：https://blog.csdn.net/challenglistic/article/details/128109026
+>
+> 具体使用： https://blog.csdn.net/xubaocai0379/article/details/125876595
+>
+> https://blog.csdn.net/brahmsjiang/article/details/79318149
+>
+> 查看变量值：https://blog.csdn.net/wohu1104/article/details/125069987
+
+```c
+// test.c
+#include <stdio.h>
+#define N 100
+int func(int num){
+    num += 10;
+    return num;
+}
+int main(){
+    for(int i = 0; i < N; i++){
+        printf("current number is : %d\n", func(i));
+    }
+    return 0;
+}
+```
+
+```c
+gcc test.c -g -o test
+gdb test
+b 31 // 31行打断点
+b fun // 在函数位置打断点
+run // 开始调试
+print num // 显示函数中num的值，必须在打断点，run到断点位置停住后才能查看变量值
+next //单步执行 (在停止之后); 跳过函数调用
+step //单步执行 (在停止之后); 进入函数调用
+kill //结束调试
+list 8//显示第八行 
+list add //显示add函数
+quit //推出gdb
+    
+
+g++ test.cpp -g -o test
+gdb test
+```
+
+
 
 ####  智能指针
 
@@ -2173,6 +2367,9 @@ vector先开辟空间，然后再调用构造函数初始化
 
 * new底层是默认的operator new，只有第一个默认参数
 * new()底层是对operator new重载了，添加了第二参数，第一参数默认是对象的大小
+* placement new构造起来的对象数组，要显式的调用他们的析构函数来销毁（析构函数并不释放对象的内存），千万不要使用delete，这是因为placement new构造起来的对象或数组大小并不一定等于原来分配的内存大小，使用delete会造成内存泄漏或者之后释放内存时出现运行时错误。
+  * 如果确定构造的对象就是开辟的大小，则可以直接delete
+
 
 ![image-20230420205210767](C++interview/image-20230420205210767.png)
 
@@ -2280,6 +2477,37 @@ dtor.this: 0x5563d7c09e70 id=0
 dtor.this: 0x5563d7c09e74 id=1
 dtor.this: 0x5563d7c09e78 id=2
 ```
+
+```c++
+class ADT{
+	int i;
+	int j;
+public:
+	ADT(){
+		i = 10;
+		j = 100;
+		cout << "ADT construct i=" << i << "j="<<j <<endl;
+	}
+	~ADT(){
+		cout << "ADT destruct" << endl;
+	}
+};
+int main()
+{
+	char *p = new(nothrow) char[sizeof(ADT) + 1];
+	if (p == NULL) {
+		cout << "alloc failed" << endl;
+	}
+	ADT *q = new(p) ADT;  //placement new:不必担心失败，只要p所指对象的的空间足够ADT创建即可
+	//delete q;//错误!不能在此处调用delete q;
+  q->~ADT();//显示调用析构函数
+	// q->ADT::~ADT();//显示调用析构函数
+	delete[] p;
+	return 0;
+}
+```
+
+
 
 ####  delete[] 与 delete
 
@@ -2498,10 +2726,24 @@ int main()
 >
 > [dynamic_cast](https://blog.csdn.net/liranke/article/details/5145787)
 
+指针的转型
+
+* 转型变化的是指针指向的内存的范围变化，没有设计到重新构建内存
+
 dynamic_cast
 
 * 虚继承时，向下转型必须使用dynamic_cast
 * 非虚继承时，可以直接通过(子类*)强制转换
+* 先用父类指针构造子类，再将父类指针向下转型为子类指针，子类指针可以正常使用，这就是shared_ptr可以解决父类析构函数没有定义为虚函数的原因
+  * 但是先用父类指针构造父类，再将父类指针向下转型为子类指针
+    * 若不是虚继承
+      * 使用dynamic_cast转型直接报错
+      * 使用(子类*)强制转换，可以正常转换，但是可能存在子类独有的内存未初始化的情况，可能执行报错
+
+    * 若是虚继承
+      * 使用dynamic_cast转型直接报错
+      * (子类*)强制转换，不可用，编译提示错误
+
 
 ```c++
 #include <iostream>
@@ -2561,7 +2803,7 @@ int main(){
   // b->fun(); // error
   cout<<"b: "<<b<<endl;
   Child* c = dynamic_cast<Child*>(b);
-  // Child* c = (Child*)b;  // 虚继承时这种写法对，只能用dynamic_cast方式， 不是虚继承时可以这样转化
+  // Child* c = (Child*)b;  // 虚继承时这种写法不对，只能用dynamic_cast方式， 不是虚继承时可以这样转化
   c->print();
   c->fun();
   cout<<"c: "<<c<<endl;
@@ -2583,6 +2825,43 @@ self: 0x55d576a7fe70
 fun
 c: 0x55d576a7fe70
 ~Base
+    
+int main(){
+  Base* b = new Base(1);
+  b->print();
+  // b->fun(); // error
+  cout<<"b: "<<b<<endl;
+  Child* c = dynamic_cast<Child*>(b);
+  // Child* c = (Child*)b;  // 虚继承时这种写法对，只能用dynamic_cast方式， 不是虚继承时可以这样转化
+  c->print();
+  c->fun();
+  cout<<"c: "<<c<<endl;
+  delete c; // 结果同b  但Child的析构函数会被调用
+  return 0;
+}
+// 打印
+Base
+b: 0x564de3d9ee70
+Segmentation fault (core dumped)
+    
+// dynamic_cast 向下转型比static_cast更安全，因为转成不成功返回的是nullptr, 而使用static_cast转型不成功没有返回nullptr，不便于判断，使用易错   
+int main(){
+  Base* b = new Base(1);
+  b->print();
+  cout<<"b: "<<b<<endl;
+  Child* c = dynamic_cast<Child*>(b);
+  if(c == nullptr){
+    cout<<"c is nullptr"<<endl;
+  }
+  delete b;
+  // delete c; // 此时c == nullptr， 构造的b得不到释放，需要通过delete b来释放
+  return 0;
+}
+// 打印
+Base
+b: 0x55fe086f4e70
+c is nullptr
+~Base
 ```
 
 ####  内存共享
@@ -2597,6 +2876,139 @@ c: 0x55d576a7fe70
 >
 > 1、mmap保存到实际硬盘，实际存储并没有反映到主存上。优点：储存量可以很大（多于主存），缺点：进程间读取和写入速度要比主存的要慢。
 > 2、shm保存到物理存储器（主存），实际的储存量直接反映到主存上。优点，进程间访问速度（读写）比磁盘要快；缺点，储存量不能非常大（多于主存）
+
+####  宏、const和static
+
+> const的使用:https://blog.csdn.net/qq_41902325/article/details/124274072
+>
+> const的使用https://blog.csdn.net/limengshi138392/article/details/122078477
+>
+> stati初始化时机：https://blog.csdn.net/qq_52809807/article/details/129783093
+
+* 宏要点
+  * 预编译阶段
+  * 直接文本替换
+  * 没有类型检测
+* const要点
+  * 定义时必须初始化，之后无法更改
+  * const成员变量
+    * 只能通过构造函数初始化列表进行初始化，并且必须有构造函数
+    * 不同类对其const数据成员的值可以不同，所以不能在类中声明时初始化
+      * const变量是属于对象的，和static不同
+  * const成员函数
+    * 对于类的成员函数，若指定其为const类型，则表明其是一个常函数，不能修改类的成员变量
+    * 也就是不可以改变非mutable（用该关键字声明的变量可以在const成员函数中被修改）数据的值
+      * 用mutable关键字声明的变量可以在const成员函数中被修改
+  * const对象
+    * 类的常对象只能访问类的常成员函数
+  * 隐藏性
+    * const修饰变量是也与static有一样的隐藏作用。只能在该文件中使用，其他文件不可以引用声明使用。 因此在头文件中声明const变量是没问题的，因为即使被多个文件包含，链接性都是内部的，不会出现符号冲突。
+* [static要点](https://blog.csdn.net/www_dong/article/details/116102066)
+  * 初始化
+    * 静态成员的数据存放在数据(data)区，未初始化的存储在(bss)区，编译的时候进行分配空间。
+    * 如果是在C语言中在编译的时候进行初始化。
+    * 如果是在C++中在对象第一次使用的时候进行初始化。
+  * 局部静态变量(函数内)
+    * 静态变量在函数内定义，始终存在，且只进行一次初始化，具有记忆性，其作用范围与局部变量相同，函数退出后仍然存在，但不能使用
+  * 静态函数(面向过程)
+    * 只能当前文件使用，和静态对象一样有隐藏性
+    * 函数内部的非静态变量每次调用函数都是从新分配内存和初始化，也就是每次调用互相之间不影响
+    * 函数内部的静态变量只初始化一次，每次调用沿用的都是之前的数据
+  * static成员变量
+    * 属于类，定义时要分配空间，不能在类声明中初始化，必须在类定义体外部初始化
+  * static成员函数
+    * 属于类，没有this指针，只能访问static成员变量和static成员函数
+    * **不能被声明为const、虚函数和volatile**：  关键是没有this指针
+      * const是属于对象的，没有this指针是访问不到const的
+    * [线程安全问题](https://blog.csdn.net/Dream_Weave/article/details/119808269)
+      * static函数中有使用静态变量则需要加锁
+  * static对象
+    * [单例模式的应用](https://blog.csdn.net/lizhichao410/article/details/124121253)
+    * 静态对象在使用上和正常对象一样，可以使用静态或非静态成员函数和变量，只是这个对象自己是静态的
+  * 隐藏性
+
+```c++
+// 静态对象
+class test
+{
+private:
+  int a;
+  static int b;
+public:
+  test(int a):a(a){
+    cout<<"test"<<endl;
+  }
+  ~test(){
+    cout<<"~test"<<endl;
+  }
+  static void printb(){
+    cout<<"printb"<<endl;
+    cout<<"b = "<<b<<endl;
+  }
+  void print(){
+    cout<<"print"<<endl;
+    cout<<"a = "<<a<<endl;
+    cout<<"b = "<<b<<endl;
+  }
+};
+
+int test::b = 2;
+
+
+static test t(1);
+int main(){
+  cout<<"main start"<<endl;
+  test::printb();
+  t.print();
+  cout<<"main end"<<endl;
+  return 0;
+}
+
+// 打印
+test
+main start
+printb
+b = 2
+print
+a = 1
+b = 2
+main end
+~test
+```
+
+```c++
+// 静态函数
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+ 
+static void Func()
+{
+  static int a = 1;
+  int b = 1;
+  a++;
+  b++;
+  cout<<a<<endl;
+  cout<<b<<endl;
+	printf("This is a static function\n");
+}
+ 
+int main()
+{
+	Func(); 
+	Func(); 
+    return 0;
+}
+
+// 打印
+2
+2
+This is a static function
+3
+2
+This is a static function
+```
 
 
 
@@ -2626,9 +3038,102 @@ operator new的第二参数，传入指针，结合vector，先开辟空间再�
 >
 > https://blog.csdn.net/weixin_43606861/article/details/116121511?spm=1001.2101.3001.6650.5&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-5-116121511-blog-125814259.235%5Ev30%5Epc_relevant_default_base&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-5-116121511-blog-125814259.235%5Ev30%5Epc_relevant_default_base&utm_relevant_index=8
 
+####  华为
+
+申请一个int A[10]，然后把A强制转换成char*，问sizeof(A)返回多少，我回答是40B，理由是因为最开始就申请了10*4B的空间，强转了也是这么大，不知道对不对。追问给A赋值“hello”，问strlen返回多少（5，也不知道对不对），又问sizeof(char*)的大小（1B，C++常见的指针都是1B吧
+
+* `sizeof(char*) == 8`  只要是指针就是8
+* 不能直接`char* c = "hello"`这样初始化，只能先初始化字符数组再赋值给这个指针
+* `sizeof(数组) = 数组长度`
+* `strcpy(b，"hello")`   b 是用字符数组初始化的字符指针，用这种方式才能给字符指针初始化
+* `strlen()`只返回字符有效字符个数，不包括反斜杠
+  * 传入参数可以是字符数组，也可以字符指针，返回结果一样
+* int[] 转 char* 可以用(char*)强转，也可以用reinterpret_cast转换
+
+```c++
+# include <iostream>
+# include <cstring>
+using namespace std;
+
+int main(){
+  int a[10];
+  cout<<sizeof(a)<<endl;  // 40
+  // 把a强制转换成char*
+  cout<<sizeof(char*)<<endl; // 8
+  cout<<sizeof(int)<<endl;  // 4
+
+  char* b = (char*)a;
+  // b = "hello";  // 编译报错，不知直接用常量初始化
+  strcpy(b, "hello");
+  cout<<sizeof(b)<<endl;  // 8
+  cout<<sizeof(*b)<<endl;  // 1
+  cout<<strlen(b)<<endl;  // 5
+  cout<<b<<endl;  // hello
+  // 循环b
+  for(int i=0;i<10;i++){
+    b[i] = 'a' + i;
+  }
+  //  输出b
+  for(int i=0;i<10;i++){
+    cout<<b[i];  // abcdefghij
+  }
+  cout <<endl;
+  cout<<"-------------------"<<endl;
+  // char* c = "hello";  // 编译报错，不知直接用常量初始化
+  char c[6] = "hello";
+  char* d = c;
+  cout<<sizeof(c)<<endl; // 6
+  cout<<sizeof(d)<<endl; // 8
+  // 输出 c
+  cout<<c<<endl;
+  cout<<d<<endl;
+  return 0;
+}
+```
+
+```c++
+# include <iostream>
+# include <cstring>
+using namespace std;
+
+int main(){
+  int a[10];
+  cout<<sizeof(a)<<endl;  // 40
+  // 把a强制转换成char*类型，再求大小
+  cout<<sizeof(char*)<<endl;  // 8
+  cout<<sizeof((char*)a)<<endl;  // 8
+  char * b = reinterpret_cast<char*>(a);
+  // b = "hello world"; // 报错 不能这样赋值
+  strcpy(b, "hello world");
+  // strlen 求b 并输出
+  cout<<strlen(b)<<endl;  // 11
+  // 输出b
+  cout<<b<<endl;  // hello world
+
+  char c[10];
+  cout<<sizeof(c)<<endl;  // 10
+  strcpy(c, "abc");
+  cout<<strlen(c)<<endl;  // 3
+  cout<<sizeof(c)<<endl;  // 10   取决于申请的空间大小
+  return 0;
+}
+```
+
+
+
 ##  网络编程
 
-[select中的fd_set](https://blog.csdn.net/Fuel_Ming/article/details/122931926)
+> [select中的fd_set](https://blog.csdn.net/Fuel_Ming/article/details/122931926)
+>
+> fd_set: 是一个 unsighed long 数组，大小16   16 * 8 * = 1024
+
+
+
+#### TCP与UDP
+
+TCP是可靠的，面向连接的
+
+UPD是不可靠的，是面向无连接的
 
 ####  TCP通信流程
 
@@ -2782,6 +3287,13 @@ ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,const struct s
 ####  tcp粘包和拆包
 
 > [大丙视频](https://www.bilibili.com/video/BV1yf4y1Y7CU?p=1&vd_source=7230a052308bbb41976f248d2c778e3a)
+>
+> 添加包头
+>
+> 本质不是tcp的问题，tcp本身是流式传输，UDP是报式传输
+
+* 发送方：在发送的数据包前添加数据包大小(注意字节序的转换)，在while发送这个数据包，每次write都会返回发送了多少，while直到整个包的数据确保都发完了
+* 接收方：先接收包头即数据包的大小，在while接收这样大小的数据，每次read会返回接收了多少，while直到接收了整个数据包，除非read返回0，则表示发送方没有数据了
 
 ####  **select**
 
@@ -2982,3 +3494,302 @@ epoll 的 ET模式， 高效模式，但是只支持 非阻塞模式。 --- 忙�
 > /learn/network/tcp_epoll/libevent.c
 >
 > epoll ET模式 + 非阻塞、轮询 + void *ptr
+
+##  数据库
+
+###  SQL
+
+查询去重
+
+> https://blog.csdn.net/m0_67402026/article/details/126117902
+>
+> https://blog.csdn.net/qq_35091353/article/details/127805844
+
+* distinct
+* group by
+* row_number
+
+```
+	19.2、将之前的关键字全部组合在一起，来看一下他们的执行顺序？
+		select
+			...
+		from
+			...
+		where
+			...
+		group by
+			...
+		order by
+			...
+		
+		以上关键字的顺序不能颠倒，需要记忆。
+		执行顺序是什么？
+			1. from
+			2. where
+			3. group by
+			4. select
+			5. order by
+		
+		为什么分组函数不能直接使用在where后面？
+			select ename,sal from emp where sal > min(sal);//报错。
+			因为分组函数在使用的时候必须先分组之后才能使用。
+			where执行的时候，还没有分组。所以where后面不能出现分组函数。
+
+			select sum(sal) from emp; 
+			这个没有分组，为啥sum()函数可以用呢？
+				因为select在group by之后执行。
+```
+
+
+
+```
+20、大总结（单表的查询学完了）
+	select 
+		...
+	from
+		...
+	where
+		...
+	group by
+		...
+	having
+		...
+	order by
+		...
+	
+	以上关键字只能按照这个顺序来，不能颠倒。
+
+	执行顺序？
+		1. from
+		2. where
+		3. group by
+		4. having
+		5. select
+		6. order by
+	
+	从某张表中查询数据，
+	先经过where条件筛选出有价值的数据。
+	对这些有价值的数据进行分组。
+	分组之后可以使用having继续筛选。
+	select查询出来。
+	最后排序输出！
+
+	找出每个岗位的平均薪资，要求显示平均薪资大于1500的，除MANAGER岗位之外，
+	要求按照平均薪资降序排。
+		select 
+			job, avg(sal) as avgsal
+		from
+			emp
+		where
+			job <> 'MANAGER'
+		group by
+			job
+		having
+			avg(sal) > 1500
+		order by
+			avgsal desc;
+
+		+-----------+-------------+
+		| job       | avgsal      |
+		+-----------+-------------+
+		| PRESIDENT | 5000.000000 |
+		| ANALYST   | 3000.000000 |
+		+-----------+-------------+
+
+		select 
+			job, avg(sal) as avgsal
+		from
+			emp
+		where
+			job not in('MANAGER')
+		group by
+			job
+		having
+			avg(sal) > 1500
+		order by
+			avgsal desc;
+```
+
+子查询
+
+```c++
+3.3、where子句中的子查询
+
+	案例：找出比最低工资高的员工姓名和工资？
+		select 
+			ename,sal
+		from
+			emp 
+		where
+			sal > min(sal);
+
+		ERROR 1111 (HY000): Invalid use of group function
+		where子句中不能直接使用分组函数。
+	
+	实现思路：
+		第一步：查询最低工资是多少
+			select min(sal) from emp;
+			+----------+
+			| min(sal) |
+			+----------+
+			|   800.00 |
+			+----------+
+		第二步：找出>800的
+			select ename,sal from emp where sal > 800;
+		
+		第三步：合并
+			select ename,sal from emp where sal > (select min(sal) from emp);
+			+--------+---------+
+			| ename  | sal     |
+			+--------+---------+
+			| ALLEN  | 1600.00 |
+			| WARD   | 1250.00 |
+			| JONES  | 2975.00 |
+			| MARTIN | 1250.00 |
+			| BLAKE  | 2850.00 |
+			| CLARK  | 2450.00 |
+			| SCOTT  | 3000.00 |
+			| KING   | 5000.00 |
+			| TURNER | 1500.00 |
+			| ADAMS  | 1100.00 |
+			| JAMES  |  950.00 |
+			| FORD   | 3000.00 |
+			| MILLER | 1300.00 |
+			+--------+---------+
+```
+
+```
+3.4、from子句中的子查询
+	注意：from后面的子查询，可以将子查询的查询结果当做一张临时表。（技巧）
+
+	案例：找出每个岗位的平均工资的薪资等级。
+
+	第一步：找出每个岗位的平均工资（按照岗位分组求平均值）
+		select job,avg(sal) from emp group by job;
+		+-----------+-------------+
+		| job       | avgsal      |
+		+-----------+-------------+
+		| ANALYST   | 3000.000000 |
+		| CLERK     | 1037.500000 |
+		| MANAGER   | 2758.333333 |
+		| PRESIDENT | 5000.000000 |
+		| SALESMAN  | 1400.000000 |
+		+-----------+-------------+t表
+
+	第二步：克服心理障碍，把以上的查询结果就当做一张真实存在的表t。
+	mysql> select * from salgrade; s表
+	+-------+-------+-------+
+	| GRADE | LOSAL | HISAL |
+	+-------+-------+-------+
+	|     1 |   700 |  1200 |
+	|     2 |  1201 |  1400 |
+	|     3 |  1401 |  2000 |
+	|     4 |  2001 |  3000 |
+	|     5 |  3001 |  9999 |
+	+-------+-------+-------+
+	t表和s表进行表连接，条件：t表avg(sal) between s.losal and s.hisal;
+		
+		select 
+			t.*, s.grade
+		from
+			(select job,avg(sal) as avgsal from emp group by job) t
+		join
+			salgrade s
+		on
+			t.avgsal between s.losal and s.hisal;
+		
+		+-----------+-------------+-------+
+		| job       | avgsal      | grade |
+		+-----------+-------------+-------+
+		| CLERK     | 1037.500000 |     1 |
+		| SALESMAN  | 1400.000000 |     2 |
+		| ANALYST   | 3000.000000 |     4 |
+		| MANAGER   | 2758.333333 |     4 |
+		| PRESIDENT | 5000.000000 |     5 |
+		+-----------+-------------+-------+
+```
+
+##  linux命令
+
+#####  查看内存使用情况
+
+> free: https://blog.csdn.net/xp178171640/article/details/123634439
+
+* 命令
+  * -h  单位更有好的显示
+  * -s  3 没间隔3秒显示一次
+* 概念
+  * buff/cache  将磁盘缓存到内存，占用内存大小
+  * swap： 将内存不常用的数据记录在磁盘，缓解内存开销
+  * available = free + buffer + cache
+
+```shell
+wangyj@node1:~/learn$ free -h -s 3
+              total        used        free      shared  buff/cache   available
+Mem:           251G        5.0G         52G        2.5M        194G        244G
+Swap:          8.0G        3.0M        8.0G
+```
+
+/proc/meminfo
+
+```shell
+cat /proc/meminfo
+```
+
+#####  查看进程内存使用情况
+
+> [top/ps](https://blog.csdn.net/weixin_40482816/article/details/118385737#:~:text=%E9%80%9A%E8%BF%87%EF%BC%9A%20ps%20aux%20%7C%20sort%20-k4%2C4nr%20%7C%20head,%E7%9A%84%20%E5%8D%A0%E7%94%A8%20%E7%8E%87%EF%BC%8C%E7%84%B6%E5%90%8E%E6%8C%89q%E9%94%AE%E5%9B%9E%E5%88%B0%E5%91%BD%E4%BB%A4%E8%A1%8C%E3%80%82%20%E5%8F%A6%E5%A4%96%E8%BF%98%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%20top%20%E5%91%BD%E4%BB%A4%E5%8A%A8%E6%80%81%20%E6%9F%A5%E7%9C%8B%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%20%E3%80%82)
+
+* -d 1 每隔一秒显示一次
+* 查看可执行程序为main的程序
+* top 中的RES表示物理内存使用情况
+
+```
+top -d 1 | grep main
+top -d 1 | grep 57166  // 57166进程id
+top -p 57166 // 可以查看全局内存使用情况和57166这个进程的内存使用情况和cpu使用情况
+```
+
+> [ps/top](https://blog.csdn.net/yzf279533105/article/details/107041674)
+
+* {2765180}表示内存使用情况，单位为k
+
+```
+ps aux | grep main/57166
+
+wangyj@node1:~/learn$ ps aux | grep 57166
+wangyj   50538  0.0  0.0  13140  1012 pts/306  S+   03:03   0:00 grep --color=auto 57166
+wangz    57166  118  1.0 7664844 {2765180} ?     Rl   May20 8226:59 ./main inde_2_11000_rtree_5.txt query_inde_3.txt opt
+```
+
+* VmRSS表示内存使用情况
+
+```
+cat /proc/57166/status  //57166进程id
+```
+
+
+
+##  node.js
+
+导入库的语法
+
+```js
+var test = require("./main.js")
+```
+
+Node.js可以使用ES6的导入语法，来引入模块。ES6中提供了import和export两种方式来实现模块的导入和导出
+
+##  要求
+
+```
+熟练使用c++基础语言进行研发，多线程、多进程、内存共享、网络通信编程技术；
+
+熟练使用脚本语言（Perl/python/php，至少一种），有丰富的Unix/Linux环境下开发经验
+```
+
+##  开放问题
+
+主管：**当你和上级意见不一的时候怎么处理。**
+
+我：平时会和组员同学有分歧，通过协商基本都能解决，但是我们是平级关系。现实中我没有遇到过和上级产生矛盾的情形，因为遇到的上级最多也就是老师。那我假想有这样一个情形，我认为我会分析上级态度，如果不是商量的态度就先执行，然后另找机会和上级谈自己的看法；如果上级本身是举棋不定的商量态度，我会当场和他/她分享我的不同意见。

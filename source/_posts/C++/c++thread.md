@@ -73,3 +73,57 @@ int pthread_detach(pthread_t thread);
 ###  c++线程基本使用
 
 > https://subingwen.cn/cpp/thread/
+
+## 无锁队列
+
+> github: https://github.com/gongyiling/cpp_lecture/tree/91ec4233a8b8175db94f7430604ace82fa51cefb/lockfree
+>
+> bilibili: https://www.bilibili.com/video/BV1sy4y1t73N/?spm_id_from=333.337.search-card.all.click&vd_source=7230a052308bbb41976f248d2c778e3a
+
+##  线程池
+
+难点
+
+* waitalldone
+  * 在worker函数中需要判断同时`shutdown = true && queue.size() == 0 `时线程才退出
+  * waitdone中
+    * 标记线程池退出，如果已经标记则直接return(说明之前已经唤醒所有线程并等待所有线程退出)
+    * 阻塞回收线程
+  * 构造线程池，添加任务
+  * 析构函数， 调用waitdone， 然后释放资源
+* lambda表达式作为任务函数
+  * 将任务函数的类型定义为可调用函数
+
+```c++
+#include <functional>
+using callback = function<unsigned long long(void*)>; // unsigned long long是返回值类型，void*是函数参数
+struct Task
+{
+  callback func;
+  void* arg;
+  Task() : func(nullptr), arg(nullptr) {}
+  Task(callback f, void* arg) : func(f), arg(arg) {}
+};
+```
+
+* 任务函数的返回值求和
+  * 线程池中定义一个原子变量
+  * 任务函数的返回值累加到原子变量上
+  * 通过`pool->getRet()`获取原子变量的累加结果
+    * getRet()中需要先等待所有任务执行完(调用waitalldone())，再返回
+
+#  协程
+
+> **协程是一种函数对象，可以设置锚点做暂停，然后再该锚点恢复继续运行**
+>
+> 一个特殊的函数——可以在某个地方挂起，并且可以重新在挂起处继续运行
+>
+> 协程就是可暂停和恢复的函数
+>
+> [使用场景](https://zhuanlan.zhihu.com/p/446797833)
+>
+> [协程实现ovoice-github](https://github.com/wangbojing/NtyCo)
+>
+> 协程池github : https://github.com/fengyoulin/ef    对应视频：https://www.bilibili.com/video/BV1a5411b7aZ/?spm_id_from=333.788.recommend_more_video.0&vd_source=7230a052308bbb41976f248d2c778e3a
+>
+> 

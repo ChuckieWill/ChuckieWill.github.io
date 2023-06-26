@@ -11,6 +11,21 @@ categories:
 
 ##  0 快捷键
 
+###  0.1函数查看和回退
+
+> [VScode函数跳转，再返回，快捷键设置和自定义](https://blog.csdn.net/Dallas01/article/details/130362099)
+
+* 查看函数： ctrl + 点击要查看的函数
+* 查看完函数后返回原来的位置： alt + left建
+
+###  0.2 代码格式化
+
+> [vscode怎么格式化代码 vscode代码格式化快捷键](https://product.pconline.com.cn/itbk/software/dnyw/1591/15916216.html)
+
+* `Shift+Alt+F`
+
+
+
 * 缩进
 
 向右：tab  or  ctrl+]
@@ -39,8 +54,7 @@ categories:
   * 多行注释
 * ctrl+f
   * 在文件中查找
-* 查看函数： ctrl + 点击要查看的函数
-* 查看完函数后返回原来的位置： alt + -
+* 
 * html直接在浏览器打开：alt + b 
 
 

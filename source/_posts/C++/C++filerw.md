@@ -1,6 +1,6 @@
 ---
-title: C++
-date: 2022-07-06 10:43:17
+title: C++文件读写
+date: 2022-01-06 10:43:17
 tags:
 - C++文件读写
 categories:

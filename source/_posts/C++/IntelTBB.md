@@ -20,6 +20,8 @@ categories:
 >
 > 官网：https://link.springer.com/chapter/10.1007/978-1-4842-4398-5_2
 >
+> tbb官网：https://spec.oneapi.io/versions/latest/elements/oneTBB/source/nested-index.html
+>
 > 超线程对内存密集型的计数效果更好（内存密集型就是计算少的）
 
 **安装TBB**

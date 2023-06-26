@@ -12,6 +12,8 @@ categories:
 
 #  linux
 
+## 常用
+
 #####  Screen
 
 > 用于将linux上的任务在后台执行，即使ssh断开也可以在后台继续执行
@@ -224,3 +226,104 @@ wangyj@node1:~/dataset$ ls -lh amazon-2008.txt
 -rw-rw-r-- 1 wangyj wangyj 68M May  5  2022 amazon-2008.txt
 ```
 
+##  虚拟机安装Ubuntu和CentOS
+
+###  安装Ubuntu
+
+> [官网](https://ubuntu.com/)
+
+####  下载镜像文件(.iso)
+
+![image-20230611212717790](linux/image-20230611212717790.png)
+
+![image-20230611212942618](linux/image-20230611212942618.png)
+
+* 点击后滑动到底部，如下
+
+![image-20230611213109594](linux/image-20230611213109594.png)
+
+![image-20230611213437318](linux/image-20230611213437318.png)
+
+![image-20230611213545952](linux/image-20230611213545952.png)
+
+####  VMware安装Ubuntu
+
+> [在VMware上安装Ubuntu详细教程](https://blog.csdn.net/GRT609/article/details/123931322)
+
+###  安装CentOS
+
+#### 下载镜像文件(.iso)
+
+> [官网](https://www.centos.org/)
+>
+> [centos下载镜像文件](https://blog.csdn.net/qq_52772669/article/details/130735077)
+>
+> [CentOS 7镜像下载和安装教程](http://www.taodudu.cc/news/show-567516.html?action=onClick)
+>
+> [Centos7镜像版本命名规则](https://blog.csdn.net/weixin_72637522/article/details/130295593)
+
+![image-20230611214815555](linux/image-20230611214815555.png)
+
+![image-20230611215339574](linux/image-20230611215339574.png)
+
+![image-20230611215450213](linux/image-20230611215450213.png)
+
+####       VMware安装CentOS
+
+> [超详细VMware安装CentOs图文教程](https://blog.csdn.net/GRT609/article/details/123931322)
+>
+> [vmware 安装 centos](https://blog.csdn.net/weixin_45630258/article/details/125070170)
+
+
+
+##  xftp连接虚拟机ubuntu
+
+**ubuntu配置**
+
+> [xshell和xftp与虚拟机Ubuntu之间的连接与配置](https://blog.csdn.net/xuyankuanrong/article/details/80246203)
+
+* 安装openssh-server
+
+```
+sudo apt install openssh-server
+```
+
+* 检测是否启动
+  * 只有`ssh-agent`则未启动，否则启动了
+
+```
+ps -e|grep ssh
+```
+
+![image-20230614212006079](linux/image-20230614212006079.png)
+
+* 启动ssh
+
+```
+/etc/init.d/ssh start
+```
+
+基本以上步骤就可以连接了, 以下可以参考
+
+```shell
+sudo apt install openssh-server // 
+apt install net-tools   // 安装net-tools工具
+ifconfig // 查看ip
+
+1.检查Ubuntu是否已安装xftp
+vsftpd --version
+2.如果没有安装，先安装xftp
+sudo apt-get install vsftpd
+3.检测Ubuntu是否安装ssh
+ps -e|grep ssh
+4.如果没有安装，先安装ssh
+sudo apt-get install openssh-server
+5.启动ssh
+/etc/init.d/ssh start
+```
+
+**xftp设置**
+
+* 只需要虚拟机ubuntu的IP地址和用户名和密码即可
+
+![image-20230614212401186](linux/image-20230614212401186.png)
