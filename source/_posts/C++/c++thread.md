@@ -85,6 +85,11 @@ int pthread_detach(pthread_t thread);
 难点
 
 * waitalldone
+  * 在worker函数中需要判断同时`shutdown = false && queue.size() == 0 `时，线程才阻塞
+    * 如果队列中还有任务，即使`shutdown = true`也不能发生关闭，因为线程不会进入阻塞，还会继续往下执行
+    * 只有队列中任务为空了，且`shutdown = false`才会阻塞，这种情况在`shutdown = true`时，会唤醒线程，线程执行到下面的判断就直接退出了
+      * 也就说被唤醒退出的情况，只发生在`shutdown = true`之前就已经因为队列为空阻塞了
+      * 若`shutdown = true`之前队列还不为空，这些线程将永远进入不了阻塞，因为`shutdown != false`，对于这种情况会一直执行任务队列中的任务，直到任务执行完成，执行到下面的判断，然后退出
   * 在worker函数中需要判断同时`shutdown = true && queue.size() == 0 `时线程才退出
   * waitdone中
     * 标记线程池退出，如果已经标记则直接return(说明之前已经唤醒所有线程并等待所有线程退出)

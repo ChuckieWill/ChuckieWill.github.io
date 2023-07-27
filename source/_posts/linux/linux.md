@@ -327,3 +327,11 @@ sudo apt-get install openssh-server
 * 只需要虚拟机ubuntu的IP地址和用户名和密码即可
 
 ![image-20230614212401186](linux/image-20230614212401186.png)
+
+##  网络
+
+查看路由表
+
+在 Linux 操作系统，我们可以使用 `route -n` 命令查看当前系统的路由表
+
+在 Linux 系统中，我们可以使用 `arp -a` 命令来查看 ARP 缓存的内容

@@ -225,7 +225,7 @@ int poll(struct pollfd *fds, nfds_t nfds, int timeout);
 * Level Triggered (LT) 水平触发只要有数据都会触发。
   * 缓冲区剩余未读尽的数据会导致epo11_wait返回
 * 为什么使用ET
-  * 使用LT的情况下，如果缓冲区小于写入的数据量，则一次不能读完，剩余的数据会再次出发epoll_wait返回，相当于在一个事件（只来了一次数据）上触发了多次epoll_wait的返回，这就耽误了对其它文件描述符上事件的监听
+  * 使用LT的情况下，如果缓冲区小于写入的数据量，则一次不能读完，剩余的数据会再次触发epoll_wait返回，相当于在一个事件（只来了一次数据）上触发了多次epoll_wait的返回，这就耽误了对其它文件描述符上事件的监听
   * 使用ET则可以解决以上问题，一个事件只触发一次epoll_wait的返回，避免了epoll_wait多次返回
     * 只是在使用ET的情况下，需要while的去把数据读出来，就是把这个事件的所有数据通过while读完，因为没读完的不会再触发epoll_wait返回了
 
