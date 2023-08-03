@@ -20,16 +20,26 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="linuxshell脚本">
+  <meta name="description" content="linux常用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux">
 <meta property="og:url" content="http://yoursite.com/2021/03/03/linux/linux/index.html">
 <meta property="og:site_name" content="Chuckie&#39;s Blog">
-<meta property="og:description" content="linuxshell脚本">
+<meta property="og:description" content="linux常用">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230112133716636.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611212717790.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611212942618.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611213109594.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611213437318.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611213545952.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611214815555.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611215339574.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611215450213.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230614212006079.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230614212401186.png">
 <meta property="article:published_time" content="2021-03-03T02:46:17.000Z">
-<meta property="article:modified_time" content="2023-01-12T05:38:59.518Z">
+<meta property="article:modified_time" content="2023-07-19T13:54:03.319Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
@@ -222,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-01-12 13:38:59" itemprop="dateModified" datetime="2023-01-12T13:38:59+08:00">2023-01-12</time>
+                <time title="修改时间：2023-07-19 21:54:03" itemprop="dateModified" datetime="2023-07-19T21:54:03+08:00">2023-07-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -240,14 +250,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>454</span>
+              <span>3.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -259,7 +269,73 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><h5 id="shell脚本"><a href="#shell脚本" class="headerlink" title="shell脚本"></a>shell脚本</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/bash        // 向系统表明是shell文件</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"build 生成生产环境代码"</span>   // <span class="built_in">echo</span> 表示输出 输出内容用双引号</span><br></pre></td></tr></table></figure>
+        <h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><h2 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h2><h5 id="Screen"><a href="#Screen" class="headerlink" title="Screen"></a>Screen</h5><blockquote>
+<p>用于将linux上的任务在后台执行，即使ssh断开也可以在后台继续执行</p>
+<p><a href="https://www.elecfans.com/emb/202212051948505.html" target="_blank" rel="noopener">https://www.elecfans.com/emb/202212051948505.html</a></p>
+</blockquote>
+<h5 id="安装g"><a href="#安装g" class="headerlink" title="安装g++"></a>安装g++</h5><blockquote>
+<p>[Ubuntu18.04中安装gcc、g++编译器 /运行c文件、c++文件【超详细图文教程】] : <a href="https://blog.csdn.net/weixin_43290551/article/details/125970965" target="_blank" rel="noopener">https://blog.csdn.net/weixin_43290551/article/details/125970965</a></p>
+<p>[快速升级到g++11和gcc11] : <a href="https://blog.csdn.net/weixin_37726222/article/details/124002454" target="_blank" rel="noopener">https://blog.csdn.net/weixin_37726222/article/details/124002454</a></p>
+<p>查看版本：<a href="https://www.cnblogs.com/liujiaxin2018/p/16695558.html" target="_blank" rel="noopener">https://www.cnblogs.com/liujiaxin2018/p/16695558.html</a></p>
+</blockquote>
+<h5 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h5><blockquote>
+<p><a href="https://www.cnblogs.com/chinareny2k/archive/2010/01/05/1639468.html" target="_blank" rel="noopener">zip</a></p>
+</blockquote>
+<h5 id="cmake"><a href="#cmake" class="headerlink" title="cmake"></a>cmake</h5><blockquote>
+<p><a href="https://blog.csdn.net/qq_41375609/article/details/110535697" target="_blank" rel="noopener">https://blog.csdn.net/qq_41375609/article/details/110535697</a></p>
+</blockquote>
+<h5 id="shell脚本"><a href="#shell脚本" class="headerlink" title="shell脚本"></a>shell脚本</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/bash        // 向系统表明是shell文件</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"build 生成生产环境代码"</span>   // <span class="built_in">echo</span> 表示输出 输出内容用双引号</span><br></pre></td></tr></table></figure>
+
+<p>定时执行任务</p>
+<ul>
+<li>该方式可以定时，但是任务提前完成仍然要等到定时时间结束后才能执行下一个任务</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">echo "================data/itwiki-2013====query/7_p3.graph============================" &gt;&gt; all28.txt</span><br><span class="line">bin/count data/itwiki-2013 query/7_p3.graph 28 &gt;&gt; all28.txt &amp;  // &amp;符号获取pid</span><br><span class="line">PID=$!  // 获取上面程序执行的pid</span><br><span class="line">sleep 18000  //定时5小时 18000s  无论前面的任务是否在5小时内完成，都要等五小时，才能执行后面的z</span><br><span class="line">echo "===============================================================================" &gt;&gt; all28.txt</span><br><span class="line">kill -9 $PID //定时结束后结束进程</span><br><span class="line"></span><br><span class="line">echo "================data/itwiki-2013====query/7_p3.graph============================" &gt;&gt; all28.txt</span><br><span class="line">bin/count data/itwiki-2013 query/7_p3.graph 28 &gt;&gt; all28.txt &amp;</span><br><span class="line">PID=$!</span><br><span class="line">sleep 18000</span><br><span class="line">echo "===============================================================================" &gt;&gt; all28.txt</span><br><span class="line">kill -9 $PID</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="查看设备配置"><a href="#查看设备配置" class="headerlink" title="查看设备配置"></a>查看设备配置</h5><blockquote>
+<p><a href="https://blog.csdn.net/weixin_53060366/article/details/125255658" target="_blank" rel="noopener">https://blog.csdn.net/weixin_53060366/article/details/125255658</a></p>
+<p><a href="https://blog.csdn.net/wangquan1992/article/details/103821138" target="_blank" rel="noopener">Linux下查看CPU高速缓存(cache)信息</a></p>
+<p><a href="https://blog.csdn.net/weixin_40535588/article/details/119998102" target="_blank" rel="noopener">Linux的CPU高速缓存cache和页高速缓存cache，buffer</a></p>
+</blockquote>
+<p>查看内存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">wangyj@node1:~&#x2F;patternset$ free -h</span><br><span class="line">              total        used        free      shared  buff&#x2F;cache   available</span><br><span class="line">Mem:           251G         16G         19G        2.3M        215G        233G</span><br><span class="line">Swap:          8.0G        1.0M        8.0G</span><br><span class="line"></span><br><span class="line">free [-bkmotV][-s &lt;间隔秒数&gt;]</span><br><span class="line"></span><br><span class="line">-b 　以Byte为单位显示内存使用情况。</span><br><span class="line"></span><br><span class="line">-k 　以KB为单位显示内存使用情况。</span><br><span class="line"></span><br><span class="line">-m 　以MB为单位显示内存使用情况。</span><br><span class="line"></span><br><span class="line">-h 　以合适的单位显示内存使用情况，最大为三位数，自动计算对应的单位值。单位有：B &#x3D; bytes、K &#x3D; kilos、M &#x3D; megas、G &#x3D; gigas、T &#x3D; teras</span><br></pre></td></tr></table></figure>
+
+<p>查看cpu信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lscpu</span><br></pre></td></tr></table></figure>
+
+<p>查看一级二级三级高速缓存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">lscpu</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">L1d cache:           32K</span><br><span class="line">L1i cache:           32K      </span><br><span class="line">L2 cache:            1024K    &#x2F;&#x2F; 1MB</span><br><span class="line">L3 cache:            19712K   &#x2F;&#x2F; 9.25MB</span><br></pre></td></tr></table></figure>
+
+<p>CPU 具体型号</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>CPU 个数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo| grep <span class="string">"physical id"</span>| sort| uniq| wc -l</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>CPU 每个里面的具体内核数量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo| grep <span class="string">"cpu cores"</span>| uniq</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>CPU 逻辑个数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo| grep <span class="string">"processor"</span>| wc -l</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>内核版本信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -r 或 uname -a</span><br></pre></td></tr></table></figure>
+
+<p>磁盘空间大小：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -hT</span><br></pre></td></tr></table></figure>
+
+<p>内存大小：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">free -mh</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="comment">#内存使用的百分比</span></span><br><span class="line">free -m | sed -n <span class="string">'2p'</span> | awk <span class="string">'&#123;print "used mem is "$3"M,total mem is "$2"M,used percent is "$3/$2*100"%"&#125;'</span></span><br></pre></td></tr></table></figure>
+
+<p>查看高速缓存区(Cached)</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/weixin_32559261/article/details/116801710" target="_blank" rel="noopener">https://blog.csdn.net/weixin_32559261/article/details/116801710</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat &#x2F;proc&#x2F;meminfo</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看Linux内存消耗"><a href="#查看Linux内存消耗" class="headerlink" title="查看Linux内存消耗"></a>查看Linux内存消耗</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo du -sh &#x2F;home&#x2F;wangyj</span><br><span class="line">du -sh &#x2F;home&#x2F;wangyj</span><br></pre></td></tr></table></figure>
 
 
 
@@ -283,6 +359,74 @@
 <li>本地密钥文件是不带后缀的id_rsa文件</li>
 </ul>
 <p><img src="/2021/03/03/linux/linux/image-20230112133716636.png" alt="image-20230112133716636"></p>
+<h5 id="查看文件大小"><a href="#查看文件大小" class="headerlink" title="查看文件大小"></a>查看文件大小</h5><blockquote>
+<p><a href="https://blog.csdn.net/oqqHuTu12345678/article/details/125556409" target="_blank" rel="noopener">https://blog.csdn.net/oqqHuTu12345678/article/details/125556409</a></p>
+</blockquote>
+<p>使用“ls -l filepath”查看文件大小，第五列为文件字节数。</p>
+<p>使用“ls -lh filepath”查看文件大小，加-h参数可以人性化显示文件大小。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wangyj@node1:~&#x2F;dataset$ ls -l amazon-2008.txt </span><br><span class="line">-rw-rw-r-- 1 wangyj wangyj 70632805 May  5  2022 amazon-2008.txt</span><br><span class="line">wangyj@node1:~&#x2F;dataset$ ls -lh amazon-2008.txt </span><br><span class="line">-rw-rw-r-- 1 wangyj wangyj 68M May  5  2022 amazon-2008.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="虚拟机安装Ubuntu和CentOS"><a href="#虚拟机安装Ubuntu和CentOS" class="headerlink" title="虚拟机安装Ubuntu和CentOS"></a>虚拟机安装Ubuntu和CentOS</h2><h3 id="安装Ubuntu"><a href="#安装Ubuntu" class="headerlink" title="安装Ubuntu"></a>安装Ubuntu</h3><blockquote>
+<p><a href="https://ubuntu.com/" target="_blank" rel="noopener">官网</a></p>
+</blockquote>
+<h4 id="下载镜像文件-iso"><a href="#下载镜像文件-iso" class="headerlink" title="下载镜像文件(.iso)"></a>下载镜像文件(.iso)</h4><p><img src="/2021/03/03/linux/linux/image-20230611212717790.png" alt="image-20230611212717790"></p>
+<p><img src="/2021/03/03/linux/linux/image-20230611212942618.png" alt="image-20230611212942618"></p>
+<ul>
+<li>点击后滑动到底部，如下</li>
+</ul>
+<p><img src="/2021/03/03/linux/linux/image-20230611213109594.png" alt="image-20230611213109594"></p>
+<p><img src="/2021/03/03/linux/linux/image-20230611213437318.png" alt="image-20230611213437318"></p>
+<p><img src="/2021/03/03/linux/linux/image-20230611213545952.png" alt="image-20230611213545952"></p>
+<h4 id="VMware安装Ubuntu"><a href="#VMware安装Ubuntu" class="headerlink" title="VMware安装Ubuntu"></a>VMware安装Ubuntu</h4><blockquote>
+<p><a href="https://blog.csdn.net/GRT609/article/details/123931322" target="_blank" rel="noopener">在VMware上安装Ubuntu详细教程</a></p>
+</blockquote>
+<h3 id="安装CentOS"><a href="#安装CentOS" class="headerlink" title="安装CentOS"></a>安装CentOS</h3><h4 id="下载镜像文件-iso-1"><a href="#下载镜像文件-iso-1" class="headerlink" title="下载镜像文件(.iso)"></a>下载镜像文件(.iso)</h4><blockquote>
+<p><a href="https://www.centos.org/" target="_blank" rel="noopener">官网</a></p>
+<p><a href="https://blog.csdn.net/qq_52772669/article/details/130735077" target="_blank" rel="noopener">centos下载镜像文件</a></p>
+<p><a href="http://www.taodudu.cc/news/show-567516.html?action=onClick" target="_blank" rel="noopener">CentOS 7镜像下载和安装教程</a></p>
+<p><a href="https://blog.csdn.net/weixin_72637522/article/details/130295593" target="_blank" rel="noopener">Centos7镜像版本命名规则</a></p>
+</blockquote>
+<p><img src="/2021/03/03/linux/linux/image-20230611214815555.png" alt="image-20230611214815555"></p>
+<p><img src="/2021/03/03/linux/linux/image-20230611215339574.png" alt="image-20230611215339574"></p>
+<p><img src="/2021/03/03/linux/linux/image-20230611215450213.png" alt="image-20230611215450213"></p>
+<h4 id="VMware安装CentOS"><a href="#VMware安装CentOS" class="headerlink" title="VMware安装CentOS"></a>VMware安装CentOS</h4><blockquote>
+<p><a href="https://blog.csdn.net/GRT609/article/details/123931322" target="_blank" rel="noopener">超详细VMware安装CentOs图文教程</a></p>
+<p><a href="https://blog.csdn.net/weixin_45630258/article/details/125070170" target="_blank" rel="noopener">vmware 安装 centos</a></p>
+</blockquote>
+<h2 id="xftp连接虚拟机ubuntu"><a href="#xftp连接虚拟机ubuntu" class="headerlink" title="xftp连接虚拟机ubuntu"></a>xftp连接虚拟机ubuntu</h2><p><strong>ubuntu配置</strong></p>
+<blockquote>
+<p><a href="https://blog.csdn.net/xuyankuanrong/article/details/80246203" target="_blank" rel="noopener">xshell和xftp与虚拟机Ubuntu之间的连接与配置</a></p>
+</blockquote>
+<ul>
+<li>安装openssh-server</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install openssh-server</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>检测是否启动<ul>
+<li>只有<code>ssh-agent</code>则未启动，否则启动了</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -e|grep ssh</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/03/03/linux/linux/image-20230614212006079.png" alt="image-20230614212006079"></p>
+<ul>
+<li>启动ssh</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;ssh start</span><br></pre></td></tr></table></figure>
+
+<p>基本以上步骤就可以连接了, 以下可以参考</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install openssh-server // </span><br><span class="line">apt install net-tools   // 安装net-tools工具</span><br><span class="line">ifconfig // 查看ip</span><br><span class="line"></span><br><span class="line">1.检查Ubuntu是否已安装xftp</span><br><span class="line">vsftpd --version</span><br><span class="line">2.如果没有安装，先安装xftp</span><br><span class="line">sudo apt-get install vsftpd</span><br><span class="line">3.检测Ubuntu是否安装ssh</span><br><span class="line">ps -e|grep ssh</span><br><span class="line">4.如果没有安装，先安装ssh</span><br><span class="line">sudo apt-get install openssh-server</span><br><span class="line">5.启动ssh</span><br><span class="line">/etc/init.d/ssh start</span><br></pre></td></tr></table></figure>
+
+<p><strong>xftp设置</strong></p>
+<ul>
+<li>只需要虚拟机ubuntu的IP地址和用户名和密码即可</li>
+</ul>
+<p><img src="/2021/03/03/linux/linux/image-20230614212401186.png" alt="image-20230614212401186"></p>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><p>查看路由表</p>
+<p>在 Linux 操作系统，我们可以使用 <code>route -n</code> 命令查看当前系统的路由表</p>
+<p>在 Linux 系统中，我们可以使用 <code>arp -a</code> 命令来查看 ARP 缓存的内容</p>
 
     </div>
 
@@ -301,8 +445,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/11/17/Javascript/Javascript(0x08)-JS%E4%B8%AD%E7%9A%84JSON%E5%BA%8F%E5%88%97%E5%8C%96/" rel="prev" title="Javascript(0x08)-JS中的JSON序列化">
-      <i class="fa fa-chevron-left"></i> Javascript(0x08)-JS中的JSON序列化
+    <a href="/2021/02/06/third-repositories/nginx/nginx_source/" rel="prev" title="nginx源码分析">
+      <i class="fa fa-chevron-left"></i> nginx源码分析
     </a></div>
       <div class="post-nav-item">
     <a href="/2021/03/03/wx-applet/wxapplet-ui/wxapplet-ui/" rel="next" title="微信小程序UI框架使用指南">
@@ -366,7 +510,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux"><span class="nav-text">linux</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#shell脚本"><span class="nav-text">shell脚本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如何查看Ubuntu版本"><span class="nav-text">如何查看Ubuntu版本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在test-txtd第一行加入hello"><span class="nav-text">在test.txtd第一行加入hello</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#将本地文件拷贝到远程服务器"><span class="nav-text">将本地文件拷贝到远程服务器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Xshell-XFTP链接"><span class="nav-text">Xshell XFTP链接</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux"><span class="nav-text">linux</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用"><span class="nav-text">常用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Screen"><span class="nav-text">Screen</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装g"><span class="nav-text">安装g++</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解压"><span class="nav-text">解压</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cmake"><span class="nav-text">cmake</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#shell脚本"><span class="nav-text">shell脚本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看设备配置"><span class="nav-text">查看设备配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看Linux内存消耗"><span class="nav-text">查看Linux内存消耗</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如何查看Ubuntu版本"><span class="nav-text">如何查看Ubuntu版本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在test-txtd第一行加入hello"><span class="nav-text">在test.txtd第一行加入hello</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#将本地文件拷贝到远程服务器"><span class="nav-text">将本地文件拷贝到远程服务器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Xshell-XFTP链接"><span class="nav-text">Xshell XFTP链接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看文件大小"><span class="nav-text">查看文件大小</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机安装Ubuntu和CentOS"><span class="nav-text">虚拟机安装Ubuntu和CentOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Ubuntu"><span class="nav-text">安装Ubuntu</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载镜像文件-iso"><span class="nav-text">下载镜像文件(.iso)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VMware安装Ubuntu"><span class="nav-text">VMware安装Ubuntu</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装CentOS"><span class="nav-text">安装CentOS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载镜像文件-iso-1"><span class="nav-text">下载镜像文件(.iso)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VMware安装CentOS"><span class="nav-text">VMware安装CentOS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xftp连接虚拟机ubuntu"><span class="nav-text">xftp连接虚拟机ubuntu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络"><span class="nav-text">网络</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -382,20 +526,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-count">108</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">54</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">84</span>
+        <span class="site-state-item-count">95</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -454,13 +598,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">864k</span>
+    <span title="站点总字数">1m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">13:06</span>
+    <span title="站点阅读时长">15:45</span>
 </div>
 
         
