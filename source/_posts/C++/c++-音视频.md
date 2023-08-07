@@ -155,7 +155,9 @@ ffmpeg -i ~/Documents/new_killer.mp4
 
 
 
-9-8  ----  9-10  带学习
+9-8  ----  9-10  待学习
+
+
 
 ##  H264编码
 
@@ -243,3 +245,35 @@ H264压缩技术
   NAL Header(1B) + RBSP
 
 ![image-20230725165601178](c++-音视频/image-20230725165601178.png)
+
+###  SPS
+
+#####  Profile & Level
+
+* H264 Profile
+  * 对视频压缩特性的描述,Profile越高，就说明采用了越高级的压缩特性
+* H264 Level
+  * Level是对视频的描述, Level越高，视频的码率、分辨率、fps越高
+
+![image-20230804173707337](c++-音视频/image-20230804173707337.png)
+
+###  PPS
+
+![image-20230804174251294](c++-音视频/image-20230804174251294.png)
+
+###  Slice-Header
+
+* 帧类型
+* GOP中解码帧序号
+* 预测权重
+* 滤波
+
+
+
+###  分析工具
+
+> https://www.elecard.com/products/video-analysis
+>
+> https://jaist.dl.sourceforge/project/h254streamanalysis/binary/SpecialVH264.exe
+>
+> https://sourceforge.net/projects/videoeye/files/
