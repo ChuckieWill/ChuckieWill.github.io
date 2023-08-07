@@ -33,8 +33,10 @@
 <meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725113807188.png">
 <meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725160811958.png">
 <meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725165601178.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230804173707337.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230804174251294.png">
 <meta property="article:published_time" content="2022-07-06T02:43:17.000Z">
-<meta property="article:modified_time" content="2023-07-25T08:56:02.473Z">
+<meta property="article:modified_time" content="2023-08-04T09:47:25.707Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="音视频">
 <meta name="twitter:card" content="summary">
@@ -227,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-25 16:56:02" itemprop="dateModified" datetime="2023-07-25T16:56:02+08:00">2023-07-25</time>
+                <time title="修改时间：2023-08-04 17:47:25" itemprop="dateModified" datetime="2023-08-04T17:47:25+08:00">2023-08-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,14 +247,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
+              <span>2.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -387,7 +389,7 @@
 
 
 
-<p>9-8  —-  9-10  带学习</p>
+<p>9-8  —-  9-10  待学习</p>
 <h2 id="H264编码"><a href="#H264编码" class="headerlink" title="H264编码"></a>H264编码</h2><blockquote>
 <p>压缩比1/100</p>
 <p>码流建议：<a href="https://docportal.shengwang.cn/cn" target="_blank" rel="noopener">https://docportal.shengwang.cn/cn</a></p>
@@ -482,6 +484,29 @@
 <li>NALU<br>NAL Header(1B) + RBSP</li>
 </ul>
 <p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725165601178.png" alt="image-20230725165601178"></p>
+<h3 id="SPS"><a href="#SPS" class="headerlink" title="SPS"></a>SPS</h3><h5 id="Profile-amp-Level"><a href="#Profile-amp-Level" class="headerlink" title="Profile &amp; Level"></a>Profile &amp; Level</h5><ul>
+<li>H264 Profile<ul>
+<li>对视频压缩特性的描述,Profile越高，就说明采用了越高级的压缩特性</li>
+</ul>
+</li>
+<li>H264 Level<ul>
+<li>Level是对视频的描述, Level越高，视频的码率、分辨率、fps越高</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230804173707337.png" alt="image-20230804173707337"></p>
+<h3 id="PPS"><a href="#PPS" class="headerlink" title="PPS"></a>PPS</h3><p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230804174251294.png" alt="image-20230804174251294"></p>
+<h3 id="Slice-Header"><a href="#Slice-Header" class="headerlink" title="Slice-Header"></a>Slice-Header</h3><ul>
+<li>帧类型</li>
+<li>GOP中解码帧序号</li>
+<li>预测权重</li>
+<li>滤波</li>
+</ul>
+<h3 id="分析工具"><a href="#分析工具" class="headerlink" title="分析工具"></a>分析工具</h3><blockquote>
+<p><a href="https://www.elecard.com/products/video-analysis" target="_blank" rel="noopener">https://www.elecard.com/products/video-analysis</a></p>
+<p><a href="https://jaist.dl.sourceforge/project/h254streamanalysis/binary/SpecialVH264.exe" target="_blank" rel="noopener">https://jaist.dl.sourceforge/project/h254streamanalysis/binary/SpecialVH264.exe</a></p>
+<p><a href="https://sourceforge.net/projects/videoeye/files/" target="_blank" rel="noopener">https://sourceforge.net/projects/videoeye/files/</a></p>
+</blockquote>
 
     </div>
 
@@ -565,7 +590,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图形基础"><span class="nav-text">图形基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#H264编码"><span class="nav-text">H264编码</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图形基础"><span class="nav-text">图形基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#H264编码"><span class="nav-text">H264编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SPS"><span class="nav-text">SPS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Profile-amp-Level"><span class="nav-text">Profile &amp; Level</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PPS"><span class="nav-text">PPS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Slice-Header"><span class="nav-text">Slice-Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析工具"><span class="nav-text">分析工具</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
