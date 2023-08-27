@@ -277,3 +277,76 @@ H264压缩技术
 > https://jaist.dl.sourceforge/project/h254streamanalysis/binary/SpecialVH264.exe
 >
 > https://sourceforge.net/projects/videoeye/files/
+
+
+
+
+
+#  L069
+
+##  常用命令
+
+ffmpeg音视频处理流程
+
+* demuxer是解封装，封装格式：mp4, flv
+* decoder 是解码，编码格式：h264,h265,aac
+* encoder 是编码
+* muxer     是封装
+
+![image-20230814112340461](c++-音视频/image-20230814112340461.png)
+
+
+
+基本信息查询
+
+![image-20230814112659039](c++-音视频/image-20230814112659039.png)
+
+录制命令
+
+* 录制屏幕
+  * `ffmpeg -f avfoundation -i 1-r 30 out.yuv`
+    * -f :指定使用avfoundation采集数据
+    * -i∶指定从哪儿采集数据，它是一个文件索引号， 1表示屏幕的索引
+    * -r∶指定帧率， 30表示每秒30帧
+    * 保存为yuv格式
+  * 播放录制的视频：`ffplay -s 2560x1600 -fix_fmt uyvy422 out.yuv`
+    * -s：设定播放的分辨率
+    * -fix_fmt：设置像素格式
+  * mac 查看avfoundation的设备索引
+    * `ffmpeg -f avfoundation -list_devices true -i ""`
+* 录制音频
+  * `ffmpeg -f avfoundation -i :1 out.wav`
+    * -i：指定采集数据的设备索引   `:1`表示从话筒(音频)采集，`:`前表示采集视频的索引，`:`后表示采集音频的索引
+
+
+
+分解与复用
+
+> 换封装格式
+>
+> 提取视频、音频
+>
+> 不涉及编解码，只有解封装和封装
+
+
+
+多媒体格式转换
+
+* `ffmpeg -i out.mp4 -vcodec copy -acodec copy out.flv`
+* `ffmpeg -i out.mp4 -an -vcodec copy out.h264`
+  * 抽取视频
+* `ffmpeg -i out.mp4 -acodec copy -vn out.aac`
+  * 抽取音频
+
+
+
+处理原始数据
+
+FFmpeg提取YUV数据
+`ffmpeg -i input.mp4 -an -c:v rawvideo -pix_fmt yuv420p out.yuv`
+
+* -c:v rawvideo  : 指定视频编码格式
+* -pix_fmt yuv420p ： 指定视频像素格式
+
+FFmpeg提取PCM数据
+`ffmpeg -i out.mp4 -vn -ar 44100 -ac2 -f s16le out.pcm`

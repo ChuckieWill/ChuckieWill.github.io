@@ -20,6 +20,16 @@ categories:
 >
 > https://www.elecfans.com/emb/202212051948505.html
 
+```
+screen -S "win" 新建   // S 必须大写
+screen -ls      查看
+screen -r "win" 重新进入
+exit            退出
+screen -d -r 26285.win  重名时 通过pid选择  pid = 26285
+```
+
+
+
 #####  安装g++
 
 > [Ubuntu18.04中安装gcc、g++编译器 /运行c文件、c++文件【超详细图文教程】] : https://blog.csdn.net/weixin_43290551/article/details/125970965
