@@ -35,8 +35,10 @@
 <meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725165601178.png">
 <meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230804173707337.png">
 <meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230804174251294.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230814112340461.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230814112659039.png">
 <meta property="article:published_time" content="2022-07-06T02:43:17.000Z">
-<meta property="article:modified_time" content="2023-08-04T09:47:25.707Z">
+<meta property="article:modified_time" content="2023-08-15T13:46:48.612Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="音视频">
 <meta name="twitter:card" content="summary">
@@ -229,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-04 17:47:25" itemprop="dateModified" datetime="2023-08-04T17:47:25+08:00">2023-08-04</time>
+                <time title="修改时间：2023-08-15 21:46:48" itemprop="dateModified" datetime="2023-08-15T21:46:48+08:00">2023-08-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,7 +249,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
+              <span>3.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -507,6 +509,70 @@
 <p><a href="https://jaist.dl.sourceforge/project/h254streamanalysis/binary/SpecialVH264.exe" target="_blank" rel="noopener">https://jaist.dl.sourceforge/project/h254streamanalysis/binary/SpecialVH264.exe</a></p>
 <p><a href="https://sourceforge.net/projects/videoeye/files/" target="_blank" rel="noopener">https://sourceforge.net/projects/videoeye/files/</a></p>
 </blockquote>
+<h1 id="L069"><a href="#L069" class="headerlink" title="L069"></a>L069</h1><h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p>ffmpeg音视频处理流程</p>
+<ul>
+<li>demuxer是解封装，封装格式：mp4, flv</li>
+<li>decoder 是解码，编码格式：h264,h265,aac</li>
+<li>encoder 是编码</li>
+<li>muxer     是封装</li>
+</ul>
+<p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230814112340461.png" alt="image-20230814112340461"></p>
+<p>基本信息查询</p>
+<p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230814112659039.png" alt="image-20230814112659039"></p>
+<p>录制命令</p>
+<ul>
+<li>录制屏幕<ul>
+<li><code>ffmpeg -f avfoundation -i 1-r 30 out.yuv</code><ul>
+<li>-f :指定使用avfoundation采集数据</li>
+<li>-i∶指定从哪儿采集数据，它是一个文件索引号， 1表示屏幕的索引</li>
+<li>-r∶指定帧率， 30表示每秒30帧</li>
+<li>保存为yuv格式</li>
+</ul>
+</li>
+<li>播放录制的视频：<code>ffplay -s 2560x1600 -fix_fmt uyvy422 out.yuv</code><ul>
+<li>-s：设定播放的分辨率</li>
+<li>-fix_fmt：设置像素格式</li>
+</ul>
+</li>
+<li>mac 查看avfoundation的设备索引<ul>
+<li><code>ffmpeg -f avfoundation -list_devices true -i &quot;&quot;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>录制音频<ul>
+<li><code>ffmpeg -f avfoundation -i :1 out.wav</code><ul>
+<li>-i：指定采集数据的设备索引   <code>:1</code>表示从话筒(音频)采集，<code>:</code>前表示采集视频的索引，<code>:</code>后表示采集音频的索引</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>分解与复用</p>
+<blockquote>
+<p>换封装格式</p>
+<p>提取视频、音频</p>
+<p>不涉及编解码，只有解封装和封装</p>
+</blockquote>
+<p>多媒体格式转换</p>
+<ul>
+<li><code>ffmpeg -i out.mp4 -vcodec copy -acodec copy out.flv</code></li>
+<li><code>ffmpeg -i out.mp4 -an -vcodec copy out.h264</code><ul>
+<li>抽取视频</li>
+</ul>
+</li>
+<li><code>ffmpeg -i out.mp4 -acodec copy -vn out.aac</code><ul>
+<li>抽取音频</li>
+</ul>
+</li>
+</ul>
+<p>处理原始数据</p>
+<p>FFmpeg提取YUV数据<br><code>ffmpeg -i input.mp4 -an -c:v rawvideo -pix_fmt yuv420p out.yuv</code></p>
+<ul>
+<li>-c:v rawvideo  : 指定视频编码格式</li>
+<li>-pix_fmt yuv420p ： 指定视频像素格式</li>
+</ul>
+<p>FFmpeg提取PCM数据<br><code>ffmpeg -i out.mp4 -vn -ar 44100 -ac2 -f s16le out.pcm</code></p>
 
     </div>
 
@@ -590,7 +656,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图形基础"><span class="nav-text">图形基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#H264编码"><span class="nav-text">H264编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SPS"><span class="nav-text">SPS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Profile-amp-Level"><span class="nav-text">Profile &amp; Level</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PPS"><span class="nav-text">PPS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Slice-Header"><span class="nav-text">Slice-Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析工具"><span class="nav-text">分析工具</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图形基础"><span class="nav-text">图形基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#H264编码"><span class="nav-text">H264编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SPS"><span class="nav-text">SPS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Profile-amp-Level"><span class="nav-text">Profile &amp; Level</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PPS"><span class="nav-text">PPS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Slice-Header"><span class="nav-text">Slice-Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析工具"><span class="nav-text">分析工具</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L069"><span class="nav-text">L069</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令"><span class="nav-text">常用命令</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -684,7 +750,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:45</span>
+    <span title="站点阅读时长">15:49</span>
 </div>
 
         

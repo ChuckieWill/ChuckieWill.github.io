@@ -52,7 +52,7 @@
 <meta property="og:image" content="http://yoursite.com/2022/01/26/C++/C++interview/image-20230420205013208.png">
 <meta property="og:image" content="https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP-Wireshark/19.jpg">
 <meta property="article:published_time" content="2022-01-26T06:43:17.000Z">
-<meta property="article:modified_time" content="2023-08-03T12:49:23.919Z">
+<meta property="article:modified_time" content="2023-08-17T11:56:59.236Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -245,7 +245,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-03 20:49:23" itemprop="dateModified" datetime="2023-08-03T20:49:23+08:00">2023-08-03</time>
+                <time title="修改时间：2023-08-17 19:56:59" itemprop="dateModified" datetime="2023-08-17T19:56:59+08:00">2023-08-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,14 +263,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>66k</span>
+              <span>70k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1:01</span>
+              <span>1:03</span>
             </span>
 
         </div>
@@ -1770,11 +1770,13 @@
 </blockquote>
 <p>内部实现</p>
 <p>线程安全</p>
+<p>unique_ptr 阻止拷贝是编译阶段，通过delete拷贝构造函数实现，但是移动拷贝没有delete, 所以通过move是可以赋值的</p>
 <h4 id="vector存储对象"><a href="#vector存储对象" class="headerlink" title="vector存储对象"></a>vector存储对象</h4><blockquote>
 <p><a href="https://blog.csdn.net/Think88666/article/details/89408890" target="_blank" rel="noopener">https://blog.csdn.net/Think88666/article/details/89408890</a></p>
 <p><a href="https://blog.csdn.net/weixin_42322256/article/details/125068306" target="_blank" rel="noopener">https://blog.csdn.net/weixin_42322256/article/details/125068306</a></p>
 </blockquote>
 <p>vector存储对象扩容时，也是完全拷贝对象，push_back和emplace_back对比</p>
+<p>c++11 push_back() 也开始支持移动拷贝</p>
 <h4 id="虚函数表和虚函数指针"><a href="#虚函数表和虚函数指针" class="headerlink" title="虚函数表和虚函数指针"></a>虚函数表和虚函数指针</h4><blockquote>
 <p><a href="https://blog.csdn.net/qq_43142509/article/details/126365313" target="_blank" rel="noopener">https://blog.csdn.net/qq_43142509/article/details/126365313</a></p>
 <p><a href="https://www.nowcoder.com/discuss/415213368640909312?sourceSSR=users" target="_blank" rel="noopener">https://www.nowcoder.com/discuss/415213368640909312?sourceSSR=users</a></p>
@@ -1810,8 +1812,22 @@
 <h4 id="delete-与-delete"><a href="#delete-与-delete" class="headerlink" title="delete[] 与 delete"></a>delete[] 与 delete</h4><ul>
 <li><p>delete this会发生什么</p>
 <ul>
-<li>会释放掉这个指针(指针的内存空间)，不会释放对象</li>
-<li>delete 对象才能释放对象</li>
+<li>在析构函数中调用会一直循环递归调用<ul>
+<li>delete会先调用析构函数，然后再释放内存</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>在普通函数中调用会释放内存，函数后续不能再访问成员变量和this，因为内存已经释放</p>
+<ul>
+<li>delete this 一定要和new 出来的对象配合使用<ul>
+<li>关于如何保证一个对象只能动态创建(new)<ul>
+<li>析构函数设置为保护(可继承)或私有(不可继承)</li>
+<li>需要额外定义释放内存的函数destory(), 在这个函数中可以delete this来释放对象内存</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p>delete可以delete NULL、nullptr  不会报错</p>
@@ -1954,14 +1970,14 @@
 </li>
 <li>加载时初始化<ul>
 <li>发生在main函数之前</li>
-<li>懒汉模式</li>
+<li>饿汉模式</li>
 <li>静态变量是一个基本数据类型，但是初始值<strong>非常量</strong></li>
 <li>静态变量是一个<strong>类对象</strong>，这种情况下即使是使用常量初始化，也是加载时初始化，而不是编译时初始化</li>
 </ul>
 </li>
 <li>运行时初始化<ul>
 <li>发生在变量第一次被引用 （<strong>函数内部局部变量</strong>）</li>
-<li>饿汉模式</li>
+<li>懒汉模式</li>
 </ul>
 </li>
 </ul>
@@ -2020,7 +2036,24 @@
 <h4 id="STL内存分配"><a href="#STL内存分配" class="headerlink" title="STL内存分配"></a>STL内存分配</h4><ul>
 <li>STL容器都是通过二级分配器分配内存的，也就是分配在堆上，通过内存池来管理</li>
 <li>在栈区定义容器变量，变量本身存储在栈区，但是变量存储的数据在堆区</li>
-<li>在对空间定义的容器变量，变量本身存储在堆区，存储的数据也在堆区</li>
+<li>在堆空间定义的容器变量，变量本身存储在堆区，存储的数据也在堆区</li>
+<li>两级空间配置器<ul>
+<li>底层都是调用malloc</li>
+<li>一级空间配置器处理大于128k的申请<ul>
+<li>直接调用malloc</li>
+</ul>
+</li>
+<li>二级空间配置器处理小于128k的申请<ul>
+<li>内存池管理内存，16条链表，每条链表上挂20个，只有内存池中内存不够时才调用malloc再次申请内存</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>malloc<ul>
+<li>大于128k, 在自由存储区申请内存，底层用mmap</li>
+<li>小于128k，在堆区申请内存，底层用brk</li>
+</ul>
+</li>
 </ul>
 <h4 id="类如何只能静态分配和只能动态分配"><a href="#类如何只能静态分配和只能动态分配" class="headerlink" title="类如何只能静态分配和只能动态分配"></a>类如何只能静态分配和只能动态分配</h4><blockquote>
 <p><a href="https://blog.csdn.net/weixin_42752274/article/details/126150079" target="_blank" rel="noopener">https://blog.csdn.net/weixin_42752274/article/details/126150079</a></p>
@@ -2038,6 +2071,57 @@
 <li>由于将析构函数定义为私有，需要额外定义析构函数释放内存？？？</li>
 </ul>
 </li>
+</ul>
+<h4 id="单例模式-1"><a href="#单例模式-1" class="headerlink" title="单例模式"></a>单例模式</h4><blockquote>
+<p>小林coding : <a href="https://www.cnblogs.com/xiaolincoding/p/11437231.html" target="_blank" rel="noopener">https://www.cnblogs.com/xiaolincoding/p/11437231.html</a></p>
+</blockquote>
+<ul>
+<li>懒汉模式：线程不安全<ul>
+<li>定义静态实例对象指针，每次获取需要加锁</li>
+<li>定义局部静态实例对象，不用加锁，因为局部静态对象只会被初始化一次</li>
+</ul>
+</li>
+<li>饿汉模式：线程安全</li>
+</ul>
+<h4 id="运算符重载"><a href="#运算符重载" class="headerlink" title="运算符重载"></a>运算符重载</h4><blockquote>
+<p><a href="https://blog.csdn.net/qq_52905520/article/details/127178512" target="_blank" rel="noopener">https://blog.csdn.net/qq_52905520/article/details/127178512</a></p>
+</blockquote>
+<ul>
+<li>常规</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> x, y;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	A(<span class="keyword">int</span> x1 = <span class="number">0</span>, <span class="keyword">int</span> y1 = <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		x = x1;</span><br><span class="line">		y = y1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">friend</span> A <span class="keyword">operator</span>+(<span class="keyword">const</span> A&amp; a, <span class="keyword">const</span> A&amp; b);</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"x="</span> &lt;&lt; x &lt;&lt; <span class="string">","</span> &lt;&lt; <span class="string">"y="</span> &lt;&lt; y &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">A <span class="keyword">operator</span>+(<span class="keyword">const</span> A&amp; a, <span class="keyword">const</span> A&amp; b)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> A(a.x + b.x, a.y + b.y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> x, y;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	A(<span class="keyword">int</span> x1 = <span class="number">0</span>, <span class="keyword">int</span> y1 = <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		x = x1;</span><br><span class="line">		y = y1;</span><br><span class="line">	&#125;</span><br><span class="line">	A <span class="keyword">operator</span>+(<span class="keyword">const</span> A&amp; a)<span class="keyword">const</span></span><br><span class="line">	&#123;</span><br><span class="line">		A t;</span><br><span class="line">		t.x = <span class="keyword">this</span>-&gt;x + a.x;</span><br><span class="line">		t.y = <span class="keyword">this</span>-&gt;y + a.y;</span><br><span class="line">		<span class="keyword">return</span> t;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"x="</span> &lt;&lt; x &lt;&lt; <span class="string">","</span> &lt;&lt; <span class="string">"y="</span> &lt;&lt; y &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>自增<ul>
+<li>用前置来写后置</li>
+<li>参数有类型为后置</li>
+<li>前置返回引用</li>
+<li>后置返回对象</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> x, y;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	A(<span class="keyword">int</span> x1 = <span class="number">0</span>, <span class="keyword">int</span> y1 = <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		x = x1;</span><br><span class="line">		y = y1;</span><br><span class="line">	&#125;</span><br><span class="line">	A &amp;<span class="keyword">operator</span>++()<span class="comment">//++i 前置++实现</span></span><br><span class="line">	&#123;</span><br><span class="line">		++x;	<span class="comment">//先自增</span></span><br><span class="line">		++y;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>;	<span class="comment">//后引用</span></span><br><span class="line">	&#125;</span><br><span class="line">	A <span class="keyword">operator</span>++(<span class="keyword">int</span>)	<span class="comment">//i++ 后置++实现</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//int参数没有任何意义，只是为了区分是前置还是后置形式</span></span><br><span class="line">		A a = *<span class="keyword">this</span>;	<span class="comment">//保存对象引用</span></span><br><span class="line">		++(*<span class="keyword">this</span>);	<span class="comment">//自增，调用前面实现的前置++</span></span><br><span class="line">		<span class="keyword">return</span> a;	<span class="comment">//返回先前保存的对象</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"x="</span> &lt;&lt; x &lt;&lt; <span class="string">","</span> &lt;&lt; <span class="string">"y="</span> &lt;&lt; y &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	A a1(1, 2), a2(3, 4);</span><br><span class="line">	(a1++).show();</span><br><span class="line">	(++a2).show();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印</span></span><br><span class="line">x=<span class="number">1</span>,y=<span class="number">2</span></span><br><span class="line">x=<span class="number">4</span>,y=<span class="number">5</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输入输出<ul>
+<li>返回值为引用</li>
+<li>输入需要输入输出类的引用</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> x, y;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	A(<span class="keyword">int</span> x1 = <span class="number">0</span>, <span class="keyword">int</span> y1 = <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		x = x1;</span><br><span class="line">		y = y1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">friend</span> istream&amp; <span class="keyword">operator</span>&gt;&gt;(istream&amp; is, A&amp; a);</span><br><span class="line">	<span class="keyword">friend</span> ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp; os, <span class="keyword">const</span> A&amp; a);</span><br><span class="line">&#125;;</span><br><span class="line">istream&amp; <span class="keyword">operator</span>&gt;&gt;(istream&amp; is, A&amp; a)</span><br><span class="line">&#123;</span><br><span class="line">	is &gt;&gt; a.x &gt;&gt; a.y;</span><br><span class="line">	<span class="keyword">return</span> is;</span><br><span class="line">&#125;</span><br><span class="line">ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp; os, <span class="keyword">const</span> A&amp; a)</span><br><span class="line">&#123;</span><br><span class="line">	os &lt;&lt; <span class="string">"x="</span> &lt;&lt; a.x &lt;&lt; <span class="string">","</span> &lt;&lt; <span class="string">"y="</span>&lt;&lt;a.y ;</span><br><span class="line">	<span class="keyword">return</span> os;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">A <span class="title">a1</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>)</span></span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; a1;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; a1;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印</span></span><br><span class="line"><span class="number">21</span> <span class="number">88</span></span><br><span class="line">x=<span class="number">21</span>,y=<span class="number">88</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="c-11对象自带的函数"><a href="#c-11对象自带的函数" class="headerlink" title="c++11对象自带的函数"></a>c++11对象自带的函数</h4><blockquote>
+<p>c++11中类的默认函数</p>
+</blockquote>
+<p>6个函数 + 全局默认操作符号</p>
+<ul>
+<li>构造函数:<code>A()</code></li>
+<li>拷贝构造函数:<code>A(const A&amp;)</code>或<code>A(A&amp;)</code></li>
+<li>拷贝赋值函数:<code>A&amp; operator=(const A&amp;)</code>或<code>A&amp; operator=(A&amp;)</code></li>
+<li>移动构造函数:<code>A(A &amp;&amp;)</code></li>
+<li>移动赋值函数:<code>A&amp; operator=(A &amp;&amp;)</code></li>
+<li>析构函数:<code>~A()</code></li>
 </ul>
 <h4 id="阿里二面"><a href="#阿里二面" class="headerlink" title="阿里二面"></a>阿里二面</h4><p>operator new的第二参数，传入指针，结合vector，先开辟空间再用new()构造</p>
 <p>父类析构函数没有定义为虚析构函数，如何保证子类可以正常析构，使用share_ptr、template解决   share_ptr的删除器(default_delete)</p>
@@ -2073,7 +2157,7 @@
 
 <h2 id="计算机上网络"><a href="#计算机上网络" class="headerlink" title="计算机上网络"></a>计算机上网络</h2><blockquote>
 <p><a href="https://blog.csdn.net/Fuel_Ming/article/details/122931926" target="_blank" rel="noopener">select中的fd_set</a></p>
-<p>fd_set: 是一个 unsighed long 数组，大小16   16 * 8 * = 1024</p>
+<p>fd_set: 是一个 unsighed long 数组，大小16   16 * 8 *8 = 1024</p>
 </blockquote>
 <h3 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a>网络编程</h3><h4 id="TCP与UDP"><a href="#TCP与UDP" class="headerlink" title="TCP与UDP"></a>TCP与UDP</h4><p>TCP是可靠的，面向连接的，数据流传输协议</p>
 <p>UPD是不可靠的，是面向无连接的，报式传输协议</p>
@@ -2210,7 +2294,24 @@
 <p>/learn/network/tcp_epoll/libevent.c</p>
 <p>epoll ET模式 + 非阻塞、轮询 + void *ptr</p>
 </blockquote>
-<h3 id="基础问题"><a href="#基础问题" class="headerlink" title="基础问题"></a>基础问题</h3><h4 id="http1-0-1-1-2-3区别"><a href="#http1-0-1-1-2-3区别" class="headerlink" title="http1.0/1.1/2/3区别"></a>http1.0/1.1/2/3区别</h4><h4 id="https握手过程"><a href="#https握手过程" class="headerlink" title="https握手过程"></a>https握手过程</h4><h4 id="浏览器输入url"><a href="#浏览器输入url" class="headerlink" title="浏览器输入url"></a>浏览器输入url</h4><p><strong>TCP</strong></p>
+<h3 id="基础问题"><a href="#基础问题" class="headerlink" title="基础问题"></a>基础问题</h3><h4 id="http1-0-1-1-2-3区别"><a href="#http1-0-1-1-2-3区别" class="headerlink" title="http1.0/1.1/2/3区别"></a>http1.0/1.1/2/3区别</h4><p>1.0 -&gt; 1.1</p>
+<ul>
+<li>长连接</li>
+<li>管道，解决发送的对头阻塞</li>
+</ul>
+<p>1.1 -&gt; 2.0</p>
+<ul>
+<li>头部压缩</li>
+<li>二进制格式传输，200字符传输3个字节，二进制传输1个字节</li>
+<li>并发传输，stream，解决响应队头阻塞问题</li>
+<li>主动推送，请求html返回html和css</li>
+</ul>
+<p>2.0 -&gt; 3.0</p>
+<ul>
+<li>底层改成UDP，解决TCP导致的队头阻塞(丢包重传，阻塞已经到达内核态的数据传到用户态)</li>
+<li>QUIC，将https的握手结合，减少了握手次数</li>
+</ul>
+<h4 id="https握手过程"><a href="#https握手过程" class="headerlink" title="https握手过程"></a>https握手过程</h4><h4 id="浏览器输入url"><a href="#浏览器输入url" class="headerlink" title="浏览器输入url"></a>浏览器输入url</h4><p><strong>TCP</strong></p>
 <ul>
 <li><p>消息头</p>
 <ul>
@@ -2291,7 +2392,18 @@
 </ul>
 </li>
 </ul>
+<h4 id="局部性原理"><a href="#局部性原理" class="headerlink" title="局部性原理"></a>局部性原理</h4><blockquote>
+<p><a href="https://blog.csdn.net/qq_53162179/article/details/125004093" target="_blank" rel="noopener">https://blog.csdn.net/qq_53162179/article/details/125004093</a></p>
+</blockquote>
+<p>一个数组存储一亿个元素，内存是连续的吗</p>
+<ul>
+<li>一亿个元素内存大概400M</li>
+</ul>
 <h2 id="数据库-1"><a href="#数据库-1" class="headerlink" title="数据库"></a>数据库</h2><h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>B树和B+树的区别</p>
+<ul>
+<li>B+树数据都存储在叶子节点上</li>
+<li>B+树叶子节点通过链表链接</li>
+</ul>
 <h2 id="大数据量"><a href="#大数据量" class="headerlink" title="大数据量"></a>大数据量</h2><p>有限内存对大量数据排序</p>
 <ul>
 <li>利用桶排序的方式，先划分好桶，一个桶对应一个磁盘上的文件</li>
@@ -2377,6 +2489,19 @@
 <li>第一行</li>
 </ul>
 </li>
+</ul>
+<h5 id="过滤所有以abc开头的文件名"><a href="#过滤所有以abc开头的文件名" class="headerlink" title="过滤所有以abc开头的文件名"></a>过滤所有以abc开头的文件名</h5><blockquote>
+<p>正则表达式： <a href="https://www.runoob.com/regexp/regexp-syntax.html" target="_blank" rel="noopener">https://www.runoob.com/regexp/regexp-syntax.html</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ls | grep &quot;^L*&quot;</span><br><span class="line"></span><br><span class="line">^ : 以开头</span><br><span class="line">$ : 以结尾</span><br></pre></td></tr></table></figure>
+
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p>一个数字一个元素出现一次，其它元素出现3次，找到出现1次的元素</p>
+<ul>
+<li>记录每个比特位1出现的次数，用32大小的数组存储，每个位对3取余，余1则这个1一定是出现一次的数字的</li>
+</ul>
+<p>一个数组，左移k位， 1 2 3 4 5 6 7 –&gt; 3 4 5 6 7 1 2 (k = 2) O（1）时间复杂度 O(n)空间复杂度</p>
+<ul>
+<li>[0-k-1]反转，[k, n-1]反转， 整个数组反转</li>
 </ul>
 <h2 id="node-js"><a href="#node-js" class="headerlink" title="node.js"></a>node.js</h2><p>导入库的语法</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = <span class="built_in">require</span>(<span class="string">"./main.js"</span>)</span><br></pre></td></tr></table></figure>
@@ -2610,7 +2735,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#todo"><span class="nav-text">todo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c"><span class="nav-text">c++</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象开辟堆区注意事项"><span class="nav-text">对象开辟堆区注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动构造函数导致默认”-”构造不能用"><span class="nav-text">移动构造函数导致默认”&#x3D;”构造不能用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#返回值const引用-待解决"><span class="nav-text">返回值const引用  待解决</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#八股文"><span class="nav-text">八股文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#面试宝典"><span class="nav-text">面试宝典</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统"><span class="nav-text">操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#prelearn"><span class="nav-text">prelearn</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#马士兵操作系统"><span class="nav-text">马士兵操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存管理"><span class="nav-text">内存管理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式"><span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STL"><span class="nav-text">STL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#六大部件"><span class="nav-text">六大部件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#array"><span class="nav-text">array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vector"><span class="nav-text">vector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stack"><span class="nav-text">stack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map"><span class="nav-text">map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unordered-map"><span class="nav-text">unordered_map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#priority-queue"><span class="nav-text">priority_queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set、map"><span class="nav-text">set、map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关知识点"><span class="nav-text">相关知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#move-左值-右值"><span class="nav-text">move 左值 右值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器移动"><span class="nav-text">迭代器移动</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库"><span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计模式"><span class="nav-text">设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单例模式"><span class="nav-text">单例模式</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多线程"><span class="nav-text">多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池"><span class="nav-text">线程池</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#面试问题"><span class="nav-text">面试问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#c-1"><span class="nav-text">c++</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GDB调试"><span class="nav-text">GDB调试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#智能指针"><span class="nav-text">智能指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vector存储对象"><span class="nav-text">vector存储对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#虚函数表和虚函数指针"><span class="nav-text">虚函数表和虚函数指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#placement-new"><span class="nav-text">placement new</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#delete-与-delete"><span class="nav-text">delete[] 与 delete</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shared-ptr与析构"><span class="nav-text">shared_ptr与析构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多态指针转型"><span class="nav-text">多态指针转型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内存共享"><span class="nav-text">内存共享</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#宏、const和static"><span class="nav-text">宏、const和static</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#STL内存分配"><span class="nav-text">STL内存分配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类如何只能静态分配和只能动态分配"><span class="nav-text">类如何只能静态分配和只能动态分配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阿里二面"><span class="nav-text">阿里二面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#华为"><span class="nav-text">华为</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机上网络"><span class="nav-text">计算机上网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络编程"><span class="nav-text">网络编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP与UDP"><span class="nav-text">TCP与UDP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP通信流程"><span class="nav-text">TCP通信流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UDP通信流程"><span class="nav-text">UDP通信流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp第三次握手失败"><span class="nav-text">tcp第三次握手失败</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拥塞控制-流量控制"><span class="nav-text">拥塞控制&#x2F;流量控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp粘包和拆包"><span class="nav-text">tcp粘包和拆包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#select"><span class="nav-text">select</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#poll"><span class="nav-text">poll</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#epoll"><span class="nav-text">epoll</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ET-LT"><span class="nav-text">ET&#x2F;LT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#epoll反应堆"><span class="nav-text">epoll反应堆</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础问题"><span class="nav-text">基础问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#http1-0-1-1-2-3区别"><span class="nav-text">http1.0&#x2F;1.1&#x2F;2&#x2F;3区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#https握手过程"><span class="nav-text">https握手过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器输入url"><span class="nav-text">浏览器输入url</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作系统-1"><span class="nav-text">操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程间通信方式："><span class="nav-text">进程间通信方式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程间同步方式："><span class="nav-text">线程间同步方式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乐观锁和悲观锁"><span class="nav-text">乐观锁和悲观锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁条件"><span class="nav-text">死锁条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#程序运行流程"><span class="nav-text">程序运行流程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库-1"><span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构"><span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大数据量"><span class="nav-text">大数据量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL"><span class="nav-text">SQL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux命令"><span class="nav-text">linux命令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看内存使用情况"><span class="nav-text">查看内存使用情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看进程内存使用情况"><span class="nav-text">查看进程内存使用情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看设备负载情况"><span class="nav-text">查看设备负载情况</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node-js"><span class="nav-text">node.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要求"><span class="nav-text">要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开放问题"><span class="nav-text">开放问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RTMP"><span class="nav-text">RTMP</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#todo"><span class="nav-text">todo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c"><span class="nav-text">c++</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象开辟堆区注意事项"><span class="nav-text">对象开辟堆区注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动构造函数导致默认”-”构造不能用"><span class="nav-text">移动构造函数导致默认”&#x3D;”构造不能用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#返回值const引用-待解决"><span class="nav-text">返回值const引用  待解决</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#八股文"><span class="nav-text">八股文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#面试宝典"><span class="nav-text">面试宝典</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统"><span class="nav-text">操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#prelearn"><span class="nav-text">prelearn</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#马士兵操作系统"><span class="nav-text">马士兵操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存管理"><span class="nav-text">内存管理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式"><span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#STL"><span class="nav-text">STL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#六大部件"><span class="nav-text">六大部件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#array"><span class="nav-text">array</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vector"><span class="nav-text">vector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stack"><span class="nav-text">stack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map"><span class="nav-text">map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unordered-map"><span class="nav-text">unordered_map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#priority-queue"><span class="nav-text">priority_queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set、map"><span class="nav-text">set、map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关知识点"><span class="nav-text">相关知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#move-左值-右值"><span class="nav-text">move 左值 右值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器移动"><span class="nav-text">迭代器移动</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库"><span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计模式"><span class="nav-text">设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单例模式"><span class="nav-text">单例模式</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多线程"><span class="nav-text">多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程池"><span class="nav-text">线程池</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#面试问题"><span class="nav-text">面试问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#c-1"><span class="nav-text">c++</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GDB调试"><span class="nav-text">GDB调试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#智能指针"><span class="nav-text">智能指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vector存储对象"><span class="nav-text">vector存储对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#虚函数表和虚函数指针"><span class="nav-text">虚函数表和虚函数指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#placement-new"><span class="nav-text">placement new</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#delete-与-delete"><span class="nav-text">delete[] 与 delete</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shared-ptr与析构"><span class="nav-text">shared_ptr与析构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多态指针转型"><span class="nav-text">多态指针转型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内存共享"><span class="nav-text">内存共享</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#宏、const和static"><span class="nav-text">宏、const和static</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#STL内存分配"><span class="nav-text">STL内存分配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类如何只能静态分配和只能动态分配"><span class="nav-text">类如何只能静态分配和只能动态分配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单例模式-1"><span class="nav-text">单例模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运算符重载"><span class="nav-text">运算符重载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-11对象自带的函数"><span class="nav-text">c++11对象自带的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阿里二面"><span class="nav-text">阿里二面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#华为"><span class="nav-text">华为</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机上网络"><span class="nav-text">计算机上网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络编程"><span class="nav-text">网络编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP与UDP"><span class="nav-text">TCP与UDP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP通信流程"><span class="nav-text">TCP通信流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UDP通信流程"><span class="nav-text">UDP通信流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp第三次握手失败"><span class="nav-text">tcp第三次握手失败</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拥塞控制-流量控制"><span class="nav-text">拥塞控制&#x2F;流量控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp粘包和拆包"><span class="nav-text">tcp粘包和拆包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#select"><span class="nav-text">select</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#poll"><span class="nav-text">poll</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#epoll"><span class="nav-text">epoll</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ET-LT"><span class="nav-text">ET&#x2F;LT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#epoll反应堆"><span class="nav-text">epoll反应堆</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础问题"><span class="nav-text">基础问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#http1-0-1-1-2-3区别"><span class="nav-text">http1.0&#x2F;1.1&#x2F;2&#x2F;3区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#https握手过程"><span class="nav-text">https握手过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器输入url"><span class="nav-text">浏览器输入url</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作系统-1"><span class="nav-text">操作系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程间通信方式："><span class="nav-text">进程间通信方式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程间同步方式："><span class="nav-text">线程间同步方式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乐观锁和悲观锁"><span class="nav-text">乐观锁和悲观锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#死锁条件"><span class="nav-text">死锁条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#程序运行流程"><span class="nav-text">程序运行流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#局部性原理"><span class="nav-text">局部性原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库-1"><span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构"><span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大数据量"><span class="nav-text">大数据量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL"><span class="nav-text">SQL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux命令"><span class="nav-text">linux命令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看内存使用情况"><span class="nav-text">查看内存使用情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看进程内存使用情况"><span class="nav-text">查看进程内存使用情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看设备负载情况"><span class="nav-text">查看设备负载情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#过滤所有以abc开头的文件名"><span class="nav-text">过滤所有以abc开头的文件名</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法"><span class="nav-text">算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node-js"><span class="nav-text">node.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要求"><span class="nav-text">要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开放问题"><span class="nav-text">开放问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RTMP"><span class="nav-text">RTMP</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -2704,7 +2829,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:45</span>
+    <span title="站点阅读时长">15:49</span>
 </div>
 
         
