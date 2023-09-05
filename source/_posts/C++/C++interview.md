@@ -3129,6 +3129,110 @@ x=21,y=88
 - 移动赋值函数:`A& operator=(A &&)`
 - 析构函数:`~A()`
 
+####  const修饰成员函数
+
+> 底层原理本质是利用了重载
+>
+> 修饰对象： https://blog.csdn.net/alidada_blog/article/details/86477750
+>
+> 修饰对象成员函数：https://blog.csdn.net/qq_52302919/article/details/127129326
+
+* 修饰对象
+  * 对象调用函数时，传入的this都是const A* const this， 只有常函数可以匹配这个参数，所以只能调用常函数
+
+* 修饰成员函数
+  * 对象调用该函数时，该函数要求传入的this是const A* const this
+  * 所以内部不能修改成员变量
+
+####  A* p = NULL
+
+> https://blog.csdn.net/songzitea/article/details/52177279
+
+* A* p = NULL;  // 只声明了， 并没有定义，A对象根本就没有定义，这个对象就没初始, **就不存在一个A对象**
+* 这个操作相当 this = NULL，访问成员变量时需要通过this，那就是访问空指针，自然报错
+  * 本质是访问空指针
+
+```c++
+class A{
+public:
+  int x;
+  void p0(){
+    printf("%d", 123);
+  }
+  void p1(){
+    printf("%d", x);
+  }
+  void p2(){
+    // printf("%d", (int)&x); //编译报错，不能将int* 转化为int
+    // printf("%d", reinterpret_cast<int>(&x)); // 也不能正常转换
+    cout<<&x<<endl;
+
+  }
+};
+
+int main(){
+  // 可通过编译
+  // -------这里只声明了， 并没有定义，A对象根本就没有定义，这个对象就没初始化-------
+  A* p = NULL; // 此时就是将NULL赋值给了this指针，NULL在c++中就是0， 0是基地址，访问需要进入内核态，没有权限报core错误
+  p->p0(); // 可以调用
+  p->p1(); // 对象地址为null 也就是0， **执行**报错 // Segmentation fault (core dumped)  内核态没有权限访问  基地址要进入内核态，没有权限访问
+  p->p2(); // 需要通过this访问x， this = NULL，同样问题执行报错
+  return 0;
+}
+
+
+class A{
+public:
+  int x;
+  virtual void p0(){
+    printf("%d", 123);
+  }
+  virtual void p1(){
+    printf("%d", x);
+  }
+  virtual void p2(){
+    cout<<&x<<endl;
+  }
+};
+
+int main(){
+  // 可通过编译
+  A* p = NULL; // 此时就是将NULL赋值给了this指针，NULL在c++中就是0， 0是基地址，访问需要进入内核态，没有权限报core错误
+  // 此时需要通过this，然后通过虚函数指针访问虚表里函数的地址  而this = NULL ,同样问题报错
+  p->p0(); 
+  p->p1(); 
+  p->p2(); 
+  return 0;
+}
+
+class A{
+public:
+  int x;
+  static void p0(){
+    printf("%d", 123);
+  }
+  static void p1(){
+    printf("%d", x); // 直接编辑器提示错误
+  }
+  static void p2(){
+    cout<<&x<<endl; // 直接编辑器提示错误
+
+  }
+};
+
+int main(){
+  // 编译不通过
+  A* p = NULL; // 此时就是将NULL赋值给了this指针，NULL在c++中就是0， 0是基地址，访问需要进入内核态，没有权限报core错误
+  // static 函数属于类， 没有this指针，不能访问x，直接编译报错
+  p->p0(); 
+  p->p1(); 
+  p->p2(); 
+  return 0;
+}
+```
+
+
+
 ####  阿里二面
 
 operator new的第二参数，传入指针，结合vector，先开辟空间再用new()构造
@@ -4039,13 +4143,181 @@ $ : 以结尾
 
 ## 算法
 
+#####  出现3次的元素
+
 一个数字一个元素出现一次，其它元素出现3次，找到出现1次的元素
 
 * 记录每个比特位1出现的次数，用32大小的数组存储，每个位对3取余，余1则这个1一定是出现一次的数字的
 
+#####  移动k位
+
 一个数组，左移k位， 1 2 3 4 5 6 7 --> 3 4 5 6 7 1 2 (k = 2) O（1）时间复杂度 O(n)空间复杂度
 
 * [0-k-1]反转，[k, n-1]反转， 整个数组反转
+
+#####  找高频元素
+
+给定一个有序数组，问是否存在出现次数大于1/3的元素
+
+* 因为出现次数大于1/3 所以这个元素一定出现在1/3位置或2/3位置，再二分查找该元素起始位置，确定范围
+
+```c++
+# include <iostream>
+# include <bits/stdc++.h>
+using namespace std;
+
+bool check(const vector<int>& arr){
+  // 0 1 2 3 4 5 6 7 8  n = 9
+  // 1 2 3 4 5 6 7 8 9
+  //       *   *
+  int n = arr.size();
+  int left = arr[n/3]; // 9/3 = 3 正好是1/3位置索引
+  int right = arr[n - n/3]; // 9 - 3 - 1 = 5  正好2/3位置的索引
+  // lower_bound找到大于等于该值的第一个元素的位置的迭代器
+  auto itll = lower_bound(arr.begin(), arr.end(), left); // 找到1/3元素左边的起始位置，包含该位置
+  // upper_bound找到大于该值的第一个元素的位置的迭代器
+  auto itlr = upper_bound(arr.begin(), arr.end(), left); // 找到1/3元素右边的结束位置，不包含该位置
+  if( itlr - itll > n/3){
+    return true;
+  }
+
+  // lower_bound找到大于等于该值的第一个元素的位置的迭代器
+  auto itrl = lower_bound(arr.begin(), arr.end(), right); // 找到2/3元素左边的起始位置，包含该位置
+  // upper_bound找到大于该值的第一个元素的位置的迭代器
+  auto itrr = upper_bound(arr.begin(), arr.end(), right); // 找到2/3元素右边的结束位置，不包含该位置
+  if( itrr - itrl > n/3){
+    return true;
+  }
+  return false;
+}
+
+int main(){
+  vector<int> arr = {1,1,1,2,3,4};
+  vector<int> arr1 = {1,2,3,4};
+
+  if(check(arr1)){
+    cout<<"yes"<<endl;
+  }else{
+    cout<<"no"<<endl;
+  }
+  return 0;
+}
+
+```
+
+#####  约瑟夫环
+
+> [约瑟夫环](https://blog.csdn.net/melonyzzZ/article/details/127787472)
+
+* 阿里优酷一面算法
+
+  * 输入n表示n个人, 从0到n-1编号，输入m, 从0编号开始报数，报数从1开始，报数到m则退出，再从1开始报数，最终留下的人获胜
+  * 仍然输入m，输入任意n，输出获胜的编号，时间复杂度要O(n)
+* 得物笔试
+  * 输入n表示n个人, 从1到n编号，输入m, 从1编号开始报数，报数从1开始，报数到m则退出，再从1开始报数，报到最右边则再往左报数，报到最左边则再继续往右报数，最终留下的人获胜
+  * 例如 n = 3, m = 4
+    * 1 2 3 再往左报数 2  则2先被剔除  变为1 3
+    * 继续从删除的位置2往左报数  1 再往右 3 再往左1 再往右 3  则3被剔除，剩余1
+
+
+
+#####  快速幂溢出问题
+
+> [快速幂/快速乘](https://blog.csdn.net/liangllhahaha/article/details/82119378)
+>
+> [快速幂溢出](https://blog.csdn.net/m0_62556295/article/details/127211930)
+>
+> 重要定理：(a*b)%p = (a%p) *( b%p)%p
+>
+> 重要定理：(a+b)%p = ((a%p) + ( b%p))%p
+
+```
+a = mp + x
+b = np + y
+(a*b)%p = ((mp + x)*(np + y))%p = (mnp^2 + mpy + npx + xy)%p = xy%p
+(a%p) *( b%p)%p = x * y %p = xy%p
+
+(a+b)%p = ((mp + x)+(np + y))%p = (mp + np + x + y)%p = (x+y)%p
+((a%p) + ( b%p))%p = (x + y)%p
+```
+
+```c++
+// 快速幂
+int main(){
+    long long a,b,p,ans;
+    cin>>a>>b>>p;
+    
+    a%=p;
+    while(b)
+    {
+        if(b%2)
+        {
+            ans=(ans*a)%p;
+        }
+        a = (a*a)%p;
+        b/=2;
+    }
+    cout<<ans<<endl;
+    return 0;
+}
+// a^b = a*2^0 * a*2^1 * .... * a*2^n
+long long ksm(long long a, long long b, long long p) {
+    long long ans = 1, base = a%p;
+    while(b != 0) {
+        if(b & 1 != 0) {
+            ans = (ans*base)%p;
+        }
+        base = (base*base)%p;
+        b >>= 1;
+    }
+    return ans;
+}
+
+// 快速乘
+// a*b = a*2^0 + a*2^1+....+a*2^n
+long long ksc(long long a, long long b){
+    long long ans = 0, base = a;
+    while(b != 0){
+        if(b&1){
+            ans = ans + base;
+        }
+        base = base + base;
+        b >>= 1;
+    }
+    
+}
+// 防止溢出
+long long ksc(long long a, long long b, long long p){
+    long long ans = 0, base = a;
+    while(b != 0){
+        if(b&1){
+            ans = (ans + base)%p;
+        }
+        base = (base + base)%p;
+        b >>= 1;
+    }
+    
+}
+```
+
+#####  最短路径
+
+* 宽度优先，深度优先可能爆空间
+* 华为4.19 第二题
+
+#####  差分数组
+
+* 华为4.19 第一题
+
+#####  有序集合求交
+
+> 多个有序数组排序也用优先队列
+
+* 多个有序集合求交
+  * 用优先队列
+  * 和堆顶相同则计数， 计数达到m(m个队列)则是交集元素
+  * 大于堆顶元素则入队
+  * 小于堆顶元素则抛弃，继续考察下一个元素
 
 ##  node.js
 
