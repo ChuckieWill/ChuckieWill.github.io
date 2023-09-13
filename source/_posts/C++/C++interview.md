@@ -34,6 +34,7 @@ categories:
 
 * 由于对象需要开辟堆区，在析构时需要释放堆区，但是如果是通过默认构造函数初始化对象，就没有开辟堆区，所以在析构时就会对没有开辟空间的地址执行释放空间的操作，这就会导致程序奔溃
   * 总结：**对象有堆区，则在默认构造和有参构造等构造函数中一定要将指针初始化(nullptr或实际的值)**
+  * 如果不赋初始值，指针指向不明确，**指针不会默认是nullptr**，所以在析构函数中不会判断为空，会进行delete，此时delete的地址不明确则会报错
 
 
 **拷贝构造函数注意事项**
@@ -233,6 +234,10 @@ int main(){
 
 ###  移动构造函数导致默认"="构造不能用
 
+* 自定义了拷贝函数，就不会自动生成赋值函数了
+* 自定义了移动拷贝函数，就不会自动生成移动赋值函数了
+* 临时对象的赋值优先调用移动赋值函数，没有移动赋值函数的情况下，会调用赋值函数  
+
 ```c++
 #include <iostream>
 #include <string>
@@ -261,12 +266,42 @@ public:
       id = NULL;
     }
   }
+
+  // 赋值函数
+  // Test& operator=(const Test& t){
+  //   cout<<"Test: 拷贝赋值函数..."<<endl;
+  //   if(this != &t){
+  //     if(id != NULL){
+  //       delete id;
+  //       id = NULL;
+  //     }
+  //     if(t.id != NULL){
+  //       id = new item(*t.id);
+  //     }
+  //   }
+  //   return *this;
+  // }
+
   // 移动构造函数
   Test(Test&& t){
     cout<<"Test: 移动构造函数..."<<endl;
     id = t.id;
     t.id = NULL;
   }
+
+  // 移动赋值函数
+  // Test& operator=(Test&& t){
+  //   cout<<"Test: 移动赋值函数..."<<endl;
+  //   if(this != &t){
+  //     if(id != NULL){
+  //       delete id;
+  //       id = NULL;
+  //     }
+  //     id = t.id;
+  //     t.id = NULL;
+  //   }
+  //   return *this;
+  // }
 
   // 析构函数
   ~Test(){
@@ -283,11 +318,14 @@ public:
 int main()
 {
   Test<int> t1;
-  // 删除自定义的移动构造函数后就可以正常使用了
+  // 删除自定义的移动构造函数后就可以正常使用了，因为编译器会自动生成一个移动构造函数，但如果自定义了移动构造函数，编译器就不会自动生成移动赋值函数了
+  // 或则同时自定义移动构造函数和移动赋值函数
+  // 在有自定义移动赋值函数和赋值函数的情况下，临时对象的赋值调用的是移动赋值
+  // 在没有自定义移动赋值，有自定义赋值函数的情况下，临时对象的赋值调用的是赋值函数
+  // 在没有自定义移动赋值和赋值函数，但有自定义拷贝函数或者移动拷贝函数的情况下，则会报错，因为有了拷贝函数，编译器就不会自动生成赋值哈函数，有了移动拷贝函数，编译器就不会自动生成移动赋值函数
   t1 = Test<int>(10); // 报错 无法引用 函数 "Test<item>::operator=(const Test<int> &) [其中 item=int]" (已隐式声明) -- 它是已删除的函数
   return 0;
 }
-
 
 ```
 
@@ -1398,6 +1436,30 @@ runtime: 0.370269 s
   cout<<endl;
   cout<<v.size()<<endl; // 6
   cout<<v.capacity()<<endl; // 6
+
+---------------------------------------------------------------------
+
+  vector<int> v = {1,2,3};
+
+  cout<<v.size()<<endl; // 3
+  cout<<v.capacity()<<endl; // 3
+  v.resize(7);
+  for (const auto& el: v) cout << el << ' '; // 1 2 3 0 0 0 0 
+  cout<<endl;
+  cout<<v.size()<<endl; // 7
+  cout<<v.capacity()<<endl; // 7  超过动态扩容的范围(6)则直接开辟指定大小的空间
+
+  v.resize(2);
+  for (const auto& el: v) cout << el << ' '; // 1 2
+  cout<<endl;
+  cout<<v.size()<<endl; // 2
+  cout<<v.capacity()<<endl; // 7
+
+  v.resize(6, 4);
+  for (const auto& el: v) cout << el << ' '; // 1 2 4 4 4 4 
+  cout<<endl;
+  cout<<v.size()<<endl; // 6
+  cout<<v.capacity()<<endl; // 7
 ```
 
 * assign： 用于初始化
