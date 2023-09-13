@@ -5804,6 +5804,8 @@ public:
 };
 ```
 
+####  基础
+
 * 70 [爬楼梯](https://leetcode.cn/problems/climbing-stairs/)
   * f[n] = f[n-1] + f[n-2]
   * f[0] = 1 需要使用但不能递推  f[2] = f[1] + f[0] = 2
@@ -5812,31 +5814,15 @@ public:
   * 自己的方案比官答可能更好
   * f[i,j] = min(f[i+1,j], f[i+1,j+1]) + triangle[i,j]
   * 自底向上，f可以就是triangle节约空间
-* 64 [最小路径和](https://leetcode.cn/problems/minimum-path-sum/)
 
-**发现重叠子问题**
+####  坐标型
 
-> 画出树状图，看是否有重复子问题，如果有则可以用记忆搜索法进行递归，也就意味着可以用动态规划
-
-* 343 [ 整数拆分](https://leetcode.cn/problems/integer-break/)
-  * 待复习
-  * `f[i] = max(max(j*f[i-j], j*(i-j))   1<=j<i`
-  * f[1] = 1
-  * 特别注意：调f[i-j]的时候是对i-j的继续拆分，不包括i-j本身  所以需要`max(j*f[i-j], j*(i-j)`
-* 279 [ 完全平方数](https://leetcode.cn/problems/perfect-squares/)
-  * 上面学习过，查看以前的记录
-  * `f[j] = min(f[j-i*i] + 1)  1<=i*i<=j`
-  * f[0] = 0
-* 91 [ 解码方法](https://leetcode.cn/problems/decode-ways/)
-  * 官答更简洁  学习
-  * `f[i] = f[i-1] + f[i-2]，  s[i-1]-'0' > 0s时可加f[i-1]，  9<(s[i-2]-'0')*10+(s[i-1]-'0')<=26时可加f[i-2]`
-  * f[0] = 1 需要使用，但是不能递推
-  * f[1] = s[0]-'0' > 0 ? 1 : 0
 * 62 [不同路径](https://leetcode.cn/problems/unique-paths/)
   * 有数学方法
 * 63 不同路径2
+* 64 [最小路径和](https://leetcode.cn/problems/minimum-path-sum/)
 
-**状态定义和状态转移**
+####  打家劫舍
 
 * 198 [打家劫舍](https://leetcode.cn/problems/house-robber/)
   * 经典 复习
@@ -5855,8 +5841,89 @@ public:
 * 337 [打家劫舍 III](https://leetcode.cn/problems/house-robber-iii/)
   * 看解析， 待复习
   * 关键是构建递推关系
-* 309 [最佳买卖股票时机含冷冻期](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/)
-  * 没有思路，看解析，待复习
+
+
+
+####  零钱类型
+
+* 322 [零钱兑换](https://leetcode.cn/problems/coin-change/)
+  * 记录和为w的最少硬币数
+  * 元素可重复
+  * 一维数组
+    * 从0---n-1
+  * return f[w]，需要的就是和为w
+
+```c++
+// f[j] 记录和为j的最少硬币数
+// f[j] = min(f[j-nums[i]]) + 1 ;  0<=i<n;  j >= nums[i]
+// f[0] = 0
+```
+
+* 377 [ 组合总和 Ⅳ](https://leetcode.cn/problems/combination-sum-iv/)
+  *  记录和为w的组合个数
+  *  元素可重复
+  *  一维数组
+     * 从0---n-1
+  *  return f[w]，需要的就是和为w
+
+```c++
+* `F[i] = F[i-nums[0]]+ F[i-nums[1]] + ..... + F[i-nums[k]]`
+* `F[0] = 1`
+// f[j] 记录和为j的组合个数
+// f[j] = 和f[j-nums[i]]  0<=i<n
+// f[0] = 1
+// return f[w] 
+```
+
+
+
+* 343 [ 整数拆分](https://leetcode.cn/problems/integer-break/)
+  * 待复习
+  * `f[i] = max(max(j*f[i-j], j*(i-j))   1<=j<i`
+  * f[1] = 1
+  * 特别注意：调f[i-j]的时候是对i-j的继续拆分，不包括i-j本身  所以需要`max(j*f[i-j], j*(i-j)`
+* 279 [ 完全平方数](https://leetcode.cn/problems/perfect-squares/)
+  * 上面学习过，查看以前的记录
+  * `f[j] = min(f[j-i*i] + 1)  1<=i*i<=j`
+  * f[0] = 0
+* 91 [ 解码方法](https://leetcode.cn/problems/decode-ways/)
+  * 官答更简洁  学习
+  * `f[i] = f[i-1] + f[i-2]，  s[i-1]-'0' > 0s时可加f[i-1]，  9<(s[i-2]-'0')*10+(s[i-1]-'0')<=26时可加f[i-2]`
+  * f[0] = 1 需要使用，但是不能递推
+  * f[1] = s[0]-'0' > 0 ? 1 : 0
+
+* 139 [单词拆分](https://leetcode.cn/problems/word-break/)
+  * 记录是否可组合 bool
+  * 元素可重复
+  * 一维数组
+    * 从0---n
+
+  * return f[w]
+
+
+```c++
+// f[j]记录是否可以组合成s.substr(0,j)
+// f[j] = f[j-w[i].size()]  s.substr(j-w[i].size(), w[i].size()) == w[i]; 0<=i<n    只要满足即可结束循环
+// f[0] = true;
+```
+
+
+
+
+```c++
+// * 注意i的取值  i可能正好和索引一致从0开始，也可能从索引+1开始
+// * 先判断`F[i-wlen]` 因为后面字符串的判断耗时更高   
+    // wlen = w.length()  w for wordDict
+	// s(i-wlen, wlen) == w   s字符串中[i-wlen,i]是否等于w
+    // F[i] = F[i-wlen] && s(i-wlen, wlen) == w     i-wlen >= 0 i表示从s中取前1-i个数 即[0,i-1]
+    // F[0] = true
+```
+
+
+
+
+
+
 
 ####  **背包问题**
 
@@ -5881,35 +5948,6 @@ public:
 // f[i][j] = f[i-1][j] || f[i-1][j-nums[i-1]]   0<=j<=w;  0<i<=n;  j>=nums[i];
 // f[0][0] = true;
 // f[0][1---w] = false;
-```
-
-* 322 [零钱兑换](https://leetcode.cn/problems/coin-change/)
-  * 记录和为w的最少硬币数
-  * 元素可重复
-  * 一维数组
-    * 从0---n-1
-  * return f[w]，需要的就是和为w
-
-```c++
-// f[j] 记录和为j的最少硬币数
-// f[j] = min(f[j-nums[i]]) + 1 ;  0<=i<n;  j >= nums[i]
-// f[0] = 0
-```
-
-* 377 [ 组合总和 Ⅳ](https://leetcode.cn/problems/combination-sum-iv/)
-  *  记录和为w的组合个数
-  * 元素可重复
-  * 一维数组
-    * 从0---n-1
-  * return f[w]，需要的就是和为w
-
-```c++
-* `F[i] = F[i-nums[0]]+ F[i-nums[1]] + ..... + F[i-nums[k]]`
-* `F[0] = 1`
-// f[j] 记录和为j的组合个数
-// f[j] = 和f[j-nums[i]]  0<=i<n
-// f[0] = 1
-// return f[w]
 ```
 
 * 474 [一和零](https://leetcode.cn/problems/ones-and-zeroes/)
@@ -5947,34 +5985,6 @@ public:
     // F[j][k] = 0 j < zero k < one  一开始都初始化为0
 ```
 
-* 139 [单词拆分](https://leetcode.cn/problems/word-break/)
-  * 记录是否可组合 bool
-  * 元素可重复
-  * 一维数组
-    * 从0---n
-
-  * return f[w]
-
-
-```c++
-// f[j]记录是否可以组合成s.substr(0,j)
-// f[j] = f[j-w[i].size()]  s.substr(j-w[i].size(), w[i].size()) == w[i]; 0<=i<n    只要满足即可结束循环
-// f[0] = true;
-```
-
-
-
-
-```c++
-// * 注意i的取值  i可能正好和索引一致从0开始，也可能从索引+1开始
-// * 先判断`F[i-wlen]` 因为后面字符串的判断耗时更高   
-    // wlen = w.length()  w for wordDict
-	// s(i-wlen, wlen) == w   s字符串中[i-wlen,i]是否等于w
-    // F[i] = F[i-wlen] && s(i-wlen, wlen) == w     i-wlen >= 0 i表示从s中取前1-i个数 即[0,i-1]
-    // F[0] = true
-```
-
-
 
 * 494 [ 目标和](https://leetcode.cn/problems/target-sum/)
   * 自己的方法
@@ -5982,6 +5992,7 @@ public:
   * 官方解答
     * **先将问题简化，再使用动态规划**   这种方式很重要，以后做题要注意
     * `记数组的元素和为 sum，添加 - 号的元素之和为 neg，则其余添加 + 的元素之和为 sum-neg，得到的表达式的结果为 (sum - neg) - neg = target, 即neg = (sum - target) / 2,  由于数组 nums 中的元素都是非负整数, neg 也必须是非负整数，所以上式成立的前提是 sum−target 是非负偶数。若不符合该条件可直接返回 0`
+      * 注意是非负偶数，1非负，2偶数
     * 问题就转化为在数组中选取一些元素，使得和为neg，并记录有多少种这样的选择（将这些元素添加 -  号 就可以满足上式）
       * 记录和为neg的组合数
       * 元素不可重复
@@ -6022,12 +6033,36 @@ public:
 // 注意最后返回的不是f[n]  而是遍历f找到最大值，因为nums[n-1]不一定在最长序列里
 ```
 
+
+
+```c++
+// 贪心
+//f[i]表示长度为 i 的最长上升子序列的末尾元素的最小值
+以输入序列 [0,8,4,12,2][0, 8, 4, 12, 2][0,8,4,12,2] 为例：
+
+第一步插入 000，d=[0]d = [0]d=[0]；
+
+第二步插入 888，d=[0,8]d = [0, 8]d=[0,8]；
+
+第三步插入 444，d=[0,4]d = [0, 4]d=[0,4]；
+
+第四步插入 121212，d=[0,4,12]d = [0, 4, 12]d=[0,4,12]；
+
+第五步插入 222，d=[0,2,12]d = [0, 2, 12]d=[0,2,12]。 // 这里用2替换4,只是更新f[1] = 2, 当考虑长度为2的最长上升子序列时，确实应该是0，2  而不是0，4。在2之后有比12小的且比2大的则直接可以替换12
+```
+
+
+
 * 376 [ 摆动序列](https://leetcode.cn/problems/wiggle-subsequence/)
   * self  O(n*n)
     * 受上面300的影响，思路受限制
 
   * 官方 O(n)
     * 只考虑前一个元素
+    * 有难度，想不到只考虑前一个元素
+    * 关键理解点：
+      * 当 nums[i]≤nums[i−1]\textit{nums}[i] \leq \textit{nums}[i - 1]nums[i]≤nums[i−1] 时，我们无法选出更长的「上升摆动序列」的方案。因为对于任何以 nums[i]\textit{nums}[i]nums[i] 结尾的「上升摆动序列」，我们都可以将 nums[i]\textit{nums}[i]nums[i] 替换为 nums[i−1]\textit{nums}[i - 1]nums[i−1]，使其成为以 nums[i−1]\textit{nums}[i - 1]nums[i−1] 结尾的「上升摆动序列」
+    
 
 
 ```c++
@@ -6050,19 +6085,82 @@ public:
     // 初始化 f = 1, n = 1;
 ```
 
-####  最长公共子序列LCS
+####  最长公共子序列/子串
+
+* [LCR 095. 最长公共子序列](https://leetcode.cn/problems/qJnOS7/description/)
 
 ```c++
+// F[i][j] 记录前i个元素和前j个元素的最长公共子序列
 // F[i][j] = F[i-1][j-1] + 1 if(s1[i] == s2[j]) 
 // F[i][j] = max(F[i-1][j], F[i][j-1]) if(s1[i] != s2[j]) 
+```
 
+* 最长公共子串
+
+```c++
+// F[i][j] 记录以i结尾和以j结尾的最长公共子串
+// 需要更新res = max(res, F[i][j]) 得到最终结果
+// F[i][j] = F[i-1][j-1] + 1 if(s1[i] == s2[j]) 
+// F[i][j] = 0 if(s1[i] != s2[j]) 
 ```
 
 
 
+####  最长回文子序列/子串
+
+* [5最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/description/)
+  * 动态规划，远不如中心扩展法
+  * 中心扩展法, 可以去提前结束循环，所以效率更高
+
+```c++
+// 动态规划   看leetcode笔记
+// f[i][j] = f[i+1][j-1]  s[i] == s[j]  
+// f[i][j] = false  s[i] != s[j]
+// f[i][j] 为true时更新最长子串
+ 
+```
+
+* [516最长回文子序列](https://leetcode.cn/problems/longest-palindromic-subsequence/description/)
+
+```c++
+class Solution {
+public:
+    int longestPalindromeSubseq(string s) {
+        // f[i][j] = f[i+1][j-1] + 2  s[i] == s[j]                    注意是+2
+        // f[i][j] = max(f[i+1][j], f[i][j-1])  s[i] != s[j]
+        // 初始化
+        // f[i][i] = 1  其它为0， 因为是+2
+        int n = s.size();
+        vector<vector<int>> f(n, vector<int>(n, 0));
+        for(int i = 0; i < n; ++i){
+            f[i][i] = 1;
+        }
+        for(int i = n- 2; i >= 0; --i){
+            for(int j = i + 1; j < n; ++j){
+                if(s[i] == s[j]){
+                    f[i][j] = f[i+1][j-1] + 2;
+                }else{
+                    f[i][j] = max(f[i+1][j], f[i][j-1]);
+                }
+            }
+        }
+        return f[0][n-1];
+    }
+};
+```
+
+
+
+####  编辑距离&正则匹配
+
+* 10[正则表达式匹配](https://leetcode.cn/problems/regular-expression-matching/description/)
+
 
 
 ####  股票相关题目
+
+* 309 [最佳买卖股票时机含冷冻期](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/)
+  * 没有思路，看解析，待复习
 
 * 121  只交易一次
   * 动态规划
