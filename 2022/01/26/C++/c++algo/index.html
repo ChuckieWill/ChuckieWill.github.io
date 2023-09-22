@@ -85,7 +85,7 @@
 <meta property="og:image" content="http://yoursite.com/2022/01/26/C++/c++algo/image-20221121101324796.png">
 <meta property="og:image" content="http://yoursite.com/2022/01/26/C++/c++algo/image-20221121101506770.png">
 <meta property="article:published_time" content="2022-01-26T06:43:17.000Z">
-<meta property="article:modified_time" content="2023-05-22T08:36:39.926Z">
+<meta property="article:modified_time" content="2023-09-13T12:25:26.989Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="C++algorithm">
 <meta name="twitter:card" content="summary">
@@ -278,7 +278,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-22 16:36:39" itemprop="dateModified" datetime="2023-05-22T16:36:39+08:00">2023-05-22</time>
+                <time title="修改时间：2023-09-13 20:25:26" itemprop="dateModified" datetime="2023-09-13T20:25:26+08:00">2023-09-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -296,14 +296,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>110k</span>
+              <span>112k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1:40</span>
+              <span>1:42</span>
             </span>
 
         </div>
@@ -317,11 +317,79 @@
       
         <h1 id="一"><a href="#一" class="headerlink" title="一"></a>一</h1><h2 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h2><h3 id="工具函数"><a href="#工具函数" class="headerlink" title="工具函数"></a>工具函数</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctime&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> SortTestHelper &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//生成n个随机数，每个元素的范围：[l,r]</span></span><br><span class="line">	<span class="function"><span class="keyword">int</span>* <span class="title">generateRandomArray</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">		assert(l &lt; r);<span class="comment">//满足条件才继续执行  要引入&lt;cassert&gt;</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span>* arr = <span class="keyword">new</span> <span class="keyword">int</span>[n];<span class="comment">//注意在堆区生成，需要delete[]</span></span><br><span class="line"></span><br><span class="line">		srand(time(<span class="literal">NULL</span>));<span class="comment">//生成随机数的种子， 需要引入&lt;ctime&gt;</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">			arr[i] = rand() % (r - l + <span class="number">1</span>) + l;<span class="comment">//rand生成的是随机整数</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> arr;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//打印数组的所有元素,n是数组长度</span></span><br><span class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">printArray</span><span class="params">(T arr[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; arr[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//检查排序是否正确</span></span><br><span class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isSorted</span><span class="params">(T arr[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (arr[i] &gt; arr[i + <span class="number">1</span>])</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//通用函数执行时间计算函数</span></span><br><span class="line">	<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;           <span class="comment">//sort是函数指针</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">testSort</span><span class="params">(<span class="built_in">string</span> sortName, <span class="keyword">void</span>(*sort)(T[], <span class="keyword">int</span>), T arr[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">clock_t</span> startTime = clock(); <span class="comment">//需要引入&lt;ctime&gt;</span></span><br><span class="line">		sort(arr, n);<span class="comment">//调用传入的函数</span></span><br><span class="line">		<span class="keyword">clock_t</span> endTime = clock();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">//判断函数执行排序是否正确</span></span><br><span class="line">		assert(isSorted(arr, n));</span><br><span class="line">		                            <span class="comment">//计算时钟周期个数            //宏定义 1秒有几个时钟周期</span></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; sortName &lt;&lt; <span class="string">" : "</span> &lt;&lt; <span class="keyword">double</span>(endTime - startTime) / CLOCKS_PER_SEC &lt;&lt; <span class="string">" s"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="桶排序和计数排序"><a href="#桶排序和计数排序" class="headerlink" title="桶排序和计数排序"></a>桶排序和计数排序</h3><blockquote>
+<h3 id="桶排序、计数排序、基数排序"><a href="#桶排序、计数排序、基数排序" class="headerlink" title="桶排序、计数排序、基数排序"></a>桶排序、计数排序、基数排序</h3><blockquote>
 <p><a href="https://blog.csdn.net/qq_55624813/article/details/121316256" target="_blank" rel="noopener">https://blog.csdn.net/qq_55624813/article/details/121316256</a></p>
 </blockquote>
+<ul>
+<li><p>桶排序</p>
+<ul>
+<li>稳定排序</li>
+<li>思路<ul>
+<li>划分区间，填充到区间中，区间内快排</li>
+</ul>
+</li>
+<li>时间复杂度<ul>
+<li>O(m*n/mlogn/m)   = nlogn/m（划分m个桶）, m越接近n则越接近O(n)</li>
+</ul>
+</li>
+<li>空间复杂度<ul>
+<li>O(n)</li>
+</ul>
+</li>
+<li>应用场景<ul>
+<li>磁盘中大量数据排序</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>计数排序</p>
+<ul>
+<li>稳定排序</li>
+<li>思想<ul>
+<li>类似桶排序，不过区间大小为1</li>
+<li>只适合范围比较小的数据，n个数据，最大值为k，需要k不能大于n太多，只能处理非负数</li>
+</ul>
+</li>
+<li>时间复杂度<ul>
+<li>O(n + k)  k是数据的最大值</li>
+</ul>
+</li>
+<li>空间复杂度<ul>
+<li>O(n + k) k是数据的最大值</li>
+</ul>
+</li>
+<li>应用场景<ul>
+<li>分数排序，分数范围一般在[0,100]，范围小</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>基数排序</p>
+<ul>
+<li>稳定排序</li>
+<li>思想<ul>
+<li>按位排序，先排低位，再排高位，每次排序用基数排序，</li>
+<li>适合位数不是特别大的数据</li>
+</ul>
+</li>
+<li>时间复杂度<ul>
+<li>O(k*n)  k为位数，例如排序手机号，k = 11</li>
+</ul>
+</li>
+<li>空间复杂度<ul>
+<li>O(n)</li>
+</ul>
+</li>
+<li>应用场景<ul>
+<li>10万手机号排序</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><blockquote>
 <p>时间复杂度：O(n*n)</p>
+<p>需要额外空间： O(1)</p>
 </blockquote>
 <p>从数组第一个元素开始，在其后选择一个最小的元素与之交换，然后后移一格，再在其后选择一个最小的元素与之交换，以此类推</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Student.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"SortTestHelper.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">selectSort</span><span class="params">(T arr[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">		<span class="keyword">int</span> minIndex = i;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (arr[j] &lt; arr[minIndex]) &#123;</span><br><span class="line">				minIndex = j;</span><br><span class="line">				</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		swap(arr[i], arr[minIndex]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">10</span>] = &#123; <span class="number">10</span>,<span class="number">9</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">6</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span> &#125;;</span><br><span class="line">	selectSort(a, <span class="number">10</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; a[i] ;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">string</span> c[<span class="number">3</span>] = &#123; <span class="string">"C"</span>,<span class="string">"B"</span>, <span class="string">"A"</span> &#125;;</span><br><span class="line">	selectSort(c, <span class="number">3</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; c[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	Student s[<span class="number">4</span>] = &#123; &#123;<span class="string">"D"</span>, <span class="number">100</span>&#125;,&#123;<span class="string">"C"</span>,<span class="number">95</span>&#125;,&#123;<span class="string">"B"</span>, <span class="number">95</span>&#125;,&#123;<span class="string">"A"</span>, <span class="number">91</span>&#125; &#125;;</span><br><span class="line">	selectSort(s, <span class="number">4</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; s[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> n = <span class="number">10000</span>;</span><br><span class="line">	<span class="keyword">int</span>* arr = SortTestHelper::generateRandomArray(n, <span class="number">0</span>, n);</span><br><span class="line">	selectSort(arr, n);</span><br><span class="line">	SortTestHelper::printArray(arr, n);</span><br><span class="line">	<span class="keyword">delete</span>[] arr; <span class="comment">//注意删除堆区的临时变量</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -331,6 +399,7 @@
 <h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><blockquote>
 <ul>
 <li>时间复杂度：O（n*n）</li>
+<li>需要额外空间： O(1)</li>
 <li>相对选择排序的优势： 内层循环可以提前终止</li>
 <li>相对选择排序优势更明显的情况： 数组的有序性本身很高，这样内层循环就会更早提前终止</li>
 <li>对于近乎有序的排序情况，插入排序比O(n*logn)的排序算法还要好</li>
@@ -343,7 +412,8 @@
 <h3 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h3><blockquote>
 <p><a href="https://blog.csdn.net/yuan2019035055/article/details/120246584" target="_blank" rel="noopener">https://blog.csdn.net/yuan2019035055/article/details/120246584</a></p>
 <p><strong>希尔排序</strong>（Shell Sort）是<a href="https://so.csdn.net/so/search?q=插入排序&spm=1001.2101.3001.7020" target="_blank" rel="noopener">插入排序</a>的一种。也称缩小增量排序，是直接插入排序算法的一种更高效的改进版本。希尔排序是<strong>非稳定</strong>排序算法。</p>
-<p>时间复杂度：最坏：O(n^2)   比选择和插入排序快</p>
+<p>时间复杂度：O(n*1.3), 最坏：O(n^2)   比选择和插入排序快</p>
+<p>需要额外空间： O(1)</p>
 </blockquote>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shellSort</span><span class="params">(T arr[], <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> <span class="built_in">step</span> = n/<span class="number">2</span>; <span class="built_in">step</span> &gt;<span class="number">0</span>; <span class="built_in">step</span> /= <span class="number">2</span>)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">step</span>; i++)&#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> j = i + <span class="built_in">step</span>; j &lt; n; j += <span class="built_in">step</span>)&#123;</span><br><span class="line">        T temp = arr[j];</span><br><span class="line">        <span class="keyword">int</span> m;</span><br><span class="line">        <span class="keyword">for</span>(m = j-<span class="built_in">step</span>; m &gt;= <span class="number">0</span> &amp;&amp; arr[m] &gt; temp; m -= <span class="built_in">step</span>)&#123;</span><br><span class="line">          arr[m+<span class="built_in">step</span>] = arr[m];</span><br><span class="line">        &#125;</span><br><span class="line">        arr[m+<span class="built_in">step</span>] = temp;  <span class="comment">// 上面循环结束时m又-step了</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> vec[] = &#123;<span class="number">12</span>,<span class="number">34</span>,<span class="number">5</span>,<span class="number">632</span>,<span class="number">5</span>,<span class="number">689</span>,<span class="number">34</span>,<span class="number">67</span>,<span class="number">89</span>&#125;;</span><br><span class="line">  shellSort(vec, <span class="number">9</span>);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++)&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;vec[i]&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -352,7 +422,7 @@
 <h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><blockquote>
 <ul>
 <li>时间复杂度：O(n*logn)</li>
-<li>需要额外空间</li>
+<li>需要额外空间: O(n)</li>
 <li>自顶向下 </li>
 <li>自底向上 适合链表的归并，因为对数组的索引操作比较少</li>
 <li>优化：<ul>
@@ -377,6 +447,7 @@
 <h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><blockquote>
 <ul>
 <li>时间复杂度：O(n*logn)</li>
+<li>需要额外空间： O(logn)</li>
 </ul>
 <p>重复元素较多的情况使用三路快排</p>
 </blockquote>
@@ -426,6 +497,8 @@
 
 
 <h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><blockquote>
+<p>时间复杂度：O(n*logn)</p>
+<p>需要额外空间： O(1)</p>
 <p>堆必须是一颗完全二叉树</p>
 <ul>
 <li>完全二叉树： 只有最后一层是不满的，其它层都是满节点</li>
@@ -1954,7 +2027,7 @@
 <p><img src="/2022/01/26/C++/c++algo/image-20221121101506770.png" alt="image-20221121101506770"></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//斐波拉切数列</span></span><br><span class="line"><span class="comment">// 动态规划 自底向上</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">memo</span><span class="params">(n+<span class="number">1</span>, <span class="number">-1</span>)</span></span>;</span><br><span class="line">  memo[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">  memo[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; ++i)&#123;</span><br><span class="line">    memo[i] = memo[i<span class="number">-1</span>] + memo[i<span class="number">-2</span>];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> memo[n];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//记忆化搜索 自顶向下</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; memo;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(memo[n] == <span class="number">-1</span>)&#123;</span><br><span class="line">      memo[n] = fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> memo[n];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">fibb</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    memo.resize(n+<span class="number">1</span>, <span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">return</span> fib(n);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<ul>
+<h4 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h4><ul>
 <li>70 <a href="https://leetcode.cn/problems/climbing-stairs/" target="_blank" rel="noopener">爬楼梯</a><ul>
 <li>f[n] = f[n-1] + f[n-2]</li>
 <li>f[0] = 1 需要使用但不能递推  f[2] = f[1] + f[0] = 2</li>
@@ -1967,41 +2040,16 @@
 <li>自底向上，f可以就是triangle节约空间</li>
 </ul>
 </li>
-<li>64 <a href="https://leetcode.cn/problems/minimum-path-sum/" target="_blank" rel="noopener">最小路径和</a></li>
 </ul>
-<p><strong>发现重叠子问题</strong></p>
-<blockquote>
-<p>画出树状图，看是否有重复子问题，如果有则可以用记忆搜索法进行递归，也就意味着可以用动态规划</p>
-</blockquote>
-<ul>
-<li>343 <a href="https://leetcode.cn/problems/integer-break/" target="_blank" rel="noopener"> 整数拆分</a><ul>
-<li>待复习</li>
-<li><code>f[i] = max(max(j*f[i-j], j*(i-j))   1&lt;=j&lt;i</code></li>
-<li>f[1] = 1</li>
-<li>特别注意：调f[i-j]的时候是对i-j的继续拆分，不包括i-j本身  所以需要<code>max(j*f[i-j], j*(i-j)</code></li>
-</ul>
-</li>
-<li>279 <a href="https://leetcode.cn/problems/perfect-squares/" target="_blank" rel="noopener"> 完全平方数</a><ul>
-<li>上面学习过，查看以前的记录</li>
-<li><code>f[j] = min(f[j-i*i] + 1)  1&lt;=i*i&lt;=j</code></li>
-<li>f[0] = 0</li>
-</ul>
-</li>
-<li>91 <a href="https://leetcode.cn/problems/decode-ways/" target="_blank" rel="noopener"> 解码方法</a><ul>
-<li>官答更简洁  学习</li>
-<li><code>f[i] = f[i-1] + f[i-2]，  s[i-1]-&#39;0&#39; &gt; 0s时可加f[i-1]，  9&lt;(s[i-2]-&#39;0&#39;)*10+(s[i-1]-&#39;0&#39;)&lt;=26时可加f[i-2]</code></li>
-<li>f[0] = 1 需要使用，但是不能递推</li>
-<li>f[1] = s[0]-‘0’ &gt; 0 ? 1 : 0</li>
-</ul>
-</li>
+<h4 id="坐标型"><a href="#坐标型" class="headerlink" title="坐标型"></a>坐标型</h4><ul>
 <li>62 <a href="https://leetcode.cn/problems/unique-paths/" target="_blank" rel="noopener">不同路径</a><ul>
 <li>有数学方法</li>
 </ul>
 </li>
 <li>63 不同路径2</li>
+<li>64 <a href="https://leetcode.cn/problems/minimum-path-sum/" target="_blank" rel="noopener">最小路径和</a></li>
 </ul>
-<p><strong>状态定义和状态转移</strong></p>
-<ul>
+<h4 id="打家劫舍"><a href="#打家劫舍" class="headerlink" title="打家劫舍"></a>打家劫舍</h4><ul>
 <li>198 <a href="https://leetcode.cn/problems/house-robber/" target="_blank" rel="noopener">打家劫舍</a><ul>
 <li>经典 复习</li>
 <li><code>f[i] = max(f[i-1], f[i-2] + nums[i-1])</code></li>
@@ -2027,38 +2075,8 @@
 <li>关键是构建递推关系</li>
 </ul>
 </li>
-<li>309 <a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/" target="_blank" rel="noopener">最佳买卖股票时机含冷冻期</a><ul>
-<li>没有思路，看解析，待复习</li>
 </ul>
-</li>
-</ul>
-<h4 id="背包问题-1"><a href="#背包问题-1" class="headerlink" title="背包问题"></a><strong>背包问题</strong></h4><blockquote>
-<p>问题：</p>
-<ul>
-<li>背包问题更多变种<ul>
-<li>完全背包问题:每个物品可以无限使用</li>
-<li>多重背包问题:每个物品不止1个，有num(i)个</li>
-<li>多维费用背包问题:要考虑物品的体积和重量两个维度</li>
-<li>物品间加入更多约束： 物品间可以互相排斥;也可以互相依赖</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<ul>
-<li>416 <a href="https://leetcode.cn/problems/partition-equal-subset-sum/" target="_blank" rel="noopener">分割等和子集</a><ul>
-<li>记录是否可以  bool</li>
-<li>元素不可重复</li>
-<li>二维数组  <ul>
-<li>从1—n, 0做预处理</li>
-</ul>
-</li>
-<li>return <code>f[n][w]</code>, 最后需要知道的就是n个元素种选若干个是否可以组合成w</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// f[i][j] 记录使用[0,,,i]是否可以和为j  记录为bool</span></span><br><span class="line"><span class="comment">// f[i][j] = f[i-1][j] || f[i-1][j-nums[i-1]]   0&lt;=j&lt;=w;  0&lt;i&lt;=n;  j&gt;=nums[i];</span></span><br><span class="line"><span class="comment">// f[0][0] = true;</span></span><br><span class="line"><span class="comment">// f[0][1---w] = false;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
+<h4 id="零钱类型"><a href="#零钱类型" class="headerlink" title="零钱类型"></a>零钱类型</h4><ul>
 <li>322 <a href="https://leetcode.cn/problems/coin-change/" target="_blank" rel="noopener">零钱兑换</a><ul>
 <li>记录和为w的最少硬币数</li>
 <li>元素可重复</li>
@@ -2086,21 +2104,32 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">* `F[i] = F[i-nums[<span class="number">0</span>]]+ F[i-nums[<span class="number">1</span>]] + ..... + F[i-nums[k]]`</span><br><span class="line">* `F[<span class="number">0</span>] = <span class="number">1</span>`</span><br><span class="line"><span class="comment">// f[j] 记录和为j的组合个数</span></span><br><span class="line"><span class="comment">// f[j] = 和f[j-nums[i]]  0&lt;=i&lt;n</span></span><br><span class="line"><span class="comment">// f[0] = 1</span></span><br><span class="line"><span class="comment">// return f[w]</span></span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>474 <a href="https://leetcode.cn/problems/ones-and-zeroes/" target="_blank" rel="noopener">一和零</a><ul>
-<li>记录最大子集个数</li>
-<li>元素不可重复</li>
-<li>三维数组，本身限制就是两维<ul>
-<li>从1—size，0单独考虑</li>
-</ul>
-</li>
-<li>return <code>f[n][w][k]</code></li>
-</ul>
-</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从1---size   更便于初始化，更简洁</span></span><br><span class="line">    <span class="comment">// st记录strs中的0，1个数st[i][0]表示strs[i]中0的个数</span></span><br><span class="line">    <span class="comment">// F[i][m][n] = max(F[i-1][m][n], F[i-1][m-st[i-1][0]][n-st[i-1][1]] + 1)  0&lt;i&lt;=n</span></span><br><span class="line">    <span class="comment">// F[0][j][k] = 0 ;  0&lt;=j&lt;=m, 0&lt;=k&lt;=n</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 空间优化</span></span><br><span class="line">    <span class="comment">// f[j][k] = max(f[j][k], f[j-st[i-1][0]][k-st[i-1][1]] + 1)    0&lt;i&lt;=n</span></span><br><span class="line">    <span class="comment">// f[j][k] = 0;  0&lt;=j&lt;=m, 0&lt;=k&lt;=n    </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 从0---size-1</span></span><br><span class="line">    <span class="comment">// st记录strs中的0，1个数st[i][0]表示strs[i]中0的个数</span></span><br><span class="line">    <span class="comment">// F[i][m][n] = max(F[i-1][m][n], F[i-1][m-st[i][0]][n-st[i][1]] + 1)</span></span><br><span class="line">    <span class="comment">// F[0][j][k] = 1 j &gt;= st[0][0] k&gt;= st[0][1] // 最多j个0  最多k个1</span></span><br><span class="line">    <span class="comment">// F[0][j][k] = 0 j &lt; st[0][0] &lt; st[0][1]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//优化</span></span><br><span class="line">	<span class="comment">// 改为滚动数组</span></span><br><span class="line">    <span class="comment">// 循环提前终止</span></span><br><span class="line">    <span class="comment">// 每个string的0 1个数实时计算，节省空间</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// zero: 0的个数  one： 1的个数</span></span><br><span class="line">    <span class="comment">// F[m][n] = max(F[m][n], F[m-zero][n-one] + 1)</span></span><br><span class="line">    <span class="comment">// F[j][k] = 1 j &gt;= zero k&gt;= one // 最多j个0  最多k个1 循环提前终止</span></span><br><span class="line">    <span class="comment">// F[j][k] = 0 j &lt; zero k &lt; one  一开始都初始化为0</span></span><br></pre></td></tr></table></figure>
+
 
 <ul>
+<li><p>343 <a href="https://leetcode.cn/problems/integer-break/" target="_blank" rel="noopener"> 整数拆分</a></p>
+<ul>
+<li>待复习</li>
+<li><code>f[i] = max(max(j*f[i-j], j*(i-j))   1&lt;=j&lt;i</code></li>
+<li>f[1] = 1</li>
+<li>特别注意：调f[i-j]的时候是对i-j的继续拆分，不包括i-j本身  所以需要<code>max(j*f[i-j], j*(i-j)</code></li>
+</ul>
+</li>
+<li><p>279 <a href="https://leetcode.cn/problems/perfect-squares/" target="_blank" rel="noopener"> 完全平方数</a></p>
+<ul>
+<li>上面学习过，查看以前的记录</li>
+<li><code>f[j] = min(f[j-i*i] + 1)  1&lt;=i*i&lt;=j</code></li>
+<li>f[0] = 0</li>
+</ul>
+</li>
+<li><p>91 <a href="https://leetcode.cn/problems/decode-ways/" target="_blank" rel="noopener"> 解码方法</a></p>
+<ul>
+<li>官答更简洁  学习</li>
+<li><code>f[i] = f[i-1] + f[i-2]，  s[i-1]-&#39;0&#39; &gt; 0s时可加f[i-1]，  9&lt;(s[i-2]-&#39;0&#39;)*10+(s[i-1]-&#39;0&#39;)&lt;=26时可加f[i-2]</code></li>
+<li>f[0] = 1 需要使用，但是不能递推</li>
+<li>f[1] = s[0]-‘0’ &gt; 0 ? 1 : 0</li>
+</ul>
+</li>
 <li><p>139 <a href="https://leetcode.cn/problems/word-break/" target="_blank" rel="noopener">单词拆分</a></p>
 <ul>
 <li><p>记录是否可组合 bool</p>
@@ -2126,6 +2155,51 @@
 
 
 
+
+
+
+
+<h4 id="背包问题-1"><a href="#背包问题-1" class="headerlink" title="背包问题"></a><strong>背包问题</strong></h4><blockquote>
+<p>问题：</p>
+<ul>
+<li>背包问题更多变种<ul>
+<li>完全背包问题:每个物品可以无限使用</li>
+<li>多重背包问题:每个物品不止1个，有num(i)个</li>
+<li>多维费用背包问题:要考虑物品的体积和重量两个维度</li>
+<li>物品间加入更多约束： 物品间可以互相排斥;也可以互相依赖</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>416 <a href="https://leetcode.cn/problems/partition-equal-subset-sum/" target="_blank" rel="noopener">分割等和子集</a><ul>
+<li>记录是否可以  bool</li>
+<li>元素不可重复</li>
+<li>二维数组  <ul>
+<li>从1—n, 0做预处理</li>
+</ul>
+</li>
+<li>return <code>f[n][w]</code>, 最后需要知道的就是n个元素种选若干个是否可以组合成w</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// f[i][j] 记录使用[0,,,i]是否可以和为j  记录为bool</span></span><br><span class="line"><span class="comment">// f[i][j] = f[i-1][j] || f[i-1][j-nums[i-1]]   0&lt;=j&lt;=w;  0&lt;i&lt;=n;  j&gt;=nums[i];</span></span><br><span class="line"><span class="comment">// f[0][0] = true;</span></span><br><span class="line"><span class="comment">// f[0][1---w] = false;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>474 <a href="https://leetcode.cn/problems/ones-and-zeroes/" target="_blank" rel="noopener">一和零</a><ul>
+<li>记录最大子集个数</li>
+<li>元素不可重复</li>
+<li>三维数组，本身限制就是两维<ul>
+<li>从1—size，0单独考虑</li>
+</ul>
+</li>
+<li>return <code>f[n][w][k]</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从1---size   更便于初始化，更简洁</span></span><br><span class="line">    <span class="comment">// st记录strs中的0，1个数st[i][0]表示strs[i]中0的个数</span></span><br><span class="line">    <span class="comment">// F[i][m][n] = max(F[i-1][m][n], F[i-1][m-st[i-1][0]][n-st[i-1][1]] + 1)  0&lt;i&lt;=n</span></span><br><span class="line">    <span class="comment">// F[0][j][k] = 0 ;  0&lt;=j&lt;=m, 0&lt;=k&lt;=n</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 空间优化</span></span><br><span class="line">    <span class="comment">// f[j][k] = max(f[j][k], f[j-st[i-1][0]][k-st[i-1][1]] + 1)    0&lt;i&lt;=n</span></span><br><span class="line">    <span class="comment">// f[j][k] = 0;  0&lt;=j&lt;=m, 0&lt;=k&lt;=n    </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 从0---size-1</span></span><br><span class="line">    <span class="comment">// st记录strs中的0，1个数st[i][0]表示strs[i]中0的个数</span></span><br><span class="line">    <span class="comment">// F[i][m][n] = max(F[i-1][m][n], F[i-1][m-st[i][0]][n-st[i][1]] + 1)</span></span><br><span class="line">    <span class="comment">// F[0][j][k] = 1 j &gt;= st[0][0] k&gt;= st[0][1] // 最多j个0  最多k个1</span></span><br><span class="line">    <span class="comment">// F[0][j][k] = 0 j &lt; st[0][0] &lt; st[0][1]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//优化</span></span><br><span class="line">	<span class="comment">// 改为滚动数组</span></span><br><span class="line">    <span class="comment">// 循环提前终止</span></span><br><span class="line">    <span class="comment">// 每个string的0 1个数实时计算，节省空间</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// zero: 0的个数  one： 1的个数</span></span><br><span class="line">    <span class="comment">// F[m][n] = max(F[m][n], F[m-zero][n-one] + 1)</span></span><br><span class="line">    <span class="comment">// F[j][k] = 1 j &gt;= zero k&gt;= one // 最多j个0  最多k个1 循环提前终止</span></span><br><span class="line">    <span class="comment">// F[j][k] = 0 j &lt; zero k &lt; one  一开始都初始化为0</span></span><br></pre></td></tr></table></figure>
+
+
 <ul>
 <li>494 <a href="https://leetcode.cn/problems/target-sum/" target="_blank" rel="noopener"> 目标和</a><ul>
 <li>自己的方法<ul>
@@ -2134,7 +2208,10 @@
 </li>
 <li>官方解答<ul>
 <li><strong>先将问题简化，再使用动态规划</strong>   这种方式很重要，以后做题要注意</li>
-<li><code>记数组的元素和为 sum，添加 - 号的元素之和为 neg，则其余添加 + 的元素之和为 sum-neg，得到的表达式的结果为 (sum - neg) - neg = target, 即neg = (sum - target) / 2,  由于数组 nums 中的元素都是非负整数, neg 也必须是非负整数，所以上式成立的前提是 sum−target 是非负偶数。若不符合该条件可直接返回 0</code></li>
+<li><code>记数组的元素和为 sum，添加 - 号的元素之和为 neg，则其余添加 + 的元素之和为 sum-neg，得到的表达式的结果为 (sum - neg) - neg = target, 即neg = (sum - target) / 2,  由于数组 nums 中的元素都是非负整数, neg 也必须是非负整数，所以上式成立的前提是 sum−target 是非负偶数。若不符合该条件可直接返回 0</code><ul>
+<li>注意是非负偶数，1非负，2偶数</li>
+</ul>
+</li>
 <li>问题就转化为在数组中选取一些元素，使得和为neg，并记录有多少种这样的选择（将这些元素添加 -  号 就可以满足上式）<ul>
 <li>记录和为neg的组合数</li>
 <li>元素不可重复</li>
@@ -2167,6 +2244,12 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 动态规划</span></span><br><span class="line"><span class="comment">// F[i] 记录以nums[i]结尾的最长子序列长度</span></span><br><span class="line"><span class="comment">// F[i] = max(F[j]+1  if(nums[j] &lt; nums[i]))   0&lt;= j &lt; i</span></span><br><span class="line"><span class="comment">// 初始化都为1 因为自己本身就为1个</span></span><br><span class="line"><span class="comment">// 注意+1时灵活处理，因为if(nums[j] &lt; nums[i])可能导致进入不了max(F[j]+1) 从而没有+1, 但这个元素本身也是一个子序列 （前面元素都大于等于当前元素的情况）, 一开始初始化都为1则不用考虑这种情况，因为自己本身已经考虑进去了</span></span><br><span class="line"><span class="comment">// 注意最后返回的不是f[n]  而是遍历f找到最大值，因为nums[n-1]不一定在最长序列里</span></span><br></pre></td></tr></table></figure>
 
+
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 贪心</span></span><br><span class="line"><span class="comment">//f[i]表示长度为 i 的最长上升子序列的末尾元素的最小值</span></span><br><span class="line">以输入序列 [<span class="number">0</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">12</span>,<span class="number">2</span>][<span class="number">0</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">12</span>, <span class="number">2</span>][<span class="number">0</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">12</span>,<span class="number">2</span>] 为例：</span><br><span class="line"></span><br><span class="line">第一步插入 <span class="number">000</span>，d=[<span class="number">0</span>]d = [<span class="number">0</span>]d=[<span class="number">0</span>]；</span><br><span class="line"></span><br><span class="line">第二步插入 <span class="number">888</span>，d=[<span class="number">0</span>,<span class="number">8</span>]d = [<span class="number">0</span>, <span class="number">8</span>]d=[<span class="number">0</span>,<span class="number">8</span>]；</span><br><span class="line"></span><br><span class="line">第三步插入 <span class="number">444</span>，d=[<span class="number">0</span>,<span class="number">4</span>]d = [<span class="number">0</span>, <span class="number">4</span>]d=[<span class="number">0</span>,<span class="number">4</span>]；</span><br><span class="line"></span><br><span class="line">第四步插入 <span class="number">121212</span>，d=[<span class="number">0</span>,<span class="number">4</span>,<span class="number">12</span>]d = [<span class="number">0</span>, <span class="number">4</span>, <span class="number">12</span>]d=[<span class="number">0</span>,<span class="number">4</span>,<span class="number">12</span>]；</span><br><span class="line"></span><br><span class="line">第五步插入 <span class="number">222</span>，d=[<span class="number">0</span>,<span class="number">2</span>,<span class="number">12</span>]d = [<span class="number">0</span>, <span class="number">2</span>, <span class="number">12</span>]d=[<span class="number">0</span>,<span class="number">2</span>,<span class="number">12</span>]。 <span class="comment">// 这里用2替换4,只是更新f[1] = 2, 当考虑长度为2的最长上升子序列时，确实应该是0，2  而不是0，4。在2之后有比12小的且比2大的则直接可以替换12</span></span><br></pre></td></tr></table></figure>
+
+
+
 <ul>
 <li><p>376 <a href="https://leetcode.cn/problems/wiggle-subsequence/" target="_blank" rel="noopener"> 摆动序列</a></p>
 <ul>
@@ -2178,6 +2261,11 @@
 <li><p>官方 O(n)</p>
 <ul>
 <li>只考虑前一个元素</li>
+<li>有难度，想不到只考虑前一个元素</li>
+<li>关键理解点：<ul>
+<li>当 nums[i]≤nums[i−1]\textit{nums}[i] \leq \textit{nums}[i - 1]nums[i]≤nums[i−1] 时，我们无法选出更长的「上升摆动序列」的方案。因为对于任何以 nums[i]\textit{nums}[i]nums[i] 结尾的「上升摆动序列」，我们都可以将 nums[i]\textit{nums}[i]nums[i] 替换为 nums[i−1]\textit{nums}[i - 1]nums[i−1]，使其成为以 nums[i−1]\textit{nums}[i - 1]nums[i−1] 结尾的「上升摆动序列」</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -2185,14 +2273,54 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//self</span></span><br><span class="line">    <span class="comment">// F表示当前值减去前面的为正  N表示当前值减去前面的为负</span></span><br><span class="line">    <span class="comment">// F[i] = max(N[j]+1)  nums[i] - nums[j] &gt; 0     0&lt;=j&lt;i</span></span><br><span class="line">    <span class="comment">// N[i] = max(F[j]+1)  nums[i] - nums[j] &lt; 0     0&lt;=j&lt;i</span></span><br><span class="line"><span class="comment">//官方</span></span><br><span class="line">    <span class="comment">// F表示当前值减去前面的为正  N表示当前值减去前面的为负</span></span><br><span class="line">    <span class="comment">// F[i] = max(F[i-1], N[i-1]+1) if(nums[i]&gt;nums[i-1])</span></span><br><span class="line">    <span class="comment">// F[i] = F[i-1] if(nums[i]&lt;=nums[i-1])  本来需要上升，但不符合条件 则记录前一个上升的值</span></span><br><span class="line">    <span class="comment">// N[i] = max(N[i-1], F[i-1]+1)  if(nums[i]&lt;nums[i-1])</span></span><br><span class="line">    <span class="comment">// N[i] = N[i-1] if(nums[i]&gt;=nums[i-1])  本来需要下降（从F[i-1]过来） 但不符合条件 则记录上一个下降的值（N[i-1]）  即忽略nums[i]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 空间优化</span></span><br><span class="line">    <span class="comment">// f = max(f, n+1) if(nums[i]&gt;nums[i-1])</span></span><br><span class="line">    <span class="comment">// f = f if(nums[i]&lt;=nums[i-1]) </span></span><br><span class="line">    <span class="comment">// n = max(n, f+1)  if(nums[i]&lt;nums[i-1])</span></span><br><span class="line">    <span class="comment">// n = n if(nums[i]&gt;=nums[i-1]) </span></span><br><span class="line">    <span class="comment">// 初始化 f = 1, n = 1;</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="最长公共子序列LCS"><a href="#最长公共子序列LCS" class="headerlink" title="最长公共子序列LCS"></a>最长公共子序列LCS</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// F[i][j] = F[i-1][j-1] + 1 if(s1[i] == s2[j]) </span></span><br><span class="line"><span class="comment">// F[i][j] = max(F[i-1][j], F[i][j-1]) if(s1[i] != s2[j])</span></span><br></pre></td></tr></table></figure>
+<h4 id="最长公共子序列-子串"><a href="#最长公共子序列-子串" class="headerlink" title="最长公共子序列/子串"></a>最长公共子序列/子串</h4><ul>
+<li><a href="https://leetcode.cn/problems/qJnOS7/description/" target="_blank" rel="noopener">LCR 095. 最长公共子序列</a></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// F[i][j] 记录前i个元素和前j个元素的最长公共子序列</span></span><br><span class="line"><span class="comment">// F[i][j] = F[i-1][j-1] + 1 if(s1[i] == s2[j]) </span></span><br><span class="line"><span class="comment">// F[i][j] = max(F[i-1][j], F[i][j-1]) if(s1[i] != s2[j])</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>最长公共子串</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// F[i][j] 记录以i结尾和以j结尾的最长公共子串</span></span><br><span class="line"><span class="comment">// 需要更新res = max(res, F[i][j]) 得到最终结果</span></span><br><span class="line"><span class="comment">// F[i][j] = F[i-1][j-1] + 1 if(s1[i] == s2[j]) </span></span><br><span class="line"><span class="comment">// F[i][j] = 0 if(s1[i] != s2[j])</span></span><br></pre></td></tr></table></figure>
 
 
+
+<h4 id="最长回文子序列-子串"><a href="#最长回文子序列-子串" class="headerlink" title="最长回文子序列/子串"></a>最长回文子序列/子串</h4><ul>
+<li><a href="https://leetcode.cn/problems/longest-palindromic-substring/description/" target="_blank" rel="noopener">5最长回文子串</a><ul>
+<li>动态规划，远不如中心扩展法</li>
+<li>中心扩展法, 可以去提前结束循环，所以效率更高</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 动态规划   看leetcode笔记</span></span><br><span class="line"><span class="comment">// f[i][j] = f[i+1][j-1]  s[i] == s[j]  </span></span><br><span class="line"><span class="comment">// f[i][j] = false  s[i] != s[j]</span></span><br><span class="line"><span class="comment">// f[i][j] 为true时更新最长子串</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://leetcode.cn/problems/longest-palindromic-subsequence/description/" target="_blank" rel="noopener">516最长回文子序列</a></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">longestPalindromeSubseq</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// f[i][j] = f[i+1][j-1] + 2  s[i] == s[j]                    注意是+2</span></span><br><span class="line">        <span class="comment">// f[i][j] = max(f[i+1][j], f[i][j-1])  s[i] != s[j]</span></span><br><span class="line">        <span class="comment">// 初始化</span></span><br><span class="line">        <span class="comment">// f[i][i] = 1  其它为0， 因为是+2</span></span><br><span class="line">        <span class="keyword">int</span> n = s.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">f</span><span class="params">(n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n, <span class="number">0</span>))</span></span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)&#123;</span><br><span class="line">            f[i][i] = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = n- <span class="number">2</span>; i &gt;= <span class="number">0</span>; --i)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; n; ++j)&#123;</span><br><span class="line">                <span class="keyword">if</span>(s[i] == s[j])&#123;</span><br><span class="line">                    f[i][j] = f[i+<span class="number">1</span>][j<span class="number">-1</span>] + <span class="number">2</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    f[i][j] = <span class="built_in">max</span>(f[i+<span class="number">1</span>][j], f[i][j<span class="number">-1</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> f[<span class="number">0</span>][n<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="编辑距离-amp-正则匹配"><a href="#编辑距离-amp-正则匹配" class="headerlink" title="编辑距离&amp;正则匹配"></a>编辑距离&amp;正则匹配</h4><ul>
+<li>10<a href="https://leetcode.cn/problems/regular-expression-matching/description/" target="_blank" rel="noopener">正则表达式匹配</a></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// f[i][j] 记录s的前i个元素是否可以用p的前j个元素匹配 bool</span></span><br><span class="line"><span class="comment">// f[i][j] = f[i-1][j-1]  s[i-1] == p[j-1] || p[j-1] == '.'</span></span><br><span class="line"><span class="comment">// f[i][j] = f[i][j-2]  p[j-1] == '*'  不使用*</span></span><br><span class="line"><span class="comment">// f[i][j] = f[i-1][j]  p[j-1] == '*' &amp;&amp; ( p[j-2] == '.' || p[i-2] == s[i-1])</span></span><br><span class="line"><span class="comment">//      使用*，但是.*是可以匹配多个的，所以可能也会给是s[i-2]用，所以等于f[i-1][j]</span></span><br><span class="line"><span class="comment">//      如果s[i-2]也匹配了*,那就是f[i-1][j]， 如果不匹配，那就是对于s[i-2]，*匹配0次，即f[i-1][j] = f[i-1][j-2]</span></span><br><span class="line"><span class="comment">// 初始化</span></span><br><span class="line"><span class="comment">// f[0][0] = true</span></span><br><span class="line"><span class="comment">// f[1-n][0] = false</span></span><br><span class="line"><span class="comment">// f[0][1-m] = f[0][j-2] &amp;&amp; p[j-1] == '*'</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>72<a href="https://leetcode.cn/problems/edit-distance/description/" target="_blank" rel="noopener">编辑距离</a></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// f[i][j] 记录w1转换为w2的最少操作次数</span></span><br><span class="line"><span class="comment">// f[i][j] = f[i-1][j-1]   w1[i-1] == w2[j-1]</span></span><br><span class="line"><span class="comment">// f[i][j] = f[i-1][j-1] + 1  w1[i-1] != w2[j-1] 替换</span></span><br><span class="line"><span class="comment">// f[i][j] = f[i][j-1] + 1  w1[i-1] != w2[j-1] 插入  插入的元素和w2[j-1]匹配，则需要w1[i-1]与w2[j-2]匹配即f[i][j-1]</span></span><br><span class="line"><span class="comment">// f[i][j] = f[i-1][j] + 1  w1[i-1] != w2[j-1] 删除  删除w1[i-1], 则需要w1[i-2]与w2[j-1]匹配即f[i-1][j]</span></span><br><span class="line"><span class="comment">// f[i][j] =  min(f[i-1][j-1] 相等 ,f[i-1][j] +1 删除, f[i-1][j-1]+1 替换, f[i][j-1]+1 插入) </span></span><br><span class="line"><span class="comment">// 初始化</span></span><br><span class="line"><span class="comment">// f[0][0,,j,,m] = j  插入</span></span><br><span class="line"><span class="comment">// f[0,,i,,n][0] = i  删除</span></span><br></pre></td></tr></table></figure>
 
 
 
 <h4 id="股票相关题目"><a href="#股票相关题目" class="headerlink" title="股票相关题目"></a>股票相关题目</h4><ul>
-<li>121  只交易一次<ul>
+<li><p>309 <a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/" target="_blank" rel="noopener">最佳买卖股票时机含冷冻期</a></p>
+<ul>
+<li>没有思路，看解析，待复习</li>
+</ul>
+</li>
+<li><p>121  只交易一次</p>
+<ul>
 <li>动态规划<ul>
 <li>方式1：<ul>
 <li>从0到N-1枚举j，即第几天卖</li>
@@ -2525,7 +2653,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一"><span class="nav-text">一</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#排序算法"><span class="nav-text">排序算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工具函数"><span class="nav-text">工具函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#桶排序和计数排序"><span class="nav-text">桶排序和计数排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择排序"><span class="nav-text">选择排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入排序"><span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#希尔排序"><span class="nav-text">希尔排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并排序"><span class="nav-text">归并排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#归并求解逆序对"><span class="nav-text">归并求解逆序对</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序"><span class="nav-text">快速排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#快排优化版本"><span class="nav-text">快排优化版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两路快排"><span class="nav-text">两路快排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三路快排"><span class="nav-text">三路快排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#快排求解第n大元素"><span class="nav-text">快排求解第n大元素</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆排序"><span class="nav-text">堆排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构建堆"><span class="nav-text">构建堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#堆排序-1"><span class="nav-text">堆排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引堆"><span class="nav-text">索引堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#堆的应用"><span class="nav-text">堆的应用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序算法总结"><span class="nav-text">排序算法总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索算法"><span class="nav-text">搜索算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二分查找法"><span class="nav-text">二分查找法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二分搜索树"><span class="nav-text">二分搜索树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并查集"><span class="nav-text">并查集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Quick-Find"><span class="nav-text">Quick Find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Quick-Union"><span class="nav-text">Quick Union</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Quick-Union的优化"><span class="nav-text">Quick Union的优化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基于size的优化"><span class="nav-text">基于size的优化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于rank的优化"><span class="nav-text">基于rank的优化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#路径压缩"><span class="nav-text">路径压缩</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图论"><span class="nav-text">图论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图论基础"><span class="nav-text">图论基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邻边迭代器"><span class="nav-text">邻边迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读取图"><span class="nav-text">读取图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度优先遍历"><span class="nav-text">深度优先遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寻路"><span class="nav-text">寻路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广度优先遍历"><span class="nav-text">广度优先遍历</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最小生成树"><span class="nav-text">最小生成树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有权图"><span class="nav-text">有权图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#边的定义"><span class="nav-text">边的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#邻接矩阵构建图"><span class="nav-text">邻接矩阵构建图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#邻接表构建矩阵"><span class="nav-text">邻接表构建矩阵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读取并构建带权图"><span class="nav-text">读取并构建带权图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最小堆"><span class="nav-text">最小堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最小索引堆"><span class="nav-text">最小索引堆</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prim算法"><span class="nav-text">Prim算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#切分定理"><span class="nav-text">切分定理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lazy-Prim"><span class="nav-text">Lazy Prim</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Prim"><span class="nav-text">Prim</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kruskal算法"><span class="nav-text">Kruskal算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最短路径"><span class="nav-text">最短路径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dijkstra算法"><span class="nav-text">dijkstra算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bellman-Ford算法"><span class="nav-text">Bellman-Ford算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拓展"><span class="nav-text">拓展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字典树（Trie树）"><span class="nav-text">字典树（Trie树）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二"><span class="nav-text">二</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数组"><span class="nav-text">数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找"><span class="nav-text">查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链表"><span class="nav-text">链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈、队列"><span class="nav-text">栈、队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树和递归"><span class="nav-text">二叉树和递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归和回溯"><span class="nav-text">递归和回溯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态规划"><span class="nav-text">动态规划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#专题"><span class="nav-text">专题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#坐标型动态规划"><span class="nav-text">坐标型动态规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#位操作型动态规划"><span class="nav-text">位操作型动态规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#序列型动态规划"><span class="nav-text">序列型动态规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#划分型动态规划"><span class="nav-text">划分型动态规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#博弈型动态规划"><span class="nav-text">博弈型动态规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#背包问题"><span class="nav-text">背包问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#区间型动态规划"><span class="nav-text">区间型动态规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双序列型动态规划"><span class="nav-text">双序列型动态规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hard"><span class="nav-text">Hard</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#L003"><span class="nav-text">L003</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#背包问题-1"><span class="nav-text">背包问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最长子序列LIS"><span class="nav-text">最长子序列LIS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最长公共子序列LCS"><span class="nav-text">最长公共子序列LCS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#股票相关题目"><span class="nav-text">股票相关题目</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贪心"><span class="nav-text">贪心</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hot-100"><span class="nav-text">hot 100</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#牛客面经"><span class="nav-text">牛客面经</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拼多多-3-12"><span class="nav-text">拼多多 3.12</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一"><span class="nav-text">一</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#排序算法"><span class="nav-text">排序算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#工具函数"><span class="nav-text">工具函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#桶排序、计数排序、基数排序"><span class="nav-text">桶排序、计数排序、基数排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择排序"><span class="nav-text">选择排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入排序"><span class="nav-text">插入排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#希尔排序"><span class="nav-text">希尔排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并排序"><span class="nav-text">归并排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#归并求解逆序对"><span class="nav-text">归并求解逆序对</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序"><span class="nav-text">快速排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#快排优化版本"><span class="nav-text">快排优化版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两路快排"><span class="nav-text">两路快排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三路快排"><span class="nav-text">三路快排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#快排求解第n大元素"><span class="nav-text">快排求解第n大元素</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆排序"><span class="nav-text">堆排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构建堆"><span class="nav-text">构建堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#堆排序-1"><span class="nav-text">堆排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引堆"><span class="nav-text">索引堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#堆的应用"><span class="nav-text">堆的应用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序算法总结"><span class="nav-text">排序算法总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索算法"><span class="nav-text">搜索算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二分查找法"><span class="nav-text">二分查找法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二分搜索树"><span class="nav-text">二分搜索树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并查集"><span class="nav-text">并查集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Quick-Find"><span class="nav-text">Quick Find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Quick-Union"><span class="nav-text">Quick Union</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Quick-Union的优化"><span class="nav-text">Quick Union的优化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基于size的优化"><span class="nav-text">基于size的优化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于rank的优化"><span class="nav-text">基于rank的优化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#路径压缩"><span class="nav-text">路径压缩</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图论"><span class="nav-text">图论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图论基础"><span class="nav-text">图论基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邻边迭代器"><span class="nav-text">邻边迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读取图"><span class="nav-text">读取图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度优先遍历"><span class="nav-text">深度优先遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寻路"><span class="nav-text">寻路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广度优先遍历"><span class="nav-text">广度优先遍历</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最小生成树"><span class="nav-text">最小生成树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有权图"><span class="nav-text">有权图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#边的定义"><span class="nav-text">边的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#邻接矩阵构建图"><span class="nav-text">邻接矩阵构建图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#邻接表构建矩阵"><span class="nav-text">邻接表构建矩阵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读取并构建带权图"><span class="nav-text">读取并构建带权图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最小堆"><span class="nav-text">最小堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最小索引堆"><span class="nav-text">最小索引堆</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prim算法"><span class="nav-text">Prim算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#切分定理"><span class="nav-text">切分定理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lazy-Prim"><span class="nav-text">Lazy Prim</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Prim"><span class="nav-text">Prim</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kruskal算法"><span class="nav-text">Kruskal算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最短路径"><span class="nav-text">最短路径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dijkstra算法"><span class="nav-text">dijkstra算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bellman-Ford算法"><span class="nav-text">Bellman-Ford算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拓展"><span class="nav-text">拓展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字典树（Trie树）"><span class="nav-text">字典树（Trie树）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二"><span class="nav-text">二</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数组"><span class="nav-text">数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找"><span class="nav-text">查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链表"><span class="nav-text">链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈、队列"><span class="nav-text">栈、队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树和递归"><span class="nav-text">二叉树和递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归和回溯"><span class="nav-text">递归和回溯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态规划"><span class="nav-text">动态规划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#专题"><span class="nav-text">专题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#坐标型动态规划"><span class="nav-text">坐标型动态规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#位操作型动态规划"><span class="nav-text">位操作型动态规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#序列型动态规划"><span class="nav-text">序列型动态规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#划分型动态规划"><span class="nav-text">划分型动态规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#博弈型动态规划"><span class="nav-text">博弈型动态规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#背包问题"><span class="nav-text">背包问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#区间型动态规划"><span class="nav-text">区间型动态规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双序列型动态规划"><span class="nav-text">双序列型动态规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hard"><span class="nav-text">Hard</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#L003"><span class="nav-text">L003</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基础"><span class="nav-text">基础</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#坐标型"><span class="nav-text">坐标型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#打家劫舍"><span class="nav-text">打家劫舍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#零钱类型"><span class="nav-text">零钱类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#背包问题-1"><span class="nav-text">背包问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最长子序列LIS"><span class="nav-text">最长子序列LIS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最长公共子序列-子串"><span class="nav-text">最长公共子序列&#x2F;子串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最长回文子序列-子串"><span class="nav-text">最长回文子序列&#x2F;子串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编辑距离-amp-正则匹配"><span class="nav-text">编辑距离&amp;正则匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#股票相关题目"><span class="nav-text">股票相关题目</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贪心"><span class="nav-text">贪心</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hot-100"><span class="nav-text">hot 100</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#牛客面经"><span class="nav-text">牛客面经</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拼多多-3-12"><span class="nav-text">拼多多 3.12</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -2541,20 +2669,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">54</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-count">96</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2613,13 +2741,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1m</span>
+    <span title="站点总字数">1.1m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:27</span>
+    <span title="站点阅读时长">16:08</span>
 </div>
 
         

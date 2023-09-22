@@ -28,7 +28,7 @@
 <meta property="og:description" content="c++11_new 爱编程的大丙B站-c++11学习笔记 爱编程的大丙个人博客-c++11">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-06T02:43:17.000Z">
-<meta property="article:modified_time" content="2023-06-04T07:07:39.553Z">
+<meta property="article:modified_time" content="2023-08-28T03:40:21.332Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="C++11">
 <meta name="twitter:card" content="summary">
@@ -220,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-04 15:07:39" itemprop="dateModified" datetime="2023-06-04T15:07:39+08:00">2023-06-04</time>
+                <time title="修改时间：2023-08-28 11:40:21" itemprop="dateModified" datetime="2023-08-28T11:40:21+08:00">2023-08-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,7 +267,7 @@
 <ul>
 <li>alignas设置的大小是整体的对齐大小</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">struct <span class="title">alignas</span><span class="params">(<span class="number">32</span>)</span> test4</span>&#123;</span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	<span class="keyword">int</span>  i;</span><br><span class="line">	<span class="keyword">double</span> d;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 上面正常大小是16  但设置了最小对齐数为32  所以大小补齐到32的倍数，即大小为32</span></span><br><span class="line"></span><br><span class="line"><span class="function">struct <span class="title">alignas</span><span class="params">(<span class="number">4</span>)</span> Info2 </span>&#123;</span><br><span class="line">  <span class="keyword">uint8_t</span> a;</span><br><span class="line">  <span class="keyword">uint32_t</span> b;</span><br><span class="line">  <span class="keyword">uint8_t</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 上面正常大小为：2 + 2 + 2 = 6 但对齐数为：4， 所以大小补齐到4的倍数，即大小为4</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">struct <span class="title">alignas</span><span class="params">(<span class="number">32</span>)</span> test4</span>&#123;</span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	<span class="keyword">int</span>  i;</span><br><span class="line">	<span class="keyword">double</span> d;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 上面正常大小是16  但设置了最小对齐数为32  所以大小补齐到32的倍数，即大小为32</span></span><br><span class="line"></span><br><span class="line"><span class="function">struct <span class="title">alignas</span><span class="params">(<span class="number">4</span>)</span> Info2 </span>&#123;</span><br><span class="line">  <span class="keyword">uint8_t</span> a;</span><br><span class="line">  <span class="keyword">uint16_t</span> b;</span><br><span class="line">  <span class="keyword">uint8_t</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 上面正常大小为：2 + 2 + 2 = 6 但对齐数为：4， 所以大小补齐到4的倍数，即大小为4</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -359,7 +359,7 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <span class="keyword">int</span>, <span class="keyword">typename</span> U = <span class="keyword">char</span>&gt;</span><br><span class="line"><span class="keyword">void</span> func(T arg1 = <span class="number">100</span>, U arg2 = <span class="number">100</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"arg1: "</span> &lt;&lt; arg1 &lt;&lt; <span class="string">", arg2: "</span> &lt;&lt; arg2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 模板函数调用</span></span><br><span class="line">    func(<span class="string">'a'</span>);</span><br><span class="line">    func(<span class="number">97</span>, <span class="string">'a'</span>);</span><br><span class="line">    func();    <span class="comment">// 打印：100， d </span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <span class="keyword">int</span>, <span class="keyword">typename</span> U = <span class="keyword">char</span>&gt;</span><br><span class="line"><span class="keyword">void</span> func(T arg1 = <span class="number">100</span>, U arg2 = <span class="number">100</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"arg1: "</span> &lt;&lt; arg1 &lt;&lt; <span class="string">", arg2: "</span> &lt;&lt; arg2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 模板函数调用</span></span><br><span class="line">    func(<span class="string">'a'</span>);     <span class="comment">// a d </span></span><br><span class="line">    func(<span class="number">97</span>, <span class="string">'a'</span>); <span class="comment">// 97, a</span></span><br><span class="line">    func();    <span class="comment">// 打印：100， d </span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="using的使用"><a href="#using的使用" class="headerlink" title="using的使用"></a>using的使用</h3><blockquote>
 <p>using 语法和 typedef 一样，并不会创建出新的类型，它们只是给某些类型定义了新的别名</p>
@@ -374,9 +374,13 @@
 </ul>
 </li>
 </ul>
-<h3 id="委托构造函数和继承构造函数"><a href="#委托构造函数和继承构造函数" class="headerlink" title="委托构造函数和继承构造函数"></a>委托构造函数和继承构造函数</h3><ul>
+<h3 id="委托构造函数和继承构造函数"><a href="#委托构造函数和继承构造函数" class="headerlink" title="委托构造函数和继承构造函数"></a>委托构造函数和继承构造函数</h3><blockquote>
+<p><a href="https://subingwen.cn/cpp/construct/" target="_blank" rel="noopener">https://subingwen.cn/cpp/construct/</a></p>
+</blockquote>
+<ul>
 <li>委托构造函数<ul>
-<li>在构造函数中可以条用另外的构造函数，以此可精简代码</li>
+<li>在构造函数中可以调用另外的构造函数，以此可精简代码</li>
+<li>c++11之前是不支持构造函数中调用别的构造函数的</li>
 </ul>
 </li>
 <li>继承构造函数<ul>
@@ -394,7 +398,7 @@
 <li>initializer_list ？？？</li>
 </ul>
 <h3 id="基于范围的for循环"><a href="#基于范围的for循环" class="headerlink" title="基于范围的for循环"></a>基于范围的for循环</h3><ul>
-<li>原始for循环可以一遍循环一遍修改循环的内容，因为每次都会对结束判断</li>
+<li>原始for循环可以一边循环一边修改循环的内容，因为每次都会对结束判断</li>
 <li>基于范围的for循环是一开始就确定了循环的范围，所以循环过程中是不能修改循环内容的，但是不用每次都判断是否结束了，效率更高</li>
 <li>set的值和map的key在循环时本身就是不可变的</li>
 </ul>
@@ -402,9 +406,39 @@
 <li>包装器</li>
 <li>绑定器</li>
 </ul>
-<h3 id="Lambda-表达式"><a href="#Lambda-表达式" class="headerlink" title="Lambda 表达式"></a>Lambda 表达式</h3><h3 id="右值引用"><a href="#右值引用" class="headerlink" title="右值引用"></a>右值引用</h3><blockquote>
+<h3 id="Lambda-表达式"><a href="#Lambda-表达式" class="headerlink" title="Lambda 表达式"></a>Lambda 表达式</h3><blockquote>
+<p><a href="https://subingwen.cn/cpp/lambda/" target="_blank" rel="noopener">https://subingwen.cn/cpp/lambda/</a></p>
+</blockquote>
+<ul>
+<li>[] - 不捕捉任何变量</li>
+<li>[&amp;] - 捕获外部作用域中所有变量，并作为引用在函数体内使用 (按引用捕获)<ul>
+<li>可读写</li>
+</ul>
+</li>
+<li>[=] - 捕获外部作用域中所有变量，并作为副本在函数体内使用 (按值捕获)<ul>
+<li>拷贝的副本在匿名函数体内部是只读的</li>
+<li>需要mutable修改，才能在函数内部可写</li>
+</ul>
+</li>
+<li>[=, &amp;foo] - 按值捕获外部作用域中所有变量，并按照引用捕获外部变量 foo</li>
+<li>[bar] - 按值捕获 bar 变量，同时不捕获其他变量<ul>
+<li>需要mutable修改，才能在函数内部可写</li>
+</ul>
+</li>
+<li>[&amp;bar] - 按引用捕获 bar 变量，同时不捕获其他变量<ul>
+<li>可以读写</li>
+</ul>
+</li>
+<li>[this] - 捕获当前类中的 this 指针<ul>
+<li>可读写</li>
+<li>让 lambda 表达式拥有和当前类成员函数同样的访问权限</li>
+<li>如果已经使用了 &amp; 或者 =, 默认添加此选项</li>
+</ul>
+</li>
+</ul>
+<h3 id="右值引用"><a href="#右值引用" class="headerlink" title="右值引用"></a>右值引用</h3><blockquote>
 <p> <strong>引用本质是别名</strong></p>
-<p>核心： 用右值引用接收一个将亡值就是给这个将亡值续命，相当于通过这个右值引用可以继续使用这个将亡值，完全继承了将亡值的所有权，这个将网亡值可以是函数的返回值，本来返回后应该就析构了，但是因为有右值引用接收，所以并不会析构，直到右值引用不使用时才析构</p>
+<p>核心： 用右值引用接收一个将亡值就是给这个将亡值续命，相当于通过这个右值引用可以继续使用这个将亡值，完全继承了将亡值的所有权，这个将亡值可以是函数的返回值，本来返回后应该就析构了，但是因为有右值引用接收，所以并不会析构，直到右值引用不使用时才析构</p>
 </blockquote>
 <h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><ul>
 <li><p>初始化</p>
@@ -604,20 +638,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">54</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-count">96</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -676,13 +710,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">1m</span>
+    <span title="站点总字数">1.1m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">15:27</span>
+    <span title="站点阅读时长">16:08</span>
 </div>
 
         
