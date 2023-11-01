@@ -3811,6 +3811,15 @@ epoll 的 ET模式， 高效模式，但是只支持 非阻塞模式。 --- 忙�
 
 ![TCP 三次握手和四次挥手的流程](https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP-Wireshark/19.jpg)
 
+####  reset使用场景
+
+当收到不符合预期的情况时，就会使用reset，，，
+
+####  什么情况下会断开tcp
+
+* 当使用socket编程时，调用close，主动断开连接
+* 当中间设备坏掉时，例如交换机坏掉了
+
 
 
 ##  操作系统
@@ -3898,7 +3907,11 @@ epoll 的 ET模式， 高效模式，但是只支持 非阻塞模式。 --- 忙�
 
 * 一亿个元素内存大概400M
 
+####  调度算法
 
+一个32核的机器，跑5个进程，如何使得每个进程不会占用太多核，也不会使用太少核
+
+* 可以通过操作系统的调度算法，控制每个进程在cpu上的时间片，实现相对公平
 
 ##  数据库
 
@@ -4905,6 +4918,12 @@ public:
     }
 };
 ```
+
+#####  华为
+
+[53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/)
+
+[870. 优势洗牌](https://leetcode.cn/problems/advantage-shuffle/)
 
 
 

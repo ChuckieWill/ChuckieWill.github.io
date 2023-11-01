@@ -50,3 +50,19 @@ github: https://github.com/queryproc/optimizing-subgraph-queries-combining-binar
  . ./env.sh
 ```
 
+
+
+查看jdk版本
+
+```sh
+java -version
+```
+
+查看 Java 安装路径
+
+* linux上一般在/usr/lib/jvm下面
+
+```sh
+which java
+```
+
