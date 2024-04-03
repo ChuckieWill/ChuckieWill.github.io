@@ -14,6 +14,10 @@ categories:
 
 ## 常用
 
+#####  .bashrc
+
+> [【Linux】什么是.bashrc，以及其使用方法](https://blog.csdn.net/weixin_57208584/article/details/135868555)
+
 #####  Screen
 
 > 用于将linux上的任务在后台执行，即使ssh断开也可以在后台继续执行
@@ -106,6 +110,16 @@ free [-bkmotV][-s <间隔秒数>]
 -h 　以合适的单位显示内存使用情况，最大为三位数，自动计算对应的单位值。单位有：B = bytes、K = kilos、M = megas、G = gigas、T = teras
 ```
 
+查看gpu信息
+
+> [lspci详解](https://blog.csdn.net/weixin_38452632/article/details/136633239)
+
+```
+lspci | grep -e VGA
+```
+
+
+
 查看cpu信息
 
 ```
@@ -194,6 +208,12 @@ du -sh /home/wangyj
 
 ```
 cat /etc/issue
+
+// or
+uname -v
+
+// or
+lsb_release -a
 ```
 
 #####  在test.txtd第一行加入hello
@@ -235,6 +255,43 @@ wangyj@node1:~/dataset$ ls -l amazon-2008.txt
 wangyj@node1:~/dataset$ ls -lh amazon-2008.txt 
 -rw-rw-r-- 1 wangyj wangyj 68M May  5  2022 amazon-2008.txt
 ```
+
+
+
+##  linux非root安装JDK11
+
+1. **下载 JDK 11：** 打开 Oracle 或者 OpenJDK 官方网站，在下载页面找到 JDK 11 的版本。你可以选择 Oracle JDK 或 OpenJDK，视你的需求而定。
+
+   例如，如果你选择使用 OpenJDK，可以使用如下命令下载：
+
+   ```
+   wget https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz
+   ```
+
+2. **解压缩文件：** 使用以下命令解压缩下载的 tar 文件：
+
+   ```
+   tar -zxvf openjdk-11+28_linux-x64_bin.tar.gz
+   ```
+
+   这将在当前目录下创建一个新的目录，其中包含解压缩后的 JDK。
+
+3. **设置环境变量：** 设置 `JAVA_HOME` 和 `PATH` 环境变量，让系统知道 JDK 的位置。假设你的 JDK 解压到了 `~/jdk-11`：
+
+   ```
+   export JAVA_HOME=~/jdk-11
+   export PATH=$JAVA_HOME/bin:$PATH
+   ```
+
+   如果你想使这些变量在每次登录时都自动设置，将上述命令添加到你的 shell 配置文件（如 `~/.bashrc` 或 `~/.zshrc`）。
+
+4. **验证安装：** 打开一个新的终端窗口并运行以下命令，验证是否正确安装了 JDK：
+
+   ```
+   java -version
+   ```
+
+
 
 ##  虚拟机安装Ubuntu和CentOS
 
@@ -337,6 +394,12 @@ sudo apt-get install openssh-server
 * 只需要虚拟机ubuntu的IP地址和用户名和密码即可
 
 ![image-20230614212401186](linux/image-20230614212401186.png)
+
+##  vscode 连接虚拟机ubuntu
+
+ubuntu上的配置同：xftp连接虚拟机ubuntu
+
+![image-20240403110853006](linux/image-20240403110853006.png)
 
 ##  网络
 
