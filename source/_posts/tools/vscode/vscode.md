@@ -28,6 +28,14 @@ categories:
 
 > https://blog.csdn.net/weixin_44309374/article/details/131309302
 
+* 折叠所有代码 (按住ctrl 分别点击k和0)
+
+  > ctrl+k,ctrl+0
+
+* 展开所有代码 (按住ctrl 分别点击k和j)
+
+  > ctrl+k,ctrl+j
+
 * 缩进
 
 向右：tab  or  ctrl+]
