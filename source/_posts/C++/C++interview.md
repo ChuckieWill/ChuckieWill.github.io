@@ -237,6 +237,8 @@ int main(){
 * 自定义了拷贝函数，就不会自动生成赋值函数了
 * 自定义了移动拷贝函数，就不会自动生成移动赋值函数了
 * 临时对象的赋值优先调用移动赋值函数，没有移动赋值函数的情况下，会调用赋值函数  
+* 定义了移动拷贝函数，则移动赋值函数默认不提供，=后为临时对象时，就会发现找不到移动赋值函数，从而报错
+* 定义了移动拷贝函数，拷贝函数，拷贝赋值函数都不会默认提供
 
 ```c++
 #include <iostream>
@@ -2196,59 +2198,6 @@ struct MANAGER{
 
 ##  c++
 
-####  GDB调试
-
-> 查看变量值（结构体、数组，对象等）：https://blog.csdn.net/wohu1104/article/details/125069987
->
-> GDB处理core dumped: https://www.freesion.com/article/20821302350/
->
-> https://blog.csdn.net/jackhh1/article/details/124434307
-
-> 概要：https://blog.csdn.net/challenglistic/article/details/128109026
->
-> 具体使用： https://blog.csdn.net/xubaocai0379/article/details/125876595
->
-> https://blog.csdn.net/brahmsjiang/article/details/79318149
->
-> 查看变量值：https://blog.csdn.net/wohu1104/article/details/125069987
-
-```c
-// test.c
-#include <stdio.h>
-#define N 100
-int func(int num){
-    num += 10;
-    return num;
-}
-int main(){
-    for(int i = 0; i < N; i++){
-        printf("current number is : %d\n", func(i));
-    }
-    return 0;
-}
-```
-
-```c
-gcc test.c -g -o test
-gdb test
-b 31 // 31行打断点
-b fun // 在函数位置打断点
-run // 开始调试
-print num // 显示函数中num的值，必须在打断点，run到断点位置停住后才能查看变量值
-next //单步执行 (在停止之后); 跳过函数调用
-step //单步执行 (在停止之后); 进入函数调用
-kill //结束调试
-list 8//显示第八行 
-list add //显示add函数
-quit //推出gdb
-    
-
-g++ test.cpp -g -o test
-gdb test
-```
-
-
-
 ####  智能指针
 
 > https://blog.csdn.net/solstice/article/details/8547547
@@ -2663,10 +2612,39 @@ int main()
 
 ####  智能指针的使用场景
 
-* shared_ptr
-  * 多线程场景，引用计数，实现对资源的统一访问
-* unique_ptr
-  * 独占式
+**shared_ptr**
+
+* 多线程场景，引用计数，实现对资源的统一访问
+* 在容器中存储动态分配的对象：`shared_ptr` 可以用于容器，以便容器中的多个元素可以共享动态分配的资源，并在不再需要时自动释放。
+
+```c++
+std::vector<std::shared_ptr<int>> vec;
+vec.push_back(std::make_shared<int>(1));
+vec.push_back(std::make_shared<int>(2));
+// 当 vector 销毁时，它会自动释放所有元素的资源
+
+```
+
+* 避免悬挂指针：当你需要传递指针给多个函数或对象，但不想手动管理内存释放，`shared_ptr` 可以确保在所有引用结束时自动释放资源
+
+```c++
+void process(std::shared_ptr<int> ptr) {
+    // ...
+}
+
+std::shared_ptr<int> p = std::make_shared<int>(42);
+process(p); // 在 process 函数结束后，p 仍然有效
+
+```
+
+
+
+**unique_ptr**
+
+* 独占式
+* 文件管理
+* 资源管理
+* 数据库链接管理
 
 ####  多态指针转型
 
@@ -2889,6 +2867,7 @@ c is nullptr
     * [单例模式的应用](https://blog.csdn.net/lizhichao410/article/details/124121253)
     * 静态对象在使用上和正常对象一样，可以使用静态或非静态成员函数和变量，只是这个对象自己是静态的
   * 隐藏性
+    * static函数不能通过include static函数的.h文件在其它文件中使用，因为具有隐藏性
 
 ```c++
 // 静态对象
@@ -3000,6 +2979,42 @@ x = 6, y = 5
 x = 7, y = 5
 x = 8, y = 5
 x = 9, y = 5
+```
+
+**隐藏性**
+
+```cpp
+// test.h
+#pragma once
+static int get();
+
+// test.cpp
+static int get(){
+  return 10;
+}
+
+// main.cpp
+#include<iostream>
+#include "test.h"
+using namespace std;
+
+int main()
+{
+  cout<<get()<<endl; // 编辑器不报错
+  return 0;
+}
+```
+
+```c++
+// 编译报错
+wangyj@node1:~/learn$ g++ main.cpp test.cpp -o main
+In file included from main.cpp:18:0:
+test.h:2:12: warning: ‘int get()’ used but never defined
+ static int get();
+            ^~~
+/tmp/ccOZJvKr.o: In function `main':
+main.cpp:(.text+0x5): undefined reference to `get()'
+collect2: error: ld returned 1 exit status
 ```
 
 
@@ -3836,6 +3851,12 @@ epoll 的 ET模式， 高效模式，但是只支持 非阻塞模式。 --- 忙�
 
 ##  操作系统
 
+#### 进程同步方式：
+
+* 信号
+* 信号量
+* 互斥锁
+
 #### 进程间通信方式：
 
 * 管道
@@ -3878,6 +3899,23 @@ epoll 的 ET模式， 高效模式，但是只支持 非阻塞模式。 --- 忙�
 * 资源统一分配，避免请求保持
 * 可剥夺资源
 * 资源有序分配，避免环路等待
+
+避免死锁
+
+* 从设计上避免死锁
+* 按序分配资源
+
+* **使用锁的顺序**：确保所有线程都按照相同的顺序请求锁。这可以减少死锁的概率。例如，如果线程A首先请求锁X，然后请求锁Y，那么线程B也应该按照相同的顺序请求这两个锁。
+* **使用超时**：在获取锁时，可以设置一个超时时间。如果在超时时间内无法获取锁，线程可以释放已经持有的锁并重试，从而避免死锁。
+* **使用适当的锁粒度**：尽量避免使用全局锁，而是使用更小的锁粒度。这可以减少锁的争夺，降低死锁的可能性。
+* **使用信号量和条件变量**：这些同步工具可以帮助你更精细地控制线程的执行顺序，从而降低死锁的风险
+* 
+* **避免嵌套锁**：不要在持有一个锁的情况下再次请求另一个锁，因为这可能导致死锁。如果确实需要多个锁，可以使用递归锁来解决这个问题。
+* **使用资源分配图**：可以使用资源分配图来检测潜在的死锁情况。如果发现资源分配图中存在环路，那么就可能存在死锁。
+* **合理设计算法**：尽量设计避免死锁的算法。例如，银行家算法用于分配资源，以确保不会发生死锁。
+* **避免饥饿**：确保所有线程都有机会获得它们需要的资源。避免一个线程长时间占用资源，导致其他线程饥饿。
+* **使用死锁检测工具**：一些编程语言和工具提供死锁检测工具，可以帮助你发现和解决潜在的死锁问题。
+* **仔细测试和分析**：在多线程或多进程程序中，进行仔细的测试和代码审查，以识别和解决潜在的死锁问题
 
 
 
@@ -4138,7 +4176,7 @@ B树和B+树的区别
 		+-----------+-------------+-------+
 ```
 
-##  linux命令
+##  linux
 
 #####  查看内存使用情况
 
@@ -4184,7 +4222,8 @@ top -p 57166 // 可以查看全局内存使用情况和57166这个进程的内�
 * {2765180}表示内存使用情况，单位为k
 
 ```
-ps aux | grep main/57166
+ps -aux | grep main/57166  // 在BSD风格的系统上常用，如macOS
+ps -ef | grep main/57166   // 在SysV风格的系统上常用，如Linux
 
 wangyj@node1:~/learn$ ps aux | grep 57166
 wangyj   50538  0.0  0.0  13140  1012 pts/306  S+   03:03   0:00 grep --color=auto 57166
@@ -4202,6 +4241,19 @@ cat /proc/57166/status  //57166进程id
 > https://blog.csdn.net/ylz_yg/article/details/128323631
 
 * uptime
+  * 当前时间是 "14:32:17"。
+  * 系统已经运行了 3 天 5 小时 45 分钟。
+  * 有 4 个用户登录到系统。
+  * 平均负载值为 0.12（1分钟平均）、0.25（5分钟平均）和 0.30（15分钟平均），这表示系统的负载处于轻负载状态。
+    * 对于计算密集型，平均负载基本等于CPU利用率，例如开启28线程，平均负载可能为28，表示CPU利用率为2800%
+
+
+```
+14:32:17 up 3 days, 5:45, 4 users, load average: 0.12, 0.25, 0.30
+```
+
+
+
 * w
   * 第一行
 * top
@@ -4211,12 +4263,461 @@ cat /proc/57166/status  //57166进程id
 
 > 正则表达式： https://www.runoob.com/regexp/regexp-syntax.html
 
-```
+* ls + grep 的方式
+
+```shell
 ls | grep "^L*"
 
 ^ : 以开头
 $ : 以结尾
+
+
+// 查找以字母 "s" 开头且以字母 "y" 结尾的文件名  .*表示匹配多个任意字符
+ls | grep "^s.*y$"
+
 ```
+
+* find的方式
+  * `/path/to/search` 是你要搜索的目录的路径。将其替换为你实际希望搜索的目录路径。
+  * `-type f` 表示只搜索文件，不包括目录。
+    * `-type f`：搜索普通文件（regular files）。
+    * `-type d`：搜索目录（directories）。
+    * `-type l`：搜索符号链接（symbolic links）。
+    * `-type b`：搜索块设备文件（block special files）。
+    * `-type c`：搜索字符设备文件（character special files）。
+    * `-type p`：搜索具名管道（FIFOs，也称为命名管道）。
+    * `-type s`：搜索套接字（sockets)
+  * `-name "s*y"` 指定了文件名的模式。这里使用通配符 `*` 来匹配以 "s" 开头且以 "y" 结尾的文件名
+  * `find` 将会在指定目录下递归搜索文件，并列出符合条件的文件的路径
+
+```shell
+find /path/to/search -type f -name "s*y"
+```
+
+
+
+#####  linux的设备有哪几种
+
+1. **字符设备（Character Devices）**：
+   - 这类设备以字符为单位进行输入和输出，通常不考虑数据的结构。例如，键盘、鼠标、终端等字符设备。
+2. **块设备（Block Devices）**：
+   - 块设备以块（通常是固定大小的数据块）为单位进行输入和输出。典型的块设备包括硬盘驱动器（HDD）、固态硬盘（SSD）等。
+3. **网络设备（Network Devices）**：
+   - 网络设备用于网络通信，包括以太网接口卡（NIC）和无线网卡。它们用于数据包的收发和网络连接。
+4. **虚拟设备（Virtual Devices）**：
+   - 虚拟设备是在内核中模拟的设备，用于执行特定任务或提供接口。例如，/dev/null（用于丢弃输出）、/dev/random（生成随机数）等。
+
+#####  查看一个进程的运行时间
+
+```shell
+top 查看 PID
+ps -o etime= -p <PID>
+```
+
+
+
+####  GDB调试
+
+> 查看变量值（结构体、数组，对象等）：https://blog.csdn.net/wohu1104/article/details/125069987
+>
+> GDB处理core dumped: https://www.freesion.com/article/20821302350/
+>
+> https://blog.csdn.net/jackhh1/article/details/124434307
+
+> 概要：https://blog.csdn.net/challenglistic/article/details/128109026
+>
+> 具体使用： https://blog.csdn.net/xubaocai0379/article/details/125876595
+>
+> https://blog.csdn.net/brahmsjiang/article/details/79318149
+>
+> 查看变量值：https://blog.csdn.net/wohu1104/article/details/125069987
+
+```c
+// test.c
+#include <stdio.h>
+#define N 100
+int func(int num){
+    num += 10;
+    return num;
+}
+int main(){
+    for(int i = 0; i < N; i++){
+        printf("current number is : %d\n", func(i));
+    }
+    return 0;
+}
+```
+
+```c
+gcc test.c -g -o test
+gdb test
+b 31 // 31行打断点
+b fun // 在函数位置打断点
+run // 开始调试
+print num // 显示函数中num的值，必须在打断点，run到断点位置停住后才能查看变量值
+next //单步执行 (在停止之后); 跳过函数调用
+step //单步执行 (在停止之后); 进入函数调用
+kill //结束调试
+list 8//显示第八行 
+list add //显示add函数
+quit //推出gdb
+    
+
+g++ test.cpp -g -o test
+gdb test
+```
+
+
+
+##### GDB检查内存泄漏
+
+> 使用Valgrind
+
+**安装Valgrind**
+
+```shell
+sudo apt-get install valgrind
+```
+
+**查看内存泄漏**
+
+```c++
+// 内存泄漏程序
+#include <iostream>
+#include <cstdlib>
+
+int main() {
+    // 分配内存但没有释放
+    int* dynamicArray = new int[10];
+
+    // 模拟程序执行其他操作
+    for (int i = 0; i < 10; ++i) {
+        dynamicArray[i] = i;
+    }
+
+    // 程序退出时没有释放分配的内存
+    // delete[] dynamicArray;  // 这一行应该被添加来修复内存泄漏
+
+    return 0;
+}
+
+```
+
+编译
+
+```shell
+ g++ test.cpp -g -o test
+```
+
+使用`--leak-check=full`查看内存泄漏情况
+
+```shell
+valgrind --leak-check=full ./test
+```
+
+执行结果
+
+```
+// 有内存泄漏的输出
+==6978== Memcheck, a memory error detector
+==6978== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==6978== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==6978== Command: ./test
+==6978== 
+==6978== 
+==6978== HEAP SUMMARY:
+==6978==     in use at exit: 40 bytes in 1 blocks  
+==6978==   total heap usage: 2 allocs, 1 frees, 72,744 bytes allocated
+==6978== 
+==6978== 40 bytes in 1 blocks are definitely lost in loss record 1 of 1   // 提示有40字节数据没有释放内存
+==6978==    at 0x4C3289F: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6978==    by 0x10879B: main (test.cpp:6)  // 申请内存的位置 man函数第6行
+==6978== 
+==6978== LEAK SUMMARY:
+==6978==    definitely lost: 40 bytes in 1 blocks
+==6978==    indirectly lost: 0 bytes in 0 blocks
+==6978==      possibly lost: 0 bytes in 0 blocks
+==6978==    still reachable: 0 bytes in 0 blocks
+==6978==         suppressed: 0 bytes in 0 blocks
+==6978== 
+==6978== For counts of detected and suppressed errors, rerun with: -v
+==6978== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+
+// 没有内存泄漏的输出
+==7084== Memcheck, a memory error detector
+==7084== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==7084== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==7084== Command: ./test
+==7084== 
+==7084== 
+==7084== HEAP SUMMARY:
+==7084==     in use at exit: 0 bytes in 0 blocks
+==7084==   total heap usage: 2 allocs, 2 frees, 72,744 bytes allocated
+==7084== 
+==7084== All heap blocks were freed -- no leaks are possible
+==7084== 
+==7084== For counts of detected and suppressed errors, rerun with: -v
+==7084== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+```
+
+#####  GDB查看死锁
+
+存在死锁的程序
+
+```c++
+#include <iostream>
+#include <thread>
+#include <mutex>
+
+std::mutex mutex1;
+std::mutex mutex2;
+
+void threadFunction1() {
+    std::lock_guard<std::mutex> lock1(mutex1);
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    std::lock_guard<std::mutex> lock2(mutex2);
+    std::cout << "Thread 1: Got both locks" << std::endl;
+}
+
+void threadFunction2() {
+    std::lock_guard<std::mutex> lock2(mutex2);
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    std::lock_guard<std::mutex> lock1(mutex1);
+    std::cout << "Thread 2: Got both locks" << std::endl;
+}
+
+int main() {
+    std::thread t1(threadFunction1);
+    std::thread t2(threadFunction2);
+
+    t1.join();
+    t2.join();
+
+    return 0;
+}
+
+```
+
+编译
+
+```shell
+g++ test.cpp -g -lpthread -o test
+```
+
+执行
+
+```shell
+gdb ./test
+```
+
+进入GDB并运行
+
+```shell
+(gdb) run
+Starting program: /home/chuckie/learn/test 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7ffff6dff700 (LWP 7285)]
+[New Thread 0x7ffff65fe700 (LWP 7286)]
+
+此时需要ctrl+c退出
+```
+
+显示所有线程信息
+
+* info thread
+* 存在__lll_lock_wait()的线程大概率是有死锁的线程
+
+```shell
+(gdb) info thread
+  Id   Target Id         Frame 
+* 1    Thread 0x7ffff7fdb740 (LWP 7281) "test" 0x00007ffff7bbcd2d in __GI___pthread_timedjoin_ex (threadid=140737335260928, thread_return=0x0, abstime=0x0, block=<optimized out>)
+    at pthread_join_common.c:89
+  2    Thread 0x7ffff6dff700 (LWP 7285) "test" __lll_lock_wait () at ../sysdeps/unix/sysv/linux/x86_64/lowlevellock.S:135
+  3    Thread 0x7ffff65fe700 (LWP 7286) "test" __lll_lock_wait () at ../sysdeps/unix/sysv/linux/x86_64/lowlevellock.S:135
+```
+
+切换到指定线程查看详情
+
+* thread 2 : 切换到2号线程
+* bt(backtrace) ： 查看线程的堆栈跟踪
+  * 可以看到线程2在等待mutex2， 等待位置是test.cpp的11行
+  * 线程3在等待mutex1，等待位置是test.cpp的18行
+
+```shell
+(gdb) thread 2
+[Switching to thread 2 (Thread 0x7ffff6dff700 (LWP 7285))]
+#0  __lll_lock_wait () at ../sysdeps/unix/sysv/linux/x86_64/lowlevellock.S:135
+135     ../sysdeps/unix/sysv/linux/x86_64/lowlevellock.S: No such file or directory.
+(gdb) bt
+#0  __lll_lock_wait () at ../sysdeps/unix/sysv/linux/x86_64/lowlevellock.S:135
+#1  0x00007ffff7bbe025 in __GI___pthread_mutex_lock (mutex=0x5555557581a0 <mutex2>) at ../nptl/pthread_mutex_lock.c:80
+#2  0x00005555555550bf in __gthread_mutex_lock (__mutex=0x5555557581a0 <mutex2>) at /usr/include/x86_64-linux-gnu/c++/7/bits/gthr-default.h:748
+#3  0x0000555555555518 in std::mutex::lock (this=0x5555557581a0 <mutex2>) at /usr/include/c++/7/bits/std_mutex.h:103
+#4  0x0000555555555594 in std::lock_guard<std::mutex>::lock_guard (this=0x7ffff6dfedc0, __m=...) at /usr/include/c++/7/bits/std_mutex.h:162
+#5  0x000055555555515b in threadFunction1 () at test.cpp:11 // 等待位置是test.cpp的11行
+#6  0x0000555555555c6b in std::__invoke_impl<void, void (*)()> (__f=@0x55555576ae78: 0x5555555550f7 <threadFunction1()>) at /usr/include/c++/7/bits/invoke.h:60
+#7  0x0000555555555a78 in std::__invoke<void (*)()> (__fn=@0x55555576ae78: 0x5555555550f7 <threadFunction1()>) at /usr/include/c++/7/bits/invoke.h:95
+#8  0x0000555555556146 in std::thread::_Invoker<std::tuple<void (*)()> >::_M_invoke<0ul> (this=0x55555576ae78) at /usr/include/c++/7/thread:234
+#9  0x0000555555556102 in std::thread::_Invoker<std::tuple<void (*)()> >::operator() (this=0x55555576ae78) at /usr/include/c++/7/thread:243
+#10 0x00005555555560d2 in std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)()> > >::_M_run (this=0x55555576ae70) at /usr/include/c++/7/thread:186
+#11 0x00007ffff787b4c0 in ?? () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#12 0x00007ffff7bbb6db in start_thread (arg=0x7ffff6dff700) at pthread_create.c:463
+#13 0x00007ffff72bf61f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+(gdb) thread 3
+[Switching to thread 3 (Thread 0x7ffff65fe700 (LWP 7286))]
+#0  __lll_lock_wait () at ../sysdeps/unix/sysv/linux/x86_64/lowlevellock.S:135
+135     in ../sysdeps/unix/sysv/linux/x86_64/lowlevellock.S
+(gdb) bt
+#0  __lll_lock_wait () at ../sysdeps/unix/sysv/linux/x86_64/lowlevellock.S:135
+#1  0x00007ffff7bbe025 in __GI___pthread_mutex_lock (mutex=0x555555758160 <mutex1>) at ../nptl/pthread_mutex_lock.c:80
+#2  0x00005555555550bf in __gthread_mutex_lock (__mutex=0x555555758160 <mutex1>) at /usr/include/x86_64-linux-gnu/c++/7/bits/gthr-default.h:748
+#3  0x0000555555555518 in std::mutex::lock (this=0x555555758160 <mutex1>) at /usr/include/c++/7/bits/std_mutex.h:103
+#4  0x0000555555555594 in std::lock_guard<std::mutex>::lock_guard (this=0x7ffff65fddc0, __m=...) at /usr/include/c++/7/bits/std_mutex.h:162
+#5  0x0000555555555248 in threadFunction2 () at test.cpp:18 //等待位置是test.cpp的18行
+#6  0x0000555555555c6b in std::__invoke_impl<void, void (*)()> (__f=@0x55555576afc8: 0x5555555551e4 <threadFunction2()>) at /usr/include/c++/7/bits/invoke.h:60
+#7  0x0000555555555a78 in std::__invoke<void (*)()> (__fn=@0x55555576afc8: 0x5555555551e4 <threadFunction2()>) at /usr/include/c++/7/bits/invoke.h:95
+#8  0x0000555555556146 in std::thread::_Invoker<std::tuple<void (*)()> >::_M_invoke<0ul> (this=0x55555576afc8) at /usr/include/c++/7/thread:234
+#9  0x0000555555556102 in std::thread::_Invoker<std::tuple<void (*)()> >::operator() (this=0x55555576afc8) at /usr/include/c++/7/thread:243
+#10 0x00005555555560d2 in std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)()> > >::_M_run (this=0x55555576afc0) at /usr/include/c++/7/thread:186
+#11 0x00007ffff787b4c0 in ?? () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#12 0x00007ffff7bbb6db in start_thread (arg=0x7ffff65fe700) at pthread_create.c:463
+#13 0x00007ffff72bf61f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
+```
+
+#####  GDB查看调用堆栈
+
+测试程序
+
+```c++
+#include <iostream>
+
+void innerFunction() {
+    int inner_variable = 42;
+    std::cout << "Inside innerFunction()" << std::endl;
+}
+
+void outerFunction() {
+    int outer_variable = 100;
+    std::cout << "Inside outerFunction()" << std::endl;
+    innerFunction();
+}
+
+int main() {
+    int main_variable = 10;
+    std::cout << "Inside main()" << std::endl;
+    outerFunction();
+    return 0;
+}
+
+```
+
+编译执行
+
+```shell
+g++ test.cpp -g -o test
+gdb ./test
+b innerFunction //打断点，便于观察堆栈情况
+run
+bt
+```
+
+堆栈信息
+
+* #后是每一个函数调用的唯一的帧编号
+
+```
+(gdb) bt
+#0  innerFunction () at test.cpp:4
+#1  0x0000555555554930 in outerFunction () at test.cpp:11
+#2  0x000055555555496f in main () at test.cpp:17
+```
+
+查看特定帧的信息
+
+* frame 帧编号
+
+```
+(gdb) frame 1
+#1  0x0000555555554930 in outerFunction () at test.cpp:11
+11          innerFunction();
+```
+
+
+
+#####  GDB处理core
+
+源码
+
+```cpp
+#include <iostream>
+
+int main() {
+    int* ptr = nullptr; // 故意将指针设置为 nullptr
+    *ptr = 42;          // 尝试在空指针上解引用
+    return 0;
+}
+```
+
+编译并执行
+
+```shell
+g++ -g -o test test.cpp
+./test   // 程序将崩溃，并且在当前工作目录中生成一个名为 core 的核心转储文件
+```
+
+使用GDB加载程序和核心转储文件
+
+```shell
+gdb ./test core   // 这将启动GDB并加载程序和 core 文件
+```
+
+查看崩溃时的堆栈跟踪
+
+```shell
+(gdb) bt
+```
+
+这将显示堆栈跟踪，显示了程序崩溃的地方。在这种情况下，您应该看到类似以下的输出：
+
+```
+#0  0x0000555555555162 in main () at test.cpp:5
+这表明程序在 main 函数的第5行崩溃
+```
+
+查看变量状态（可选）：
+
+```shell
+(gdb) print ptr
+```
+
+
+
+**核心文件生成路径问题**
+
+查看核心文件生成是否启用
+
+```shell
+ulimit -c
+// 没启用返回0
+// 启用返回unlimited
+```
+
+设置为启用，默认情况下core生成在当前目录下
+
+```shell
+ulimit -c unlimited
+```
+
+若当前目录下没有生成core文件，则需要设置core文件的生成路径
+
+* `/home/chuckie/learn/` 就是指定的路径,生成的文件名为core
+
+```shell
+sudo sh -c 'echo "/home/chuckie/learn/core" > /proc/sys/kernel/core_pattern'
+```
+
+
 
 ## 算法
 
@@ -4285,11 +4786,29 @@ int main(){
 #####  约瑟夫环
 
 > [约瑟夫环](https://blog.csdn.net/melonyzzZ/article/details/127787472)
+>
+> [动态规划处理与瑟夫环](https://blog.csdn.net/K346K346/article/details/50992397?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522169537162716800186592545%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=169537162716800186592545&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-50992397-null-null.142^v94^insert_down1&utm_term=%E7%BA%A6%E7%91%9F%E5%A4%AB%E7%8E%AF%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92&spm=1018.2226.3001.4187)
 
 * 阿里优酷一面算法
 
   * 输入n表示n个人, 从0到n-1编号，输入m, 从0编号开始报数，报数从1开始，报数到m则退出，再从1开始报数，最终留下的人获胜
   * 仍然输入m，输入任意n，输出获胜的编号，时间复杂度要O(n)
+
+```c++
+// 动态规划
+int lastRemainingDP(unsigned int n, unsigned int m){
+    if(n<1||m<1)
+        return -1;
+
+    int last=0; //n=1,最后移出环的元素
+    for(int i=2;i<=n;++i)
+        last=(last+m)%i;
+    return last;
+}
+```
+
+
+
 * 得物笔试
   * 输入n表示n个人, 从1到n编号，输入m, 从1编号开始报数，报数从1开始，报数到m则退出，再从1开始报数，报到最右边则再往左报数，报到最左边则再继续往右报数，最终留下的人获胜
   * 例如 n = 3, m = 4
@@ -4337,7 +4856,7 @@ int main(){
     cout<<ans<<endl;
     return 0;
 }
-// a^b = a*2^0 * a*2^1 * .... * a*2^n
+// a^b = a^2^0 * a^2^1 * .... * a^2^n
 long long ksm(long long a, long long b, long long p) {
     long long ans = 1, base = a%p;
     while(b != 0) {
@@ -4392,9 +4911,121 @@ long long ksc(long long a, long long b, long long p){
 
 * 多个有序集合求交
   * 用优先队列
-  * 和堆顶相同则计数， 计数达到m(m个队列)则是交集元素
-  * 大于堆顶元素则入队, 堆顶出队，计数归0
-  * 小于堆顶元素则抛弃，继续考察下一个元素
+  * 和堆顶相同
+    * 计数
+    * 计数达到m(m个队列)则是交集元素
+      * 堆顶出队，堆顶下一个元素入队，计数归零
+  * 大于堆顶元素
+    * 则入队, 堆顶出队，计数归0
+  * 小于堆顶元素
+    * 则抛弃，继续考察下一个元素
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        auto cmp = [](ListNode* l1, ListNode* l2){
+            return l1->val > l2->val;
+        };
+        priority_queue<ListNode*, vector<ListNode*>, decltype(cmp)> q(cmp);
+        // int val = lists[0]->val;
+        int count = 0;
+        ListNode* dummy = new ListNode();
+        ListNode* p = dummy;
+        int n = lists.size();
+        bool flag = true;
+        for(int i = 0; i < n; ++i){
+            if(!lists[i]){
+                return nullptr; // 有空数组，不可能有交集
+            }
+        }
+        q.push(lists[0]);
+        while(flag && !q.empty()){
+            cout<<"--------------"<<endl;
+            // 每一轮for都试图找到n个相同的元素
+            for(int i = 0; i < n; ++i){
+                auto cur = q.top();
+                cout<<i<<"  "<<cur->val<<endl;
+                while(lists[i] && lists[i]->val < cur->val){
+                    lists[i] = lists[i]->next;
+                }
+                if(!lists[i]){ // 已经有数组为空，且count还小于n, 不可能再有交集直接结束循环
+                    flag = false;
+                    break;
+                }
+                if(lists[i]->val == cur->val){
+                    ++count;
+                    if(count == n){
+                        p->next = cur;
+                        p = p->next;
+                        q.pop();
+                        count = 0;
+                        if(cur->next) q.push(cur->next);
+                    }
+                }
+                if(lists[i]->val > cur->val){
+                    q.push(lists[i]);
+                    q.pop();
+                    count = 0;
+                }
+            }
+        }
+        cout<<"========"<<endl;
+        return nullptr;
+    }
+};
+```
+
+
+
+#####  LRU
+
+```c++
+class LRUCache {
+public:
+    list<pair<int, int>> ls;
+    unordered_map<int, list<pair<int,int>>::iterator> mp;
+    int cap;
+    LRUCache(int capacity) {
+        cap = capacity;
+    }
+    
+    int get(int key) {
+        if(mp.count(key) > 0){
+            auto temp = *mp[key];
+            ls.erase(mp[key]);
+            ls.push_front(temp);
+            mp[key] = ls.begin();
+            return temp.second;
+        }
+        return -1;
+    }
+    
+    void put(int key, int value) {
+        if(mp.count(key) > 0){
+            ls.erase(mp[key]);
+        }else if(ls.size() == cap){
+            int key = ls.back().first;
+            ls.pop_back();
+            mp.erase(key);
+        }
+        ls.push_front({key, value});
+        mp[key] = ls.begin();
+    }
+};
+```
+
+
 
 #####  int数字反转
 
@@ -4529,5 +5160,10 @@ Chunk类型
 3. RTMP
    1. 配置开关，找案例，c模块的动态和静态配置，lua模块的配置解析
 4. I帧重复SPS/PPS去重
-   1. 处理Annexb格式时，才处理的位置没有数据，发现是前面模块的判断有问题，在判断是Annexb格式时就直接return了，本质原本的代码写的很有局限性，不通用
+   1. 处理Annexb格式时，在处理的位置没有数据，发现是前面模块的判断有问题，在判断是Annexb格式时就直接return了，本质原本的代码写的很有局限性，不通用
    2. 有的sps/pps可以识别到，有的就不行，发现是原本的代码在解析nale时，只解析了第一个nale，如果时sps/pps/vps则判断为是携带这些信息的I帧，但是其实应该遍历查找所有nale是否携带sps/pps/vps来判断
+
+
+
+tcpdump、wireshark、flv
+
