@@ -28,6 +28,8 @@ github: https://github.com/queryproc/optimizing-subgraph-queries-combining-binar
  # 以下都是在/scripts目录下执行
  # 1 将txt的边表格式转换为csv格式数据，主要是加了标签，默认标签都是0
  python3 change_snap_to_csv.py ../../dataset/Wiki-Vote.txt ../dataset/Wiki-Vote.csv
+ #    d
+ python3 serialize_dataset.py /absolute/path/edges.csv /absolute/path/data -v /absolute/path/vertices.csv
  # 2 将csv格式数据转换为系统需要的格式
  python3 serialize_dataset.py ../dataset/Wiki-Vote.csv ../data/Wiki-Vote
  # 3 为数据集生成优化器，每个数据集都要执行，文件生成的地方就是数据集存储的地方
@@ -40,13 +42,41 @@ github: https://github.com/queryproc/optimizing-subgraph-queries-combining-binar
 
 退出远程连接，再次进入需要执行如下命令才能正常执行查询
 
-```shell
- # 设置环境变量  需要是jdk11版本的
- export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+* node 1
 
- # 更新
- ./gradlew build installDist
+```shell
+# 设置环境变量  需要是jdk11版本的
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
+# 更新
+./gradlew build installDist
  
- . ./env.sh
+. ./env.sh
 ```
+
+* node3
+
+```c++
+export JAVA_HOME=/home/wangyj/jvm/jdk-11
+```
+
+
+
+查看jdk版本
+
+```sh
+java -version
+```
+
+查看 Java 安装路径
+
+* linux上一般在/usr/lib/jvm下面
+
+```sh
+which java
+```
+
+
+
+处理顶点单标记
 

@@ -14,6 +14,43 @@ categories:
 
 ## 常用
 
+#####  查看一个进程的运行时间
+
+```shell
+top 查看 PID
+ps -o etime= -p <PID>
+```
+
+
+
+#####  查看环境变量
+
+* 命令解释器会在环境变量的目录中查找命令对应的可执行文件，如果可以找到即可执行
+* 环境变量之间通过`:`分割
+
+```shell
+echo $PATH
+
+wangyj@node29:/home/wangyj/CUDA-code$ echo $PATH
+/home/wangyj/.vscode-server/bin/0ee08df0cf4527e40edc9aa28f4b5bd38bbff2b2/bin/remote-cli::/usr/local/cuda-11.1/bin::/usr/local/cuda-11.1/.local/bin:/usr/local/cuda/bin:/usr/bin/java/jdk1.8.0_211/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/cuda-11.1/bin
+```
+
+
+
+#####  .bashrc
+
+> [【Linux】什么是.bashrc，以及其使用方法](https://blog.csdn.net/weixin_57208584/article/details/135868555)
+
+* 编辑`.bashrc`
+* `~`表示用户的家目录，每个用户都有自己的`.bashrc`文件
+* 在`.bashrc`文件中可以设置环境变量
+
+```shell
+vi ~/.bashrc
+```
+
+
+
 #####  Screen
 
 > 用于将linux上的任务在后台执行，即使ssh断开也可以在后台继续执行
@@ -106,6 +143,16 @@ free [-bkmotV][-s <间隔秒数>]
 -h 　以合适的单位显示内存使用情况，最大为三位数，自动计算对应的单位值。单位有：B = bytes、K = kilos、M = megas、G = gigas、T = teras
 ```
 
+查看gpu信息
+
+> [lspci详解](https://blog.csdn.net/weixin_38452632/article/details/136633239)
+
+```
+lspci | grep -e VGA
+```
+
+
+
 查看cpu信息
 
 ```
@@ -194,6 +241,12 @@ du -sh /home/wangyj
 
 ```
 cat /etc/issue
+
+// or
+uname -v
+
+// or
+lsb_release -a
 ```
 
 #####  在test.txtd第一行加入hello
@@ -235,6 +288,43 @@ wangyj@node1:~/dataset$ ls -l amazon-2008.txt
 wangyj@node1:~/dataset$ ls -lh amazon-2008.txt 
 -rw-rw-r-- 1 wangyj wangyj 68M May  5  2022 amazon-2008.txt
 ```
+
+
+
+##  linux非root安装JDK11
+
+1. **下载 JDK 11：** 打开 Oracle 或者 OpenJDK 官方网站，在下载页面找到 JDK 11 的版本。你可以选择 Oracle JDK 或 OpenJDK，视你的需求而定。
+
+   例如，如果你选择使用 OpenJDK，可以使用如下命令下载：
+
+   ```
+   wget https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz
+   ```
+
+2. **解压缩文件：** 使用以下命令解压缩下载的 tar 文件：
+
+   ```
+   tar -zxvf openjdk-11+28_linux-x64_bin.tar.gz
+   ```
+
+   这将在当前目录下创建一个新的目录，其中包含解压缩后的 JDK。
+
+3. **设置环境变量：** 设置 `JAVA_HOME` 和 `PATH` 环境变量，让系统知道 JDK 的位置。假设你的 JDK 解压到了 `~/jdk-11`：
+
+   ```
+   export JAVA_HOME=~/jdk-11
+   export PATH=$JAVA_HOME/bin:$PATH
+   ```
+
+   如果你想使这些变量在每次登录时都自动设置，将上述命令添加到你的 shell 配置文件（如 `~/.bashrc` 或 `~/.zshrc`）。
+
+4. **验证安装：** 打开一个新的终端窗口并运行以下命令，验证是否正确安装了 JDK：
+
+   ```
+   java -version
+   ```
+
+
 
 ##  虚拟机安装Ubuntu和CentOS
 
@@ -338,6 +428,12 @@ sudo apt-get install openssh-server
 
 ![image-20230614212401186](linux/image-20230614212401186.png)
 
+##  vscode 连接虚拟机ubuntu
+
+ubuntu上的配置同：xftp连接虚拟机ubuntu
+
+![image-20240403110853006](linux/image-20240403110853006.png)
+
 ##  网络
 
 查看路由表
@@ -345,3 +441,169 @@ sudo apt-get install openssh-server
 在 Linux 操作系统，我们可以使用 `route -n` 命令查看当前系统的路由表
 
 在 Linux 系统中，我们可以使用 `arp -a` 命令来查看 ARP 缓存的内容
+
+
+
+#  linux教程
+
+##  用户管理命令
+
+###  2.1 添加新用户
+
+* `sudo useradd -m -s /bin/bash  用户名`该方式不能设置密码，需要通过修改密码来重置密码才能正常登录
+* `sudo adduser 用户名`新建过程会自动创建家目录，且创建过程可以设置密码，不用额外的操作
+
+```shell
+# 添加用户
+# sudo -> 使用管理员权限执行这个命令
+$ sudo adduser 用户名
+
+# centos
+$ sudo useradd 用户名
+
+# ubuntu
+$ sudo useradd -m -s /bin/bash  用户名   # -m 自动在home下新建用户的家目录 -s /bin/bash指定命令解析器
+
+# 在使用 adduser 添加新用户的时候，有的Linux版本执行完命令就结束了，有的版本会提示设置密码等用户信息
+robin@OS:~/Linux$ sudo adduser lisi
+Adding user `lisi' ...
+Adding new group `lisi' (1004) ...
+Adding new user `lisi' (1004) with group `lisi' ...
+Creating home directory `/home/lisi' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for lisi
+Enter the new value, or press ENTER for the default
+        Full Name []: 
+        Room Number []: 
+        Work Phone []: 
+        Home Phone []: 
+        Other []: 
+Is the information correct? [Y/n] y
+
+```
+
+
+
+##  vim
+
+###  6.15 vim配置
+
+####  显示行号
+
+> https://blog.csdn.net/bobo82529/article/details/134072369
+
+1、临时显示行号
+
+```shell
+只须按ESC键退出编辑内容模式，输入“：” 
+再输入“set number”或者“set nu”后按回车键，就可以显示行号了
+取消显示行号：输入“：set nonu”
+```
+
+2、永久显示行号
+
+```shell
+vim ~/.vimrc 
+# 打开后输入如下设置
+set number 或者 set nu
+```
+
+
+
+##  动态静态链接库
+
+> https://subingwen.cn/linux/library/
+
+###  2.4.3 动态连接库环境变量配置
+
+动态库使用报错
+
+```shell
+wangyj@node1:~/learn/library/dynamic/test$ ./main 
+./main: error while loading shared libraries: libcalc.so: cannot open shared object file: No such file or directory
+```
+
+* 出现以上错误即动态库地址没有在环境变量中配置
+
+####  配置LD_LIBRARY_PATH
+
+方式1：终端字符串拼接，临时的
+
+* 将动态链接库的地址`/home/wangyj/learn/library/dynamic/test:`拼接到LD_LIBRARY_PATH， 注意最后加`:`
+
+```shell
+wangyj@node1:~/learn/library/dynamic$ LD_LIBRARY_PATH=/home/wangyj/learn/library/dynamic/test:$LD_LIBRARY_PATH
+```
+
+* 修改后需要`source ~/.bashrc`重新加载配置
+
+方式2：修改配置文件
+
+* 找到相关的配置文件，永久的
+  * 用户级别: `~/.bashrc` —> 设置对当前用户有效
+  * 系统级别:` /etc/profile` —> 设置对所有用户有效
+* 使用 vim 打开配置文件, 在文件最后添加这样一句话
+
+```shell
+# 自己把路径写进去就行了
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH :动态库的绝对路径  // 注意=号间没有空格
+```
+
+* 修改后需要`source ~/.bashrc`重新加载配置
+  *  `source `可以简写为一个` .`
+
+```shell
+# 修改的是哪一个就执行对应的那个命令
+# source 可以简写为一个 . , 作用是让文件内容被重新加载
+$ source ~/.bashrc          (. ~/.bashrc)
+$ source /etc/profile       (. /etc/profile)
+```
+
+### 7 makefile练习
+
+```shell
+# 目录结构
+.
+├── include
+│   └── head.h	==> 头文件, 声明了加减乘除四个函数
+├── main.c		==> 测试程序, 调用了head.h中的函数
+└── src
+    ├── add.c	==> 加法运算
+    ├── div.c	==> 除法运算
+    ├── mult.c  ==> 乘法运算
+    └── sub.c   ==> 减法运算
+```
+
+makefile如下
+
+```makefile
+# 最终的目标名 app
+target = app
+# 搜索当前项目目录下的源文件
+src=$(wildcard *.c ./src/*.c)
+# 将文件的后缀替换掉 .c -> .o
+obj=$(patsubst %.c, %.o, $(src))
+# 头文件目录
+include=./include
+
+# 第一条规则
+# 依赖中都是 xx.o yy.o zz.o
+# gcc命令执行的是链接操作
+$(target):$(obj)
+        gcc $^ -o $@
+
+# 模式匹配规则
+# 执行汇编操作, 前两步: 预处理, 编译是自动完成
+%.o:%.c
+        gcc $< -c -I $(include) -o $@  # 这里要加-o $@才能保证生成的*.o文件在./src/目录下，否则生成在g
+
+# 添加一个清除文件的规则
+.PHONY:clean
+
+clean:
+        -rm $(obj) $(target) -f
+```
+
