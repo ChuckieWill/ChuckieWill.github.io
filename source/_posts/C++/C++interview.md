@@ -512,8 +512,75 @@ int main()
 
 > https://blog.csdn.net/qq_15821883/article/details/105540175
 
+* 一个对象在析构时会先调用自己的析构函数，然后再调用父类的析构函数。逻辑同构造函数 ，一个对象先调用父类的构造函数，然后调用自己的构造函数
+  * 但是在多态情况下，一个对象指向其子类，在析构时其只能调用自己和父类的析构函数，不能调用子类的析构函数，所以需要将自己的析构函数设置为虚析构，这样就可以先调用子类的析构函数，再调用自己和父类的析构函数
+
 * 使得基类指针可以调用派生类的析构函数
 * 如果基类析构函数不是虚析构函数，在基类指针delete的时候只会调用基类的析构函数，不会调用派生类的析构函数，就会导致派生类的内存泄露
+
+```c++
+#include <iostream>
+ 
+ 
+class BaseClass
+{
+public:
+	BaseClass() {}
+	~BaseClass() 
+	{
+		std::cout << "delete BaseClass" << std::endl;
+	}
+};
+ 
+class ChildClassA : public BaseClass
+{
+public:
+	ChildClassA() {}
+	~ChildClassA() 
+	{
+		std::cout << "ChildClassA Delete" << std::endl;
+	}
+};
+class ChildClassB : public ChildClassA
+{
+public:
+	ChildClassB() {}
+	~ChildClassB()
+	{
+		std::cout << "ChildClassB Delete" << std::endl;
+	}
+};
+
+int main()
+{
+    std::cout << "Hello World" << std::endl;
+        // 测试案例
+  BaseClass *a = new ChildClassA();
+	BaseClass *b = new ChildClassB();
+	ChildClassA *c = new ChildClassB();  
+ 
+	delete a;
+	a = nullptr;
+	std::cout << std::endl;
+ 
+	delete b;
+	b = nullptr;
+	std::cout << std::endl;
+ 
+	delete c;
+	c = nullptr;
+    return 0;
+}
+
+// 打印结果
+Hello World
+delete BaseClass
+
+delete BaseClass
+
+ChildClassA Delete  
+delete BaseClass     // 子类会自动调用父类的析构函数  即使不是虚函数
+```
 
 1.3.33仿函数
 
@@ -538,6 +605,49 @@ int main()
 1.5.11 C+＋中四种类型转换分别为const_cast static_cast dynamic_cast reinterpret_cast,
 
 > https://blog.csdn.net/Awesomewan/article/details/117112781
+>
+> [博客园：static_cast, dynamic_cast与reinterpret_cast的区别 ](https://www.cnblogs.com/overxus/p/17991592)
+
+* const_cast
+  * 用于将const变量转为非const
+    * 非const转const也可 但没必要
+  * 目标类型必须是一个指向对象、数据成员或引用类型的**指针或引用**
+    * 注意目标类型必须是**指针或引用 **
+  * 不同类型的转换会报错（类a指针转换会类b指针）
+
+```c++
+  float* aa = new float(10.5);
+  *aa = 11.6;
+//   const float* bb = const_cast<const float* >(aa);  // 和 const float* bb = aa; 等价
+  const float* bb = aa;
+
+//   *bb = 12.6;  提示错误  不能修改值
+  *aa = 11.6;
+  cout<< "aa: " << *aa<<endl; // 输出11.6  *aa还是可以修改
+  cout << "bb: " << *bb << endl; // 输出11.6
+```
+
+
+
+* static_cast
+  * 静态类型转换 在编译阶段就可以确定的转换
+  * 也可用于动态类型转换 但是如果转换有问题会直接报错 而不是像dynamic_cast返回nullptr可用作判断
+  * 不能用于const变量转为非const  会编辑器提示错误
+* dynamic_cast
+  * 动态类型转换 在运行期间才能确定的转换 主要用于父子类直接的转换
+  * 如果转换失败且转换的目标类型是指针，则返回一个空指针；
+  * 如果转换失败且转换的目标类型是引用，则会抛出`std::bad_cast`异常；
+  * `dynamic_cast`的目标类型必须是一个已定义的**类的引用或指针类型**, 否则编辑器提示错误
+    * 注意是**类**的**引用或指针类型**
+      * 如果不是类，是基本数据类型的指针或引用，编辑器也会提示错误
+  * 动态类型转换与C++的多态有关，常用于基类与子类指针或引用的转换，且**基类中至少要有一个虚函数**。
+    * 如果基类没有虚函数 则编辑器会直接提示错误：`'Base' is not polymorphicclang(bad_dynamic_cast_not_polymorphic)`   根本就不能编译
+  * 不能用于const变量转为非const  会编辑器提示错误
+* reinterpret_cast
+  * reinterpret的意思是“重新解释”，它不会改变任何底层的数据，而是告诉编译器应该把当前数据当作哪种类型。
+  * 常见使用场景：一个类指针在传递时为void*类型 拿到后需要转回原来的类的类型  （原类型是确定的）
+  * reinterpret和强制类型转换有点类似
+  * 不能用于const变量转为非const  会编辑器提示错误
 
 1.5.13  简述一下 C++ll 中的可变参数模板新特性
 
@@ -2848,12 +2958,12 @@ c is nullptr
         * 懒汉模式
     * static初始化注意事项和原理（看原文）
       * 只初始化一次，以后给它赋值，赋值不会成功，仍然使用之前的值，只能通过自增减，或者加减乘除等来改变，反正就是不能通过赋值再给他赋其它值
-      * 原理是用变量后面的32未标记来存储是否已经初始化了
+      * 原理是用变量后面的32位标记来存储是否已经初始化了
   * 局部静态变量(函数内)
     * 静态变量在函数内定义，始终存在，且只进行一次初始化，具有记忆性，其作用范围与局部变量相同，函数退出后仍然存在，但不能使用
   * 静态函数(面向过程)
     * 只能当前文件使用，和静态对象一样有隐藏性
-    * 函数内部的非静态变量每次调用函数都是从新分配内存和初始化，也就是每次调用互相之间不影响
+    * 函数内部的非静态变量每次调用函数都是重新分配内存和初始化，也就是每次调用互相之间不影响
     * 函数内部的静态变量只初始化一次，每次调用沿用的都是之前的数据
   * static成员变量
     * 属于类，定义时要分配空间，不能在类声明中初始化，必须在类定义体外部初始化

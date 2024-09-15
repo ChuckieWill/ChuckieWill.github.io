@@ -27,12 +27,34 @@ ps -o etime= -p <PID>
 
 * 命令解释器会在环境变量的目录中查找命令对应的可执行文件，如果可以找到即可执行
 * 环境变量之间通过`:`分割
+* $ 表示取地址
 
 ```shell
 echo $PATH
 
 wangyj@node29:/home/wangyj/CUDA-code$ echo $PATH
 /home/wangyj/.vscode-server/bin/0ee08df0cf4527e40edc9aa28f4b5bd38bbff2b2/bin/remote-cli::/usr/local/cuda-11.1/bin::/usr/local/cuda-11.1/.local/bin:/usr/local/cuda/bin:/usr/bin/java/jdk1.8.0_211/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/cuda-11.1/bin
+```
+
+* $lib_root  是个变量 值就是第一行的 /data/cuda
+* LD_LIBRARY_PATH 是动态链接库的环境变量
+
+```shell
+  1 lib_root=/data/cuda
+  2 export LD_LIBRARY_PATH=$lib_root/TensorRT-8.6.1/lib:$lib_root/cudnn-8.9.3/lib:$CONDA_PREFIX/lib:/data/cuda/cuda-11.7/lib64:$LD_LIBRARY_PATH
+  3 export PATH=$lib_root/TensorRT-8.6.1/bin:/data/cuda/cuda-11.7/bin:$PATH
+  4 
+  5 # CUDA_VISIBLE_DEVICES=1 nvprof --concurrent-kernels on -f --export-profile ann_server.profile.gpu ./ann_server & disown
+  6 # ASAN_OPTIONS=protect_shadow_gap=0:replace_intrin=0:detect_leaks=0 CUDA_VISIBLE_DEVICES=1 ./ann_server & disown
+  7 # CUDA_LAUNCH_BLOCKING=1 cuda-memcheck ./ann_server & disown
+  8 # CUDA_ENABLE_COREDUMP_ON_EXCEPTION=1 CUDA_VISIBLE_DEVICES=1 cuda-memcheck --report-api-errors yes ./ann_server & disown
+  9 # CUDA_VISIBLE_DEVICES=1 gdb -q --args ./ann_server
+ 10 
+ 11 # gdb -q --args ./ann_server
+ 12 
+ 13 # CUDA_VISIBLE_DEVICES=1 nvprof --concurrent-kernels on -f --export-profile cr_server.nvvp ./cr_server & disown
+ 14 # ulimit -c 0
+ 15 ./ann_server >s.log 2>&1 & disown
 ```
 
 
