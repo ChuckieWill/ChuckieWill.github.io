@@ -28,7 +28,7 @@
 <meta property="og:description" content="hot 100 1  两数之和  时间复杂度O（n）,空间O（n） 哈希map, find, count(时间复杂度都为O(1), 最坏情况为O(n))   2 两数相加 链表  初始化pre,每次相加包括pre, 整除10更新pre   3 无重复字符的最长子串  滑动窗口+hashset   4 寻找两个正序数组的中位数  二分查找，边界，各种情况分析，易错，复习   5  最长回文子串  从">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-26T06:43:17.000Z">
-<meta property="article:modified_time" content="2024-07-28T06:10:53.231Z">
+<meta property="article:modified_time" content="2024-09-22T15:02:31.128Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="算法总结">
 <meta name="twitter:card" content="summary">
@@ -220,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-07-28 14:10:53" itemprop="dateModified" datetime="2024-07-28T14:10:53+08:00">2024-07-28</time>
+                <time title="修改时间：2024-09-22 23:02:31" itemprop="dateModified" datetime="2024-09-22T23:02:31+08:00">2024-09-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,14 +238,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>20k</span>
+              <span>21k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>18 分钟</span>
+              <span>19 分钟</span>
             </span>
 
         </div>
@@ -990,50 +990,127 @@
 <p>3 充分利用滑动的指针：148 自底向上的cur的使用，复习</p>
 </blockquote>
 <ul>
-<li>offer专项 021 <a href="https://leetcode.cn/problems/SLwz0R/" target="_blank" rel="noopener">删除链表的倒数第 n 个结点</a><ul>
+<li><p>offer专项 021 <a href="https://leetcode.cn/problems/SLwz0R/" target="_blank" rel="noopener">删除链表的倒数第 n 个结点</a></p>
+<ul>
 <li>双指针，只遍历一遍，前后指针差为n，巧妙，记忆</li>
 </ul>
 </li>
-<li>2 <a href="https://leetcode.cn/problems/add-two-numbers/" target="_blank" rel="noopener">两数相加</a><ul>
+<li><p>2 <a href="https://leetcode.cn/problems/add-two-numbers/" target="_blank" rel="noopener">两数相加</a></p>
+<ul>
 <li>不使用原链表，返回链表不算空间</li>
 </ul>
 </li>
-<li>19  <a href="https://leetcode.cn/problems/SLwz0R/" target="_blank" rel="noopener">删除链表的倒数第 n 个结点</a></li>
-<li>21 <a href="https://leetcode.cn/problems/merge-two-sorted-lists/" target="_blank" rel="noopener"> 合并两个有序链表</a><ul>
+<li><p><a href="https://leetcode.cn/problems/add-two-numbers-ii/" target="_blank" rel="noopener">445. 两数相加 II</a></p>
+<ul>
+<li>链表翻转则和2一样</li>
+<li>链表不翻转，使用栈（要额外的空间）</li>
+</ul>
+</li>
+<li><p>19  <a href="https://leetcode.cn/problems/SLwz0R/" target="_blank" rel="noopener">删除链表的倒数第 n 个结点</a></p>
+</li>
+<li><p>21 <a href="https://leetcode.cn/problems/merge-two-sorted-lists/" target="_blank" rel="noopener"> 合并两个有序链表</a></p>
+<ul>
 <li>类比数组归并，小的压入数组，就相当p-&gt;next = 小的</li>
 </ul>
 </li>
-<li>23 <a href="https://leetcode.cn/problems/merge-k-sorted-lists/" target="_blank" rel="noopener">合并 K 个升序链表</a><ul>
+<li><p>23 <a href="https://leetcode.cn/problems/merge-k-sorted-lists/" target="_blank" rel="noopener">合并 K 个升序链表</a></p>
+<ul>
 <li>熟悉优先队列的使用，复习</li>
 </ul>
 </li>
-<li>114 <a href="https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/" target="_blank" rel="noopener">二叉树展开为链表</a><ul>
+<li><p>114 <a href="https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/" target="_blank" rel="noopener">二叉树展开为链表</a></p>
+<ul>
 <li>递归思想，复习</li>
 <li>压栈，复习</li>
 </ul>
 </li>
-<li>141 <a href="https://leetcode.cn/problems/linked-list-cycle/" target="_blank" rel="noopener">环形链表</a><ul>
+<li><p>141 <a href="https://leetcode.cn/problems/linked-list-cycle/" target="_blank" rel="noopener">环形链表</a></p>
+<ul>
 <li>快慢指针</li>
 </ul>
 </li>
-<li>142 <a href="https://leetcode.cn/problems/linked-list-cycle-ii/" target="_blank" rel="noopener"> 环形链表 II</a></li>
-<li>146 <a href="https://leetcode.cn/problems/lru-cache/" target="_blank" rel="noopener">LRU 缓存</a></li>
-<li>148 <a href="https://leetcode.cn/problems/sort-list/" target="_blank" rel="noopener"> 排序链表</a><ul>
+<li><p>142 <a href="https://leetcode.cn/problems/linked-list-cycle-ii/" target="_blank" rel="noopener"> 环形链表 II</a></p>
+</li>
+<li><p>146 <a href="https://leetcode.cn/problems/lru-cache/" target="_blank" rel="noopener">LRU 缓存</a></p>
+</li>
+<li><p>148 <a href="https://leetcode.cn/problems/sort-list/" target="_blank" rel="noopener"> 排序链表</a></p>
+<ul>
 <li>自顶向下好写</li>
 <li>自底向上复杂，复习</li>
 </ul>
 </li>
-<li>206 <a href="https://leetcode.cn/problems/reverse-linked-list/" target="_blank" rel="noopener">反转链表</a></li>
-<li>234 <a href="https://leetcode.cn/problems/palindrome-linked-list/" target="_blank" rel="noopener"> 回文链表</a><ul>
+<li><p>206 <a href="https://leetcode.cn/problems/reverse-linked-list/" target="_blank" rel="noopener">反转链表</a></p>
+</li>
+<li><p>92 反转链表II 有难度</p>
+<ul>
+<li>只遍历一遍如何实现<ul>
+<li>翻转不要抽离出去，直接就地翻转</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>25 <a href="https://leetcode.cn/problems/reverse-nodes-in-k-group/" target="_blank" rel="noopener">K 个一组翻转链表</a>  困难</p>
+<ul>
+<li>也不是很难，关键在于定位要翻转的范围</li>
+</ul>
+</li>
+<li><p>234 <a href="https://leetcode.cn/problems/palindrome-linked-list/" target="_blank" rel="noopener"> 回文链表</a></p>
+<ul>
 <li>找中心点，反转，比对，每个步骤都分开做，因为合在一起太复杂，容易错</li>
 </ul>
 </li>
-<li>offer 专项077 <a href="https://leetcode.cn/problems/7WHec2/" target="_blank" rel="noopener">链表排序</a><ul>
+<li><p>offer 专项077 <a href="https://leetcode.cn/problems/7WHec2/" target="_blank" rel="noopener">链表排序</a></p>
+<ul>
 <li>148</li>
 <li>归并排序，复习复习复习！！！  考察归并和链表</li>
 </ul>
 </li>
+<li><p><a href="https://leetcode.cn/problems/remove-duplicates-from-sorted-list/" target="_blank" rel="noopener">83. 删除排序链表中的重复元素</a></p>
+<ul>
+<li><em>删除所有重复的元素，使每个元素只出现一次</em></li>
 </ul>
+</li>
+<li><p>82 <a href="https://leetcode.cn/problems/remove-duplicates-from-sorted-list-ii/" target="_blank" rel="noopener">删除排序链表中的重复元素 II</a></p>
+<ul>
+<li><em>删除原始链表中所有重复数字的节点，只留下不同的数字</em></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href="https://leetcode.cn/problems/partition-list/" target="_blank" rel="noopener">86. 分隔链表</a><ul>
+<li>借用92中一次遍历的思想</li>
+<li>官方解法： 维护两个链表也很简便</li>
+</ul>
+</li>
+<li><a href="https://leetcode.cn/problems/odd-even-linked-list/" target="_blank" rel="noopener">328. 奇偶链表</a><ul>
+<li>借用86中维护两个链表的思想</li>
+<li>具体实现方式略有不同</li>
+</ul>
+</li>
+<li><a href="https://leetcode.cn/problems/remove-linked-list-elements/" target="_blank" rel="noopener">203. 移除链表元素</a></li>
+<li><a href="https://leetcode.cn/problems/swap-nodes-in-pairs/" target="_blank" rel="noopener">24. 两两交换链表中的节点</a></li>
+<li>143<a href="https://leetcode.cn/problems/reorder-list/" target="_blank" rel="noopener"> 重排链表</a><ul>
+<li>考察点多  重做复习</li>
+<li>快慢指针找中点</li>
+<li>链表翻转</li>
+<li>链表合并</li>
+</ul>
+</li>
+<li><a href="https://leetcode.cn/problems/insertion-sort-list/" target="_blank" rel="noopener">147. 对链表进行插入排序</a><ul>
+<li>模拟插入排序</li>
+<li>满足升序 直接往后走 </li>
+<li>不满足则该节点需要前移</li>
+</ul>
+</li>
+</ul>
+<p><strong>常见记录</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 反转链表</span></span><br><span class="line"><span class="function">ListNode* <span class="title">reverse</span><span class="params">(ListNode* head)</span></span>&#123;</span><br><span class="line">  ListNode* pre = <span class="literal">nullptr</span>;</span><br><span class="line">  <span class="keyword">while</span> (head)</span><br><span class="line">  &#123;</span><br><span class="line">    ListNode* temp = head-&gt;next;</span><br><span class="line">    head-&gt;next = pre;</span><br><span class="line">    pre = head;</span><br><span class="line">    head = temp;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> pre;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 合并两个单链表 l1长于l2的情况可以完全链接上  l2长于l1时，l2后半段会丢失</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeList</span><span class="params">(ListNode* l1, ListNode* l2)</span></span>&#123;</span><br><span class="line">  ListNode* ll1;</span><br><span class="line">  ListNode* ll2;</span><br><span class="line">  <span class="keyword">while</span> (l1 &amp;&amp; l2)</span><br><span class="line">  &#123;</span><br><span class="line">    ll1 = l1-&gt;next;</span><br><span class="line">    ll2 = l2-&gt;next;</span><br><span class="line">      </span><br><span class="line">    l1-&gt;next = l2;</span><br><span class="line">    l1 = ll1;</span><br><span class="line">      </span><br><span class="line">    l2-&gt;next = l1;</span><br><span class="line">    l2 = ll2;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 找链表的中点</span></span><br><span class="line"><span class="function">ListNode* <span class="title">midList</span><span class="params">(ListNode* head)</span></span>&#123;</span><br><span class="line">  ListNode* slow = head;</span><br><span class="line">  ListNode* fast = head;</span><br><span class="line">  <span class="keyword">while</span> (fast-&gt;next &amp;&amp; fast-&gt;next-&gt;next)</span><br><span class="line">  &#123;</span><br><span class="line">    slow = slow-&gt;next;</span><br><span class="line">    fast = fast-&gt;next-&gt;next;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> slow;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
 <h2 id="树"><a href="#树" class="headerlink" title="树"></a>树</h2><blockquote>
 <p>通过空节点判断递归到底，判断更简洁</p>
 </blockquote>
