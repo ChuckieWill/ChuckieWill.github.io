@@ -4350,86 +4350,11 @@ x = x * (2*10^4+1)后  x的间距变为2*10^4+1 正好可以容下y的区间  x+
 
 ##   链表
 
-> 设置虚拟头节点
-
-```c++
-// 反转链表
-ListNode* reverse(ListNode* head){
-  ListNode* pre = nullptr;
-  while (head)
-  {
-    ListNode* temp = head->next;
-    head->next = pre;
-    pre = head;
-    head = temp;
-  }
-  return pre;
-}
-
-// 合并两个单链表 l1长于l2的情况可以完全链接上  l2长于l1时，l2后半段会丢失
-void mergeList(ListNode* l1, ListNode* l2){
-  ListNode* ll1;
-  ListNode* ll2;
-  while (l1 && l2)
-  {
-    ll1 = l1->next;
-    ll2 = l2->next;
-      
-    l1->next = l2;
-    l1 = ll1;
-      
-    l2->next = l1;
-    l2 = ll2;
-  }
-}
-
-// 找链表的中点
-ListNode* midList(ListNode* head){
-  ListNode* slow = head;
-  ListNode* fast = head;
-  while (fast->next && fast->next->next)
-  {
-    slow = slow->next;
-    fast = fast->next->next;
-  }
-  return slow;
-}
-```
-
-
-
-* 206
-* 92 反转链表II 有难度
-  * 只遍历一遍如何实现
-* 83
-* 86   借用92中一次遍历的思想
-  * 官方解法： 维护两个链表也很简便
-* 328  借用86中维护两个链表的思想
-  * 具体实现方式略有不同
-* 2
-* 445
-  * 使用栈
-* 203
-* 82 [删除排序链表中的重复元素 II](https://leetcode.cn/problems/remove-duplicates-from-sorted-list-ii/)
-* 21[合并两个有序链表](https://leetcode.cn/problems/merge-two-sorted-lists/)
-
-* [24. 两两交换链表中的节点](https://leetcode.cn/problems/swap-nodes-in-pairs/)
-
-* 25 [K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/)  困难
-* 147 [对链表进行插入排序](https://leetcode.cn/problems/insertion-sort-list/)
-* 148 nlogn实现单链表排序
-  * 有难度  看解析
 * 237 删除单链表节点
 * 19 [删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
   * 双指针解法
 * 61 [旋转链表](https://leetcode.cn/problems/rotate-list/)
   * 官方解法更好
-* 143[ 重排链表](https://leetcode.cn/problems/reorder-list/)
-  * 考察点多  重做复习
-* 234 回文判断
-  * 转换为数组
-  * 递归方法  理解递归  但效果不好
-  * 143中方法  但是实际运用需要上锁 并发效果不好
 
 ##  **栈、队列**
 
