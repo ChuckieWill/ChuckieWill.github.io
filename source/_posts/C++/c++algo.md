@@ -4348,14 +4348,6 @@ x = x * (2*10^4+1)后  x的间距变为2*10^4+1 正好可以容下y的区间  x+
 
 
 
-##   链表
-
-* 237 删除单链表节点
-* 19 [删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
-  * 双指针解法
-* 61 [旋转链表](https://leetcode.cn/problems/rotate-list/)
-  * 官方解法更好
-
 ##  **栈、队列**
 
 * 20 [有效的括号](https://leetcode.cn/problems/valid-parentheses/)
@@ -4403,11 +4395,8 @@ x = x * (2*10^4+1)后  x的间距变为2*10^4+1 正好可以容下y的区间  x+
 
 ##  二叉树和递归
 
-* 104 [二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/)
 * 111 [二叉树的最小深度](https://leetcode.cn/problems/minimum-depth-of-binary-tree/)
-* 226 [ 翻转二叉树](https://leetcode.cn/problems/invert-binary-tree/)
 * 100 [ 相同的树](https://leetcode.cn/problems/same-tree/)
-* 101 [对称二叉树](https://leetcode.cn/problems/symmetric-tree/)
 * 222 [完全二叉树的节点个数](https://leetcode.cn/problems/count-complete-tree-nodes/)
   * 利用编号的巧妙性进行位运算   有难度待复习
   * 二分搜索
@@ -4417,26 +4406,14 @@ x = x * (2*10^4+1)后  x的间距变为2*10^4+1 正好可以容下y的区间  x+
 * 257 [二叉树的所有路径](https://leetcode.cn/problems/binary-tree-paths/)
 * 113 [路径总和 II](https://leetcode.cn/problems/path-sum-ii/)
 * 129 [求根节点到叶节点数字之和](https://leetcode.cn/problems/sum-root-to-leaf-numbers/)
-* 437 [路径总和 III](https://leetcode.cn/problems/path-sum-iii/)
-  * 查看答案 待复习  
-    * 方法1：巧妙  递归的嵌套
-    * 方法2：前缀和   注意：利用进入递归更新，推出递归还原
-  * 注意考虑是否有负数
-
 * 235 [二叉搜索树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/)
   * 注意是：二叉搜索树，是有大小关系的
-* 98 [ 验证二叉搜索树](https://leetcode.cn/problems/validate-binary-search-tree/)
-  * 递归
-  * 中序遍历
-  * 待复习
 * 450 [删除二叉搜索树中的节点](https://leetcode.cn/problems/delete-node-in-a-bst/)
   * 递归
   * 迭代
 * 108 [将有序数组转换为二叉搜索树](https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/)
-
 * 230 [二叉搜索树中第K小的元素](https://leetcode.cn/problems/kth-smallest-element-in-a-bst/)
   * 进阶  红黑树
-* 236 [二叉树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/)
 
 ##  递归和回溯
 
