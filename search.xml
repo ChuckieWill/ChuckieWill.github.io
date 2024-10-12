@@ -5280,6 +5280,35 @@
 <li>判断优化</li>
 </ul>
 </li>
+<li>111 <a href="https://leetcode.cn/problems/minimum-depth-of-binary-tree/" target="_blank" rel="noopener">二叉树的最小深度</a></li>
+<li>100 <a href="https://leetcode.cn/problems/same-tree/" target="_blank" rel="noopener"> 相同的树</a></li>
+<li>222 <a href="https://leetcode.cn/problems/count-complete-tree-nodes/" target="_blank" rel="noopener">完全二叉树的节点个数</a><ul>
+<li>利用编号的巧妙性进行位运算   有难度待复习</li>
+<li>二分搜索</li>
+<li><strong>复习  理解位运算</strong></li>
+</ul>
+</li>
+<li>110 <a href="https://leetcode.cn/problems/balanced-binary-tree/" target="_blank" rel="noopener">平衡二叉树</a></li>
+<li>112 <a href="https://leetcode.cn/problems/path-sum/" target="_blank" rel="noopener"> 路径总和</a></li>
+<li>404 <a href="https://leetcode.cn/problems/sum-of-left-leaves/" target="_blank" rel="noopener">左叶子之和</a></li>
+<li>257 <a href="https://leetcode.cn/problems/binary-tree-paths/" target="_blank" rel="noopener">二叉树的所有路径</a></li>
+<li>113 <a href="https://leetcode.cn/problems/path-sum-ii/" target="_blank" rel="noopener">路径总和 II</a></li>
+<li>129 <a href="https://leetcode.cn/problems/sum-root-to-leaf-numbers/" target="_blank" rel="noopener">求根节点到叶节点数字之和</a></li>
+<li>235 <a href="https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/" target="_blank" rel="noopener">二叉搜索树的最近公共祖先</a><ul>
+<li>注意是：二叉搜索树，是有大小关系的</li>
+</ul>
+</li>
+<li>450 <a href="https://leetcode.cn/problems/delete-node-in-a-bst/" target="_blank" rel="noopener">删除二叉搜索树中的节点</a><ul>
+<li>递归</li>
+<li><strong>重要 复习 迭代 理解指针</strong></li>
+</ul>
+</li>
+<li>108 <a href="https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/" target="_blank" rel="noopener">将有序数组转换为二叉搜索树</a></li>
+<li><strong>230</strong> <a href="https://leetcode.cn/problems/kth-smallest-element-in-a-bst/" target="_blank" rel="noopener">二叉搜索树中第K小的元素</a><ul>
+<li>进阶  红黑树</li>
+<li><strong>重要 复习  迭代中序遍历</strong></li>
+</ul>
+</li>
 </ul>
 <h2 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h2><blockquote>
 <p>栈存储索引，通过索引取值，就不用存键值对，空间开销更小</p>
@@ -5301,7 +5330,24 @@
 <p>典型案例：84</p>
 </blockquote>
 <ul>
-<li>581 <a href="https://leetcode.cn/problems/shortest-unsorted-continuous-subarray/" target="_blank" rel="noopener">最短无序连续子数组</a><ul>
+<li><p>739 <a href="https://leetcode.cn/problems/daily-temperatures/" target="_blank" rel="noopener">每日温度</a></p>
+<ul>
+<li>栈存储index值，通过 t[st[i]]拿到值</li>
+</ul>
+</li>
+<li><p>84 <a href="https://leetcode.cn/problems/largest-rectangle-in-histogram/" target="_blank" rel="noopener"> 柱状图中最大的矩形</a></p>
+<ul>
+<li>找到左边第一个比当前元素小的，找到右边第一个比当前元素小的</li>
+<li>注意初始化</li>
+</ul>
+</li>
+<li><p>85 <a href="https://leetcode.cn/problems/maximal-rectangle/" target="_blank" rel="noopener">最大矩形</a></p>
+<ul>
+<li>需要依赖84才能做出来，没有84的基础基本做不了</li>
+</ul>
+</li>
+<li><p>581 <a href="https://leetcode.cn/problems/shortest-unsorted-continuous-subarray/" target="_blank" rel="noopener">最短无序连续子数组</a></p>
+<ul>
 <li>感觉和单调栈没啥关系</li>
 <li>双指针，模拟正常思考过程</li>
 <li>往右走，则需要一直递增，若不满足则记录该位置，该位置是需要往左移动的，往右走完，记录的就是最右需要往左移的位置<ul>
@@ -5310,25 +5356,11 @@
 </li>
 </ul>
 </li>
-<li>739 <a href="https://leetcode.cn/problems/daily-temperatures/" target="_blank" rel="noopener">每日温度</a><ul>
-<li>栈存储index值，通过 t[st[i]]拿到值</li>
-</ul>
-</li>
-<li>42 <a href="https://leetcode.cn/problems/trapping-rain-water/" target="_blank" rel="noopener">接雨水</a><ul>
+<li><p>42 <a href="https://leetcode.cn/problems/trapping-rain-water/" target="_blank" rel="noopener">接雨水</a></p>
+<ul>
 <li>动态规划易理解   推荐</li>
-</ul>
-</li>
-<li>双指针的策略没有理解透彻，复习，对动态规划的优化，不易理解<ul>
+<li>双指针的策略没有理解透彻，复习，对动态规划的优化，不易理解</li>
 <li>单调栈不简洁，不易理解</li>
-</ul>
-</li>
-<li>84 <a href="https://leetcode.cn/problems/largest-rectangle-in-histogram/" target="_blank" rel="noopener"> 柱状图中最大的矩形</a><ul>
-<li>找到左边第一个比当前元素小的，找到右边第一个比当前元素小的</li>
-<li>注意初始化</li>
-</ul>
-</li>
-<li>85 <a href="https://leetcode.cn/problems/maximal-rectangle/" target="_blank" rel="noopener">最大矩形</a><ul>
-<li>需要依赖84才能做出来，没有84的基础基本做不了</li>
 </ul>
 </li>
 </ul>
@@ -26253,35 +26285,6 @@
 <li>23 合并K个升序链表<ul>
 <li>分治合并  待学习</li>
 <li>优先队列</li>
-</ul>
-</li>
-</ul>
-<h2 id="二叉树和递归"><a href="#二叉树和递归" class="headerlink" title="二叉树和递归"></a>二叉树和递归</h2><ul>
-<li>111 <a href="https://leetcode.cn/problems/minimum-depth-of-binary-tree/" target="_blank" rel="noopener">二叉树的最小深度</a></li>
-<li>100 <a href="https://leetcode.cn/problems/same-tree/" target="_blank" rel="noopener"> 相同的树</a></li>
-<li>222 <a href="https://leetcode.cn/problems/count-complete-tree-nodes/" target="_blank" rel="noopener">完全二叉树的节点个数</a><ul>
-<li>利用编号的巧妙性进行位运算   有难度待复习</li>
-<li>二分搜索</li>
-</ul>
-</li>
-<li>110 <a href="https://leetcode.cn/problems/balanced-binary-tree/" target="_blank" rel="noopener">平衡二叉树</a></li>
-<li>112 <a href="https://leetcode.cn/problems/path-sum/" target="_blank" rel="noopener"> 路径总和</a></li>
-<li>404 <a href="https://leetcode.cn/problems/sum-of-left-leaves/" target="_blank" rel="noopener">左叶子之和</a></li>
-<li>257 <a href="https://leetcode.cn/problems/binary-tree-paths/" target="_blank" rel="noopener">二叉树的所有路径</a></li>
-<li>113 <a href="https://leetcode.cn/problems/path-sum-ii/" target="_blank" rel="noopener">路径总和 II</a></li>
-<li>129 <a href="https://leetcode.cn/problems/sum-root-to-leaf-numbers/" target="_blank" rel="noopener">求根节点到叶节点数字之和</a></li>
-<li>235 <a href="https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/" target="_blank" rel="noopener">二叉搜索树的最近公共祖先</a><ul>
-<li>注意是：二叉搜索树，是有大小关系的</li>
-</ul>
-</li>
-<li>450 <a href="https://leetcode.cn/problems/delete-node-in-a-bst/" target="_blank" rel="noopener">删除二叉搜索树中的节点</a><ul>
-<li>递归</li>
-<li>迭代</li>
-</ul>
-</li>
-<li>108 <a href="https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/" target="_blank" rel="noopener">将有序数组转换为二叉搜索树</a></li>
-<li>230 <a href="https://leetcode.cn/problems/kth-smallest-element-in-a-bst/" target="_blank" rel="noopener">二叉搜索树中第K小的元素</a><ul>
-<li>进阶  红黑树</li>
 </ul>
 </li>
 </ul>
