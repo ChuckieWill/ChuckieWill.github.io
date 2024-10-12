@@ -4393,28 +4393,6 @@ x = x * (2*10^4+1)后  x的间距变为2*10^4+1 正好可以容下y的区间  x+
   * 分治合并  待学习
   * 优先队列
 
-##  二叉树和递归
-
-* 111 [二叉树的最小深度](https://leetcode.cn/problems/minimum-depth-of-binary-tree/)
-* 100 [ 相同的树](https://leetcode.cn/problems/same-tree/)
-* 222 [完全二叉树的节点个数](https://leetcode.cn/problems/count-complete-tree-nodes/)
-  * 利用编号的巧妙性进行位运算   有难度待复习
-  * 二分搜索
-* 110 [平衡二叉树](https://leetcode.cn/problems/balanced-binary-tree/)
-* 112 [ 路径总和](https://leetcode.cn/problems/path-sum/)
-* 404 [左叶子之和](https://leetcode.cn/problems/sum-of-left-leaves/)
-* 257 [二叉树的所有路径](https://leetcode.cn/problems/binary-tree-paths/)
-* 113 [路径总和 II](https://leetcode.cn/problems/path-sum-ii/)
-* 129 [求根节点到叶节点数字之和](https://leetcode.cn/problems/sum-root-to-leaf-numbers/)
-* 235 [二叉搜索树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/)
-  * 注意是：二叉搜索树，是有大小关系的
-* 450 [删除二叉搜索树中的节点](https://leetcode.cn/problems/delete-node-in-a-bst/)
-  * 递归
-  * 迭代
-* 108 [将有序数组转换为二叉搜索树](https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/)
-* 230 [二叉搜索树中第K小的元素](https://leetcode.cn/problems/kth-smallest-element-in-a-bst/)
-  * 进阶  红黑树
-
 ##  递归和回溯
 
 > 1 先排序有利于解决问题
