@@ -5196,10 +5196,20 @@
 </li>
 </ul>
 <h1 id="题型"><a href="#题型" class="headerlink" title="题型"></a>题型</h1><h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><ul>
-<li>283</li>
-<li>27</li>
-<li>26</li>
-<li>80</li>
+<li><p><a href="https://leetcode.cn/problems/move-zeroes/" target="_blank" rel="noopener">283. 移动零</a></p>
+<ul>
+<li>双指针</li>
+</ul>
+</li>
+<li><p><a href="https://leetcode.cn/problems/remove-element/" target="_blank" rel="noopener">27. 移除元素</a></p>
+<ul>
+<li>双指针 同上</li>
+</ul>
+</li>
+<li><p><a href="https://leetcode.cn/problems/remove-duplicates-from-sorted-array/" target="_blank" rel="noopener">26. 删除有序数组中的重复项</a></p>
+</li>
+<li><p>80</p>
+</li>
 </ul>
 <p><strong>排序应用</strong></p>
 <ul>
