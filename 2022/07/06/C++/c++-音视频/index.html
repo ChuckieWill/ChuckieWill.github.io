@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="图形基础像素位深">
+<meta property="og:type" content="article">
+<meta property="og:title" content="音视频">
+<meta property="og:url" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/index.html">
+<meta property="og:site_name" content="Chuckie&#39;s Blog">
+<meta property="og:description" content="图形基础像素位深">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725113104641.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725113133855.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725113155373.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725113807188.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725160811958.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725165601178.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230804173707337.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230804174251294.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230814112340461.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230814112659039.png">
+<meta property="article:published_time" content="2022-07-06T02:43:17.000Z">
+<meta property="article:modified_time" content="2024-09-18T15:06:07.355Z">
+<meta property="article:author" content="Chuckie">
+<meta property="article:tag" content="音视频">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725113104641.png">
+
+<link rel="canonical" href="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>音视频 | Chuckie's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chuckie's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          音视频
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-06 10:43:17" itemprop="dateCreated datePublished" datetime="2022-07-06T10:43:17+08:00">2022-07-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="图形基础"><a href="#图形基础" class="headerlink" title="图形基础"></a>图形基础</h2><p>像素位深</p>
+<ul>
+<li>RGB888(24位)  一个色一个字节(8bit)</li>
+<li>RGBA(32位)  一个色一个字节(8bit)  A: 透明度，一个字节(8bit)</li>
+</ul>
+<p>RGB色彩问题</p>
+<ul>
+<li>BMP图像使用的是BGR格式，需要将BGR转换位RGB格式</li>
+</ul>
+<p>屏幕指标</p>
+<ul>
+<li>PPI : 单位英寸内的像素个数，越大表明单位英寸内像素越多，屏幕越好</li>
+<li>DPI : 单位英寸内的点数，可能一个点包含多个像素，一般PPI == DPI</li>
+<li>PPI &gt; 300 就属于视网膜级别</li>
+</ul>
+<p><strong>码流的计算</strong></p>
+<p>分辨率</p>
+<ul>
+<li>X轴的像素个数*Y轴的像素个数</li>
+<li>常见的宽高比16:9/ 4:3</li>
+<li>360P/720P/1K/2K<ul>
+<li>360p是640x360，720p是1280x720，1k是1920x1080即1080p，2k是2560x1440即1440p</li>
+</ul>
+</li>
+</ul>
+<p>帧率</p>
+<ul>
+<li>每秒钟采集/播放图像的个数（每秒播放的帧数）</li>
+<li>动画的帧率是25帧/s</li>
+<li>常见的帧率:15帧/s ，30帧/s，60帧/s</li>
+</ul>
+<p>未编码视频的RGB码流</p>
+<ul>
+<li>RGB码流=分辨率（宽x高) x 3(Byte) x 帧率(25帧)<ul>
+<li>例如∶1280x720x3x25 = 69120000    约69 M</li>
+</ul>
+</li>
+</ul>
+<p>YUV</p>
+<ul>
+<li>YUV（也称YCbCr ) :Y表示明亮度，UV的作用是描述影像色彩及饱和度</li>
+<li>主要的采样格式有YUV4:2:0（标准，都支持）、YUV4:2:2和YUV4:4:4</li>
+</ul>
+<p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725113104641.png" alt="image-20230725113104641"></p>
+<p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725113133855.png" alt="image-20230725113133855"></p>
+<p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725113155373.png" alt="image-20230725113155373"></p>
+<p>YUV4:2:0</p>
+<ul>
+<li>4:2:0并不意味着只有Y、Cb（蓝色）两个分量，而没有Cr(红色)分量。</li>
+<li>它实际指得是对每行扫描线来说，只有一种色度分量，它以2:1的抽样率存储。</li>
+<li>相邻的扫描行存储不同的色度分量，也就是说，如果一行是4:2:0的话，下一行就是4:0:2，再下一行是4:2:0…以此类推。</li>
+<li>数据量计算(YUV4:2:0)<ul>
+<li>YUV = Y * 1.5<br>YUV = RGB /2</li>
+</ul>
+</li>
+</ul>
+<p>YUV4:2:0存储格式</p>
+<ul>
+<li>planar (平面)<ul>
+<li>1420 : YYYYYYYY UU VV =&gt;YUV420P</li>
+<li>YV12: YYYYYYYY VV UU =&gt; YUV420P</li>
+</ul>
+</li>
+<li>packed(打包)<ul>
+<li>NV12 : YYYYYYYY UVUV =&gt;YUV420SP</li>
+<li>NV21: YYYYYYYY VUVU =&gt;YUV420SP</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725113807188.png" alt="image-20230725113807188"></p>
+<p>未编码视频的YUV码流</p>
+<ul>
+<li>RGB码流=分辩率(宽x高)x 3 x帧率</li>
+<li>YUV码流=分辩率(宽x高)x1.5X帧率</li>
+</ul>
+<p>RGB与YUV的关系</p>
+<ul>
+<li><p>RGB用于屏幕图像的展示</p>
+</li>
+<li><p>YUV用于采集与编码</p>
+</li>
+<li><p>RGB转YUV</p>
+<ul>
+<li>Y= <code>0.299*R + 0.587*G&#39;+ 0.114*B</code></li>
+<li>U=<code>-0.147*R-0.289*G+0.436*B = 0.492*(B-Y)</code></li>
+<li>V= <code>0.615*R-0.515*G -0.100*B = 0.877*(R-Y)</code></li>
+</ul>
+</li>
+<li><p>YUV转RGB</p>
+<ul>
+<li>R= <code>Y +1.140*V</code></li>
+<li>G= <code>Y - 0.394*U - 0.581*V</code></li>
+<li>B =<code>Y + 2.032*U</code></li>
+</ul>
+</li>
+</ul>
+<p>生成YUV</p>
+<ul>
+<li>-i : 输入文件</li>
+<li>-an ： a表示音频  n表示no   表示不处理视频中的音频</li>
+<li>-c:v :  视频的解码器编码器</li>
+<li>-pix_fmt ： 指定输出的yuv格式为yuv420p</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i input.mp4</span><br><span class="line">-an</span><br><span class="line">-C:V rawvideo</span><br><span class="line">-pix_fmt yuv420p out.yuv</span><br></pre></td></tr></table></figure>
+
+<p>播放YUV</p>
+<ul>
+<li>-s : 指定分辨率</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffplay -pix_fmt yuv420p -S 608x368 out.yuv</span><br></pre></td></tr></table></figure>
+
+<p>播放Y分量</p>
+<ul>
+<li>-vf : 指定使用简单滤波器</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ffplay -pix_fmt yuv420p</span><br><span class="line">-S 608x368</span><br><span class="line">-vf extractplanes= 'y' out.yuv</span><br></pre></td></tr></table></figure>
+
+<p>提取各分量</p>
+<p>-filter_complex : 指定使用复杂滤波器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i ~/Documents/new_killer.mp4</span><br><span class="line">-filter_complex</span><br><span class="line">'extractplanes=y+u+vly][u][v]'</span><br><span class="line">-map 'ly]' y.yuv</span><br><span class="line">-map '[u]' u.yuv</span><br><span class="line">-map '[v]' v.yuv</span><br></pre></td></tr></table></figure>
+
+
+
+<p>9-8  —-  9-10  待学习</p>
+<h2 id="H264编码"><a href="#H264编码" class="headerlink" title="H264编码"></a>H264编码</h2><blockquote>
+<p>压缩比1/100</p>
+<p>码流建议：<a href="https://docportal.shengwang.cn/cn" target="_blank" rel="noopener">https://docportal.shengwang.cn/cn</a></p>
+<p><a href="https://docportal.shengwang.cn/cn/video-call-4.x/video_profile_apple_ng?platform=iOS" target="_blank" rel="noopener">https://docportal.shengwang.cn/cn/video-call-4.x/video_profile_apple_ng?platform=iOS</a></p>
+</blockquote>
+<p>码率</p>
+<ul>
+<li>条件<ul>
+<li>1.YUV格式为YUV420</li>
+<li>2.分辨率为640x480</li>
+<li>3.帧率为15</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">640 * 480 * 1.5 * 15 &#x3D; 55M  单位是字节</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>建议码流：500kpbs</li>
+</ul>
+<p>GOP</p>
+<ul>
+<li>group of picture</li>
+<li>一组差别不大的图片</li>
+</ul>
+<p>I/P/B帧</p>
+<ul>
+<li>Ⅰ帧(intraframe frame)，关键帧，采用帧内压缩技术。IDR帧属于Ⅰ帧<ul>
+<li>就是GOP的第一帧</li>
+</ul>
+</li>
+<li>P帧(forward Predicted frame)，向前参考帧。压缩时，只参考前面已经处理的帧，采用帧间压缩技术。它I帧的一半大小<ul>
+<li>参考前面的I帧</li>
+</ul>
+</li>
+<li>B帧(Bidirectionally predicted frame)，双向参考帧。压缩时，既参考前面已经处理的帧，也参考后面的帧，帧间压缩技术。它占Ⅰ帧1/4大小<ul>
+<li>参考前面的I帧和后面的P帧</li>
+<li>参考前面的p帧和后面的P帧</li>
+<li>参考前面的P帧和后面的I帧</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725160811958.png" alt="image-20230725160811958"></p>
+<p>IDR帧与I帧的区别与联系</p>
+<ul>
+<li>IDR(Instantaneous Decoder Refresh)解码器立即刷新</li>
+<li>每当遇到IDR帧时，解码器就会清空解码器参考buffer中的内容</li>
+<li>每个GOP中的第一帧就是IDR帧</li>
+<li>IDR帧是一种特殊的Ⅰ帧</li>
+</ul>
+<p>SPS与PPS</p>
+<ul>
+<li>SPS (Sequence Parameter Set)：  图片之间的编码信息<ul>
+<li>序列参数集,作用于一串连续的视频图像。如<ul>
+<li>seq_ parameter_ set id、</li>
+<li>帧数及POC(picture order count)的约束、</li>
+<li>参考帧数目、</li>
+<li>解码图像尺寸</li>
+<li>帧场编码模式选择标识等</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>PPS (Picture Parameter Set)： 图片内的编码信息<ul>
+<li>图像参数集,作用于视频序列中的图像。如<ul>
+<li>pic_ parameter. set_ id、</li>
+<li>熵编码模式选择标识、</li>
+<li>片组数目、</li>
+<li>初始获量化参数</li>
+<li>去方块滤波系数调整标识等</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>H264压缩技术</p>
+<ul>
+<li>有损压缩<ul>
+<li>帧内压缩,解决的是空域数据冗余问题</li>
+<li>帧间压缩,解决的是时域数据冗徐问题</li>
+</ul>
+</li>
+<li>无损压缩<ul>
+<li>整数离散余弦变换( DCT ) , 将空间上的相关性变为频域上无关的数据然后进行量化</li>
+<li>CABAC压缩</li>
+</ul>
+</li>
+</ul>
+<p>码流基本概念</p>
+<ul>
+<li>SODB ( String Of Data Bits )<br>原始数据比特流,长度不一定是8的倍数 ,故需要补齐。<br>它是由VCL层产生的。</li>
+<li>RBSP ( Raw Byte Sequence Payload )<br>SODB + trailing bits<br>算法是如果SODB最后-个字节不对齐,则补1和多个0.</li>
+<li>NALU<br>NAL Header(1B) + RBSP</li>
+</ul>
+<p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230725165601178.png" alt="image-20230725165601178"></p>
+<h3 id="SPS"><a href="#SPS" class="headerlink" title="SPS"></a>SPS</h3><h5 id="Profile-amp-Level"><a href="#Profile-amp-Level" class="headerlink" title="Profile &amp; Level"></a>Profile &amp; Level</h5><ul>
+<li>H264 Profile<ul>
+<li>对视频压缩特性的描述,Profile越高，就说明采用了越高级的压缩特性</li>
+</ul>
+</li>
+<li>H264 Level<ul>
+<li>Level是对视频的描述, Level越高，视频的码率、分辨率、fps越高</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230804173707337.png" alt="image-20230804173707337"></p>
+<h3 id="PPS"><a href="#PPS" class="headerlink" title="PPS"></a>PPS</h3><p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230804174251294.png" alt="image-20230804174251294"></p>
+<h3 id="Slice-Header"><a href="#Slice-Header" class="headerlink" title="Slice-Header"></a>Slice-Header</h3><ul>
+<li>帧类型</li>
+<li>GOP中解码帧序号</li>
+<li>预测权重</li>
+<li>滤波</li>
+</ul>
+<h3 id="分析工具"><a href="#分析工具" class="headerlink" title="分析工具"></a>分析工具</h3><blockquote>
+<p><a href="https://www.elecard.com/products/video-analysis" target="_blank" rel="noopener">https://www.elecard.com/products/video-analysis</a></p>
+<p><a href="https://jaist.dl.sourceforge/project/h254streamanalysis/binary/SpecialVH264.exe" target="_blank" rel="noopener">https://jaist.dl.sourceforge/project/h254streamanalysis/binary/SpecialVH264.exe</a></p>
+<p><a href="https://sourceforge.net/projects/videoeye/files/" target="_blank" rel="noopener">https://sourceforge.net/projects/videoeye/files/</a></p>
+</blockquote>
+<h1 id="L069"><a href="#L069" class="headerlink" title="L069"></a>L069</h1><h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p>ffmpeg音视频处理流程</p>
+<ul>
+<li>demuxer是解封装，封装格式：mp4, flv</li>
+<li>decoder 是解码，编码格式：h264,h265,aac</li>
+<li>encoder 是编码</li>
+<li>muxer     是封装</li>
+</ul>
+<p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230814112340461.png" alt="image-20230814112340461"></p>
+<p>基本信息查询</p>
+<p><img src="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/image-20230814112659039.png" alt="image-20230814112659039"></p>
+<p>录制命令</p>
+<ul>
+<li>录制屏幕<ul>
+<li><code>ffmpeg -f avfoundation -i 1-r 30 out.yuv</code><ul>
+<li>-f :指定使用avfoundation采集数据</li>
+<li>-i∶指定从哪儿采集数据，它是一个文件索引号， 1表示屏幕的索引</li>
+<li>-r∶指定帧率， 30表示每秒30帧</li>
+<li>保存为yuv格式</li>
+</ul>
+</li>
+<li>播放录制的视频：<code>ffplay -s 2560x1600 -fix_fmt uyvy422 out.yuv</code><ul>
+<li>-s：设定播放的分辨率</li>
+<li>-fix_fmt：设置像素格式</li>
+</ul>
+</li>
+<li>mac 查看avfoundation的设备索引<ul>
+<li><code>ffmpeg -f avfoundation -list_devices true -i &quot;&quot;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>录制音频<ul>
+<li><code>ffmpeg -f avfoundation -i :1 out.wav</code><ul>
+<li>-i：指定采集数据的设备索引   <code>:1</code>表示从话筒(音频)采集，<code>:</code>前表示采集视频的索引，<code>:</code>后表示采集音频的索引</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>分解与复用</p>
+<blockquote>
+<p>换封装格式</p>
+<p>提取视频、音频</p>
+<p>不涉及编解码，只有解封装和封装</p>
+</blockquote>
+<p>多媒体格式转换</p>
+<ul>
+<li><code>ffmpeg -i out.mp4 -vcodec copy -acodec copy out.flv</code></li>
+<li><code>ffmpeg -i out.mp4 -an -vcodec copy out.h264</code><ul>
+<li>抽取视频</li>
+</ul>
+</li>
+<li><code>ffmpeg -i out.mp4 -acodec copy -vn out.aac</code><ul>
+<li>抽取音频</li>
+</ul>
+</li>
+</ul>
+<p>处理原始数据</p>
+<p>FFmpeg提取YUV数据<br><code>ffmpeg -i input.mp4 -an -c:v rawvideo -pix_fmt yuv420p out.yuv</code></p>
+<ul>
+<li>-c:v rawvideo  : 指定视频编码格式</li>
+<li>-pix_fmt yuv420p ： 指定视频像素格式</li>
+</ul>
+<p>FFmpeg提取PCM数据<br><code>ffmpeg -i out.mp4 -vn -ar 44100 -ac2 -f s16le out.pcm</code></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/" rel="tag"># 音视频</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/29/Graph/LWA-dataset-format-conversion/" rel="prev" title="Laboratory for Web Algorihmics数据集格式转换">
+      <i class="fa fa-chevron-left"></i> Laboratory for Web Algorihmics数据集格式转换
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/12/Graph/GraphPi-paper/" rel="next" title="GraphPi论文梳理">
+      GraphPi论文梳理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图形基础"><span class="nav-text">图形基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#H264编码"><span class="nav-text">H264编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SPS"><span class="nav-text">SPS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Profile-amp-Level"><span class="nav-text">Profile &amp; Level</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PPS"><span class="nav-text">PPS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Slice-Header"><span class="nav-text">Slice-Header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析工具"><span class="nav-text">分析工具</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L069"><span class="nav-text">L069</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令"><span class="nav-text">常用命令</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chuckie"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Chuckie</p>
+  <div class="site-description" itemprop="description">Bright future</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ChuckieWill" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ChuckieWill" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/codewyj.163.com" title="E-Mail → codewyj.163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jianshu.com/u/de627226656c" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;de627226656c" rel="noopener" target="_blank">简书</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="/images/me.png"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chuckie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:04</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

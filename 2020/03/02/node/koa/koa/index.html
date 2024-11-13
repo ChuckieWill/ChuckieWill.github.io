@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一、koa基础1 koa简介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="koa">
+<meta property="og:url" content="http://yoursite.com/2020/03/02/node/koa/koa/index.html">
+<meta property="og:site_name" content="Chuckie&#39;s Blog">
+<meta property="og:description" content="一、koa基础1 koa简介">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-02T02:44:17.000Z">
+<meta property="article:modified_time" content="2024-09-18T15:06:07.670Z">
+<meta property="article:author" content="Chuckie">
+<meta property="article:tag" content="koa">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/02/node/koa/koa/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>koa | Chuckie's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chuckie's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/02/node/koa/koa/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          koa
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-02 10:44:17" itemprop="dateCreated datePublished" datetime="2020-03-02T10:44:17+08:00">2020-03-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/node/" itemprop="url" rel="index"><span itemprop="name">node</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/node/koa/" itemprop="url" rel="index"><span itemprop="name">koa</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>26k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>24 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、koa基础"><a href="#一、koa基础" class="headerlink" title="一、koa基础"></a>一、koa基础</h1><h2 id="1-koa简介"><a href="#1-koa简介" class="headerlink" title="1 koa简介"></a>1 koa简介</h2><blockquote>
+<ul>
+<li><p><strong><code>koa</code>是基于<code>node</code>环境的后端开发框架</strong></p>
+</li>
+<li><p><a href="https://koa.bootcss.com/" target="_blank" rel="noopener">koa官网</a></p>
+</li>
+</ul>
+</blockquote>
+<p><strong>安装:</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//前提先安装node.js</span></span><br><span class="line">npm install koa</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>bug </li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//问题（终端）：</span></span><br><span class="line">npm install出现Unexpected end <span class="keyword">of</span> <span class="built_in">JSON</span> input <span class="keyword">while</span> parsing near错误</span><br><span class="line"></span><br><span class="line"><span class="comment">//解决方案  终端输入命令：</span></span><br><span class="line">npm cache clean --force</span><br></pre></td></tr></table></figure>
+
+<p><strong>技术：</strong></p>
+<ul>
+<li>Node.js <ul>
+<li>Node.js不能重复安装  若计算机上已有老版本 安装新版本之前要把老版本先卸载  或者 用nvm管理两个不同的版本</li>
+<li>Node.js 的本质是让JS 可以脱离浏览器运行  而非是为了web开发 web开发只是其能力的一个方面</li>
+<li>Node.js的能力与应用<ul>
+<li>脱离浏览器运行JS</li>
+<li>NodeJS Stream（前端工程化基础）——开源的、框架级别的产品 </li>
+<li>服务端API</li>
+<li>作为中间层 ———— 中大型项目中才有中间层</li>
+</ul>
+</li>
+<li>Node.js 对ES6-10支持情况  <ul>
+<li>目前Node.js  对ES6-10的一些特性是不支持的：1、import from导入方式不支持  需要用require  2、decorator装饰器 不支持  3、class类的属性不支持  必须用this.x = x  设置属性   （相对其他语言没有属性这一说  必须在构造函数中设置属性）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>npm:Node.js中的一个工具包</li>
+<li>koa：基于Node.js 专业开发web的框架<ul>
+<li>koa特点：洋葱圈模型  精简   使用时需要二次开发，否则会很难用</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-koa使用基础及流程"><a href="#2-koa使用基础及流程" class="headerlink" title="2 koa使用基础及流程"></a>2 koa使用基础及流程</h2><h3 id="2-1-入口文件"><a href="#2-1-入口文件" class="headerlink" title="2.1 入口文件"></a>2.1 入口文件</h3><blockquote>
+<p>在项目根目录下新建入口文件   一般为app.js (文件名自定)   在入口文件中导入koa、new koa、设置端口</p>
+</blockquote>
+<ul>
+<li>一般称koa对象为  应用程序对象</li>
+<li>以下3行代码即可启动koa框架</li>
+<li>前端发送请求地址：localhost：3000（本地时）</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> koa = requrie(<span class="string">'koa'</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> koa()</span><br><span class="line">app.listen(<span class="number">3000</span>)  <span class="comment">//该函数 接收端口号 启动koa框架</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-koa中间件"><a href="#2-2-koa中间件" class="headerlink" title="2.2 koa中间件"></a>2.2 koa中间件</h3><ul>
+<li><p>理解koa中间件：</p>
+<ul>
+<li>koa中间件本质就是函数，当前端向服务端发送请求时，由这些函数接受请求、处理并返回结果</li>
+<li>koa中间件是按代码顺序执行的，在前面的中间件就先执行，需要执行后面的中间件就在前面的中间件中调用next()函数</li>
+</ul>
+</li>
+<li><p>注册中间件：</p>
+<ul>
+<li>通过<code>app.use()</code>方法，传入匿名函数，将该函数注册为中间件</li>
+<li>koa中间件返回的总是一个promise对象<ul>
+<li>async await是标配， 确保返回的一定是promise对象，维持洋葱模型</li>
+</ul>
+</li>
+<li>参数：<ul>
+<li>ctx:  上下文</li>
+<li>next:  next()函数用于调用下一个函数(简单的指中间件代码顺序上的下一个中间件)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//app.js</span></span><br><span class="line"><span class="keyword">const</span> koa = requrie(<span class="string">'koa'</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> koa()</span><br><span class="line"></span><br><span class="line"><span class="comment">//ctx:上下文  next:下一个中间件</span></span><br><span class="line">app.use(<span class="keyword">async</span>(ctx,next)=&gt;&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'中间件1'</span>)</span><br><span class="line">	<span class="keyword">await</span> next()    <span class="comment">//-----调用下方的’中间件2‘  若在此处接收next() 一定是一个promise对象</span></span><br><span class="line">    <span class="comment">//const res = await next()   //也可以接受下一个函数（中间件）返回的结果</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx,next)=&gt;&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'中间件2'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>)  <span class="comment">//该函数 接收端口号 启动koa框架</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-koa-router"><a href="#2-3-koa-router" class="headerlink" title="2.3 koa-router"></a>2.3 koa-router</h3><ul>
+<li><p>安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install koa-router</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<blockquote>
+<p><a href="https://github.com/koajs/router/blob/HEAD/API.md" target="_blank" rel="noopener">koa-router文档</a></p>
+<p><a href="https://www.npmjs.com/package/koa-router" target="_blank" rel="noopener">koa-router官网</a></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> Router()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路由传递两个参数：第一个：路由地址  第二个：匿名函数，即满足方法和路由要求后的处理函数，就是中间件</span></span><br><span class="line">router.get(<span class="string">'/classic/latest'</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  ctx.body = &#123;<span class="attr">key</span> : <span class="string">'chuckie'</span>&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.use(router.routes())<span class="comment">//将所有路由的匿名函数注册为中间件</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>理解koa-router:</p>
+<ul>
+<li>是对处理网络请求中间件的封装，根据不同的请求方法、请求地址，通过匿名函数处理并返回结果</li>
+<li>定义后需要注册成中间件：<code>app.use(router.routes())</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="3-koa获取请求参数"><a href="#3-koa获取请求参数" class="headerlink" title="3 koa获取请求参数"></a>3 koa获取请求参数</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="string">'/v1/:id/classic/latest'</span>, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> path = ctx.params</span><br><span class="line">  <span class="keyword">const</span> query = ctx.request.query</span><br><span class="line">  <span class="keyword">const</span> headers = ctx.request.header</span><br><span class="line">  <span class="keyword">const</span> body = ctx.request.body</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>路劲参数获取</p>
+<ul>
+<li>koa中定义：<code>&#39;/v1/:id/classic/latest&#39;</code><ul>
+<li>其中<code>/:id</code>即为路劲中传来的参数</li>
+</ul>
+</li>
+<li>获取：<code>const path = ctx.params</code></li>
+</ul>
+</li>
+<li><p><code>?param</code>参数</p>
+<ul>
+<li>koa中不用定义</li>
+<li>前端请求样式：<code>/v1/classic/latest?param=maxthon</code></li>
+<li>获取：<code>const query = ctx.request.query</code></li>
+</ul>
+</li>
+<li><p><code>headers</code>参数</p>
+<ul>
+<li>获取：<code>const headers = ctx.request.header</code></li>
+</ul>
+</li>
+<li><p><code>body</code>参数</p>
+<ul>
+<li><p>前提：<strong>安装<code>require-directory</code>第三方库</strong></p>
+<ul>
+<li><p>1 安装：<code>npm i require-directory</code></p>
+</li>
+<li><p>2 <code>app.js</code>文件中注册：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>)</span><br><span class="line"><span class="keyword">const</span> parser = <span class="built_in">require</span>(<span class="string">'koa-bodyparser'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line"></span><br><span class="line">app.use(parser()) <span class="comment">//该库返回结果本质是一个中间价，所以需要注册</span></span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>获取：<code>const body = ctx.request.body</code></p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="二、项目框架"><a href="#二、项目框架" class="headerlink" title="二、项目框架"></a>二、项目框架</h1><blockquote>
+<p><strong><a href="https://github.com/ChuckieWill/node-server-koa2" target="_blank" rel="noopener">koa开发基础框架模板Github地址</a></strong></p>
+</blockquote>
+<h2 id="1-全局异常处理中间件"><a href="#1-全局异常处理中间件" class="headerlink" title="1 全局异常处理中间件"></a>1 全局异常处理中间件</h2><blockquote>
+<p><strong>全局异常处理原理：</strong></p>
+<ul>
+<li>步骤一中的<code>catchError</code>中间件，注册在最前面，当后面的中间件都执行完后如果有异常抛出都会在这里被捕捉到</li>
+</ul>
+</blockquote>
+<h3 id="1-1-目录结构"><a href="#1-1-目录结构" class="headerlink" title="1.1 目录结构"></a>1.1 目录结构</h3><ul>
+<li>middlewares<ul>
+<li>exception.js    全局异常处理中间件</li>
+</ul>
+</li>
+<li>core<ul>
+<li>http-exception.js    http错误类</li>
+</ul>
+</li>
+<li>app.js        注册全局异常处理中间件</li>
+<li>config<ul>
+<li>config.js   配置信息-环境变量的配置</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-使用前提"><a href="#1-2-使用前提" class="headerlink" title="1.2 使用前提"></a>1.2 使用前提</h3><ul>
+<li><p>自定义http错误类</p>
+<ul>
+<li>参考http错误类源码</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;HttpException&#125; = <span class="built_in">require</span>(<span class="string">'../core/http-exception'</span>)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="1-3-源码"><a href="#1-3-源码" class="headerlink" title="1.3 源码"></a>1.3 源码</h3><ol>
+<li><p>在根目录下新建<code>middlewares</code>文件夹，文件夹下新建<code>exception.js</code>文件</p>
+<ul>
+<li>返回给前端的内容包括<ul>
+<li>msg: 错误信息</li>
+<li>error_code: 自定义错误码</li>
+<li>request:  发生错误的请求地址</li>
+<li>status:  http状态码</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;HttpException&#125; = <span class="built_in">require</span>(<span class="string">'../core/http-exception'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//全局错误处理中间件</span></span><br><span class="line"><span class="keyword">const</span> catchError = <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> next()</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="comment">//判断为开发环境则抛出异常，便于终端查看错误原因------环境变量判断-------</span></span><br><span class="line">    <span class="keyword">if</span>(global.config.environment === <span class="string">'dev'</span>)&#123;</span><br><span class="line">      <span class="keyword">throw</span> error</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//判断为已知错误，抛出的错误是封装的http错误类的实例</span></span><br><span class="line">    <span class="keyword">if</span>(error <span class="keyword">instanceof</span> HttpException)&#123;</span><br><span class="line">      <span class="comment">//已知错误的处理</span></span><br><span class="line">      ctx.body = &#123;</span><br><span class="line">        msg: error.msg,  <span class="comment">//错误描述</span></span><br><span class="line">        error_code: error.errorCode,  <span class="comment">//自定义错误码</span></span><br><span class="line">        request: <span class="string">`<span class="subst">$&#123;ctx.method&#125;</span> <span class="subst">$&#123;ctx.path&#125;</span>`</span>   <span class="comment">//发送错误的请求地址</span></span><br><span class="line">      &#125;</span><br><span class="line">      ctx.status = error.code  <span class="comment">//http状态码</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="comment">//未知错误的处理</span></span><br><span class="line">      ctx.body = &#123;</span><br><span class="line">        msg: <span class="string">'服务器内部错误 未知错误'</span>,</span><br><span class="line">        error_code: <span class="number">99999</span>,</span><br><span class="line">        request: <span class="string">`<span class="subst">$&#123;ctx.method&#125;</span> <span class="subst">$&#123;ctx.path&#125;</span>`</span></span><br><span class="line">      &#125;</span><br><span class="line">      ctx.status = <span class="number">500</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = catchError</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>app.js</code>中注册中间件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>)</span><br><span class="line"><span class="keyword">const</span> catchError = <span class="built_in">require</span>(<span class="string">'./middlewares/exception'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line">app.use(catchError)<span class="comment">//注册中间件</span></span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+</li>
+</ol>
+<h2 id="2-http错误类"><a href="#2-http错误类" class="headerlink" title="2 http错误类"></a>2 http错误类</h2><blockquote>
+<p><strong>应用场景：</strong></p>
+<ul>
+<li>每次有异常或错误抛出时，直接实例化http错误类即可，更加方便，<strong>抛出的错误和异常也更加规范</strong></li>
+</ul>
+</blockquote>
+<h3 id="2-1-目录结构"><a href="#2-1-目录结构" class="headerlink" title="2.1 目录结构"></a>2.1 目录结构</h3><ul>
+<li>core<ul>
+<li>http-exception.js</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-源码"><a href="#2-2-源码" class="headerlink" title="2.2 源码"></a>2.2 源码</h3><ul>
+<li>根据具体业务的要求可以继续添加特定的错误类</li>
+<li>使用时，导入并实例化错误类，然后抛出错误即可</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//统一封装的http错误类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HttpException</span> <span class="keyword">extends</span> <span class="title">Error</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(errorCode=10000,code=400, msg='服务器异常')&#123;</span><br><span class="line">    <span class="keyword">super</span>()</span><br><span class="line">    <span class="keyword">this</span>.errorCode = errorCode <span class="comment">//项目自定义错误码</span></span><br><span class="line">    <span class="keyword">this</span>.code = code <span class="comment">//http状态码</span></span><br><span class="line">    <span class="keyword">this</span>.msg = msg   <span class="comment">//错误描述</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//参数错误类，一般在参数校验错误时使用</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ParameterException</span> <span class="keyword">extends</span> <span class="title">HttpException</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(msg, errorCode)&#123;</span><br><span class="line">    <span class="keyword">super</span>()</span><br><span class="line">    <span class="keyword">this</span>.code = <span class="number">400</span></span><br><span class="line">    <span class="keyword">this</span>.msg = msg || <span class="string">'参数错误'</span></span><br><span class="line">    <span class="keyword">this</span>.errorCode = errorCode || <span class="number">10000</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;HttpException,ParameterException&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-koa路由框架"><a href="#3-koa路由框架" class="headerlink" title="3 koa路由框架"></a>3 koa路由框架</h2><h3 id="3-1-目录结构"><a href="#3-1-目录结构" class="headerlink" title="3.1 目录结构"></a>3.1 目录结构</h3><blockquote>
+<p>api版本管理：</p>
+<ul>
+<li>通过v1、v2、v3、、、、、方式表示不同版本的路由</li>
+<li>URL也通过<code>/v1/,,,</code>、<code>/v2/,,,,</code>来区分不同版本</li>
+</ul>
+</blockquote>
+<ul>
+<li>app<ul>
+<li>api<ul>
+<li>v1  版本1的路由<ul>
+<li>user.js   相关用户的路由（案例）</li>
+</ul>
+</li>
+<li>v2  版本2的路由</li>
+</ul>
+</li>
+<li>models<ul>
+<li>user.js  相关用户的操作数据库的数据模型（案例）</li>
+</ul>
+</li>
+<li>validators<ul>
+<li>validator.js  定义参数校验类</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-2-使用前提"><a href="#3-2-使用前提" class="headerlink" title="3.2 使用前提"></a>3.2 使用前提</h3><ul>
+<li><p>安装<code>koa-router</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i koa-router</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>参数校验器</p>
+</li>
+<li><p>数据模型操作数据库</p>
+</li>
+</ul>
+<h3 id="3-3-源码"><a href="#3-3-源码" class="headerlink" title="3.3 源码"></a>3.3 源码</h3><p><strong>路由核心步骤：</strong></p>
+<ul>
+<li>1 参数校验 ，依赖参数校验器</li>
+<li>2 对数据库数据进行增删改查，依赖实例化的数据模型（sequelize）</li>
+<li>3 将对数据库的操作结果整理后返回前端</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;RegisterValidater&#125; = <span class="built_in">require</span>(<span class="string">'../../validators/validator'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; User &#125; = <span class="built_in">require</span>(<span class="string">'../../models/user'</span>)</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> Router(&#123;</span><br><span class="line">  prefix: <span class="string">'/v1/user'</span><span class="comment">//设置路由的基地址 </span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//用户注册路由   </span></span><br><span class="line"><span class="comment">//拼接后的路由地址为：/v1/user/register</span></span><br><span class="line">router.post(<span class="string">'/register'</span>, <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">  <span class="comment">//1 参数校验</span></span><br><span class="line">  <span class="keyword">const</span> v = <span class="keyword">await</span> <span class="keyword">new</span> RegisterValidater().validate(ctx)</span><br><span class="line">  <span class="comment">//2 获取并整理参数</span></span><br><span class="line">  <span class="keyword">const</span> user = &#123;</span><br><span class="line">    nickname : v.get(<span class="string">'body.nickname'</span>),</span><br><span class="line">    password : v.get(<span class="string">'body.password2'</span>),</span><br><span class="line">    email : v.get(<span class="string">'body.email'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//3 用sequelize实例化的模型将数据插入数据库</span></span><br><span class="line">  <span class="keyword">await</span> User.create(user)</span><br><span class="line">  <span class="comment">//4 返回前端操作成功</span></span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> global.errs.Success() </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="4-校验器-参数校验"><a href="#4-校验器-参数校验" class="headerlink" title="4 校验器(参数校验)"></a>4 校验器(参数校验)</h2><blockquote>
+<p>封装了<a href="https://doc.cms.talelin.com/server/koa/validator.html" target="_blank" rel="noopener">LinValidator</a>校验类，方便参数的校验</p>
+<p><code>LinValidator</code>校验类整合了第三方库<a href="https://github.com/validatorjs/validator.js" target="_blank" rel="noopener">validator.js</a></p>
+<p><code>LinValidator</code>校验类使用教程查看-&gt;<a href="https://doc.cms.talelin.com/server/koa/validator.html" target="_blank" rel="noopener">LinValidator使用教程</a></p>
+<p><code>LinValidator</code>中<code>Rule</code>参数中第一个参数(校验函数)可查看<a href="https://github.com/validatorjs/validator.js" target="_blank" rel="noopener"><code>validator.js官方文档</code></a></p>
+</blockquote>
+<h3 id="4-1-目录结构"><a href="#4-1-目录结构" class="headerlink" title="4.1 目录结构"></a>4.1 目录结构</h3><ul>
+<li>core<ul>
+<li>lin-validator.js      封装的LinValidator类</li>
+<li>utils.js        </li>
+<li>http-exception.js   封装的http错误类</li>
+</ul>
+</li>
+<li>app<ul>
+<li>validators<ul>
+<li>validator.js          继承LinValidator类，自定义具体业务的校验类</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-2-使用前提"><a href="#4-2-使用前提" class="headerlink" title="4.2 使用前提"></a>4.2 使用前提</h3><ul>
+<li><p>安装<code>validator</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install validator</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装<code>jsonwebtoken</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i jsonwebtoken</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装<code>lodash</code>   </p>
+<ul>
+<li><a href="https://www.lodashjs.com/docs/latest" target="_blank" rel="noopener">lodash官方文档</a></li>
+<li>便于获取http请求中的参数，具体使用参考<a href="https://doc.cms.talelin.com/server/koa/validator.html" target="_blank" rel="noopener">LinValidator使用教程</a></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i lodash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义参数错误http错误类</p>
+<ul>
+<li>参考http错误类源码</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;ParameterException&#125; = <span class="built_in">require</span>(<span class="string">'./http-exception'</span>)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="4-3-源码"><a href="#4-3-源码" class="headerlink" title="4.3 源码"></a>4.3 源码</h3><h4 id="4-3-1-lin-validator-js"><a href="#4-3-1-lin-validator-js" class="headerlink" title="4.3.1 lin-validator.js"></a>4.3.1 <code>lin-validator.js</code></h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//lin-validator.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> validator = <span class="built_in">require</span>(<span class="string">'validator'</span>)<span class="comment">//第三方库 ，需要安装</span></span><br><span class="line"><span class="keyword">const</span> &#123;ParameterException&#125; = <span class="built_in">require</span>(<span class="string">'./http-exception'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;<span class="keyword">get</span>,last,<span class="keyword">set</span>,cloneDeep&#125; = require("lodash")  //第三方库 ，需要安装</span><br><span class="line">const &#123;findMembers&#125; = <span class="built_in">require</span>(<span class="string">'./utils'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LinValidator</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.data = &#123;&#125;</span><br><span class="line">        <span class="keyword">this</span>.parsed = &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    _assembleAllParams(ctx) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            body: ctx.request.body,</span><br><span class="line">            query: ctx.request.query,</span><br><span class="line">            path: ctx.params,</span><br><span class="line">            header: ctx.request.header</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">get</span>(path, parsed = true) &#123;</span><br><span class="line">        <span class="keyword">if</span> (parsed) &#123;</span><br><span class="line">            <span class="keyword">const</span> value = <span class="keyword">get</span>(this.parsed, path, null)</span><br><span class="line">            if (value == null) &#123;</span><br><span class="line">                <span class="keyword">const</span> keys = path.split(<span class="string">'.'</span>)</span><br><span class="line">                <span class="keyword">const</span> key = last(keys)</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">get</span>(this.parsed.default, key)</span><br><span class="line">            &#125;</span><br><span class="line">            return value</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">get</span>(this.data, path)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    _findMembersFilter(key) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="regexp">/validate([A-Z])\w+/g</span>.test(key)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>[key] <span class="keyword">instanceof</span> <span class="built_in">Array</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>[key].forEach(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">const</span> isRuleType = value <span class="keyword">instanceof</span> Rule</span><br><span class="line">                <span class="keyword">if</span> (!isRuleType) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'验证数组必须全部为Rule类型'</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> validate(ctx, alias = &#123;&#125;) &#123;</span><br><span class="line">        <span class="keyword">this</span>.alias = alias</span><br><span class="line">        <span class="keyword">let</span> params = <span class="keyword">this</span>._assembleAllParams(ctx)</span><br><span class="line">        <span class="keyword">this</span>.data = cloneDeep(params)</span><br><span class="line">        <span class="keyword">this</span>.parsed = cloneDeep(params)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> memberKeys = findMembers(<span class="keyword">this</span>, &#123;</span><br><span class="line">            filter: <span class="keyword">this</span>._findMembersFilter.bind(<span class="keyword">this</span>)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> errorMsgs = []</span><br><span class="line">        <span class="comment">// const map = new Map(memberKeys)</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">of</span> memberKeys) &#123;</span><br><span class="line">            <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="keyword">this</span>._check(key, alias)</span><br><span class="line">            <span class="keyword">if</span> (!result.success) &#123;</span><br><span class="line">                errorMsgs.push(result.msg)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (errorMsgs.length != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ParameterException(errorMsgs)</span><br><span class="line">        &#125;</span><br><span class="line">        ctx.v = <span class="keyword">this</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> _check(key, alias = &#123;&#125;) &#123;</span><br><span class="line">        <span class="keyword">const</span> isCustomFunc = <span class="keyword">typeof</span> (<span class="keyword">this</span>[key]) == <span class="string">'function'</span> ? <span class="literal">true</span> : <span class="literal">false</span></span><br><span class="line">        <span class="keyword">let</span> result;</span><br><span class="line">        <span class="keyword">if</span> (isCustomFunc) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">await</span> <span class="keyword">this</span>[key](<span class="keyword">this</span>.data)</span><br><span class="line">                result = <span class="keyword">new</span> RuleResult(<span class="literal">true</span>)</span><br><span class="line">            &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">                result = <span class="keyword">new</span> RuleResult(<span class="literal">false</span>, error.msg || error.message || <span class="string">'参数错误'</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 函数验证</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 属性验证, 数组，内有一组Rule</span></span><br><span class="line">            <span class="keyword">const</span> rules = <span class="keyword">this</span>[key]</span><br><span class="line">            <span class="keyword">const</span> ruleField = <span class="keyword">new</span> RuleField(rules)</span><br><span class="line">            <span class="comment">// 别名替换</span></span><br><span class="line">            key = alias[key] ? alias[key] : key</span><br><span class="line">            <span class="keyword">const</span> param = <span class="keyword">this</span>._findParam(key)</span><br><span class="line"></span><br><span class="line">            result = ruleField.validate(param.value)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (result.pass) &#123;</span><br><span class="line">                <span class="comment">// 如果参数路径不存在，往往是因为用户传了空值，而又设置了默认值</span></span><br><span class="line">                <span class="keyword">if</span> (param.path.length == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">set</span>(this.parsed, ['default', key], result.legalValue)</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    <span class="keyword">set</span>(this.parsed, param.path, result.legalValue)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if (!result.pass) &#123;</span><br><span class="line">            <span class="keyword">const</span> msg = <span class="string">`<span class="subst">$&#123;isCustomFunc ? <span class="string">''</span> : key&#125;</span><span class="subst">$&#123;result.msg&#125;</span>`</span></span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                msg: msg,</span><br><span class="line">                success: <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            msg: <span class="string">'ok'</span>,</span><br><span class="line">            success: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    _findParam(key) &#123;</span><br><span class="line">        <span class="keyword">let</span> value</span><br><span class="line">        value = <span class="keyword">get</span>(this.data, ['query', key])</span><br><span class="line">        if (value) &#123;</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                value,</span><br><span class="line">                path: [<span class="string">'query'</span>, key]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        value = <span class="keyword">get</span>(this.data, ['body', key])</span><br><span class="line">        if (value) &#123;</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                value,</span><br><span class="line">                path: [<span class="string">'body'</span>, key]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        value = <span class="keyword">get</span>(this.data, ['path', key])</span><br><span class="line">        if (value) &#123;</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                value,</span><br><span class="line">                path: [<span class="string">'path'</span>, key]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        value = <span class="keyword">get</span>(this.data, ['header', key])</span><br><span class="line">        if (value) &#123;</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                value,</span><br><span class="line">                path: [<span class="string">'header'</span>, key]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            value: <span class="literal">null</span>,</span><br><span class="line">            path: []</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RuleResult</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(pass, msg = '') &#123;</span><br><span class="line">        <span class="built_in">Object</span>.assign(<span class="keyword">this</span>, &#123;</span><br><span class="line">            pass,</span><br><span class="line">            msg</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RuleFieldResult</span> <span class="keyword">extends</span> <span class="title">RuleResult</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(pass, msg = '', legalValue = null) &#123;</span><br><span class="line">        <span class="keyword">super</span>(pass, msg)</span><br><span class="line">        <span class="keyword">this</span>.legalValue = legalValue</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rule</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(name, msg, ...params) &#123;</span><br><span class="line">        <span class="built_in">Object</span>.assign(<span class="keyword">this</span>, &#123;</span><br><span class="line">            name,</span><br><span class="line">            msg,</span><br><span class="line">            params</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    validate(field) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.name == <span class="string">'isOptional'</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> RuleResult(<span class="literal">true</span>)</span><br><span class="line">        <span class="keyword">if</span> (!validator[<span class="keyword">this</span>.name](field + <span class="string">''</span>, ...this.params)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> RuleResult(<span class="literal">false</span>, <span class="keyword">this</span>.msg || <span class="keyword">this</span>.message || <span class="string">'参数错误'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RuleResult(<span class="literal">true</span>, <span class="string">''</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RuleField</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(rules) &#123;</span><br><span class="line">        <span class="keyword">this</span>.rules = rules</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    validate(field) &#123;</span><br><span class="line">        <span class="keyword">if</span> (field == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 如果字段为空</span></span><br><span class="line">            <span class="keyword">const</span> allowEmpty = <span class="keyword">this</span>._allowEmpty()</span><br><span class="line">            <span class="keyword">const</span> defaultValue = <span class="keyword">this</span>._hasDefault()</span><br><span class="line">            <span class="keyword">if</span> (allowEmpty) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> RuleFieldResult(<span class="literal">true</span>, <span class="string">''</span>, defaultValue)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> RuleFieldResult(<span class="literal">false</span>, <span class="string">'字段是必填参数'</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> filedResult = <span class="keyword">new</span> RuleFieldResult(<span class="literal">false</span>)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> rule <span class="keyword">of</span> <span class="keyword">this</span>.rules) &#123;</span><br><span class="line">            <span class="keyword">let</span> result = rule.validate(field)</span><br><span class="line">            <span class="keyword">if</span> (!result.pass) &#123;</span><br><span class="line">                filedResult.msg = result.msg</span><br><span class="line">                filedResult.legalValue = <span class="literal">null</span></span><br><span class="line">                <span class="comment">// 一旦一条校验规则不通过，则立即终止这个字段的验证</span></span><br><span class="line">                <span class="keyword">return</span> filedResult</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RuleFieldResult(<span class="literal">true</span>, <span class="string">''</span>, <span class="keyword">this</span>._convert(field))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//数据类型转换</span></span><br><span class="line">    _convert(value) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> rule <span class="keyword">of</span> <span class="keyword">this</span>.rules) &#123;</span><br><span class="line">            <span class="keyword">if</span> (rule.name == <span class="string">'isInt'</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">parseInt</span>(value)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (rule.name == <span class="string">'isFloat'</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">parseFloat</span>(value)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (rule.name == <span class="string">'isBoolean'</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> value ? <span class="literal">true</span> : <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    _allowEmpty() &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> rule <span class="keyword">of</span> <span class="keyword">this</span>.rules) &#123;</span><br><span class="line">            <span class="keyword">if</span> (rule.name == <span class="string">'isOptional'</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    _hasDefault() &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> rule <span class="keyword">of</span> <span class="keyword">this</span>.rules) &#123;</span><br><span class="line">            <span class="keyword">const</span> defaultValue = rule.params[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">if</span> (rule.name == <span class="string">'isOptional'</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> defaultValue</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    Rule,</span><br><span class="line">    LinValidator</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-3-2-utils-js"><a href="#4-3-2-utils-js" class="headerlink" title="4.3.2 utils.js"></a>4.3.2 <code>utils.js</code></h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> jwt = <span class="built_in">require</span>(<span class="string">'jsonwebtoken'</span>)<span class="comment">//第三方库 ，需要安装</span></span><br><span class="line"><span class="comment">/***</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> findMembers = <span class="function"><span class="keyword">function</span> (<span class="params">instance, &#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    prefix,</span></span></span><br><span class="line"><span class="function"><span class="params">    specifiedType,</span></span></span><br><span class="line"><span class="function"><span class="params">    filter</span></span></span><br><span class="line"><span class="function"><span class="params">&#125;</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 递归函数</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">_find</span>(<span class="params">instance</span>) </span>&#123;</span><br><span class="line">        <span class="comment">//基线条件（跳出递归）</span></span><br><span class="line">        <span class="keyword">if</span> (instance.__proto__ === <span class="literal">null</span>)</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> names = <span class="built_in">Reflect</span>.ownKeys(instance)</span><br><span class="line">        names = names.filter(<span class="function">(<span class="params">name</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 过滤掉不满足条件的属性或方法名</span></span><br><span class="line">            <span class="keyword">return</span> _shouldKeep(name)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> [...names, ..._find(instance.__proto__)]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">_shouldKeep</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (filter) &#123;</span><br><span class="line">            <span class="keyword">if</span> (filter(value)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (prefix)</span><br><span class="line">            <span class="keyword">if</span> (value.startsWith(prefix))</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        <span class="keyword">if</span> (specifiedType)</span><br><span class="line">            <span class="keyword">if</span> (instance[value] <span class="keyword">instanceof</span> specifiedType)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> _find(instance)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//生成令牌</span></span><br><span class="line"><span class="keyword">const</span> generateToken = <span class="function"><span class="keyword">function</span> (<span class="params">uid, scope</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> secretKey = global.config.security.secretKey</span><br><span class="line">    <span class="keyword">const</span> expiresIn = global.config.security.expiresIn</span><br><span class="line">    <span class="keyword">const</span> token = jwt.sign(&#123;</span><br><span class="line">        uid,<span class="comment">//用户id</span></span><br><span class="line">        scope  <span class="comment">//用户权限</span></span><br><span class="line">    &#125;, secretKey, &#123;</span><br><span class="line">        expiresIn: expiresIn</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> token</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    findMembers,</span><br><span class="line">    generateToken,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-3-3-http-exception-js"><a href="#4-3-3-http-exception-js" class="headerlink" title="4.3.3 http-exception.js"></a>4.3.3 <code>http-exception.js</code></h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//统一封装的http错误类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HttpException</span> <span class="keyword">extends</span> <span class="title">Error</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(errorCode=10000,code=400, msg='服务器异常')&#123;</span><br><span class="line">    <span class="keyword">super</span>()</span><br><span class="line">    <span class="keyword">this</span>.errorCode = errorCode <span class="comment">//项目自定义错误码</span></span><br><span class="line">    <span class="keyword">this</span>.code = code <span class="comment">//http状态码</span></span><br><span class="line">    <span class="keyword">this</span>.msg = msg   <span class="comment">//错误描述</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//参数错误类，一般在参数校验错误时使用</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ParameterException</span> <span class="keyword">extends</span> <span class="title">HttpException</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(msg, errorCode)&#123;</span><br><span class="line">    <span class="keyword">super</span>()</span><br><span class="line">    <span class="keyword">this</span>.code = <span class="number">400</span></span><br><span class="line">    <span class="keyword">this</span>.msg = msg || <span class="string">'参数错误'</span></span><br><span class="line">    <span class="keyword">this</span>.errorCode = errorCode || <span class="number">10000</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;HttpException&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-Sequelize-MySQL"><a href="#5-Sequelize-MySQL" class="headerlink" title="5 Sequelize+MySQL"></a>5 Sequelize+MySQL</h2><blockquote>
+<p>关于MySQL的一些使用可以查看<strong>本站分类：tools/MySQL文章</strong></p>
+<p>使用<strong>Sequelize</strong> (一个基于 promise 的 Node.js  ORM）</p>
+<ul>
+<li><a href="https://www.sequelize.com.cn/" target="_blank" rel="noopener">Sequelize官方文档</a></li>
+</ul>
+</blockquote>
+<h3 id="5-1-目录结构"><a href="#5-1-目录结构" class="headerlink" title="5.1 目录结构"></a>5.1 目录结构</h3><blockquote>
+<p>调用关系：</p>
+<ul>
+<li>api/v1/user.js中使用实例化的sequelize实现对数据库的操作，依赖app/models/user.js</li>
+<li>app/models/user.js中定义数据表的字段，以及操作数据的业务流程，依赖core/db.js</li>
+<li>core/db.js 中建立数据库连接，依赖config/config.js</li>
+<li>config/config.js中配置了建立数据库连接相应的信息</li>
+</ul>
+</blockquote>
+<ul>
+<li>core<ul>
+<li>db.js   建立数据库连接</li>
+</ul>
+</li>
+<li>config<ul>
+<li>config.js   配置信息-数据库基本信息</li>
+</ul>
+</li>
+<li>app<ul>
+<li>models  数据模型<ul>
+<li>user.js  通过模型在数据库自动生成数据表</li>
+</ul>
+</li>
+<li>api<ul>
+<li>v1<ul>
+<li>user.js  对数据库中数据进行增删改查</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-2-使用前提"><a href="#5-2-使用前提" class="headerlink" title="5.2 使用前提"></a>5.2 使用前提</h3><ul>
+<li><p>安装<code>sequelize</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i sequelize</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装驱动</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 选择以下之一:</span><br><span class="line">$ npm install --save pg pg-hstore # Postgres</span><br><span class="line">$ npm install --save mysql2    <span class="comment">//使用mysql时安装</span></span><br><span class="line">$ npm install --save mariadb</span><br><span class="line">$ npm install --save sqlite3</span><br><span class="line">$ npm install --save tedious # Microsoft SQL Server</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h3 id="5-3-源码"><a href="#5-3-源码" class="headerlink" title="5.3 源码"></a>5.3 源码</h3><h4 id="5-3-1-config-js"><a href="#5-3-1-config-js" class="headerlink" title="5.3.1 config.js"></a>5.3.1 <code>config.js</code></h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">//数据库配置信息</span></span><br><span class="line">  database : &#123;</span><br><span class="line">    dbName:<span class="string">'blink-backend'</span>,<span class="comment">//数据库名称</span></span><br><span class="line">    user: <span class="string">'root'</span>,<span class="comment">//数据库用户名</span></span><br><span class="line">    password: <span class="string">'123456'</span>,<span class="comment">//数据库用户密码</span></span><br><span class="line">    host: <span class="string">'localhost'</span>,<span class="comment">//数据库主机名 </span></span><br><span class="line">    port:<span class="number">3306</span>,<span class="comment">//数据库端口</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-3-2-db-js"><a href="#5-3-2-db-js" class="headerlink" title="5.3.2 db.js"></a>5.3.2 <code>db.js</code></h4><ul>
+<li>更多参数可以查看—-&gt;<a href="https://sequelize.org/master/class/lib/sequelize.js~Sequelize.html#instance-constructor-constructor" target="_blank" rel="noopener">官方API</a></li>
+<li><strong>注意：<code>timezone: &#39;+08:00&#39;</code></strong><ul>
+<li>一定为’+08:00’，才能以北京的时间来记录所有的时间</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; Model &#125; = <span class="built_in">require</span>(<span class="string">'sequelize'</span>)</span><br><span class="line"><span class="keyword">const</span> Sequelize = <span class="built_in">require</span>(<span class="string">'sequelize'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;unset, clone, isArray&#125; = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;database&#125; = <span class="built_in">require</span>(<span class="string">'../config/config'</span>)<span class="comment">//导入数据库配置信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//参数1：数据库名称  参数2：数据库用户名  参数3：数据库用户密码  参数4：对象（包含多个参数）</span></span><br><span class="line"><span class="keyword">const</span> sequelize = <span class="keyword">new</span> Sequelize(database.dbName, database.user, database.password, &#123;</span><br><span class="line">  host: database.host,<span class="comment">//数据库主机名</span></span><br><span class="line">  port: database.port,<span class="comment">//数据库端口号</span></span><br><span class="line">  dialect: <span class="string">'mysql'</span> ,<span class="comment">/* 选择 'mysql' | 'mariadb' | 'postgres' | 'mssql' 其一 */</span>   <span class="comment">//数据库类型</span></span><br><span class="line">  logging: <span class="literal">true</span>,<span class="comment">//true终端显示数据库操作的sql语句，false则不显示</span></span><br><span class="line">  timezone: <span class="string">'+08:00'</span>,<span class="comment">//-----一定为'+08:00'，才能以北京的时间来记录所有的时间------</span></span><br><span class="line">  define: &#123;</span><br><span class="line">    timestamps:<span class="literal">true</span>,<span class="comment">//false:建表时不自动生成createAt,updateAt字段;true建表时自动生成，，，</span></span><br><span class="line">    paranoid: <span class="literal">true</span>,<span class="comment">//true：自动生成delete_time字段；false：不生成</span></span><br><span class="line">    createdAt: <span class="string">'created_at'</span>,<span class="comment">//重命名自动生成的字段，命名成更符合数据标准的字符形式</span></span><br><span class="line">    updatedAt: <span class="string">'updated_at'</span>,</span><br><span class="line">    deletedAt: <span class="string">'deleted_at'</span>,</span><br><span class="line">    underscored: <span class="literal">true</span>,<span class="comment">//将所有的驼峰命名改成下划线命名</span></span><br><span class="line">    scopes: &#123;<span class="comment">//自定义查询语句，</span></span><br><span class="line">      bh : &#123;<span class="comment">//bh为自定义名称</span></span><br><span class="line">        attributes: &#123;<span class="comment">//查询时调用scope('bh')，则可以在查询时排除以下字段，即查询结果不包含一下字段</span></span><br><span class="line">          exclude : [<span class="string">'updated_at'</span>, <span class="string">'deleted_at'</span>, <span class="string">'created_at'</span>]</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">sequelize.sync(&#123;</span><br><span class="line">  force:<span class="literal">false</span> <span class="comment">//数据库字段更改后自动更新，原理是删除原来的表单（包括数据），再新建表单，开发阶段可使用，上线后不可使用</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//JSON序列化</span></span><br><span class="line">Model.prototype.toJSON = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//浅拷贝 this.dataValues可以拿到模型上所有属性</span></span><br><span class="line">  <span class="keyword">let</span> data = clone(<span class="keyword">this</span>.dataValues)</span><br><span class="line">  <span class="comment">//lodash-unset,移除对象属性</span></span><br><span class="line">  unset(data,<span class="string">'updated_at'</span>)</span><br><span class="line">  unset(data,<span class="string">'created_at'</span>)</span><br><span class="line">  unset(data,<span class="string">'deleted_at'</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// exclude 模型上要删除的字段 提供模型实例自定义需要删除的字段</span></span><br><span class="line">  <span class="comment">//lodash-isArray,判断是否为数组</span></span><br><span class="line">  <span class="keyword">if</span>(isArray(<span class="keyword">this</span>.exclude))&#123;</span><br><span class="line">    <span class="comment">//遍历数组</span></span><br><span class="line">    <span class="keyword">this</span>.exclude.forEach(<span class="function">(<span class="params">value</span>)=&gt;</span>&#123;</span><br><span class="line">      <span class="comment">//移除需要自定义需要删除的字段</span></span><br><span class="line">      unset(data,value)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> data</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  sequelize</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-3-3-app-models-user-js"><a href="#5-3-3-app-models-user-js" class="headerlink" title="5.3.3 app/models/user.js"></a>5.3.3 <code>app/models/user.js</code></h4><p><strong>模型功能：</strong></p>
+<ul>
+<li>定义数据库中表单各字段</li>
+<li>自定义相关数据库操作的函数（也包括一部分业务逻辑）</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bcrypt = <span class="built_in">require</span>(<span class="string">'bcrypt'</span>)<span class="comment">//密码加密库</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">  sequelize</span><br><span class="line">&#125; = <span class="built_in">require</span>(<span class="string">'../../core/db'</span>) <span class="comment">//导入实例化的sequelize</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">  Sequelize,</span><br><span class="line">  Model</span><br><span class="line">&#125; = <span class="built_in">require</span>(<span class="string">'sequelize'</span>) <span class="comment">//导入原生类sequelize,模型Model</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//在数据库中通过user模型新建表单</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> <span class="title">Model</span> </span>&#123;</span><br><span class="line">  <span class="comment">//相关数据库操作的自定义函数</span></span><br><span class="line">  <span class="comment">//登录校验 判断用户名是否存在，密码是否正确</span></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">async</span> verifyEmailPassword(email, plainPassword)&#123;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> User.findOne(&#123;</span><br><span class="line">      where: &#123;</span><br><span class="line">        email</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">if</span>(!user)&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> global.errs.AuthFailed(<span class="string">'用户名不存在'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//对比输入密码与数据库中密码是否一致</span></span><br><span class="line">    <span class="keyword">const</span> res = bcrypt.compareSync(plainPassword, user.password)</span><br><span class="line">    <span class="keyword">if</span>(!res)&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> global.errs.AuthFailed(<span class="string">'密码错误'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> user</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义表单各字段</span></span><br><span class="line">User.init(&#123;</span><br><span class="line">  id: &#123;</span><br><span class="line">    type: Sequelize.INTEGER, <span class="comment">//设置属性数据类型为字符串</span></span><br><span class="line">    primaryKey: <span class="literal">true</span>, <span class="comment">//设置该属性为主键</span></span><br><span class="line">    autoIncrement: <span class="literal">true</span> <span class="comment">//数据库自动的生成自增长的id编号，添加用户时不用传入该属性值</span></span><br><span class="line">  &#125;,</span><br><span class="line">  nickname: Sequelize.STRING, <span class="comment">//设置属性数据类型为字符串</span></span><br><span class="line">  email: &#123;</span><br><span class="line">    type: Sequelize.STRING(<span class="number">128</span>), <span class="comment">//设置属性数据类型为字符串，且最多64个字符</span></span><br><span class="line">    unique: <span class="literal">true</span> <span class="comment">//设置属性值唯一，不可重复</span></span><br><span class="line">  &#125;,</span><br><span class="line">  password: &#123;</span><br><span class="line">    type: Sequelize.STRING,</span><br><span class="line">    <span class="comment">//观察password的变化，每次有变化则调用下面的函数</span></span><br><span class="line">    <span class="comment">//对password进行加密操作</span></span><br><span class="line">    <span class="keyword">set</span>(val)&#123;</span><br><span class="line">      <span class="keyword">const</span> salt = bcrypt.genSaltSync(<span class="number">10</span>)<span class="comment">//传入数字越大则密码加密越难，成本消耗更大，一般设置为10</span></span><br><span class="line">      <span class="keyword">const</span> psw = bcrypt.hashSync(val,salt)</span><br><span class="line">      <span class="keyword">this</span>.setDataValue(<span class="string">'password'</span>,psw)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  openid: &#123;</span><br><span class="line">    type: Sequelize.STRING(<span class="number">64</span>), <span class="comment">//设置属性数据类型为字符串，且最多64个字符</span></span><br><span class="line">    unique: <span class="literal">true</span> <span class="comment">//设置属性值唯一，不可重复</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  sequelize: sequelize,<span class="comment">//传入实例化的sequelize,用于建立数据库连接</span></span><br><span class="line">  tableName:<span class="string">'user'</span><span class="comment">//定义表单的名称</span></span><br><span class="line">&#125;) </span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  User</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-3-4-app-api-v1-user-js"><a href="#5-3-4-app-api-v1-user-js" class="headerlink" title="5.3.4 app/api/v1/user.js"></a>5.3.4 <code>app/api/v1/user.js</code></h4><ul>
+<li>在路由中通过实例化的sequelize数据模型对数据进行增删改查，下面例子为插入数据库操作</li>
+<li>增删改查语法请查看：<a href="https://www.sequelize.com.cn/core-concepts/model-querying-basics" target="_blank" rel="noopener">sequelize官方文档</a></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;RegisterValidater&#125; = <span class="built_in">require</span>(<span class="string">'../../validators/validator'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; User &#125; = <span class="built_in">require</span>(<span class="string">'../../models/user'</span>)</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> Router(&#123;</span><br><span class="line">  prefix: <span class="string">'/v1/user'</span><span class="comment">//设置路由的基地址 </span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//用户注册路由   </span></span><br><span class="line"><span class="comment">//拼接后的路由地址为：/v1/user/register</span></span><br><span class="line">router.post(<span class="string">'/register'</span>, <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">  <span class="comment">//1 参数校验</span></span><br><span class="line">  <span class="keyword">const</span> v = <span class="keyword">await</span> <span class="keyword">new</span> RegisterValidater().validate(ctx)</span><br><span class="line">  <span class="comment">//2 获取并整理参数</span></span><br><span class="line">  <span class="keyword">const</span> user = &#123;</span><br><span class="line">    nickname : v.get(<span class="string">'body.nickname'</span>),</span><br><span class="line">    password : v.get(<span class="string">'body.password2'</span>),</span><br><span class="line">    email : v.get(<span class="string">'body.email'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//3 用sequelize实例化的模型将数据插入数据库</span></span><br><span class="line">  <span class="keyword">await</span> User.create(user)</span><br><span class="line">  <span class="comment">//4 返回前端操作成功</span></span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> global.errs.Success() </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-注册及登录模块"><a href="#6-注册及登录模块" class="headerlink" title="6 注册及登录模块"></a>6 注册及登录模块</h2><blockquote>
+<p>此部分源码只列出了入口部分，依赖的其他源码可查看<a href="https://github.com/ChuckieWill/node-server-koa2" target="_blank" rel="noopener">本项目github上的源码</a></p>
+</blockquote>
+<h3 id="6-1-目录结构"><a href="#6-1-目录结构" class="headerlink" title="6.1 目录结构"></a>6.1 目录结构</h3><ul>
+<li>app<ul>
+<li>api <ul>
+<li>v1<ul>
+<li>user.js  用户注册（邮箱注册方式）</li>
+<li>token.js 用户登录（包括小程序、web等多种登录方式，本质是身份验证并返回token）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>validators<ul>
+<li>validator.js 参数校验（注册和登录参数的校验）</li>
+</ul>
+</li>
+<li>models<ul>
+<li>user.js 操作数据库的用户模型（操作数据库的相关业务逻辑写在这里）</li>
+</ul>
+</li>
+<li>lib<ul>
+<li>enum.js 枚举，定义一些常量（用户类型、用户权限）</li>
+</ul>
+</li>
+<li>services<ul>
+<li>wx.js   相关微信小程序登录的业务逻辑（app/models/user.js用户模型的上一层）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>core<ul>
+<li>utils.js 封装生成token的函数</li>
+</ul>
+</li>
+<li>middlewares<ul>
+<li>auth.js   token令牌验证</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-2-用户注册"><a href="#6-2-用户注册" class="headerlink" title="6.2 用户注册"></a>6.2 用户注册</h3><blockquote>
+<p>这里的注册只针对于邮箱注册</p>
+</blockquote>
+<p><strong>注册流程：</strong></p>
+<ol>
+<li>参数校验 （校验器源码：app/validators/validator.js - RegisterValidater）<ul>
+<li>参数要求：<ul>
+<li>nickname :用户昵称</li>
+<li>password : 用户密码</li>
+<li>email :用户邮箱，唯一标识，不可重复</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>写入数据库 （调用User模型：app/models/user.js）</li>
+<li>返回前端操作结果</li>
+</ol>
+<p><strong>源码：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//app/api/v1/user.js</span></span><br><span class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;RegisterValidater&#125; = <span class="built_in">require</span>(<span class="string">'../../validators/validator'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123; User &#125; = <span class="built_in">require</span>(<span class="string">'../../models/user'</span>)</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> Router(&#123;</span><br><span class="line">  prefix: <span class="string">'/v1/user'</span><span class="comment">//设置路由的基地址 </span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//用户注册路由   </span></span><br><span class="line"><span class="comment">//拼接后的路由地址为：/v1/user/register</span></span><br><span class="line">router.post(<span class="string">'/register'</span>, <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">  <span class="comment">//1 参数校验</span></span><br><span class="line">  <span class="keyword">const</span> v = <span class="keyword">await</span> <span class="keyword">new</span> RegisterValidater().validate(ctx)</span><br><span class="line">  <span class="comment">//2 获取并整理参数</span></span><br><span class="line">  <span class="keyword">const</span> user = &#123;</span><br><span class="line">    nickname : v.get(<span class="string">'body.nickname'</span>),</span><br><span class="line">    password : v.get(<span class="string">'body.password2'</span>),</span><br><span class="line">    email : v.get(<span class="string">'body.email'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//3 用sequelize实例化的模型将数据插入数据库</span></span><br><span class="line">  <span class="keyword">await</span> User.create(user)</span><br><span class="line">  <span class="comment">//4 返回前端操作成功</span></span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> global.errs.Success() </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-用户登录"><a href="#6-3-用户登录" class="headerlink" title="6.3 用户登录"></a>6.3 用户登录</h3><blockquote>
+<p>登录的本质是验证身份合法性并获取token</p>
+<p>登录包括多种方式：</p>
+<ul>
+<li>小程序用户登录</li>
+<li>web邮箱登录</li>
+</ul>
+</blockquote>
+<p><strong>登录路由源码：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//app/api/v1/token.js</span></span><br><span class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">  TokenValidator,</span><br><span class="line">  NotEmptyValidator</span><br><span class="line">&#125; = <span class="built_in">require</span>(<span class="string">'../../validators/validator'</span>) <span class="comment">//登录参数校验</span></span><br><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">  LoginType</span><br><span class="line">&#125; = <span class="built_in">require</span>(<span class="string">'../../lib/enum'</span>) <span class="comment">//登录方式枚举</span></span><br><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">  User</span><br><span class="line">&#125; = <span class="built_in">require</span>(<span class="string">'../../models/user'</span>) <span class="comment">//用户模型，操作数据库</span></span><br><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">  generateToken</span><br><span class="line">&#125; = <span class="built_in">require</span>(<span class="string">'../../../core/utils'</span>) <span class="comment">//生成token令牌</span></span><br><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">  Auth</span><br><span class="line">&#125; = <span class="built_in">require</span>(<span class="string">'../../../middlewares/auth'</span>) <span class="comment">//用户不同角色权限校验</span></span><br><span class="line"><span class="keyword">const</span> &#123;</span><br><span class="line">  WXManager</span><br><span class="line">&#125; = <span class="built_in">require</span>(<span class="string">'../../services/wx'</span>) <span class="comment">//微信小程序登录相关业务逻辑</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> Router(&#123;</span><br><span class="line">  prefix: <span class="string">'/v1/token'</span> <span class="comment">//设置路由的基地址 </span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//登录获取token接口</span></span><br><span class="line">router.post(<span class="string">'/'</span>, <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> token</span><br><span class="line">  <span class="comment">//1 参数校验</span></span><br><span class="line">  <span class="keyword">const</span> v = <span class="keyword">await</span> <span class="keyword">new</span> TokenValidator().validate(ctx)</span><br><span class="line">  <span class="comment">//2 根据不同的登录方式进行登录校验</span></span><br><span class="line">  <span class="keyword">switch</span> (v.get(<span class="string">'body.type'</span>)) &#123;</span><br><span class="line">    <span class="comment">//--------------------------web邮箱登录-------------------------</span></span><br><span class="line">    <span class="keyword">case</span> LoginType.USER_EMAIL:</span><br><span class="line">      token = <span class="keyword">await</span> emailLogin(v.get(<span class="string">'body.account'</span>), v.get(<span class="string">'body.secret'</span>))</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">      <span class="comment">//-----------------------微信小程序登录--------------------------</span></span><br><span class="line">    <span class="keyword">case</span> LoginType.USER_MINI_PROGRAM:</span><br><span class="line">      token = <span class="keyword">await</span> WXManager.codeToToken(v.get(<span class="string">'body.account'</span>))</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> global.errs.ParameterException(<span class="string">'该登录方式暂没有相应的处理处理函数'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//3 将数据返回前端</span></span><br><span class="line">  ctx.body = &#123;</span><br><span class="line">    token</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//--------------------------token校验接口(验证该token是否有效)--------------------</span></span><br><span class="line">router.post(<span class="string">'/verify'</span>, <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">  <span class="comment">//1 参数验证</span></span><br><span class="line">  <span class="keyword">const</span> v = <span class="keyword">await</span> <span class="keyword">new</span> NotEmptyValidator().validate(ctx)</span><br><span class="line">  <span class="comment">//2 验证token是否有效</span></span><br><span class="line">  <span class="keyword">const</span> result = Auth.verifyToken(v.get(<span class="string">'body.token'</span>))</span><br><span class="line">  <span class="comment">//3 返回前端验证结果</span></span><br><span class="line">  ctx.body = &#123;</span><br><span class="line">    result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//web邮箱登录获取token</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">emailLogin</span>(<span class="params">account, password</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> user = <span class="keyword">await</span> User.verifyEmailPassword(account, password)</span><br><span class="line">  <span class="keyword">const</span> token = generateToken(user.id, Auth.USER)</span><br><span class="line">  <span class="keyword">return</span> token</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="6-3-1-web邮箱登录"><a href="#6-3-1-web邮箱登录" class="headerlink" title="6.3.1 web邮箱登录"></a>6.3.1 web邮箱登录</h4><p><strong>登录流程：</strong></p>
+<p><em>需要先调用注册接口注册</em></p>
+<ol>
+<li>参数校验 （校验器源码：app/validators/validator.js - TokenValidator）<ul>
+<li>参数要求：<ul>
+<li>account: 账户即为邮箱</li>
+<li>secret: 用户密码</li>
+<li>type： 登录方式（101）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>身份验证 （调用User模型的方法： app/models/user.js）<ul>
+<li>数据库中查找该用户是否存在</li>
+<li>用户名与密码是否匹配    (调用加密库<code>bcryp</code>t对加密的密码比对)</li>
+</ul>
+</li>
+<li>生成token并返回前端  (调用：core/utils.js - generateToken)<ul>
+<li>在token中保存用户id：uid 和用户权限角色：scope</li>
+</ul>
+</li>
+</ol>
+<h4 id="6-3-2-小程序登录"><a href="#6-3-2-小程序登录" class="headerlink" title="6.3.2 小程序登录"></a>6.3.2 小程序登录</h4><p><strong>登录流程：</strong></p>
+<p><em>不需要注册，直接在小程序端发来js_code即可</em></p>
+<ol>
+<li>参数校验 （校验器源码：app/validators/validator.js - TokenValidator）<ul>
+<li>参数要求：<ul>
+<li>account: 账户即为js_code</li>
+<li>secret: 不用传</li>
+<li>type： 登录方式（100）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>获取openid (源码：app/services/wx.js)<ul>
+<li>向微信发送请求获取openid,相当于微信帮忙做了用户身份验证，若返回openid则用户身份合法</li>
+</ul>
+</li>
+<li>写入数据库 (源码：app/models/user.js)<ul>
+<li>通过openid在数据中查找用户，若没有查到则写入数据库（相当于注册）</li>
+</ul>
+</li>
+<li>生成token并返回前端  (调用：core/utils.js - generateToken)</li>
+</ol>
+<h3 id="6-4-token校验"><a href="#6-4-token校验" class="headerlink" title="6.4 token校验"></a>6.4 token校验</h3><blockquote>
+<p><a href="https://jwt.io/" target="_blank" rel="noopener">jsonwebtoken官网</a></p>
+</blockquote>
+<p><strong>校验流程：</strong></p>
+<ol>
+<li>参数校验 （校验器源码：app/validators/validator.js -NotEmptyValidator）<ul>
+<li>参数:token</li>
+</ul>
+</li>
+<li>验证token是否有效 （源码：middlewares/auth.js）</li>
+<li>返回前端验证结果</li>
+</ol>
+<p><strong>验证意义：</strong>调用的<code>jsonwebtoken</code>库验证的token, 只有token有效时（没过期，正确）才返回正确，否则返回false</p>
+<h3 id="6-5-用户权限验证"><a href="#6-5-用户权限验证" class="headerlink" title="6.5 用户权限验证"></a>6.5 用户权限验证</h3><blockquote>
+<p>使用<code>basic-auth</code>库，解析前端通过base64加密的token</p>
+</blockquote>
+<p><strong>验证包括：</strong></p>
+<ul>
+<li>是否有token，token是否过期、是否合法<ul>
+<li><strong>要求前端以<code>http-basic-auth</code>方式给后端传递token</strong></li>
+</ul>
+</li>
+<li>用户角色是否有权限（普通用户、管理员、超级管理员）</li>
+</ul>
+<p><strong>源码：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//middlewares/auth.js</span></span><br><span class="line"><span class="comment">//令牌验证</span></span><br><span class="line"><span class="keyword">const</span> basicAuth = <span class="built_in">require</span>(<span class="string">'basic-auth'</span>)<span class="comment">//解析HpptBasicAuth方式传递的令牌</span></span><br><span class="line"><span class="keyword">const</span> jwt = <span class="built_in">require</span>(<span class="string">'jsonwebtoken'</span>)<span class="comment">//令牌处理库</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Auth</span> </span>&#123;</span><br><span class="line">  <span class="comment">//实例化类时传入具体API的访问级别（可访问的角色）</span></span><br><span class="line">  <span class="keyword">constructor</span>(level)&#123;</span><br><span class="line">    <span class="keyword">this</span>.level = level || <span class="number">1</span><span class="comment">//设置实例化的api权限要求</span></span><br><span class="line">    <span class="comment">//类变量-scope角色定义</span></span><br><span class="line">    Auth.USER = <span class="number">8</span> <span class="comment">//普通用户</span></span><br><span class="line">    Auth.ADMIN = <span class="number">16</span> <span class="comment">//管理员</span></span><br><span class="line">    Auth.SUPER_ADMIN = <span class="number">32</span> <span class="comment">//超级管理员</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//属性</span></span><br><span class="line">  <span class="keyword">get</span> m()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">      <span class="comment">//获取前端传来的token</span></span><br><span class="line">      <span class="keyword">const</span> userToken = basicAuth(ctx.req)<span class="comment">//用basicAuth解析前端通过base64加密的token</span></span><br><span class="line">      <span class="comment">//token不存在则阻止访问</span></span><br><span class="line">      <span class="keyword">if</span>(!userToken || !userToken.name)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> global.errs.Forbbiden(<span class="string">'未传token'</span>)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//验证token是否合法</span></span><br><span class="line">        <span class="keyword">var</span> decode = jwt.verify(userToken.name, global.config.security.secretKey)</span><br><span class="line">      &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">        <span class="keyword">if</span>(error.name == <span class="string">'TokenExpiredError'</span>)&#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> global.errs.Forbbiden(<span class="string">'token已过期'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> global.errs.Forbbiden(<span class="string">'token不合法'</span>)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">//权限判断（用户角色判断），</span></span><br><span class="line">      <span class="keyword">if</span>(decode.scope &lt; <span class="keyword">this</span>.level)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> global.errs.Forbbiden(<span class="string">'权限不够'</span>)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">//将保存在jwt中的用户id:uid和scop取出</span></span><br><span class="line">      <span class="comment">//并保存在上下文auth中，便于随时使用</span></span><br><span class="line">      ctx.auth = &#123;</span><br><span class="line">        uid: decode.uid,</span><br><span class="line">        scope: decode.scope</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">await</span> next() <span class="comment">//执行具体业务逻辑的中间件</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  Auth</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用：</strong></p>
+<ul>
+<li>在具体路由中加入这个中间件，先作一层校验，一定是加在业务逻辑中间件前面</li>
+<li><code>new Auth(LoginAuth.ADMIN).m</code><ul>
+<li>LoginAuth.ADMIN: 传入可以访问的权限限制  (更多等级可以查看源码：app/lib/enum.js)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;Auth&#125; = <span class="built_in">require</span>(<span class="string">'../../../middlewares/auth'</span>)</span><br><span class="line"><span class="keyword">const</span> &#123;LoginAuth&#125; = <span class="built_in">require</span>(<span class="string">'../../lib/enum'</span>)<span class="comment">//可以访问该接口的权限枚举</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> Router(&#123;</span><br><span class="line">  prefix: <span class="string">'/v1/classic'</span><span class="comment">//设置路由的基地址 </span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注册中间件</span></span><br><span class="line">router.get(<span class="string">'/latest'</span>, <span class="keyword">new</span> Auth(LoginAuth.ADMIN).m, <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">	<span class="comment">//路由具体业务逻辑</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = router</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-5-1-前端以basic-auth方式给后端传递token"><a href="#6-5-1-前端以basic-auth方式给后端传递token" class="headerlink" title="6.5.1 前端以basic-auth方式给后端传递token"></a>6.5.1 前端以<code>basic-auth</code>方式给后端传递token</h4><blockquote>
+<p>用户在访问接口时需要进行用户权限验证，其中就包括token的验证，因此需要前端每次在请求接口时携带上token,本项目统一规定以<code>basic-auth</code>的方式在header中传给后端。关于前端如何在header中以<code>basic-auth</code>的方式传递token给后端,下面有详细讲解</p>
+</blockquote>
+<ul>
+<li><p>1 安装<a href="https://www.npmjs.com/package/js-base64" target="_blank" rel="noopener"><code>js-base64</code></a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i js-base64</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li><p>2 对token进行base64加密</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//给token进行base64加密</span></span><br><span class="line">encode()&#123;</span><br><span class="line">    <span class="keyword">const</span> token = wx.getStorageSync(<span class="string">'token'</span>)</span><br><span class="line">    <span class="keyword">const</span> base64 = Base64.encode(token+<span class="string">":"</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Basic '</span>+base64</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3 将base64加密的token通过<code>basic-auth</code>传递给后端</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">header:&#123;</span><br><span class="line">    Authorization: encode() <span class="comment">//将加密的token传递在header中传递给前端</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>案例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Base64&#125; <span class="keyword">from</span> <span class="string">'js-base64'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//小程序端以`basic-auth`方式携带token向后端发请求</span></span><br><span class="line">wx.request(&#123;</span><br><span class="line">  url: <span class="string">'http://localhost:3000/v1/classic/latest'</span>,</span><br><span class="line">  method: <span class="string">"GET"</span>,</span><br><span class="line">  header:&#123;</span><br><span class="line">    Authorization: encode() <span class="comment">//将加密的token传递在header中传递给前端</span></span><br><span class="line">  &#125;,</span><br><span class="line">  success: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//web端以`basic-auth`方式携带token向后端发请求</span></span><br><span class="line">axios.get(<span class="string">'http://localhost:3000/v1/classic/latest'</span>,&#123;</span><br><span class="line">   headers:&#123;</span><br><span class="line">    Authorization: encode() <span class="comment">//将加密的token传递在header中传递给前端</span></span><br><span class="line">  &#125;, </span><br><span class="line">&#125;).then(<span class="function">(<span class="params">res</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//给token进行base64加密</span></span><br><span class="line">encode()&#123;</span><br><span class="line">    <span class="keyword">const</span> token = wx.getStorageSync(<span class="string">'token'</span>)</span><br><span class="line">    <span class="keyword">const</span> base64 = Base64.encode(token+<span class="string">":"</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Basic '</span>+base64</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h1 id="三、辅助库"><a href="#三、辅助库" class="headerlink" title="三、辅助库"></a>三、辅助库</h1><h2 id="1-密码加密处理"><a href="#1-密码加密处理" class="headerlink" title="1 密码加密处理"></a>1 密码加密处理</h2><ol>
+<li><p>安装<code>bcrypt</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i bcrypt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bcrypt = <span class="built_in">require</span>(<span class="string">'bcrypt'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//加密</span></span><br><span class="line"><span class="keyword">const</span> salt = bcrypt.genSaltSync(<span class="number">10</span>)<span class="comment">//传入数字越大则密码加密越难，成本消耗更大，一般设置为10</span></span><br><span class="line"><span class="keyword">const</span> psw = bcrypt.hashSync(<span class="string">'123456'</span>,salt)<span class="comment">//psw即为‘123456’加密码后的密码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//密码校验</span></span><br><span class="line"><span class="comment">//plainPassword是原密码，user.password是加密后的密码</span></span><br><span class="line"><span class="comment">//若原密码与加密密码是一致的则返回true</span></span><br><span class="line"><span class="keyword">const</span> res = bcrypt.compareSync(plainPassword, user.password)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="2-生成令牌"><a href="#2-生成令牌" class="headerlink" title="2 生成令牌"></a>2 生成令牌</h2><blockquote>
+<p><a href="https://www.npmjs.com/package/jsonwebtoken" target="_blank" rel="noopener"><code>jsonwebtoken</code>官网</a></p>
+</blockquote>
+<ol>
+<li><p>安装<code>jsonwebtoken</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i jsonwebtoken</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> jwt = <span class="built_in">require</span>(<span class="string">'jsonwebtoken'</span>)<span class="comment">//第三方库 ，需要安装</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//生成令牌</span></span><br><span class="line"><span class="keyword">const</span> generateToken = <span class="function"><span class="keyword">function</span> (<span class="params">uid, scope</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> secretKey = global.config.security.secretKey</span><br><span class="line">    <span class="keyword">const</span> expiresIn = global.config.security.expiresIn</span><br><span class="line">    <span class="keyword">const</span> token = jwt.sign(&#123;</span><br><span class="line">        uid,<span class="comment">//用户id</span></span><br><span class="line">        scope  <span class="comment">//用户权限</span></span><br><span class="line">    &#125;, secretKey, &#123;</span><br><span class="line">        expiresIn: expiresIn</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> token</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ol>
+<h2 id="3-Sequelize"><a href="#3-Sequelize" class="headerlink" title="3 Sequelize"></a>3 Sequelize</h2><blockquote>
+<p>Sequelize使用的详细教程请查看：<a href="https://www.sequelize.com.cn/" target="_blank" rel="noopener">Sequelize官方文档</a></p>
+<p>以下部分主要总结了<code>sequelize</code>一些常用功能的使用方法</p>
+</blockquote>
+<h3 id="3-1-in查询"><a href="#3-1-in查询" class="headerlink" title="3.1 in查询"></a>3.1 in查询</h3><blockquote>
+<p>转入：数组（记录的属性）、   返回：数组（记录）</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//记录中有id属性， ids是一个数组，数组内容为多个id号</span></span><br><span class="line"><span class="comment">// Op.in  需要导入Op   ---- const &#123;Op&#125; = require(sequelize)</span></span><br><span class="line">where: &#123;</span><br><span class="line">    id: &#123;</span><br><span class="line">      [Op.in]: ids<span class="comment">// in查询，避免循环查询数据库  ids是要查找的数据id数组</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-查询结果排除特定属性"><a href="#3-2-查询结果排除特定属性" class="headerlink" title="3.2 查询结果排除特定属性"></a>3.2 查询结果排除特定属性</h3><blockquote>
+<p>定义在Model上</p>
+<p>使用场景：实例化的对象查询的数据都需要排除某些属性</p>
+</blockquote>
+<ul>
+<li><p>定义排除的属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//下面定义了所有查询结果都排除'updated_at', 'deleted_at', 'created_at'属性</span></span><br><span class="line"><span class="keyword">const</span> sequelize = <span class="keyword">new</span> Sequelize(....., &#123;</span><br><span class="line">    define: &#123;</span><br><span class="line">		scopes: &#123;<span class="comment">//自定义查询语句，</span></span><br><span class="line">          bh : &#123;<span class="comment">//bh为自定义名称</span></span><br><span class="line">            attributes: &#123;<span class="comment">//查询时调用scope('bh')，则可以在查询时排除以下字段，即查询结果不包含一下字段</span></span><br><span class="line">              exclude : [<span class="string">'updated_at'</span>, <span class="string">'deleted_at'</span>, <span class="string">'created_at'</span>]</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用时在实例对象上加上`scope('bh')`  bh就是上面自定义的名称</span></span><br><span class="line">Movie.scope(<span class="string">'bh'</span>).findAll(....)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="3-3-不包括属性的某个值"><a href="#3-3-不包括属性的某个值" class="headerlink" title="3.3 不包括属性的某个值"></a>3.3 不包括属性的某个值</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// type为属性名， 400是属性的某一个值， type允许的值可以有：100,200,300,400</span></span><br><span class="line"><span class="comment">// 查询结果是所有记录除了type属性值为400记录</span></span><br><span class="line">where: &#123;</span><br><span class="line">        type: &#123;</span><br><span class="line">          [Op.not]: <span class="number">400</span><span class="comment">//不包括400</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-事务-数据一致性"><a href="#3-4-事务-数据一致性" class="headerlink" title="3.4 事务(数据一致性)"></a>3.4 事务(数据一致性)</h3><blockquote>
+<p>事务，确保数据的一致性（两个操作保持一致，要么都操作，要么都没有操作）</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//下面是确保了删除和-1操作能一致进行</span></span><br><span class="line">   sequelize.transaction(<span class="keyword">async</span> t =&gt; &#123;</span><br><span class="line">      <span class="comment">//删除favor表单的点赞记录</span></span><br><span class="line">      <span class="keyword">await</span> favor.destroy(&#123;</span><br><span class="line">        force: <span class="literal">true</span>,<span class="comment">//false为物理删除，true为软删除</span></span><br><span class="line">        transaction: t</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="comment">//将相应期刊表单中点赞数量-1</span></span><br><span class="line">      <span class="keyword">const</span> art = <span class="keyword">await</span> Art.getData(art_id, type)</span><br><span class="line">      <span class="keyword">await</span> art.decrement(<span class="string">'fav_nums'</span>,&#123;<span class="attr">by</span>:<span class="number">1</span>, <span class="attr">transaction</span>: t&#125;)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-删除操作"><a href="#3-5-删除操作" class="headerlink" title="3.5 删除操作"></a>3.5 删除操作</h3><blockquote>
+<p>destory关键字</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//favor为查询返回的一条记录的实例化对象</span></span><br><span class="line">favor.destroy(&#123;</span><br><span class="line">        force: <span class="literal">true</span>,<span class="comment">//false为物理删除，true为软删除</span></span><br><span class="line">      &#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-6-属性-1-1"><a href="#3-6-属性-1-1" class="headerlink" title="3.6 属性+1-1"></a>3.6 属性+1-1</h3><blockquote>
+<p>decrement: -1</p>
+<p>increment: +1</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//art为查询返回的一条记录的实例化对象  fav_nums是记录的一个属性</span></span><br><span class="line"><span class="comment">//下面的操作是给fav_nums属性值-1</span></span><br><span class="line">art.decrement(<span class="string">'fav_nums'</span>,&#123;<span class="attr">by</span>:<span class="number">1</span>, <span class="attr">transaction</span>: t&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-7-排序"><a href="#3-7-排序" class="headerlink" title="3.7 排序"></a>3.7 排序</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HotBook.findAll(&#123;</span><br><span class="line">      order: [</span><br><span class="line">        <span class="string">'id'</span><span class="comment">//以id属性升序查询</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/koa/" rel="tag"># koa</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/22/CSS/css/CSS(0x02)-css%E9%9A%8F%E7%AC%94/" rel="prev" title="CSS(0x02)-css随笔">
+      <i class="fa fa-chevron-left"></i> CSS(0x02)-css随笔
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/02/node/node/node/" rel="next" title="node">
+      node <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、koa基础"><span class="nav-text">一、koa基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-koa简介"><span class="nav-text">1 koa简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-koa使用基础及流程"><span class="nav-text">2 koa使用基础及流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-入口文件"><span class="nav-text">2.1 入口文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-koa中间件"><span class="nav-text">2.2 koa中间件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-koa-router"><span class="nav-text">2.3 koa-router</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-koa获取请求参数"><span class="nav-text">3 koa获取请求参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、项目框架"><span class="nav-text">二、项目框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-全局异常处理中间件"><span class="nav-text">1 全局异常处理中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-目录结构"><span class="nav-text">1.1 目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-使用前提"><span class="nav-text">1.2 使用前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-源码"><span class="nav-text">1.3 源码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-http错误类"><span class="nav-text">2 http错误类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-目录结构"><span class="nav-text">2.1 目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-源码"><span class="nav-text">2.2 源码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-koa路由框架"><span class="nav-text">3 koa路由框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-目录结构"><span class="nav-text">3.1 目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-使用前提"><span class="nav-text">3.2 使用前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-源码"><span class="nav-text">3.3 源码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-校验器-参数校验"><span class="nav-text">4 校验器(参数校验)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-目录结构"><span class="nav-text">4.1 目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-使用前提"><span class="nav-text">4.2 使用前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-源码"><span class="nav-text">4.3 源码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-lin-validator-js"><span class="nav-text">4.3.1 lin-validator.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-utils-js"><span class="nav-text">4.3.2 utils.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-3-http-exception-js"><span class="nav-text">4.3.3 http-exception.js</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Sequelize-MySQL"><span class="nav-text">5 Sequelize+MySQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-目录结构"><span class="nav-text">5.1 目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-使用前提"><span class="nav-text">5.2 使用前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-源码"><span class="nav-text">5.3 源码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-1-config-js"><span class="nav-text">5.3.1 config.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-2-db-js"><span class="nav-text">5.3.2 db.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-3-app-models-user-js"><span class="nav-text">5.3.3 app&#x2F;models&#x2F;user.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-4-app-api-v1-user-js"><span class="nav-text">5.3.4 app&#x2F;api&#x2F;v1&#x2F;user.js</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-注册及登录模块"><span class="nav-text">6 注册及登录模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-目录结构"><span class="nav-text">6.1 目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-用户注册"><span class="nav-text">6.2 用户注册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-用户登录"><span class="nav-text">6.3 用户登录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3-1-web邮箱登录"><span class="nav-text">6.3.1 web邮箱登录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3-2-小程序登录"><span class="nav-text">6.3.2 小程序登录</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-4-token校验"><span class="nav-text">6.4 token校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-5-用户权限验证"><span class="nav-text">6.5 用户权限验证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-5-1-前端以basic-auth方式给后端传递token"><span class="nav-text">6.5.1 前端以basic-auth方式给后端传递token</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、辅助库"><span class="nav-text">三、辅助库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-密码加密处理"><span class="nav-text">1 密码加密处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-生成令牌"><span class="nav-text">2 生成令牌</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Sequelize"><span class="nav-text">3 Sequelize</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-in查询"><span class="nav-text">3.1 in查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-查询结果排除特定属性"><span class="nav-text">3.2 查询结果排除特定属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-不包括属性的某个值"><span class="nav-text">3.3 不包括属性的某个值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-事务-数据一致性"><span class="nav-text">3.4 事务(数据一致性)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-删除操作"><span class="nav-text">3.5 删除操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-属性-1-1"><span class="nav-text">3.6 属性+1-1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-排序"><span class="nav-text">3.7 排序</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chuckie"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Chuckie</p>
+  <div class="site-description" itemprop="description">Bright future</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ChuckieWill" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ChuckieWill" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/codewyj.163.com" title="E-Mail → codewyj.163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jianshu.com/u/de627226656c" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;de627226656c" rel="noopener" target="_blank">简书</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="/images/me.png"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chuckie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:04</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

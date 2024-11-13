@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="vscode使用0 快捷键">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vscode使用">
+<meta property="og:url" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/index.html">
+<meta property="og:site_name" content="Chuckie&#39;s Blog">
+<meta property="og:description" content="vscode使用0 快捷键">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/8140656-62cf5ba118c0f093.webp">
+<meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/8140656-cf268cb03b01e407.webp">
+<meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/image-20200916165531823.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/image-20211111095757475.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/image-20220524212212158.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/image-20220524212249784.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/image-20220524212309871.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/image-20200803170824816.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/image-20201016235543062.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/image-20201017000155900.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/image-20201002172840458.png">
+<meta property="article:published_time" content="2020-01-01T13:06:17.000Z">
+<meta property="article:modified_time" content="2024-09-18T15:06:07.711Z">
+<meta property="article:author" content="Chuckie">
+<meta property="article:tag" content="vscode">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/01/01/tools/vscode/vscode/8140656-62cf5ba118c0f093.webp">
+
+<link rel="canonical" href="http://yoursite.com/2020/01/01/tools/vscode/vscode/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>vscode使用 | Chuckie's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chuckie's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/01/tools/vscode/vscode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vscode使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-01 21:06:17" itemprop="dateCreated datePublished" datetime="2020-01-01T21:06:17+08:00">2020-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/vscode/" itemprop="url" rel="index"><span itemprop="name">vscode</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="vscode使用"><a href="#vscode使用" class="headerlink" title="vscode使用"></a>vscode使用</h1><h2 id="0-快捷键"><a href="#0-快捷键" class="headerlink" title="0 快捷键"></a>0 快捷键</h2><h3 id="0-1函数查看和回退"><a href="#0-1函数查看和回退" class="headerlink" title="0.1函数查看和回退"></a>0.1函数查看和回退</h3><blockquote>
+<p><a href="https://blog.csdn.net/Dallas01/article/details/130362099" target="_blank" rel="noopener">VScode函数跳转，再返回，快捷键设置和自定义</a></p>
+</blockquote>
+<ul>
+<li>查看函数： ctrl + 点击要查看的函数</li>
+<li>查看完函数后返回原来的位置： alt + left建</li>
+</ul>
+<h3 id="0-2-代码格式化"><a href="#0-2-代码格式化" class="headerlink" title="0.2 代码格式化"></a>0.2 代码格式化</h3><blockquote>
+<p><a href="https://product.pconline.com.cn/itbk/software/dnyw/1591/15916216.html" target="_blank" rel="noopener">vscode怎么格式化代码 vscode代码格式化快捷键</a></p>
+</blockquote>
+<ul>
+<li><code>Shift+Alt+F</code></li>
+</ul>
+<h3 id="0-3-代码展开与折叠"><a href="#0-3-代码展开与折叠" class="headerlink" title="0.3 代码展开与折叠"></a>0.3 代码展开与折叠</h3><blockquote>
+<p><a href="https://blog.csdn.net/weixin_44309374/article/details/131309302" target="_blank" rel="noopener">https://blog.csdn.net/weixin_44309374/article/details/131309302</a></p>
+</blockquote>
+<ul>
+<li><p>折叠所有代码 (按住ctrl 分别点击k和0)</p>
+<blockquote>
+<p>ctrl+k,ctrl+0</p>
+</blockquote>
+</li>
+<li><p>展开所有代码 (按住ctrl 分别点击k和j)</p>
+<blockquote>
+<p>ctrl+k,ctrl+j</p>
+</blockquote>
+</li>
+<li><p>缩进</p>
+</li>
+</ul>
+<p>向右：tab  or  ctrl+]</p>
+<p>向左：shift+tab   or   ctrl+[</p>
+<ul>
+<li>! <ul>
+<li>自动生成一套HTML代码</li>
+</ul>
+</li>
+<li>tab<ul>
+<li>增加选中行的缩进</li>
+</ul>
+</li>
+<li>tab+shift<ul>
+<li>减小选中行的缩进</li>
+</ul>
+</li>
+<li>alt + b<ul>
+<li>快速在浏览器中浏览网页</li>
+</ul>
+</li>
+<li>ctrl + c<ul>
+<li>复制</li>
+</ul>
+</li>
+<li>ctrl + x<ul>
+<li>剪切</li>
+</ul>
+</li>
+<li>ctrl + v<ul>
+<li>粘贴</li>
+</ul>
+</li>
+<li>ctrl + .<ul>
+<li>让输入法在中英文标点符号之间来回进行切换</li>
+</ul>
+</li>
+<li>ctrl + /<ul>
+<li>在代码当中快速打出注释</li>
+</ul>
+</li>
+<li>alt+shift+a<ul>
+<li>多行注释</li>
+</ul>
+</li>
+<li>ctrl+f<ul>
+<li>在文件中查找</li>
+</ul>
+</li>
+<li></li>
+<li>html直接在浏览器打开：alt + b </li>
+</ul>
+<h2 id="1-插件配置"><a href="#1-插件配置" class="headerlink" title="1 插件配置"></a>1 插件配置</h2><h3 id="1-1-基础插件配置"><a href="#1-1-基础插件配置" class="headerlink" title="1.1 基础插件配置"></a>1.1 基础插件配置</h3><ul>
+<li>汉化</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">搜索chinese</span><br><span class="line">Chinese (Simplified) Language Pack for Visual Studio Code</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Atom One Dark Theme   一种主题风格</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Atom One Dark Theme</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>KoroFileHeader  —  <strong>函数头部解释快捷键</strong></p>
+<ul>
+<li><p>光标处添加函数注释  </p>
+<p>1.Windows：ctrl+alt+t<br>2.mac:ctrl+cmd+t</p>
+</li>
+<li><p>还可以给文件加描述<br>1.Windows：ctrl+alt+i<br>2.mac:ctrl+cmd+i</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-前端开发插件配置"><a href="#1-2-前端开发插件配置" class="headerlink" title="1.2  前端开发插件配置"></a>1.2  前端开发插件配置</h3><ul>
+<li>vscode-icons    目录图标</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vscode-icons</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>open in browser    方便打开html文件<ul>
+<li>alt+B</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open in browser</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-react-开发相关插件"><a href="#1-3-react-开发相关插件" class="headerlink" title="1.3 react 开发相关插件"></a>1.3 react 开发相关插件</h3><ul>
+<li><a href="https://segmentfault.com/a/1190000019928571" target="_blank" rel="noopener">https://segmentfault.com/a/1190000019928571</a> </li>
+<li><a href="https://blog.csdn.net/qq_34586870/article/details/100079410" target="_blank" rel="noopener">https://blog.csdn.net/qq_34586870/article/details/100079410</a> </li>
+<li>Reactjs code snippets    react代码段</li>
+<li>React Redux ES6 Snippets    代码段</li>
+<li>ES7 React/Redux/GraphQL/React-Native snippets    代码段</li>
+<li>JavaScript (ES6) code snippets    es6代码段</li>
+<li>Auto Rename Tag    从名字就能看出，当你需要更改标签的时候，你改了第一个就会自动更改第二个</li>
+<li>Document This    文档注释 快捷键Ctrl +Alt + D两次</li>
+<li>Image preview    在代码行号前面显示图片预览</li>
+<li>Path Intellisense    路径补全</li>
+<li>vscode-icons    文件图标</li>
+<li>npm Intellisense    对package.json内中的依赖包的名称提示</li>
+<li>Bracket Pair Colorizer    用彩虹色标注括号</li>
+<li>Settings Sync    将配置同步到github，更换开发环境的时候就不用重复配置了</li>
+<li>Todo Tree    待办事项高亮，知乎配置介绍</li>
+</ul>
+<h3 id="1-4-vue-相关插件"><a href="#1-4-vue-相关插件" class="headerlink" title="1.4 vue 相关插件"></a>1.4 vue 相关插件</h3><ul>
+<li>vetur</li>
+</ul>
+<h2 id="2-设置"><a href="#2-设置" class="headerlink" title="2 设置"></a>2 设置</h2><h3 id="2-1-缩进设置"><a href="#2-1-缩进设置" class="headerlink" title="2.1 缩进设置"></a>2.1 缩进设置</h3><ul>
+<li><p>file–&gt;preferenses–&gt;setting   (文件-首选项-设置)</p>
+</li>
+<li><p>搜索<code>tabsize</code></p>
+<p><img src="/2020/01/01/tools/vscode/vscode/8140656-62cf5ba118c0f093.webp" alt="img"> </p>
+</li>
+</ul>
+<ul>
+<li><p>要是设置了之后发现没有生效的话，那么就继续在搜索框那边搜<code>editor.detectIndentation</code> ，将这一项修改为false即可 </p>
+<p><img src="/2020/01/01/tools/vscode/vscode/8140656-cf268cb03b01e407.webp" alt="img"> </p>
+</li>
+</ul>
+<h3 id="2-2-字体大小设置"><a href="#2-2-字体大小设置" class="headerlink" title="2.2 字体大小设置"></a>2.2 字体大小设置</h3><p><strong>快捷键设置：</strong></p>
+<p><em>vscode整个编辑器字体都会变化，包括编辑、目录、终端等字体都会变化</em></p>
+<ul>
+<li>放大：<code>ctrl + &#39;+&#39;</code> </li>
+<li>缩小：<code>ctrl + &#39;-&#39;</code></li>
+</ul>
+<p><strong>设置字体具体像素大小：</strong></p>
+<ul>
+<li>file–&gt;preferenses–&gt;setting   (文件-首选项-设置)</li>
+</ul>
+<p><img src="/2020/01/01/tools/vscode/vscode/image-20200916165531823.png" alt="image-20200916165531823"></p>
+<h3 id="2-3-快捷键设置"><a href="#2-3-快捷键设置" class="headerlink" title="2.3 快捷键设置"></a>2.3 快捷键设置</h3><h4 id="2-3-1-按F5无法开启调试的问题"><a href="#2-3-1-按F5无法开启调试的问题" class="headerlink" title="2.3.1 按F5无法开启调试的问题"></a>2.3.1 按F5无法开启调试的问题</h4><p><strong>解决方案：</strong></p>
+<ol>
+<li>在“文件-首选项-键盘快捷方式”中，先查找“调试：开始调试”，然后鼠标右键点击“删除键绑定”</li>
+<li>然后在重新设置“调试：开始调试”的“键绑定”为F5，之后回车就可以了</li>
+</ol>
+<p><strong>问题原因：</strong></p>
+<ul>
+<li>出现这个问题的原因是原键绑定设置了执行条件“!inDebugMode”，这个条件不能在原默认设置单独删除，所以将原来的配置整体删除后重新设置即可。</li>
+</ul>
+<h3 id="2-4-设置vue模板快捷生成"><a href="#2-4-设置vue模板快捷生成" class="headerlink" title="2.4 设置vue模板快捷生成"></a>2.4 设置vue模板快捷生成</h3><blockquote>
+<p>教程：<a href="https://blog.csdn.net/weixin_44157964/article/details/105602639" target="_blank" rel="noopener">https://blog.csdn.net/weixin_44157964/article/details/105602639</a></p>
+<p>教程(vue3等)：<a href="https://blog.csdn.net/m0_51431448/article/details/122989261" target="_blank" rel="noopener">https://blog.csdn.net/m0_51431448/article/details/122989261</a></p>
+</blockquote>
+<ul>
+<li>文件—首选项—–用户片段—–vue</li>
+</ul>
+<p><img src="/2020/01/01/tools/vscode/vscode/image-20211111095757475.png" alt="image-20211111095757475"></p>
+<ul>
+<li>vue.json复制为如下代码</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="comment">// Place your snippets for vue here. Each snippet is defined under a snippet name and has a prefix, body and </span></span><br><span class="line">	<span class="comment">// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:</span></span><br><span class="line">	<span class="comment">// $1, $2 for tab stops, $0 for the final cursor position, and $&#123;1:label&#125;, $&#123;2:another&#125; for placeholders. Placeholders with the </span></span><br><span class="line">	<span class="comment">// same ids are connected.</span></span><br><span class="line">	<span class="comment">// Example:</span></span><br><span class="line">	<span class="comment">// "Print to console": &#123;</span></span><br><span class="line">	<span class="comment">// 	"prefix": "log",</span></span><br><span class="line">	<span class="comment">// 	"body": [</span></span><br><span class="line">	<span class="comment">// 		"console.log('$1');",</span></span><br><span class="line">	<span class="comment">// 		"$2"</span></span><br><span class="line">	<span class="comment">// 	],</span></span><br><span class="line">	<span class="comment">// 	"description": "Log output to console"</span></span><br><span class="line">	<span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">	<span class="attr">"Print to console"</span>: &#123;</span><br><span class="line">        <span class="attr">"prefix"</span>: <span class="string">"vue"</span>,</span><br><span class="line">        <span class="attr">"body"</span>: [</span><br><span class="line">            <span class="string">"&lt;template&gt;"</span>,</span><br><span class="line">            <span class="string">"    &lt;div&gt;\n"</span>,</span><br><span class="line">            <span class="string">"    &lt;/div&gt;"</span>,</span><br><span class="line">            <span class="string">"&lt;/template&gt;"</span>,</span><br><span class="line">            <span class="string">"&lt;script&gt;"</span>,</span><br><span class="line">            <span class="string">"export default &#123;"</span>,</span><br><span class="line">            <span class="string">"   data() &#123;"</span>,</span><br><span class="line">            <span class="string">"      return &#123;"</span>,</span><br><span class="line">			<span class="string">"      &#125;"</span>,</span><br><span class="line">			<span class="string">"   &#125;,"</span>,</span><br><span class="line">			<span class="string">"   created()&#123;"</span>,</span><br><span class="line">			<span class="string">"   &#125;,"</span>,</span><br><span class="line">			<span class="string">"   computed:&#123;"</span>,</span><br><span class="line">			<span class="string">"   &#125;,"</span>,</span><br><span class="line">			<span class="string">"   methods:&#123;"</span>,</span><br><span class="line">			<span class="string">"   &#125;,"</span>,</span><br><span class="line">			<span class="string">"&#125;"</span>,</span><br><span class="line">			<span class="string">"&lt;/script&gt;"</span>,</span><br><span class="line">			<span class="string">"&lt;style lang=\"scss\" scoped&gt;\n"</span>,</span><br><span class="line">			<span class="string">"&lt;/style&gt;"</span>,</span><br><span class="line">            <span class="string">"$2"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"description"</span>: <span class="string">"Log output to console"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"Print to v2"</span>: &#123;</span><br><span class="line">    <span class="string">"prefix"</span>: <span class="string">"vue2"</span>,</span><br><span class="line">    <span class="string">"body"</span>: [</span><br><span class="line">      <span class="string">"&lt;template&gt;"</span>,</span><br><span class="line">      <span class="string">"  &lt;div&gt;\n"</span>,</span><br><span class="line">      <span class="string">"  &lt;/div&gt;"</span>,</span><br><span class="line">      <span class="string">"&lt;/template&gt;"</span>,</span><br><span class="line">      <span class="string">"&lt;script&gt;"</span>,</span><br><span class="line">      <span class="string">"export default &#123;"</span>,</span><br><span class="line">      <span class="string">"  data() &#123;"</span>,</span><br><span class="line">      <span class="string">"    return &#123;\n"</span>,</span><br><span class="line">      <span class="string">"    &#125;"</span>,</span><br><span class="line">      <span class="string">"  &#125;,"</span>,</span><br><span class="line">      <span class="string">"  mounted()&#123;\n"</span>,</span><br><span class="line">      <span class="string">"  &#125;,"</span>,</span><br><span class="line">      <span class="string">"  computed:&#123;\n"</span>,</span><br><span class="line">      <span class="string">"  &#125;,"</span>,</span><br><span class="line">      <span class="string">"  methods:&#123;\n"</span>,</span><br><span class="line">      <span class="string">"  &#125;,"</span>,</span><br><span class="line">      <span class="string">"&#125;"</span>,</span><br><span class="line">      <span class="string">"&lt;/script&gt;"</span>,</span><br><span class="line">      <span class="string">"&lt;style scoped&gt;\n"</span>,</span><br><span class="line">      <span class="string">"&lt;/style&gt;"</span>,</span><br><span class="line">      <span class="string">"$2"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"description"</span>: <span class="string">"Log output to console"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"Print to v3"</span>: &#123;</span><br><span class="line">      <span class="string">"prefix"</span>: <span class="string">"vue3"</span>,</span><br><span class="line">      <span class="string">"body"</span>: [</span><br><span class="line">        <span class="string">"&lt;template&gt;"</span>,</span><br><span class="line">        <span class="string">"  &lt;div&gt;&lt;/div&gt;"</span>,</span><br><span class="line">        <span class="string">"&lt;/template&gt;"</span>,</span><br><span class="line">        <span class="string">"&lt;script lang=\"ts\"&gt;"</span>,</span><br><span class="line">        <span class="string">"import &#123; defineComponent &#125; from 'vue'"</span>,</span><br><span class="line">        <span class="string">"export default defineComponent(&#123;"</span>,</span><br><span class="line">        <span class="string">"  components: &#123;\n"</span>,</span><br><span class="line">        <span class="string">"  &#125;,"</span>,</span><br><span class="line">        <span class="string">"  props: &#123;\n"</span>,</span><br><span class="line">        <span class="string">"  &#125;,"</span>,</span><br><span class="line">        <span class="string">"  setup (props, context) &#123;\n"</span>,</span><br><span class="line">        <span class="string">"  &#125;"</span>,</span><br><span class="line">        <span class="string">"&#125;)"</span>,</span><br><span class="line">        <span class="string">"&lt;/script&gt;"</span>,</span><br><span class="line">        <span class="string">"&lt;style scoped&gt;\n"</span>,</span><br><span class="line">        <span class="string">"&lt;/style&gt;"</span>,</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"description"</span>: <span class="string">"Log output to console"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"Print to setup"</span>: &#123;</span><br><span class="line">      <span class="string">"prefix"</span>: <span class="string">"setup"</span>,</span><br><span class="line">      <span class="string">"body"</span>: [</span><br><span class="line">        <span class="string">"&lt;template&gt;"</span>,</span><br><span class="line">        <span class="string">"  &lt;div&gt;&lt;/div&gt;"</span>,</span><br><span class="line">        <span class="string">"&lt;/template&gt;"</span>,</span><br><span class="line">        <span class="string">"&lt;script setup&gt;\n"</span>,</span><br><span class="line">        <span class="string">"&lt;/script&gt;"</span>,</span><br><span class="line">        <span class="string">"&lt;style scoped&gt;\n"</span>,</span><br><span class="line">        <span class="string">"&lt;/style&gt;"</span>,</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"description"</span>: <span class="string">"Log output to console"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>使用：<code>输入vue+tab键</code>即可自动补全</p>
+<h3 id="2-5-设置vue模板对ts自动补全支持"><a href="#2-5-设置vue模板对ts自动补全支持" class="headerlink" title="2.5 设置vue模板对ts自动补全支持"></a>2.5 设置vue模板对ts自动补全支持</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"vetur.experimental.templateInterpolationService"</span>: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2020/01/01/tools/vscode/vscode/image-20220524212212158.png" alt="image-20220524212212158"></p>
+<p><img src="/2020/01/01/tools/vscode/vscode/image-20220524212249784.png" alt="image-20220524212249784"></p>
+<p><img src="/2020/01/01/tools/vscode/vscode/image-20220524212309871.png" alt="image-20220524212309871"></p>
+<h2 id="3-配置"><a href="#3-配置" class="headerlink" title="3 配置"></a>3 配置</h2><h3 id="3-1-启动项配置"><a href="#3-1-启动项配置" class="headerlink" title="3.1 启动项配置"></a>3.1 启动项配置</h3><h4 id="3-1-1-每次调试弹出运行环境的选择"><a href="#3-1-1-每次调试弹出运行环境的选择" class="headerlink" title="3.1.1 每次调试弹出运行环境的选择"></a>3.1.1 每次调试弹出运行环境的选择</h4><p><strong>问题描述：</strong></p>
+<ul>
+<li><p>每次点击<code>shift+f5</code>都弹出如下运行环境的选择框，使得调试过程很不便捷</p>
+<p><img src="/2020/01/01/tools/vscode/vscode/image-20200803170824816.png" alt="image-20200803170824816"></p>
+</li>
+</ul>
+<p><strong>解决方案：</strong></p>
+<ul>
+<li>1 打开要运行的文件</li>
+<li>2 点击菜单栏<code>运行-添加配置</code>  选择相应的运行环境</li>
+<li>若在根目录下出现<code>.vscode/launch.json</code>文件则配置成功</li>
+</ul>
+<h4 id="3-1-2-调试文件launch-json的配置"><a href="#3-1-2-调试文件launch-json的配置" class="headerlink" title="3.1.2 调试文件launch.json的配置"></a>3.1.2 调试文件<code>launch.json</code>的配置</h4><ul>
+<li><p>文件位置：项目根目录下<code>.vscode/launch.json</code></p>
+</li>
+<li><p>每次调试文件变化时，需要在<code>launch.json</code>文件中作相应的修改</p>
+<ul>
+<li><code>&quot;program&quot;: &quot;${workspaceFolder}\\</code>需要调试的文件路径” </li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"0.2.0"</span>,</span><br><span class="line">  <span class="string">"configurations"</span>: [</span><br><span class="line">    <span class="comment">// ----1-----将调试与node serv项目自动重启(nodemon)向结合的配置------</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"nodemon"</span>,</span><br><span class="line">      <span class="string">"runtimeExecutable"</span>: <span class="string">"nodemon"</span>,</span><br><span class="line">      <span class="string">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;/app.js"</span>,</span><br><span class="line">      <span class="string">"restart"</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="string">"console"</span>: <span class="string">"integratedTerminal"</span>,</span><br><span class="line">      <span class="string">"internalConsoleOptions"</span>: <span class="string">"neverOpen"</span>,</span><br><span class="line">      <span class="string">"skipFiles"</span>: [</span><br><span class="line">        <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ----2-----配置默认调试入口文件------</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"Launch Program"</span>,</span><br><span class="line">      <span class="string">"skipFiles"</span>: [</span><br><span class="line">        <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"program"</span>: <span class="string">"$&#123;workspaceFolder&#125;\\app.js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ----3-----配置调试当前文件------</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</span><br><span class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</span><br><span class="line">      <span class="string">"name"</span>: <span class="string">"当前文件"</span>,</span><br><span class="line">      <span class="string">"skipFiles"</span>: [</span><br><span class="line">        <span class="string">"&lt;node_internals&gt;/**"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"program"</span>: <span class="string">"$&#123;file&#125;"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-1-2-1-配置node-serv项目自动重启与调试向结合"><a href="#3-1-2-1-配置node-serv项目自动重启与调试向结合" class="headerlink" title="3.1.2.1  配置node serv项目自动重启与调试向结合"></a>3.1.2.1  配置node serv项目自动重启与调试向结合</h5><ul>
+<li>此配置使得，当开启调试的时候，也会同时开启自动重启</li>
+</ul>
+<p><img src="/2020/01/01/tools/vscode/vscode/image-20201016235543062.png" alt="image-20201016235543062"></p>
+<h5 id="3-1-2-2-不同配置的切换"><a href="#3-1-2-2-不同配置的切换" class="headerlink" title="3.1.2.2  不同配置的切换"></a>3.1.2.2  不同配置的切换</h5><ul>
+<li>nodemon:  1—–将调试与node serv项目自动重启(nodemon)向结合的配置——</li>
+<li>Launch Program: 2—–额配置默认调试入口文件——</li>
+<li>当前文件: 3—–配置调试当前文件——</li>
+</ul>
+<p><img src="/2020/01/01/tools/vscode/vscode/image-20201017000155900.png" alt="image-20201017000155900"></p>
+<h4 id="3-1-3-调试面板解释"><a href="#3-1-3-调试面板解释" class="headerlink" title="3.1.3 调试面板解释"></a>3.1.3 调试面板解释</h4><p><img src="/2020/01/01/tools/vscode/vscode/image-20201002172840458.png" alt="image-20201002172840458"></p>
+<ul>
+<li>1 ： 运行到下一个断点处</li>
+<li>2  ： 单步执行</li>
+<li>3 ： 进入函数</li>
+<li>4 ： 退出函数</li>
+<li>5 ： 重启调试</li>
+<li>6 ： 停止调试</li>
+</ul>
+<h3 id="3-2-vscode下调试运行c"><a href="#3-2-vscode下调试运行c" class="headerlink" title="3.2 vscode下调试运行c++"></a>3.2 vscode下调试运行c++</h3><blockquote>
+<p><a href="https://www.cnblogs.com/zhuzhenwei918/p/9057289.html" target="_blank" rel="noopener">vscode下调试运行c++ </a></p>
+<p><a href="https://blog.csdn.net/qq_44108889/article/details/120228107" target="_blank" rel="noopener">win10安装MinGW-64安装版</a></p>
+<p><a href="https://blog.csdn.net/kramer_1711/article/details/119416512" target="_blank" rel="noopener">wingw-w64安装时 the file has been downloaded incorrectly!</a></p>
+</blockquote>
+<h2 id="4-小技巧"><a href="#4-小技巧" class="headerlink" title="4 小技巧"></a>4 小技巧</h2><h3 id="4-1-同时添加多个光标"><a href="#4-1-同时添加多个光标" class="headerlink" title="4.1 同时添加多个光标"></a>4.1 同时添加多个光标</h3><p><strong>单个添加:</strong> 将光标放在一个位置，然后按住Alt键的时候用鼠标点击其他地方，点到的地方就会添加一个光标出来<br><strong>添加一整列:</strong> 按住Shift+Alt然后鼠标下拉，即可添加一整列光标</p>
+<ul>
+<li>选中，然后crtl+D, 即可选中所有， 然后修改一次性全修改</li>
+</ul>
+<h3 id="4-2-函数注释"><a href="#4-2-函数注释" class="headerlink" title="4.2 函数注释"></a>4.2 函数注释</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">语法：</span><br><span class="line"><span class="comment">/**回车</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">效果：</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 函数注释</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-问题"><a href="#5-问题" class="headerlink" title="5 问题"></a>5 问题</h2><h3 id="5-1英文界面问题"><a href="#5-1英文界面问题" class="headerlink" title="5.1英文界面问题"></a>5.1英文界面问题</h3><p>有时候我们vscode已经下载好中文简体的插件，但是通过vue init webpack xxx创建的vue项目用vscode打开后还是会切换回英文界面。</p>
+<p>这时候需要做如下操作：</p>
+<p>1.Ctrl＋ Shift ＋P （command+shift+P）输入display 选择Configure display Language </p>
+<p>2.选择zh-cn</p>
+<p>这时候vscode会提示需要重启，点击restart重启vscode，重启后vscode就会显示中文界面。</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="1-vscode前端最佳配置"><a href="#1-vscode前端最佳配置" class="headerlink" title="1 vscode前端最佳配置"></a>1 vscode前端最佳配置</h3><blockquote>
+<p><a href="https://blog.csdn.net/win7583362/article/details/79315055/" target="_blank" rel="noopener">2020 vscode 前端最佳配置</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vscode/" rel="tag"># vscode</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/01/tools/sourceInsight/sourceInsight/" rel="prev" title="Source Insight使用">
+      <i class="fa fa-chevron-left"></i> Source Insight使用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/02/Index/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E5%9F%BA%E7%A1%80/" rel="next" title="前端面试基础">
+      前端面试基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vscode使用"><span class="nav-text">vscode使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-快捷键"><span class="nav-text">0 快捷键</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1函数查看和回退"><span class="nav-text">0.1函数查看和回退</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0-2-代码格式化"><span class="nav-text">0.2 代码格式化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0-3-代码展开与折叠"><span class="nav-text">0.3 代码展开与折叠</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-插件配置"><span class="nav-text">1 插件配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基础插件配置"><span class="nav-text">1.1 基础插件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-前端开发插件配置"><span class="nav-text">1.2  前端开发插件配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-react-开发相关插件"><span class="nav-text">1.3 react 开发相关插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-vue-相关插件"><span class="nav-text">1.4 vue 相关插件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-设置"><span class="nav-text">2 设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-缩进设置"><span class="nav-text">2.1 缩进设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-字体大小设置"><span class="nav-text">2.2 字体大小设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-快捷键设置"><span class="nav-text">2.3 快捷键设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-按F5无法开启调试的问题"><span class="nav-text">2.3.1 按F5无法开启调试的问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-设置vue模板快捷生成"><span class="nav-text">2.4 设置vue模板快捷生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-设置vue模板对ts自动补全支持"><span class="nav-text">2.5 设置vue模板对ts自动补全支持</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-配置"><span class="nav-text">3 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-启动项配置"><span class="nav-text">3.1 启动项配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-每次调试弹出运行环境的选择"><span class="nav-text">3.1.1 每次调试弹出运行环境的选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-调试文件launch-json的配置"><span class="nav-text">3.1.2 调试文件launch.json的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-2-1-配置node-serv项目自动重启与调试向结合"><span class="nav-text">3.1.2.1  配置node serv项目自动重启与调试向结合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-2-2-不同配置的切换"><span class="nav-text">3.1.2.2  不同配置的切换</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3-调试面板解释"><span class="nav-text">3.1.3 调试面板解释</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-vscode下调试运行c"><span class="nav-text">3.2 vscode下调试运行c++</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-小技巧"><span class="nav-text">4 小技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-同时添加多个光标"><span class="nav-text">4.1 同时添加多个光标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-函数注释"><span class="nav-text">4.2 函数注释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-问题"><span class="nav-text">5 问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1英文界面问题"><span class="nav-text">5.1英文界面问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录"><span class="nav-text">附录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-vscode前端最佳配置"><span class="nav-text">1 vscode前端最佳配置</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chuckie"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Chuckie</p>
+  <div class="site-description" itemprop="description">Bright future</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ChuckieWill" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ChuckieWill" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/codewyj.163.com" title="E-Mail → codewyj.163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jianshu.com/u/de627226656c" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;de627226656c" rel="noopener" target="_blank">简书</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="/images/me.png"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chuckie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:04</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

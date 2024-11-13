@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="细节1[&#39;属性1.属性11&#39;]的方式拿属性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wxapplet(0x01)-小程序端开发">
+<meta property="og:url" content="http://yoursite.com/2020/03/28/wx-applet/wxapplet/wxapplet/index.html">
+<meta property="og:site_name" content="Chuckie&#39;s Blog">
+<meta property="og:description" content="细节1[&#39;属性1.属性11&#39;]的方式拿属性">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/03/28/wx-applet/wxapplet/wxapplet/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/28/wx-applet/wxapplet/wxapplet/2.png">
+<meta property="article:published_time" content="2020-03-28T02:46:17.000Z">
+<meta property="article:modified_time" content="2024-09-18T15:06:07.722Z">
+<meta property="article:author" content="Chuckie">
+<meta property="article:tag" content="wxapplet">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/28/wx-applet/wxapplet/wxapplet/1.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/28/wx-applet/wxapplet/wxapplet/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>wxapplet(0x01)-小程序端开发 | Chuckie's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chuckie's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/28/wx-applet/wxapplet/wxapplet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          wxapplet(0x01)-小程序端开发
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-28 10:46:17" itemprop="dateCreated datePublished" datetime="2020-03-28T10:46:17+08:00">2020-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/wx-applet/" itemprop="url" rel="index"><span itemprop="name">wx-applet</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/wx-applet/wxapplet/" itemprop="url" rel="index"><span itemprop="name">wxapplet</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>26k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>23 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h1><h2 id="1-39-属性1-属性11-39-的方式拿属性"><a href="#1-39-属性1-属性11-39-的方式拿属性" class="headerlink" title="1[&#39;属性1.属性11&#39;]的方式拿属性"></a>1<code>[&#39;</code>属性1.属性11<code>&#39;]</code>的方式拿属性</h2><ul>
+<li><p>用法：<code>[&#39;属性.属性.属性&#39;]</code>——-即用<code>[]</code>和<code>&#39;&#39;</code>包裹属性</p>
+</li>
+<li><p>需要此方式拿上属性的情况</p>
+<ul>
+<li>1 给data/properties属性的属性赋值  —-  案例1</li>
+<li>2 在observe中获取属性   —– 案例2</li>
+</ul>
+</li>
+<li><p>案例</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//案例1</span></span><br><span class="line">Page(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    goods: &#123;</span><br><span class="line">      <span class="string">'pop'</span>: &#123;</span><br><span class="line">        page: <span class="number">0</span>,</span><br><span class="line">        list: []</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="string">'new'</span>: &#123;</span><br><span class="line">        page: <span class="number">0</span>,</span><br><span class="line">        list: []</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="string">'sell'</span>: &#123;</span><br><span class="line">        page: <span class="number">0</span>,</span><br><span class="line">        list: []</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  _getGoodsData(type) &#123;</span><br><span class="line">      <span class="keyword">const</span> typeKey = <span class="string">`goods.<span class="subst">$&#123;type&#125;</span>.list`</span>;</span><br><span class="line">      <span class="keyword">const</span> pageKey = <span class="string">`goods.<span class="subst">$&#123;type&#125;</span>.page`</span>;</span><br><span class="line">      <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">        [typeKey]: oldList,</span><br><span class="line">        [pageKey]: page</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;）</span><br><span class="line">     </span><br><span class="line"><span class="comment">//案例2</span></span><br><span class="line">Component(&#123;</span><br><span class="line">  properties: &#123;</span><br><span class="line">    playlist:&#123;       <span class="comment">//playlist类下有playCount属性</span></span><br><span class="line">      type: <span class="built_in">Object</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  observers:&#123;</span><br><span class="line">    [<span class="string">'playlist.playCount'</span>](count)&#123;</span><br><span class="line">      <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">        _count: <span class="keyword">this</span>._tranNumber(count, <span class="number">2</span>)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;）</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-调用API用this-OR-wx"><a href="#2-调用API用this-OR-wx" class="headerlink" title="2 调用API用this. OR wx."></a>2 调用API用this. OR wx.</h2><ul>
+<li>组件内调用系统函数用  this.     //this.createSelectorQuery()</li>
+<li>页面内调用系统函数用  wx.       //wx.createSelectorQuery()</li>
+</ul>
+<h2 id="3-wx-if-VS-hidden"><a href="#3-wx-if-VS-hidden" class="headerlink" title="3 wx:if  VS  hidden"></a>3 wx:if  VS  hidden</h2><ul>
+<li>微信官方文档： [wx:if  VS  hidden]( [<a href="https://developers.weixin.qq.com/miniprogram/dev/reference/wxml/conditional.html#wx:if%20vs%20hidden]" target="_blank" rel="noopener">https://developers.weixin.qq.com/miniprogram/dev/reference/wxml/conditional.html#wx:if%20vs%20hidden]</a>(<a href="https://developers.weixin.qq.com/miniprogram/dev/reference/wxml/conditional.html#wx:if" target="_blank" rel="noopener">https://developers.weixin.qq.com/miniprogram/dev/reference/wxml/conditional.html#wx:if</a> vs hidden) )</li>
+</ul>
+<ol>
+<li>wx:if       //适用于不频繁的隐藏切换—–消耗大      wx:if = “  标志位”</li>
+<li>hidden    //适用于频繁的隐藏切换                            hidden   =  “  标志位”</li>
+</ol>
+<h2 id="4-typeof判断类型"><a href="#4-typeof判断类型" class="headerlink" title="4 typeof判断类型"></a>4 typeof判断类型</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span></span><br><span class="line">示例代码：</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> number = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">var</span> boolean = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">var</span> object = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> array = [];</span><br><span class="line"><span class="keyword">var</span> date = getDate();</span><br><span class="line"><span class="keyword">var</span> regexp = getRegExp();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log( <span class="string">'number'</span> === <span class="keyword">typeof</span> number );</span><br><span class="line"><span class="built_in">console</span>.log( <span class="string">'boolean'</span> === <span class="keyword">typeof</span> boolean );</span><br><span class="line"><span class="built_in">console</span>.log( <span class="string">'object'</span> === <span class="keyword">typeof</span> object );</span><br><span class="line"><span class="built_in">console</span>.log( <span class="string">'function'</span> === <span class="keyword">typeof</span> func );</span><br><span class="line"><span class="built_in">console</span>.log( <span class="string">'object'</span> === <span class="keyword">typeof</span> array );</span><br><span class="line"><span class="built_in">console</span>.log( <span class="string">'object'</span> === <span class="keyword">typeof</span> date );</span><br><span class="line"><span class="built_in">console</span>.log( <span class="string">'object'</span> === <span class="keyword">typeof</span> regexp );</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log( <span class="string">'undefined'</span> === <span class="keyword">typeof</span> <span class="literal">undefined</span> );</span><br><span class="line"><span class="built_in">console</span>.log( <span class="string">'object'</span> === <span class="keyword">typeof</span> <span class="literal">null</span> );</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-setData的回调函数使用"><a href="#5-setData的回调函数使用" class="headerlink" title="5 setData的回调函数使用"></a>5 setData的回调函数使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;modelShow、 commShow为data属性  </span><br><span class="line">&#x2F;&#x2F;回调函数 类似异步  确保先执行modelShow: false  再执行commShow: true</span><br><span class="line">      this.setData(&#123;</span><br><span class="line">        modelShow: false</span><br><span class="line">      &#125;, () &#x3D;&gt; &#123;</span><br><span class="line">        this.setData(&#123;</span><br><span class="line">          commShow: true</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-JSON文件注意事项"><a href="#6-JSON文件注意事项" class="headerlink" title="6 JSON文件注意事项"></a>6 JSON文件注意事项</h2><ol>
+<li>JSON文件中不能写注释</li>
+<li>引号都必须用：双引号　　＂＂</li>
+<li>最后一行结尾没有“,”</li>
+</ol>
+<h2 id="7-wx-key"><a href="#7-wx-key" class="headerlink" title="7 wx:key"></a>7 wx:key</h2><ul>
+<li>遍历的数组为对象时  使用对象下的属性</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">数组：books[&#123;id:1&#125;,&#123;id:2&#125;,&#123;id:3&#125;,&#123;id:4&#125;]</span><br><span class="line"></span><br><span class="line">使用</span><br><span class="line">wx:for&#x3D;&quot;&#123;&#123;books&#125;&#125;&quot;  wx:key&#x3D;&quot;id&quot;-----------注意wx:key没有&#123;&#123;&#125;&#125;、也不是item.id这种写法</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>遍历的数组为数字或字符串时  使用“*this”</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">数组：books[1,2,3,4]</span><br><span class="line"></span><br><span class="line">使用</span><br><span class="line">wx:for&#x3D;&quot;&#123;&#123;books&#125;&#125;&quot;  wx:key&#x3D;&quot;*this&quot;-----------注意wx:key没有&#123;&#123;&#125;&#125;、也不是item.id这种写法</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="小程序中使用npm"><a href="#小程序中使用npm" class="headerlink" title="小程序中使用npm"></a>小程序中使用npm</h1><blockquote>
+<p><a href="https://developers.weixin.qq.com/miniprogram/dev/devtools/npm.html" target="_blank" rel="noopener">小程序使用npm官方文档</a></p>
+</blockquote>
+<p><strong>使用步骤：</strong></p>
+<ol>
+<li><p>编辑器右上角：详情–&gt;本地设置–&gt;勾选使用npm模块</p>
+</li>
+<li><p>任选一个文件夹右击选择在<code>终端打开</code></p>
+<ul>
+<li>cd到项目根目录下</li>
+<li>根目录下输入命令：<code>npm init</code><ul>
+<li>操作成功后会在项目根目录下生成：<code>package.json</code>文件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>使用npm安装需要的库</p>
+<ul>
+<li>在终端根目录下输入安装命令即可：<code>npm install ....</code></li>
+</ul>
+</li>
+<li><p>点击开发者工具中的菜单栏：工具 –&gt; 构建 npm</p>
+<ul>
+<li><p>注意：每次安装依赖后都要点击构建npm</p>
+</li>
+<li><p><a href="https://developers.weixin.qq.com/community/develop/doc/000aeaf6b949887b353a1b38657000" target="_blank" rel="noopener">构建npm的意义</a></p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="自定义组件"><a href="#自定义组件" class="headerlink" title="自定义组件"></a>自定义组件</h1><h2 id="1-observers"><a href="#1-observers" class="headerlink" title="1 observers"></a>1 observers</h2><ul>
+<li><p><code>components</code>中用于监听<code>properties</code>中属性的变化</p>
+</li>
+<li><p>每次<code>properties</code>中属性的变化都会触发<code>observers</code>中对应的函数</p>
+</li>
+<li><p><strong>注意BUG</strong>   不能在observers中修改properties的值  否则会引起内存泄漏</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//例一</span></span><br><span class="line">properties: &#123;</span><br><span class="line">   playlist:&#123;</span><br><span class="line">     type: <span class="built_in">Object</span></span><br><span class="line">   &#125;</span><br><span class="line"> &#125;,</span><br><span class="line"></span><br><span class="line"> observers:&#123;   <span class="comment">//监听的数据发生变化时就会触发这个监听函数</span></span><br><span class="line">   [<span class="string">'playlist.playCount'</span>](count)&#123;</span><br><span class="line">     <span class="comment">//console.log(count)</span></span><br><span class="line">     <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">       _count: <span class="keyword">this</span>._tranNumber(count, <span class="number">2</span>)</span><br><span class="line">     &#125;)</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;,</span><br><span class="line"> </span><br><span class="line">  data: &#123;</span><br><span class="line">   _count: <span class="number">0</span></span><br><span class="line"> &#125;,</span><br><span class="line">  </span><br><span class="line"> </span><br><span class="line"><span class="comment">//例二 </span></span><br><span class="line"> properties: &#123;</span><br><span class="line">   lyric : <span class="built_in">String</span></span><br><span class="line"> &#125;,</span><br><span class="line"></span><br><span class="line"> observers:&#123;</span><br><span class="line">   lyric(lrc)&#123;</span><br><span class="line">     <span class="built_in">console</span>.log(lrc)     <span class="comment">//打印出的lrc就是lyric</span></span><br><span class="line">   &#125;,</span><br><span class="line"> &#125;,</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-behavior"><a href="#2-behavior" class="headerlink" title="2 behavior"></a>2 behavior</h2><ul>
+<li>Behavior内部与Component内部结构一样</li>
+<li>Behavior编写并导出</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">let classicBeh &#x3D; Behavior(&#123;    &#x2F;&#x2F;---------------------------设置行为名称</span><br><span class="line">  &#x2F;&#x2F;外部传入属性</span><br><span class="line">  properties: &#123;</span><br><span class="line">    img: String,</span><br><span class="line">    content: String</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F;周期函数</span><br><span class="line"> </span><br><span class="line">  &#x2F;&#x2F;内部属性</span><br><span class="line">  data: &#123;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F;方法</span><br><span class="line">  methods: &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export &#123;classicBeh&#125;          &#x2F;&#x2F;---------------------------导出名称</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Behavior导入</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import &#123;classicBeh&#125; from &#39;~xxxx.js&#39;</span><br><span class="line">Component(&#123;</span><br><span class="line">  behaviors:[classicBeh],   &#x2F;&#x2F;------------------可以导入多个行为，在数组中添加即可</span><br><span class="line">)&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>多继承-属性覆盖问题</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">behaviors:[beh1,beh2,beh3,beh4],   &#x2F;&#x2F;------------------可以导入多个行为，在数组中添加即可</span><br><span class="line">因为可以继承多个行为就倒是用名属性的覆盖问题</span><br><span class="line"></span><br><span class="line">若beh1,beh2,beh3,beh4和compontent中的data、properties、 methods下有同名属性则以compontent中的为准</span><br><span class="line"></span><br><span class="line">若beh1,beh2,beh3,beh4中的data、properties、 methods下有同名属性则以behaviors数组最后一个行为即beh4中的为准</span><br><span class="line"></span><br><span class="line">-----注意-----</span><br><span class="line">周期函数不存在覆盖问题</span><br><span class="line">若存在同名周期函数</span><br><span class="line">组件会依次调用behaviors数组中的行为的周期函数和组件中的周期函数</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="小程序端使用云开发"><a href="#小程序端使用云开发" class="headerlink" title="小程序端使用云开发"></a>小程序端使用云开发</h1><h2 id="1-调用云函数"><a href="#1-调用云函数" class="headerlink" title="1 调用云函数"></a>1 调用云函数</h2><ul>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/functions/getting-started.html" target="_blank" rel="noopener">微信官方文档</a></li>
+<li><strong><code>wx.cloud.callFunction()</code></strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">wx.cloud.callFunction(&#123;</span><br><span class="line">  <span class="comment">// 云函数名称</span></span><br><span class="line">  name: <span class="string">'add'</span>,</span><br><span class="line">  <span class="comment">// 传给云函数的参数</span></span><br><span class="line">  data: &#123;</span><br><span class="line">    a: <span class="number">1</span>,</span><br><span class="line">    b: <span class="number">2</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(res.result) </span><br><span class="line">&#125;)</span><br><span class="line">.catch(<span class="built_in">console</span>.error)</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-调用云数据库"><a href="#2-调用云数据库" class="headerlink" title="2 调用云数据库"></a>2 调用云数据库</h2><ul>
+<li><strong><code>wx.cloud.database()</code></strong></li>
+<li>简便写法：<code>const db = wx.cloud.database()</code></li>
+</ul>
+<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><ul>
+<li>组件内调用系统函数用  this.     //this.createSelectorQuery()</li>
+<li>页面内调用系统函数用  wx.       //wx.createSelectorQuery()</li>
+</ul>
+<h2 id="1-本地存储"><a href="#1-本地存储" class="headerlink" title="1 本地存储"></a>1 本地存储</h2><ul>
+<li>本地存储可以减少数据的请求次数，减少请求量，降低服务端的压力</li>
+<li>同时用户体验也更好，看以避免数据加载的等待</li>
+<li>微信开发工具终端<code>Storage</code>可以查看存储本地的数据</li>
+</ul>
+<h3 id="1-1-数据存储本地"><a href="#1-1-数据存储本地" class="headerlink" title="1.1 数据存储本地"></a>1.1 数据存储本地</h3><ul>
+<li>key: 存储数据的键</li>
+<li>data: 存到本地的数据</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">setMusiclist()&#123;</span><br><span class="line">	<span class="comment">// wx.setStorageSync(key, data)</span></span><br><span class="line">    wx.setStorageSync(<span class="string">'musiclist'</span>, <span class="keyword">this</span>.data.musiclist)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">同步</span><br><span class="line">wx.setStorageSync(key,data)</span><br><span class="line">异步</span><br><span class="line">wx.setStorage(key,data)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-获取本地数据"><a href="#1-2-获取本地数据" class="headerlink" title="1.2 获取本地数据"></a>1.2 获取本地数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">同步</span><br><span class="line">wx.getStorageSync(key)</span><br><span class="line">异步</span><br><span class="line">wx.getStorage(key)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-界面"><a href="#2-界面" class="headerlink" title="2 界面"></a>2 界面</h2><h3 id="2-1-导航栏"><a href="#2-1-导航栏" class="headerlink" title="2.1 导航栏"></a>2.1 导航栏</h3><h4 id="2-1-1-设置界面标题"><a href="#2-1-1-设置界面标题" class="headerlink" title="2.1.1 设置界面标题"></a>2.1.1 设置界面标题</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wx.setNavigateBarTitle(&#123;</span><br><span class="line">     title: <span class="string">' '</span> </span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-WXML"><a href="#3-WXML" class="headerlink" title="3 WXML"></a>3 WXML</h2><h3 id="3-1-取组件"><a href="#3-1-取组件" class="headerlink" title="3.1 取组件"></a>3.1 取组件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const query &#x3D; this.createSelectorQuery()            &#x2F;&#x2F;返回对象</span><br><span class="line">query.select(&#39;.movable&#39;).boundingClientRect()  &#x2F;&#x2F;选要获取信息的组件 用class名称</span><br><span class="line">query.exec((rect) &#x3D;&gt; &#123;                               &#x2F;&#x2F;在此回调以上获取信息的请求            </span><br><span class="line">   console.log(rect)                                 &#x2F;&#x2F;回调为一个数组</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-获取组件信息"><a href="#3-2-获取组件信息" class="headerlink" title="3.2 获取组件信息"></a>3.2 获取组件信息</h3><ul>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.boundingClientRect.html" target="_blank" rel="noopener">NodesRef.boundingClientRect</a></li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.context.html" target="_blank" rel="noopener">NodesRef.context</a></li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.fields.html" target="_blank" rel="noopener">NodesRef.fields</a></li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.node.html" target="_blank" rel="noopener">NodesRef.node</a></li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/wxml/NodesRef.scrollOffset.html" target="_blank" rel="noopener">NodesRef.scrollOffset</a></li>
+</ul>
+<h2 id="4-基础"><a href="#4-基础" class="headerlink" title="4 基础"></a>4 基础</h2><h3 id="4-1-系统"><a href="#4-1-系统" class="headerlink" title="4.1 系统"></a>4.1 系统</h3><h4 id="4-1-1-wx-getSystemInfo"><a href="#4-1-1-wx-getSystemInfo" class="headerlink" title="4.1.1 wx.getSystemInfo()"></a>4.1.1 wx.getSystemInfo()</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取系统相关信息----获取主机的信息</span></span><br><span class="line">wx.getSystemInfo(&#123;</span><br><span class="line">        success(res) &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(res)</span><br><span class="line">          res.screenWidth     <span class="comment">//主机的宽度  单位px</span></span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-媒体"><a href="#5-媒体" class="headerlink" title="5 媒体"></a>5 媒体</h2><h3 id="5-1-图片"><a href="#5-1-图片" class="headerlink" title="5.1 图片"></a>5.1 图片</h3><h3 id="5-1-1-wx-chooseImage"><a href="#5-1-1-wx-chooseImage" class="headerlink" title="5.1.1  wx.chooseImage()"></a>5.1.1  wx.chooseImage()</h3><ul>
+<li>上传图片</li>
+</ul>
+<h3 id="5-1-2-wx-previewImage"><a href="#5-1-2-wx-previewImage" class="headerlink" title="5.1.2  wx.previewImage()"></a>5.1.2  wx.previewImage()</h3><ul>
+<li>预览图片</li>
+</ul>
+<h2 id="6-设备"><a href="#6-设备" class="headerlink" title="6 设备"></a>6 设备</h2><h3 id="6-1-扫码wx-scanCode"><a href="#6-1-扫码wx-scanCode" class="headerlink" title="6.1 扫码wx.scanCode"></a>6.1 扫码wx.scanCode</h3><ul>
+<li>一维条形码</li>
+<li>二维码</li>
+</ul>
+<h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><h2 id="1-组件生命周期"><a href="#1-组件生命周期" class="headerlink" title="1 组件生命周期"></a>1 组件生命周期</h2><ul>
+<li>微信官方文档： <a href="[https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/lifetimes.html#%E5%AE%9A%E4%B9%89%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%96%B9%E6%B3%95](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/lifetimes.html#定义生命周期方法)">Component生命周期</a></li>
+</ul>
+<h3 id="1-1-自定义生命周期"><a href="#1-1-自定义生命周期" class="headerlink" title="1.1 自定义生命周期"></a>1.1 自定义生命周期</h3><table>
+<thead>
+<tr>
+<th align="left">生命周期</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">created</td>
+<td align="left">在组件实例刚刚被创建时执行</td>
+</tr>
+<tr>
+<td align="left">attached</td>
+<td align="left">在组件实例进入页面节点树时执行</td>
+</tr>
+<tr>
+<td align="left">ready</td>
+<td align="left">在组件在视图层布局完成后执行</td>
+</tr>
+<tr>
+<td align="left">moved</td>
+<td align="left">在组件实例被移动到节点树另一个位置时执行</td>
+</tr>
+<tr>
+<td align="left">detached</td>
+<td align="left">在组件实例被从页面节点树移除时执行</td>
+</tr>
+<tr>
+<td align="left">error</td>
+<td align="left">每当组件方法抛出错误时执行</td>
+</tr>
+</tbody></table>
+<h3 id="1-2组件所在页面的生命周期"><a href="#1-2组件所在页面的生命周期" class="headerlink" title="1.2组件所在页面的生命周期"></a>1.2组件所在页面的生命周期</h3><table>
+<thead>
+<tr>
+<th align="left">生命周期</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">show</td>
+<td align="left">组件所在的页面被展示时执行</td>
+</tr>
+<tr>
+<td align="left">hide</td>
+<td align="left">组件所在的页面被隐藏时执行</td>
+</tr>
+<tr>
+<td align="left">resize</td>
+<td align="left">组件所在的页面尺寸变化时执行</td>
+</tr>
+</tbody></table>
+<h1 id="全局变量—app-js"><a href="#全局变量—app-js" class="headerlink" title="全局变量—app.js"></a>全局变量—app.js</h1><p><strong>建议设置全局变量的get函数和set函数，不建议直接获取或修改</strong></p>
+<ul>
+<li>定义全局变量</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//app.js</span></span><br><span class="line">App(&#123;</span><br><span class="line">  onLaunch: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.globalData = &#123;</span><br><span class="line">      playingMusicId : <span class="number">-1</span>,</span><br><span class="line">      openId : <span class="number">-1</span>,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//---------------------全局变量处理函数----------------------</span></span><br><span class="line">  setPlayMusicId(playingMusicId)&#123;</span><br><span class="line">    <span class="keyword">this</span>.globalData.playingMusicId = playingMusicId</span><br><span class="line">  &#125;,</span><br><span class="line">  getPlayMusicId()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.globalData.playingMusicId</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用全局变量</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在组件或页面引入对全局变量的操作</span></span><br><span class="line"><span class="keyword">const</span> app = getApp()  <span class="comment">//操作全局变量</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="WXS"><a href="#WXS" class="headerlink" title="WXS"></a>WXS</h1><h2 id="1-wxml中实现对数据的处理"><a href="#1-wxml中实现对数据的处理" class="headerlink" title="1 wxml中实现对数据的处理"></a>1 wxml中实现对数据的处理</h2><p><strong>问题：</strong>在wxml中计算价格*数量小数出现问题。</p>
+<p>需要新建一个wxs文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var filters &#x3D; &#123;</span><br><span class="line">  toFix: function (value) &#123;</span><br><span class="line">    return value.toFixed(2)&#x2F;&#x2F;此处2为保留两位小数</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">module.exports &#x3D; &#123;</span><br><span class="line">  toFix: filters.toFix</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 在wxml文件中引入 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;wxs module&#x3D;&quot;filters&quot; src&#x3D;&quot;addmul.wxs&quot;&gt;&lt;&#x2F;wxs&gt;</span><br></pre></td></tr></table></figure>
+
+<p> 修改 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;view class&#x3D;&quot;price&quot;  wx:if&#x3D;&quot;&#123;&#123;item.num &gt; 0&#125;&#125;&quot;&gt;</span><br><span class="line">      &lt;span&gt;￥&#123;&#123;item.price*item.num&#125;&#125;&lt;&#x2F;span&gt; </span><br><span class="line">&lt;&#x2F;view&gt;</span><br></pre></td></tr></table></figure>
+
+<p>为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;view class&#x3D;&quot;price&quot;  wx:if&#x3D;&quot;&#123;&#123;item.num &gt; 0&#125;&#125;&quot;&gt;</span><br><span class="line"> &lt;span&gt;￥&#123;&#123;filters.toFix(item.price*item.num)&#125;&#125;&lt;&#x2F;span&gt; </span><br><span class="line">&lt;&#x2F;view&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-正则表达式regexp"><a href="#2-正则表达式regexp" class="headerlink" title="2 正则表达式regexp"></a>2 正则表达式regexp</h2><ul>
+<li>官方文档<a href="https://developers.weixin.qq.com/miniprogram/dev/reference/wxs/06datatype.html" target="_blank" rel="noopener">框架-wxs-数据类型</a></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">getRegExp(pattern, flags)</span><br><span class="line">参数：</span><br><span class="line">pattern: 正则表达式的内容。</span><br><span class="line">flags：修饰符。该字段只能包含以下字符:</span><br><span class="line">g: global</span><br><span class="line">i: ignoreCase</span><br><span class="line">m: multiline。</span><br></pre></td></tr></table></figure>
+
+<p>例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var reg &#x3D; getRegExp(&#39;\\\\n&#39;,&#39;g&#39;)</span><br><span class="line">text.replace(reg,&#39;\n&#39;)--------将text文本按reg的方式替换成&#39;\n&#39;    replace()是字符串处理函数</span><br></pre></td></tr></table></figure>
+
+<h1 id="WXSS"><a href="#WXSS" class="headerlink" title="WXSS"></a>WXSS</h1><h2 id="1-页面向组件传递外部样式类"><a href="#1-页面向组件传递外部样式类" class="headerlink" title="1 页面向组件传递外部样式类"></a>1 页面向组件传递外部样式类</h2><ul>
+<li>组件内部设置</li>
+</ul>
+<ol>
+<li>js中设置传入外部样式类的类名  可以传入多个类名  在数组中配置</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Component(&#123;</span><br><span class="line">   externalClasses:[&#39;tag-class&#39;],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>wxml中使用外部样式类</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;view class&#x3D;&quot;tag-class&quot;&gt;&lt;&#x2F;view&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>页面向组件传入外部样式</li>
+</ul>
+<ol>
+<li>在调用组件的wxml中传入  类似数据的传入</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;w-tag tag-class&#x3D;&quot;ex-tag&quot;&#x2F;&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>样式写在页面的wxss中</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.ex-tag&#123;</span><br><span class="line">  background-color:#fff  !important;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意：外部样式不能覆盖组件内部原有的样式  所以传入时要用“!important”提高样式级别 确保覆盖 </li>
+</ul>
+<h2 id="2-阿里iconfont字体图标"><a href="#2-阿里iconfont字体图标" class="headerlink" title="2  阿里iconfont字体图标"></a>2  阿里<code>iconfont</code>字体图标</h2><ul>
+<li><p><a href="https://www.iconfont.cn/" target="_blank" rel="noopener">阿里iconfont官网</a></p>
+</li>
+<li><p>页面内使用<code>iconfont</code></p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//1 在app.wxss中引入iconfont.wxss</span><br><span class="line">@import "iconfont.wxss";</span><br><span class="line"></span><br><span class="line">//2 使用1</span><br><span class="line"> //<span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">"iconfont 阿里上的代码"</span>&gt;</span><span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">"iconfont icon-shangyishou-yuanshijituantubiao"</span>&gt;</span><span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    使用2 </span><br><span class="line">   <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"iconfont icon-fabu"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>组件内使用<code>iconfont</code></p>
+<ul>
+<li><p>方法1</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 将 iconfont.wxss 直接复制到组件文件里 </span><br><span class="line">2 组件wxss引入   @import "iconfont.wxss";</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法2 </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//1 页面组件将样式传递给组件</span><br><span class="line"><span class="tag">&lt;<span class="name">w-search</span> <span class="attr">iconfont</span>=<span class="string">"iconfont"</span> <span class="attr">icon-sousuo</span>=<span class="string">"icon-sousuo"</span>/&gt;</span></span><br><span class="line">//2 组件接收</span><br><span class="line">externalClasses: [</span><br><span class="line">    'iconfont',</span><br><span class="line">    'icon-sousuo',</span><br><span class="line">  ],</span><br><span class="line">// 3 组件wxml使用</span><br><span class="line"><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"iconfont icon-sousuo  find"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//注意事项</span><br><span class="line">在组件内不能修改iconfont的样式</span><br><span class="line">必须再定义class  例如：find</span><br><span class="line">.find &#123;</span><br><span class="line">  position: absolute;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法3</p>
+<p>消除样式隔离 </p>
+<p>指南—自定义组件—组件模板和样式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Component(&#123;</span><br><span class="line">  options: &#123;</span><br><span class="line">    styleIsolation: <span class="string">'apply-shared'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="3-组件样式特征"><a href="#3-组件样式特征" class="headerlink" title="3 组件样式特征"></a>3 组件样式特征</h2><h5 id="1-view"><a href="#1-view" class="headerlink" title="1 view"></a>1 view</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">view</span><br><span class="line">宽带占满父元素（不变）</span><br><span class="line">高度自适应（变）</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-image"><a href="#2-image" class="headerlink" title="2 image"></a>2 image</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image组件默认宽度<span class="number">300</span>px、高度<span class="number">240</span>px</span><br></pre></td></tr></table></figure>
+
+<h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><h2 id="复杂组件"><a href="#复杂组件" class="headerlink" title="复杂组件"></a>复杂组件</h2><h3 id="movable-area-moveble-view组件"><a href="#movable-area-moveble-view组件" class="headerlink" title="movable-area   moveble-view组件"></a><code>movable-area   moveble-view</code>组件</h3><p>组件——视图容器</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">movable-view</span> <span class="attr">class</span>=<span class="string">"movable-view"</span> </span></span><br><span class="line"><span class="tag"><span class="attr">direction</span>=<span class="string">"horizontal"</span>    //滑动方向水平</span></span><br><span class="line"><span class="tag"><span class="attr">damping</span>=<span class="string">"1000"</span>            //阻尼系数  值越大滑动阻力越小 滑动越快  否则反之              </span></span><br><span class="line"><span class="tag"><span class="attr">x</span>=<span class="string">"&#123;&#123;movableDis&#125;&#125;"</span>        //设置滑动的距离</span></span><br><span class="line"><span class="tag"><span class="attr">bindchange</span>=<span class="string">"onChange"</span>	  //获取滑动的实时状态</span></span><br><span class="line"><span class="tag"><span class="attr">bindtouchend</span>=<span class="string">"onTouchEnd"</span> //滑动结束时触发的事件</span></span><br><span class="line"><span class="tag">      /&gt;</span></span><br><span class="line">      </span><br><span class="line">//获取滑动的实时状态     </span><br><span class="line">onChange(event)&#123;</span><br><span class="line">      console.log(event)</span><br><span class="line">    &#125;, </span><br><span class="line">//打印结果</span><br><span class="line">detail:</span><br><span class="line">source: ""    //多种值  表示不同的拖动原因</span><br><span class="line">x: 3.4</span><br><span class="line">y: 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="progress进度条组件"><a href="#progress进度条组件" class="headerlink" title="progress进度条组件"></a>progress进度条组件</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">progress</span> </span></span><br><span class="line"><span class="tag"><span class="attr">stroke-width</span>=<span class="string">"4"</span>                     //进度条宽度</span></span><br><span class="line"><span class="tag"><span class="attr">backgroundColor</span>=<span class="string">"#969696"</span>            //进度条背景颜色</span></span><br><span class="line"><span class="tag"><span class="attr">activeColor</span>=<span class="string">"#fff"</span> 					 //进度条划过的颜色</span></span><br><span class="line"><span class="tag"><span class="attr">percent</span>=<span class="string">"&#123;&#123;progress&#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">progress</span>&gt;</span>   //已滑动的进度</span><br></pre></td></tr></table></figure>
+
+<h2 id="WXML"><a href="#WXML" class="headerlink" title="WXML"></a>WXML</h2><h3 id="1-插槽-slot"><a href="#1-插槽-slot" class="headerlink" title="1 插槽 slot"></a>1 插槽 slot</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//使用多个插槽  配置设置</span><br><span class="line">options: &#123;</span><br><span class="line">    multipleSlots: true</span><br><span class="line">  &#125;,</span><br><span class="line">  </span><br><span class="line">//页面传入插件</span><br><span class="line"><span class="tag">&lt;<span class="name">w-bottommodel</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span> <span class="attr">slot</span>=<span class="string">"slot1"</span>&gt;</span>hhhhhhhh<span class="tag">&lt;/<span class="name">view</span>&gt;</span>   //在对应名字的地方显示slot1</span><br><span class="line">    <span class="tag">&lt;<span class="name">view</span> <span class="attr">slot</span>=<span class="string">"slot2"</span>&gt;</span>wwwwwwww<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">w-bottommodel</span>&gt;</span></span><br><span class="line"></span><br><span class="line">//插槽使用</span><br><span class="line"><span class="comment">&lt;!-- 插槽 --具名插槽--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">"slot1"</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">"slot2"</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-textarea"><a href="#2-textarea" class="headerlink" title="2 textarea"></a>2 <code>textarea</code></h3><ul>
+<li>获取键盘高度</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">textarea</span>   <span class="attr">bindfocus</span>=<span class="string">"onFocus"</span> &gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">//获取焦点</span><br><span class="line">  onFocus(event)&#123;</span><br><span class="line">    //console.log(event)</span><br><span class="line">    this.setData(&#123;</span><br><span class="line">      footerBottom: event.detail.height,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-小程序原生组件绑定事件不能用”-”"><a href="#3-小程序原生组件绑定事件不能用”-”" class="headerlink" title="3 小程序原生组件绑定事件不能用”:”"></a>3 小程序原生组件绑定事件不能用”:”</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">textarea</span>   <span class="attr">bindinput</span>=<span class="string">"onInput"</span>     //<span class="attr">bind:input</span> 不能使用</span></span><br><span class="line"><span class="tag">            <span class="attr">bindfocus</span>=<span class="string">"onFocus"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">bindblur</span>=<span class="string">"onBlur"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-取消事件冒泡"><a href="#4-取消事件冒泡" class="headerlink" title="4 取消事件冒泡"></a>4 取消事件冒泡</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用bind:  绑定事件会事件冒泡</span><br><span class="line">用<span class="keyword">catch</span>: 绑定事件不会事件冒泡</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-跳转到其他小程序"><a href="#5-跳转到其他小程序" class="headerlink" title="5 跳转到其他小程序"></a>5 跳转到其他小程序</h3><ul>
+<li><p>一个小程序跳转到另一个小程序</p>
+</li>
+<li><p>两个小程序必须都关联于同一个公众号（订阅号 、服务号）</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">navigator</span>  <span class="attr">target</span>=<span class="string">"miniProgram"</span> <span class="attr">app-id</span>=<span class="string">"wx8ffc97ad5bcccc89"</span> <span class="attr">open-type</span>=<span class="string">"navigate"</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">navigator</span>&gt;</span> </span><br><span class="line"> </span><br><span class="line"> appp-id:跳转目标小程序的appId</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-解析nbsp等"><a href="#6-解析nbsp等" class="headerlink" title="6 解析nbsp等"></a>6 解析<code>nbsp</code>等</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">text</span> <span class="attr">decode</span>=<span class="string">"&#123;&#123;true&#125;&#125; "</span>&gt;</span>  <span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"></span><br><span class="line">//decode可以解析的有 <span class="symbol">&amp;nbsp;</span> <span class="symbol">&amp;lt;</span> <span class="symbol">&amp;gt;</span> <span class="symbol">&amp;amp;</span> <span class="symbol">&amp;apos;</span> <span class="symbol">&amp;ensp;</span> <span class="symbol">&amp;emsp;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="开放能力"><a href="#开放能力" class="headerlink" title="开放能力"></a>开放能力</h2><h3 id="1-分享小程序"><a href="#1-分享小程序" class="headerlink" title="1 分享小程序"></a>1 分享小程序</h3><p>指南—-开放能力—–转发—button</p>
+<p>框架—-框架接口—–页面—-Page——onShareAppMessage(Object object)</p>
+<ul>
+<li><p>通过给 <code>button</code> 组件设置属性 <code>open-type=&quot;share&quot;</code>，可以在用户点击按钮后触发 <a href="https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html#onshareappmessageobject-object" target="_blank" rel="noopener"><code>Page.onShareAppMessage</code></a> 事件， </p>
+</li>
+<li><p>Page.onShareAppMessage</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;button  open-type=<span class="string">"share"</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//evenet中的数据由点击button时传入</span></span><br><span class="line">onShareAppMessage: <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(event)</span><br><span class="line">    <span class="keyword">const</span> blog = event.target.dataset.blog</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      title: blog.content,</span><br><span class="line">      path: <span class="string">`/pages/blog-comment/blog-comment?blogId=<span class="subst">$&#123;blog._id&#125;</span>`</span></span><br><span class="line">      <span class="comment">//imageUrl: ''</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</li>
+</ul>
+<h1 id="数据通信"><a href="#数据通信" class="headerlink" title="数据通信"></a>数据通信</h1><h2 id="1-点击事件传递数据"><a href="#1-点击事件传递数据" class="headerlink" title="1 点击事件传递数据"></a>1 点击事件传递数据</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//wxml传递数据</span></span><br><span class="line">bind:tap=<span class="string">"onSelect"</span> data-musicid=<span class="string">"&#123;&#123;item.id&#125;&#125;"</span> data-index=<span class="string">"&#123;&#123;index&#125;&#125;"</span></span><br><span class="line"></span><br><span class="line">传递的数据用： data-数据名</span><br><span class="line"></span><br><span class="line">比如以上的“onSelect”事件点击会给js文件传递musicid   index</span><br><span class="line"></span><br><span class="line"><span class="comment">//js接受数据</span></span><br><span class="line">onSelect(events)&#123;</span><br><span class="line">      <span class="comment">//console.log(events.currentTarget.dataset.musicid)</span></span><br><span class="line">      <span class="keyword">const</span> musicid = events.currentTarget.dataset.musicid</span><br><span class="line">      <span class="keyword">const</span> index = events.currentTarget.dataset.index</span><br><span class="line">      </span><br><span class="line">接受的数据用： 点击事件的events中有传递的数据</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-页面跳转携带数据"><a href="#2-页面跳转携带数据" class="headerlink" title="2 页面跳转携带数据"></a>2 页面跳转携带数据</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//传递数据----发出数据页面</span></span><br><span class="line"><span class="comment">//wx.navigateTo(&#123;</span></span><br><span class="line"><span class="comment">//  url: 'test?id=1',</span></span><br><span class="line"><span class="comment">//  &#125;)</span></span><br><span class="line"></span><br><span class="line"> wx.navigateTo(&#123;</span><br><span class="line">        url: <span class="string">`../../pages/player/player?musicid=<span class="subst">$&#123;musicid&#125;</span>&amp;index=<span class="subst">$&#123;index&#125;</span>`</span>,</span><br><span class="line">      &#125;)</span><br><span class="line">      </span><br><span class="line"><span class="comment">//接受数据-----接受数据页面</span></span><br><span class="line">onLoad: <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(options)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//数据在options中</span></span><br><span class="line">  <span class="comment">//&#123;musicid: "433018115", index: "0"&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-组件与页面之间通信"><a href="#3-组件与页面之间通信" class="headerlink" title="3 组件与页面之间通信"></a>3 组件与页面之间通信</h2><h3 id="3-1-组件向页面通信"><a href="#3-1-组件向页面通信" class="headerlink" title="3.1  组件向页面通信"></a>3.1  组件向页面通信</h3><ul>
+<li>组件向页面传递数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;组件发出数据  ----  通过事件携带数据</span><br><span class="line">this.triggerEvent(&#39;事件名&#39;, &#123;数据&#125; )</span><br><span class="line">this.triggerEvent(&#39;timeUpdate&#39;, &#123;currentTime&#125; )</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;页面接受数据</span><br><span class="line">&#x2F;&#x2F;wxml中接受事件</span><br><span class="line">w-progressbar  bind:musicEnd &#x3D; &quot;onNext&quot;  </span><br><span class="line">               bind:timeUpdate&#x3D;&quot;timeUpdate&quot;&#x2F;&gt;</span><br><span class="line">&#x2F;&#x2F;js中处理事件  接受数据</span><br><span class="line">timeUpdate(event)&#123;</span><br><span class="line">    console.log(event.detail.currentTime)&#x2F;&#x2F;数据在event中</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>组件向页面发出事件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;组件向父页面发出事件</span><br><span class="line">this.triggerEvent(&quot;musicEnd&quot;)    &#x2F;&#x2F;事件名称为：‘musicEnd’</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;父页面处理组件发出的事件</span><br><span class="line">&lt;w-progressbar  bind:musicEnd &#x3D; &quot;onNext&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;单纯发出事件  表示组件内的变化通知页面  页面再做响应</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-页面向组件传递数据"><a href="#3-2-页面向组件传递数据" class="headerlink" title="3.2 页面向组件传递数据"></a>3.2 页面向组件传递数据</h3><ul>
+<li>js传递</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;页面发出数据</span><br><span class="line">this.selectComponent()&#x2F;&#x2F;选择组件</span><br><span class="line">this.selectComponent(&#39;组件的class&#39;).组件内定义的事件名称(数据)</span><br><span class="line">this.selectComponent(&#39;.lyric&#39;).update(event.detail.currentTime)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;组件接受数据</span><br><span class="line"> methods: &#123;</span><br><span class="line">    update(currentTime)&#123;</span><br><span class="line">      console.log(currentTime)</span><br><span class="line">    &#125;,</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>wxml传递</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;页面传出数据</span><br><span class="line">&lt;w-lyric  isLyricShow &#x3D; &quot;&#123;&#123;!isLyricShow&#125;&#125;&quot; &#x2F;&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;组件接受数据</span><br><span class="line">isLyricShow : &#123;</span><br><span class="line">      type: Boolean,</span><br><span class="line">      value: false</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-页面之间调用函数"><a href="#4-页面之间调用函数" class="headerlink" title="4 页面之间调用函数"></a>4 页面之间调用函数</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取pages</span></span><br><span class="line"><span class="keyword">const</span> pages = getCurrentPages()</span><br><span class="line"><span class="built_in">console</span>.log(pages)</span><br><span class="line"><span class="comment">//取到上一页</span></span><br><span class="line"><span class="keyword">const</span> prevPage = pages[pages.length - <span class="number">2</span>]</span><br><span class="line"><span class="comment">//调用上一页的下拉刷新函数</span></span><br><span class="line">prevPage.onPullDownRefresh()  <span class="comment">//prevPage为上一页   onPullDownRefresh为上一页的函数</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h1 id="获取用户授权及用户信息"><a href="#获取用户授权及用户信息" class="headerlink" title="获取用户授权及用户信息"></a>获取用户授权及用户信息</h1><ul>
+<li>获取用户公开信息 用open-data组件</li>
+<li>js中获取用户信息流程：button让用户授权—–&gt;js中再用wx.getUserInfo（）API获取用户信息</li>
+</ul>
+<h2 id="1-open-data"><a href="#1-open-data" class="headerlink" title="1 open-data"></a>1 open-data</h2><ul>
+<li><p>微信官方文档：<a href="https://developers.weixin.qq.com/miniprogram/dev/component/open-data.html" target="_blank" rel="noopener">组件-&gt;开放能力-&gt;open-data</a></p>
+</li>
+<li><p>只能直接展示在界面上  　　　因为是在WXML中获取的  JS中没有获取信息</p>
+</li>
+<li><p>只能展示用户自己的相关信息</p>
+</li>
+</ul>
+<h2 id="2-wx-getUserInfo"><a href="#2-wx-getUserInfo" class="headerlink" title="2 wx.getUserInfo()"></a>2 wx.getUserInfo()</h2><ul>
+<li><p>获取用户授权信息API： wx.getSetting()</p>
+</li>
+<li><p>获取用户信息API： wx.getUserInfo()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">getSetting()与getUserInfo() 配合使用</span><br><span class="line">1 用getSetting() 获取用户是否授权的信息 </span><br><span class="line">2 若已经授权 则用getUserInfo()获取用户信息</span><br><span class="line">3 若未授权  则用下方的button 弹出获取用户的权限的弹出框</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li>使用前提: 必须是用户已经授权之后才可以调用这个接口  所以先用wx.getSetting获取用户授权情况 判断之后再使用wx.getUserInfo()</li>
+</ul>
+<h2 id="3-button"><a href="#3-button" class="headerlink" title="3 button"></a>3 button</h2><p>点击button 弹出获取用户权限的弹出框</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;button class&#x3D;&quot;login&quot;</span><br><span class="line">        open-type&#x3D;&quot;getUserInfo&quot;          &#x2F;&#x2F;固定写法 获取开放能力  包括&quot;getUserInfo&quot;也是固定</span><br><span class="line">        bindgetuserinfo&#x3D;&quot;onGotUserInfo&quot;&gt; &#x2F;&#x2F;bindgetuserinfo事件 会调用授权弹框  </span><br><span class="line">        获取微信授权信息&lt;&#x2F;button&gt;</span><br><span class="line">        </span><br><span class="line">   &#x2F;&#x2F;点击button 弹出获取用户权限的弹出框  选择“拒绝”或“允许”  选择后返回event      </span><br><span class="line">  onGotUserInfo(event)&#123;</span><br><span class="line">      console.log(event)     &#x2F;&#x2F;授权与否  若授权等信息都在event中</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-login云函数获取openId"><a href="#4-login云函数获取openId" class="headerlink" title="4 login云函数获取openId"></a>4 login云函数获取openId</h2><ul>
+<li><p>Cloud.getWXContext() </p>
+</li>
+<li><p>通过小程序自带的login云函数获取openID </p>
+</li>
+<li><p>返回值只有openId  和appId</p>
+</li>
+</ul>
+<h1 id="音乐播放开发"><a href="#音乐播放开发" class="headerlink" title="音乐播放开发"></a>音乐播放开发</h1><ul>
+<li>官方文档：<ul>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/media/background-audio/BackgroundAudioManager.html" target="_blank" rel="noopener">backgroundAudioManger</a></li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#requiredBackgroundModes" target="_blank" rel="noopener">requiredBackgroundModes配置</a></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1 获取全局唯一背景音频管理器</span></span><br><span class="line"><span class="keyword">const</span> backgroundAudioManger = wx.getBackgroundAudioManager()</span><br><span class="line"></span><br><span class="line"><span class="comment">//2 使用   以下2个属性必须设置</span></span><br><span class="line">backgroundAudioManger.src = result.data[<span class="number">0</span>].url    <span class="comment">//设置播放地址</span></span><br><span class="line">backgroundAudioManger.title = music.name          <span class="comment">//设置播放名称</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//3 在app.json中设置  使得可以在背景播放</span></span><br><span class="line"><span class="string">"requiredBackgroundModes"</span>: [<span class="string">"audio"</span>, <span class="string">"location"</span>]</span><br><span class="line"></span><br><span class="line">backgroundAudioManger.src也可以取到当前正在播放的音乐的地址</span><br><span class="line">backgroundAudioManger.pause()  <span class="comment">//暂停</span></span><br><span class="line">backgroundAudioManger.play()   <span class="comment">//播放</span></span><br><span class="line">backgroundAudioManager.seek(sec)   <span class="comment">//设置播放的秒数  sec单位为秒</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">backgroundAudioManager.duration   <span class="comment">//获取播放时间  返回值为秒（单位）</span></span><br><span class="line"><span class="comment">//duration的返回值不稳定  有时候是‘undefined’ 所以需要判断</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> backgroundAudioManager.duration != <span class="string">'undefined'</span>)&#123;</span><br><span class="line">      <span class="keyword">this</span>.setTime() <span class="comment">//this.setTime（）中有执行backgroundAudioManager.duration及其他操作</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      setTimeout(<span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.setTime()   </span><br><span class="line">      &#125;,<span class="number">1000</span>)<span class="comment">//设置定时器过一秒再获取</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">backgroundAudioManager.currentTime  <span class="comment">//获取当前播放时间   返回值为秒（单位）</span></span><br><span class="line"><span class="comment">//可在backgroundAudioManager.onTimeUpdate(() =&gt; &#123;   &#125;)函数中实现持续调用</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">backgroundAudioManager.onPlay(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'onPlay'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">backgroundAudioManager.onStop(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'onStop'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">backgroundAudioManager.onPause(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Pause'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">backgroundAudioManager.onWaiting(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'onWaiting'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//监听背景音频进入可播放状态事件。 但不保证后面可以流畅播放</span></span><br><span class="line">backgroundAudioManager.onCanplay(<span class="function"><span class="params">()</span> =&gt;</span> &#123; </span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'onCanplay'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//持续获取音乐正在播放的时间</span></span><br><span class="line">backgroundAudioManager.onTimeUpdate(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'onTimeUpdate'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">backgroundAudioManager.onEnded(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"onEnded"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">backgroundAudioManager.onError(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line"><span class="built_in">console</span>.error(res.errMsg)</span><br><span class="line"><span class="built_in">console</span>.error(res.errCode)</span><br><span class="line">wx.showToast(&#123;</span><br><span class="line">  title: <span class="string">'错误:'</span> + res.errCode,</span><br><span class="line">&#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="订阅消息"><a href="#订阅消息" class="headerlink" title="订阅消息"></a>订阅消息</h1><p>微信官方文档：<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/subscribe-message.html" target="_blank" rel="noopener">指南-&gt;开放能力-&gt;消息-&gt;订阅消息</a></p>
+<ol>
+<li>订阅消息API： wx.requestSubscribeMessage()</li>
+<li>云函数调用API： subscribeMessage.send</li>
+<li>subscribeMessage.send 开发文档中 有关于传入数据的数据类型的要</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> wx.getSetting() 获取获取用户对相关订阅消息的订阅状态。</span><br><span class="line">	<span class="comment">//注意  用户订阅消息设置，接口参数withSubscriptions值为true时才会返回</span></span><br><span class="line">	<span class="comment">//withSubscriptions: true,</span></span><br><span class="line">	成功回调 res.subscriptionsSetting 中有订阅消息的状态</span><br><span class="line">	若未授权 则调用下发接口获取授权</span><br><span class="line"><span class="number">2</span> wx.requestSubscribeMessage() 获取订阅授权</span><br><span class="line">   <span class="comment">//注意  该API 只能在用户发生点击行为或者发起支付回调后，才可以调起订阅消息界面。</span></span><br><span class="line"><span class="number">3</span> subscribeMessage.send 云调用  发送订阅消息</span><br><span class="line">   <span class="comment">//注意 config.json 中配置subscribeMessage.send</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="小程序码"><a href="#小程序码" class="headerlink" title="小程序码"></a>小程序码</h1><ol>
+<li>建立云函数、生成二维码（但是是二进制格式）</li>
+<li>在云函数中将二进制格式的二维码上传到云存储，上传成功返回结果即是图片格式二维码</li>
+<li>云函数中将图图片格式return出去</li>
+<li>小程序端调用云函数获取二维码</li>
+</ol>
+<ul>
+<li><p>生成二维码API：<code>cloud.openapi.wxacode.getUnlimited</code></p>
+</li>
+<li><p>官方文档：<a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/qr-code/wxacode.getUnlimited.html" target="_blank" rel="noopener">getUnlimited</a></p>
+</li>
+<li><p>云函数部分</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//getQrCode/index.js</span></span><br><span class="line"><span class="comment">// 云函数入口文件</span></span><br><span class="line"><span class="keyword">const</span> cloud = <span class="built_in">require</span>(<span class="string">'wx-server-sdk'</span>)</span><br><span class="line">cloud.init()</span><br><span class="line"><span class="comment">// 云函数入口函数</span></span><br><span class="line">exports.main = <span class="keyword">async</span> (event, context) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 1. 生成二维码</span></span><br><span class="line">  <span class="keyword">const</span> wxContext = cloud.getWXContext()</span><br><span class="line">  <span class="keyword">const</span> result = <span class="keyword">await</span> cloud.openapi.wxacode.getUnlimited(&#123;</span><br><span class="line">    scene: wxContext.OPENID,</span><br><span class="line">    <span class="comment">//pages:"pages/blog/blog",</span></span><br><span class="line">    <span class="comment">// lineColor: &#123;</span></span><br><span class="line">    <span class="comment">//   'r': 211,</span></span><br><span class="line">    <span class="comment">//   'g': 60,</span></span><br><span class="line">    <span class="comment">//   'b': 57</span></span><br><span class="line">    <span class="comment">// &#125;,</span></span><br><span class="line">    <span class="comment">// isHyaline: true</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">//返回值(result.buffer)是二进制----表示二维码</span></span><br><span class="line">  <span class="comment">//console.log(result.buffer)</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 2.将二维码上传到云存储    二进制=====》图片</span></span><br><span class="line">  <span class="comment">//上传云存储  将二进制数转化为图片</span></span><br><span class="line">  <span class="keyword">const</span> upload = <span class="keyword">await</span> cloud.uploadFile(&#123;</span><br><span class="line">    cloudPath: <span class="string">'qrcode/'</span> + <span class="built_in">Date</span>.now() + <span class="string">'-'</span> + <span class="built_in">Math</span>.random() * <span class="number">1000000</span> +<span class="string">'.png'</span>,</span><br><span class="line">    fileContent: result.buffer,</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">//返回小程序端小程序码的云存储地址</span></span><br><span class="line">  <span class="keyword">return</span> upload.fileID</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>小程序端部分</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wx.cloud.callFunction(&#123;</span><br><span class="line">  name: <span class="string">'getQrCode'</span>,</span><br><span class="line">&#125;).then(<span class="function">(<span class="params">res</span>) =&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> qrCode = res.result  <span class="comment">//qrCode即是小程序二维码</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="小程序进阶"><a href="#小程序进阶" class="headerlink" title="小程序进阶"></a>小程序进阶</h1><h2 id="1-渲染页面的技术选项"><a href="#1-渲染页面的技术选项" class="headerlink" title="1 渲染页面的技术选项"></a>1 渲染页面的技术选项</h2><ol>
+<li><p>纯客户端原生技术（ios, java）</p>
+</li>
+<li><p>纯web技术（html, css. js）</p>
+<p>渲染层与逻辑层同一个线程–低效</p>
+</li>
+<li><p>用客户端原生技术与web技术结合的混合技术（Hybird）</p>
+<p>渲染层与逻辑层不同线程—–高效</p>
+</li>
+</ol>
+<h2 id="2-小程序渲染层与逻辑层交互原理"><a href="#2-小程序渲染层与逻辑层交互原理" class="headerlink" title="2 小程序渲染层与逻辑层交互原理"></a>2 小程序渲染层与逻辑层交互原理</h2><ul>
+<li>不能频繁使用setData():  避免多次逻辑层&lt;—-&gt;系统层&lt;—-&gt;渲染层   占用资源   出现卡顿</li>
+<li>不需要展示在界面的数据定义在data外</li>
+</ul>
+<img src="/2020/03/28/wx-applet/wxapplet/wxapplet/1.png" style="zoom: 50%;">
+
+<h2 id="3-小程序版本更新管理"><a href="#3-小程序版本更新管理" class="headerlink" title="3 小程序版本更新管理"></a>3 小程序版本更新管理</h2><p>API——-基础——-更新</p>
+<p>//模拟器测试</p>
+<img src="/2020/03/28/wx-applet/wxapplet/wxapplet/2.png" style="zoom: 80%;">
+
+<p>//app.js——-onLaunch函数中调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;检查版本更新情况并更新</span><br><span class="line">checkUpdate()&#123;</span><br><span class="line">  &#x2F;&#x2F;全局版本管理器</span><br><span class="line">  const updateManager &#x3D; wx.getUpdateManager()</span><br><span class="line">  &#x2F;&#x2F;检测版本更新</span><br><span class="line">  updateManager.onCheckForUpdate((res) &#x3D;&gt; &#123;</span><br><span class="line">    &#x2F;&#x2F;res.hasUpdate 表示有新版本</span><br><span class="line">    if(res.hasUpdate)&#123;</span><br><span class="line">      &#x2F;&#x2F;下载新版本</span><br><span class="line">      updateManager.onUpdateReady((res) &#x3D;&gt; &#123;</span><br><span class="line">        wx.showModal(&#123;</span><br><span class="line">          title: &#39;更新提示&#39;,</span><br><span class="line">          content: &#39;新版本已经准备好，是否重启应用&#39;,</span><br><span class="line">          success: (res) &#x3D;&gt; &#123;</span><br><span class="line">            &#x2F;&#x2F;提示选择“确定”</span><br><span class="line">            if(res.confirm)&#123;</span><br><span class="line">              &#x2F;&#x2F;重启并应用新版本</span><br><span class="line">              updateManager.applyUpdate()</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-小程序性能与体验优化"><a href="#4-小程序性能与体验优化" class="headerlink" title="4 小程序性能与体验优化"></a>4 小程序性能与体验优化</h2><h3 id="4-1-体验评分"><a href="#4-1-体验评分" class="headerlink" title="4.1 体验评分"></a>4.1 体验评分</h3><ul>
+<li>调试器——-Audits(手动测试每个功能)</li>
+<li>详情—–本地设置—–自动运行体验评分（调试过程中就已经进行了评测）</li>
+</ul>
+<h3 id="4-2-注意事项"><a href="#4-2-注意事项" class="headerlink" title="4.2 注意事项"></a>4.2 注意事项</h3><ol>
+<li>所有资源请求建议使用HTTPS （HTTP是明文的  可能出现数据被篡改）</li>
+<li>及时回收定时器  </li>
+<li>避免使用：active伪类来实现点击态（小程序中  滑动过程中点击态不会消失  小程序中建议使用hover）</li>
+<li>滑动区域开启惯性效果  （安卓自带惯性效果  苹果上要有一下设置：-webkit-overflow-scrolling:touch）</li>
+<li>避免出现JavaScript异常</li>
+<li>避免短时间内发起太多的图片请求（使用iconfont字体图标）</li>
+<li>避免短时间内发起太多请求</li>
+</ol>
+<h3 id="4-3-setData注意事项"><a href="#4-3-setData注意事项" class="headerlink" title="4.3 setData注意事项"></a>4.3 setData注意事项</h3><ol>
+<li>避免setData的数据过大（1M以内）</li>
+<li>避免setData调用过于频繁</li>
+<li>不需要展示在界面的数据定义在data外  以减少setData的使用</li>
+</ol>
+<h2 id="5-小程序上线审核流程"><a href="#5-小程序上线审核流程" class="headerlink" title="5 小程序上线审核流程"></a>5 小程序上线审核流程</h2><p>微信公众平台——管理—–版本管理</p>
+<p>开发版本——&gt;审核版本——–&gt;线上版本</p>
+<h3 id="5-1-上传成体验版（开发版本）"><a href="#5-1-上传成体验版（开发版本）" class="headerlink" title="5.1 上传成体验版（开发版本）"></a>5.1 上传成体验版（开发版本）</h3><p>微信开发工具——-右上方“上传”</p>
+<ul>
+<li><p>版本号含义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0.0.0</span><br><span class="line">&#x2F;&#x2F;第一位  大功能修改</span><br><span class="line">&#x2F;&#x2F;第二位  小功能修改</span><br><span class="line">&#x2F;&#x2F;第三位  Bug修改</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看代码量的大小</p>
+<p>微信开发工具——–右上方“详情”——基本信息——本地代码</p>
+</li>
+<li><p>小程序上传代码包要求小于2M</p>
+</li>
+</ul>
+<h2 id="6-关于服务类目"><a href="#6-关于服务类目" class="headerlink" title="6 关于服务类目"></a>6 关于服务类目</h2><p>微信开发文档—-上方“介绍”——-产品定位及功能介绍——小程序信息完善及开发前准备—–小程序开放的服务类</p>
+<h1 id="小程序端HTTP请求封装"><a href="#小程序端HTTP请求封装" class="headerlink" title="小程序端HTTP请求封装"></a>小程序端HTTP请求封装</h1><h3 id="1-封装HTTP请求-callback"><a href="#1-封装HTTP请求-callback" class="headerlink" title="1 封装HTTP请求(callback)"></a>1 封装HTTP请求(callback)</h3><p>对比1封装HTTP请求（callback）与 2封装HTTP请求（promise）  体会promsie的优势</p>
+<ul>
+<li><p>1 根目录下-config.js——-封装基础网络请求信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const config &#x3D; &#123;</span><br><span class="line">  api_base_url: &#39;http:&#x2F;&#x2F;hhhhhhh.pro&#x2F;v1&#x2F;&#39;,</span><br><span class="line">  appkey: &quot;K57S1kGd4CLBz2dw&quot;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export &#123;config&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2 utils/http.js———-封装wx.request()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">import &#123;config&#125; from &#39;..&#x2F;config.js&#39;</span><br><span class="line"></span><br><span class="line">const tips &#x3D; &#123;</span><br><span class="line">    1: &#39;抱歉，出现了一个错误&#39;,</span><br><span class="line">    1005:&#39;appkey无效，请前往www.7yue.pro申请&#39;,</span><br><span class="line">    3000:&#39;期刊不存在&#39;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class HTTP&#123;</span><br><span class="line">    request(params)&#123;</span><br><span class="line">        &#x2F;&#x2F; 参数params&#123;url, data, method,&#125;</span><br><span class="line">        if(!params.method)&#123;</span><br><span class="line">            params.method&#x3D;&quot;GET&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        wx.request(&#123;</span><br><span class="line">            url:config.api_base_url + params.url,</span><br><span class="line">            method:params.method,</span><br><span class="line">            data:params.data,</span><br><span class="line">            header:&#123;</span><br><span class="line">                &#39;content-type&#39;:&#39;application&#x2F;json&#39;,</span><br><span class="line">                &#39;appkey&#39;:config.appkey</span><br><span class="line">            &#125;,</span><br><span class="line">            success:(res)&#x3D;&gt;&#123;</span><br><span class="line">                let code &#x3D; res.statusCode.toString()</span><br><span class="line">                if (code.startsWith(&#39;2&#39;))&#123;</span><br><span class="line">                &#x2F;&#x2F;--------------------将数据返回给调用方的回调函数----------------------</span><br><span class="line">                &#x2F;&#x2F;---- params.success---&gt;判断是否传入了回调函数  若未传入则不返回数据------</span><br><span class="line">                     params.success &amp;&amp; params.success(res.data)</span><br><span class="line">                &#125;</span><br><span class="line">                else&#123;</span><br><span class="line">                    let error_code &#x3D; res.data.error_code</span><br><span class="line">                    this._show_error(error_code)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            fail:(err)&#x3D;&gt;&#123;</span><br><span class="line">                this._show_error(1)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;服务器异常处理函数 传入参数为错误码-----这部分处理根据具体情况确定</span><br><span class="line">     _show_error(error_code)&#123;</span><br><span class="line">        if(!error_code)&#123;</span><br><span class="line">            error_code &#x3D; 1</span><br><span class="line">        &#125;</span><br><span class="line">        const tip &#x3D; tips[error_code]</span><br><span class="line">        wx.showToast(&#123;</span><br><span class="line">            title: tip?tip:tips[1], </span><br><span class="line">            icon:&#39;none&#39;,</span><br><span class="line">            duration:2000</span><br><span class="line">        &#125;) </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export &#123;HTTP&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3 models/xxxxx.js—————-继承封装的HTPP继续封装具体方法</p>
+<ul>
+<li>一般一个页面再封装一个类 —&gt;类下封装获取不同数据的方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">import &#123;HTTP&#125; from &#39;..&#x2F;utils&#x2F;http.js&#39;</span><br><span class="line"></span><br><span class="line">class ClassicModel extends HTTP &#123;  --------classic 为一个页面名</span><br><span class="line">  getLatest(sCallback)&#123;  ------------------getLatest()为定义的具体方法</span><br><span class="line">    this.request(&#123;</span><br><span class="line">      url: &#39;classic&#x2F;latest&#39;,</span><br><span class="line">      success:(res)&#x3D;&gt;&#123; ---------通过utils&#x2F;http.js中params.success(res.data)传回的数据</span><br><span class="line">        sCallback(res) --------------------将数据返回给调用方的回调函数</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export &#123;ClassicModel&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import &#123;HTTP&#125; from &#39;..&#x2F;..&#x2F;utils&#x2F;http.js&#39;</span><br><span class="line">let http &#x3D; new HTTP()-----------------注意实例化</span><br><span class="line"></span><br><span class="line">http.request(&#123;</span><br><span class="line">      url: &#39;classic&#x2F;latest&#39;,</span><br><span class="line">      success:(res)&#x3D;&gt;&#123;</span><br><span class="line">        console.log(res)-----------通过utils&#x2F;http.js中params.success(res.data)传回的数据</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4 页面中调用models/xxx.js 中的类下的方法 —–实例化类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import &#123;ClassicModel&#125; from &#39;..&#x2F;..&#x2F;models&#x2F;classic.js&#39;</span><br><span class="line">let classic &#x3D; new ClassicModel()-----------------注意实例化</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">classic.getLatest((res)&#x3D;&gt;&#123;</span><br><span class="line">      console.log(res)-----------通过models&#x2F;xxx.js中sCallback(res)传回的数据</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ul>
+<h3 id="2-封装HTTP请求-promise"><a href="#2-封装HTTP请求-promise" class="headerlink" title="2 封装HTTP请求(promise)"></a>2 封装HTTP请求(promise)</h3><p>对比1封装HTTP请求（callback）与 2封装HTTP请求（promise）  体会promsie的优势</p>
+<ul>
+<li><p>1 根目录下-config.js——-封装基础网络请求信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const config &#x3D; &#123;</span><br><span class="line">  api_base_url: &#39;http:&#x2F;&#x2F;bl.7yue.pro&#x2F;v1&#x2F;&#39;,</span><br><span class="line">  appkey: &quot;K57S1kGd4CLBz2dw&quot;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export &#123;config&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2 utils/http.js———-封装wx.request()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">import &#123;config&#125; from &#39;..&#x2F;config.js&#39;</span><br><span class="line"></span><br><span class="line">const tips &#x3D; &#123;</span><br><span class="line">    1: &#39;抱歉，出现了一个错误&#39;,</span><br><span class="line">    1005:&#39;appkey无效，请前往www.7yue.pro申请&#39;,</span><br><span class="line">    3000:&#39;期刊不存在&#39;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class HTTP&#123;</span><br><span class="line">    &#x2F;&#x2F;提供给外部</span><br><span class="line">    request(&#123;url,data&#x3D;&#123;&#125;,method&#x3D;&#39;GET&#39;&#125;)&#123;   &#x2F;&#x2F;注意传参用&#123;&#125;、并且写出每个参数</span><br><span class="line">      return new Promise((resolve,reject)&#x3D;&gt;&#123;------------&#x2F;&#x2F;通过return一直将promise对象返回</span><br><span class="line">        this._request(url,resolve,reject,data,method)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;提供给内部</span><br><span class="line">    _request(url,resolve,reject,data&#x3D;&#123;&#125;,method&#x3D;&#39;GET&#39;)&#123;</span><br><span class="line">        wx.request(&#123;</span><br><span class="line">            method,</span><br><span class="line">            data,</span><br><span class="line">            url:config.api_base_url + url,</span><br><span class="line">            header:&#123;</span><br><span class="line">                &#39;content-type&#39;:&#39;application&#x2F;json&#39;,</span><br><span class="line">                &#39;appkey&#39;:config.appkey</span><br><span class="line">            &#125;,</span><br><span class="line">            success:(res)&#x3D;&gt;&#123;</span><br><span class="line">                let code &#x3D; res.statusCode.toString()</span><br><span class="line">                if (code.startsWith(&#39;2&#39;))&#123;</span><br><span class="line">                  resolve(res)-------------1</span><br><span class="line">                &#125;</span><br><span class="line">                else&#123;</span><br><span class="line">                    reject()---------------1</span><br><span class="line">                    let error_code &#x3D; res.data.error_code</span><br><span class="line">                    this._show_error(error_code)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            fail:(err)&#x3D;&gt;&#123;</span><br><span class="line">                reject()------------------1</span><br><span class="line">                this._show_error(1)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;服务器异常处理</span><br><span class="line">     _show_error(error_code)&#123;</span><br><span class="line">        if(!error_code)&#123;</span><br><span class="line">            error_code &#x3D; 1</span><br><span class="line">        &#125;</span><br><span class="line">        const tip &#x3D; tips[error_code]</span><br><span class="line">        wx.showToast(&#123;</span><br><span class="line">            title: tip?tip:tips[1], </span><br><span class="line">            icon:&#39;none&#39;,</span><br><span class="line">            duration:2000</span><br><span class="line">        &#125;) </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export &#123;HTTP&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3 models/xxxxx.js—————-继承封装的HTPP继续封装具体方法</p>
+<ul>
+<li>一般一个页面再封装一个类 —&gt;类下封装获取不同数据的方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import &#123;</span><br><span class="line">  HTTP</span><br><span class="line">&#125; from &#39;..&#x2F;utils&#x2F;http-p.js&#39;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class bookModel extends HTTP&#123;</span><br><span class="line">    getHotList()&#123;</span><br><span class="line">      return this.request(&#123;---------------------&#x2F;&#x2F;通过return一直将promise对象返回</span><br><span class="line">        url:&#39;book&#x2F;hot_list&#39;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export &#123;BookModel&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4 页面中调用models/xxx.js 中的类下的方法 —–实例化类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import &#123;BookModel&#125; from &#39;..&#x2F;..&#x2F;models&#x2F;classic.js&#39;</span><br><span class="line">let bookModel &#x3D; new BookModel()-----------------注意实例化</span><br><span class="line"></span><br><span class="line">const hotList &#x3D; bookModel.getHotList() ---hotList即返回的promise对象（resturn回来的）</span><br><span class="line">hotList.then(</span><br><span class="line">  (res)&#x3D;&gt;&#123;---------------------------------------res即resolve()的回调函数</span><br><span class="line">  console.log(&#39;book-hotlist&#39;,res)</span><br><span class="line">  &#125;,</span><br><span class="line">  (error)&#x3D;&gt;&#123;------------------------------------error即reject()的回调函数</span><br><span class="line">  console.log(error)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="上拉触底加载封装"><a href="#上拉触底加载封装" class="headerlink" title="上拉触底加载封装"></a>上拉触底加载封装</h1><ul>
+<li><p>封装的<code>behavior</code>相当于对<strong>列表数据</strong>的一个管理</p>
+</li>
+<li><p>注意事项</p>
+<ul>
+<li>上锁  避免用户操作过快导致发送重复的网络请求  当发送网络请求时上锁  请求结束后解锁</li>
+<li>列表数据全部加载完成判断  若列表数据全部加载完成 则不再发送获取更多数据的网络请求 避免消耗过多资源</li>
+</ul>
+</li>
+<li><p>不使用behavior</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">data: &#123;</span><br><span class="line">        isSearching:false,&#x2F;&#x2F;锁  用于控制网络请求不重复  发送网络请求是上锁  请求结束后解锁--------1</span><br><span class="line">        isEnd:false,&#x2F;&#x2F;记录是否加载完列表所有数据 若全部加载完则不再发送网络请求 避免发送多次无用的请求消耗资源----------------------------------------------------------------------------------2</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">&#x2F;&#x2F;向服务器请求搜索的数据及相关业务</span><br><span class="line">_getSearch(keyword)&#123;</span><br><span class="line">    &#x2F;&#x2F;判断是否上锁 若上锁则直接退出网络请求---------------1</span><br><span class="line">    if(this.data.isSearching)&#123;</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F; 判断是否加载完所有数据 若加载完所有数据则不再发送网路请求  ---------------------------2</span><br><span class="line">    if(!this.data.isEnd)&#123;</span><br><span class="line">        &#x2F;&#x2F;上锁</span><br><span class="line">        this.data.isSearching &#x3D; true---------------1</span><br><span class="line">        &#x2F;&#x2F;向服务器请求数据</span><br><span class="line">        bookModel.getSearch(this.properties.searchBooks.length,keyword).then((res)&#x3D;&gt;&#123;</span><br><span class="line">            const books &#x3D; res.data.books</span><br><span class="line">            const nowBooks &#x3D; this.data.searchBooks.concat(books)</span><br><span class="line">            &#x2F;&#x2F;记录列表数据全部加载完成 若返回的数据数组长度为零则说明数据全部加载完-------------2</span><br><span class="line">            if(books.length &#x3D;&#x3D; 0)&#123;</span><br><span class="line">                this.setData(&#123;</span><br><span class="line">                    isEnd:true</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">            this.setData(&#123;</span><br><span class="line">                searchBooks:nowBooks</span><br><span class="line">            &#125;)</span><br><span class="line">            &#x2F;&#x2F;解锁</span><br><span class="line">            this.data.isSearching &#x3D; false ----------1</span><br><span class="line">        &#125;,()&#x3D;&gt;&#123;</span><br><span class="line">            &#x2F;&#x2F;解锁</span><br><span class="line">            this.data.isSearching &#x3D; false-----------1  (避免死锁 即使请求失败也要解锁)</span><br><span class="line">            &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用behavior</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">const paginationBev &#x3D; Behavior(&#123;</span><br><span class="line">    data:&#123;</span><br><span class="line">        dataArray:[],</span><br><span class="line">        isGetMore:true,&#x2F;&#x2F;列表数据全部加载完成时设置为false</span><br><span class="line">        isLocked:false,&#x2F;&#x2F;锁 用于控制上锁、解锁  确保网络请求不重复  发送网络请求时上锁  请求结束后解锁</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    methods:&#123;</span><br><span class="line">        setNewData(dataArray)&#123;</span><br><span class="line">            if(dataArray.length &#x3D;&#x3D; 0)&#123;</span><br><span class="line">                this.data.isGetMore &#x3D; false</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            const tempArray &#x3D; this.data.dataArray.concat(dataArray)</span><br><span class="line">            this.setData(&#123;</span><br><span class="line">                dataArray:tempArray</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;获取加载更多时的起始页码</span><br><span class="line">        getStart()&#123;</span><br><span class="line">            return this.data.dataArray.length</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;是否还加载更多数据 若列表数据已全部加载完则返回false  --- 避免无用加载</span><br><span class="line">        isGetMore()&#123;</span><br><span class="line">            return this.data.isGetMore</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;是否服务器没有数据</span><br><span class="line">        isNoData()&#123;</span><br><span class="line">            if(this.getStart() &#x3D;&#x3D; 0 &amp; !this.isGetMore())&#123;</span><br><span class="line">                return true</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                return false</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;恢复初始状态</span><br><span class="line">        recovery()&#123;</span><br><span class="line">            this.setData(&#123;</span><br><span class="line">                dataArray:[],</span><br><span class="line">                isGetMore:true</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;获取锁的状态</span><br><span class="line">        isLocked()&#123;</span><br><span class="line">            return this.data.isLocked</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;上锁</span><br><span class="line">        locked()&#123;</span><br><span class="line">            this.data.isLocked &#x3D; true</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;解锁</span><br><span class="line">        unLocked()&#123;</span><br><span class="line">            this.data.isLocked &#x3D;false</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">export &#123;paginationBev&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/wxapplet/" rel="tag"># wxapplet</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/12/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/JavaScript/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95(JavaScript)/" rel="prev" title="数据结构与算法(JavaScript)">
+      <i class="fa fa-chevron-left"></i> 数据结构与算法(JavaScript)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/28/wx-applet/wxapplet/wxapplet-cloud/" rel="next" title="wxapplet(0x01)-小程序云开发">
+      wxapplet(0x01)-小程序云开发 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#细节"><span class="nav-text">细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-39-属性1-属性11-39-的方式拿属性"><span class="nav-text">1[&#39;属性1.属性11&#39;]的方式拿属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-调用API用this-OR-wx"><span class="nav-text">2 调用API用this. OR wx.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-wx-if-VS-hidden"><span class="nav-text">3 wx:if  VS  hidden</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-typeof判断类型"><span class="nav-text">4 typeof判断类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-setData的回调函数使用"><span class="nav-text">5 setData的回调函数使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-JSON文件注意事项"><span class="nav-text">6 JSON文件注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-wx-key"><span class="nav-text">7 wx:key</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小程序中使用npm"><span class="nav-text">小程序中使用npm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义组件"><span class="nav-text">自定义组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-observers"><span class="nav-text">1 observers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-behavior"><span class="nav-text">2 behavior</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小程序端使用云开发"><span class="nav-text">小程序端使用云开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-调用云函数"><span class="nav-text">1 调用云函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-调用云数据库"><span class="nav-text">2 调用云数据库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API"><span class="nav-text">API</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-本地存储"><span class="nav-text">1 本地存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-数据存储本地"><span class="nav-text">1.1 数据存储本地</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-获取本地数据"><span class="nav-text">1.2 获取本地数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-界面"><span class="nav-text">2 界面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-导航栏"><span class="nav-text">2.1 导航栏</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-设置界面标题"><span class="nav-text">2.1.1 设置界面标题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-WXML"><span class="nav-text">3 WXML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-取组件"><span class="nav-text">3.1 取组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-获取组件信息"><span class="nav-text">3.2 获取组件信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-基础"><span class="nav-text">4 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-系统"><span class="nav-text">4.1 系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-wx-getSystemInfo"><span class="nav-text">4.1.1 wx.getSystemInfo()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-媒体"><span class="nav-text">5 媒体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-图片"><span class="nav-text">5.1 图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-wx-chooseImage"><span class="nav-text">5.1.1  wx.chooseImage()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-2-wx-previewImage"><span class="nav-text">5.1.2  wx.previewImage()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-设备"><span class="nav-text">6 设备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-扫码wx-scanCode"><span class="nav-text">6.1 扫码wx.scanCode</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#生命周期"><span class="nav-text">生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-组件生命周期"><span class="nav-text">1 组件生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-自定义生命周期"><span class="nav-text">1.1 自定义生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2组件所在页面的生命周期"><span class="nav-text">1.2组件所在页面的生命周期</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#全局变量—app-js"><span class="nav-text">全局变量—app.js</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WXS"><span class="nav-text">WXS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-wxml中实现对数据的处理"><span class="nav-text">1 wxml中实现对数据的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-正则表达式regexp"><span class="nav-text">2 正则表达式regexp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WXSS"><span class="nav-text">WXSS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-页面向组件传递外部样式类"><span class="nav-text">1 页面向组件传递外部样式类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-阿里iconfont字体图标"><span class="nav-text">2  阿里iconfont字体图标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-组件样式特征"><span class="nav-text">3 组件样式特征</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-view"><span class="nav-text">1 view</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-image"><span class="nav-text">2 image</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件"><span class="nav-text">组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂组件"><span class="nav-text">复杂组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#movable-area-moveble-view组件"><span class="nav-text">movable-area   moveble-view组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#progress进度条组件"><span class="nav-text">progress进度条组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WXML"><span class="nav-text">WXML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-插槽-slot"><span class="nav-text">1 插槽 slot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-textarea"><span class="nav-text">2 textarea</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-小程序原生组件绑定事件不能用”-”"><span class="nav-text">3 小程序原生组件绑定事件不能用”:”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-取消事件冒泡"><span class="nav-text">4 取消事件冒泡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-跳转到其他小程序"><span class="nav-text">5 跳转到其他小程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-解析nbsp等"><span class="nav-text">6 解析nbsp等</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开放能力"><span class="nav-text">开放能力</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-分享小程序"><span class="nav-text">1 分享小程序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据通信"><span class="nav-text">数据通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-点击事件传递数据"><span class="nav-text">1 点击事件传递数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-页面跳转携带数据"><span class="nav-text">2 页面跳转携带数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-组件与页面之间通信"><span class="nav-text">3 组件与页面之间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-组件向页面通信"><span class="nav-text">3.1  组件向页面通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-页面向组件传递数据"><span class="nav-text">3.2 页面向组件传递数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-页面之间调用函数"><span class="nav-text">4 页面之间调用函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取用户授权及用户信息"><span class="nav-text">获取用户授权及用户信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-open-data"><span class="nav-text">1 open-data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-wx-getUserInfo"><span class="nav-text">2 wx.getUserInfo()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-button"><span class="nav-text">3 button</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-login云函数获取openId"><span class="nav-text">4 login云函数获取openId</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#音乐播放开发"><span class="nav-text">音乐播放开发</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#订阅消息"><span class="nav-text">订阅消息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小程序码"><span class="nav-text">小程序码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小程序进阶"><span class="nav-text">小程序进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-渲染页面的技术选项"><span class="nav-text">1 渲染页面的技术选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-小程序渲染层与逻辑层交互原理"><span class="nav-text">2 小程序渲染层与逻辑层交互原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-小程序版本更新管理"><span class="nav-text">3 小程序版本更新管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-小程序性能与体验优化"><span class="nav-text">4 小程序性能与体验优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-体验评分"><span class="nav-text">4.1 体验评分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-注意事项"><span class="nav-text">4.2 注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-setData注意事项"><span class="nav-text">4.3 setData注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-小程序上线审核流程"><span class="nav-text">5 小程序上线审核流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-上传成体验版（开发版本）"><span class="nav-text">5.1 上传成体验版（开发版本）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-关于服务类目"><span class="nav-text">6 关于服务类目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小程序端HTTP请求封装"><span class="nav-text">小程序端HTTP请求封装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-封装HTTP请求-callback"><span class="nav-text">1 封装HTTP请求(callback)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-封装HTTP请求-promise"><span class="nav-text">2 封装HTTP请求(promise)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#上拉触底加载封装"><span class="nav-text">上拉触底加载封装</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chuckie"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Chuckie</p>
+  <div class="site-description" itemprop="description">Bright future</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ChuckieWill" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ChuckieWill" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/codewyj.163.com" title="E-Mail → codewyj.163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jianshu.com/u/de627226656c" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;de627226656c" rel="noopener" target="_blank">简书</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="/images/me.png"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chuckie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:04</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

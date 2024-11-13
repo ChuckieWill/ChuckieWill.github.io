@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="c++11_new 爱编程的大丙B站-c++11学习笔记 爱编程的大丙个人博客-c++11">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++11新特性">
+<meta property="og:url" content="http://yoursite.com/2022/02/06/C++/C++11_new/index.html">
+<meta property="og:site_name" content="Chuckie&#39;s Blog">
+<meta property="og:description" content="c++11_new 爱编程的大丙B站-c++11学习笔记 爱编程的大丙个人博客-c++11">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-06T02:43:17.000Z">
+<meta property="article:modified_time" content="2024-09-18T15:06:07.245Z">
+<meta property="article:author" content="Chuckie">
+<meta property="article:tag" content="C++11">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/02/06/C++/C++11_new/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>C++11新特性 | Chuckie's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chuckie's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/06/C++/C++11_new/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++11新特性
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-06 10:43:17" itemprop="dateCreated datePublished" datetime="2022-02-06T10:43:17+08:00">2022-02-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="c-11-new"><a href="#c-11-new" class="headerlink" title="c++11_new"></a>c++11_new</h1><blockquote>
+<p><a href="https://blog.csdn.net/Jiangtagong/article/details/119698713" target="_blank" rel="noopener">爱编程的大丙B站-c++11学习笔记</a></p>
+<p><a href="https://subingwen.cn/cplusplus/" target="_blank" rel="noopener">爱编程的大丙个人博客-c++11</a></p>
+</blockquote>
+<h3 id="alignas"><a href="#alignas" class="headerlink" title="alignas"></a>alignas</h3><blockquote>
+<p><a href="https://blog.csdn.net/m0_68070522/article/details/124537265" target="_blank" rel="noopener">alignas</a></p>
+</blockquote>
+<ul>
+<li>alignas设置的大小是整体的对齐大小</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">struct <span class="title">alignas</span><span class="params">(<span class="number">32</span>)</span> test4</span>&#123;</span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	<span class="keyword">int</span>  i;</span><br><span class="line">	<span class="keyword">double</span> d;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 上面正常大小是16  但设置了最小对齐数为32  所以大小补齐到32的倍数，即大小为32</span></span><br><span class="line"></span><br><span class="line"><span class="function">struct <span class="title">alignas</span><span class="params">(<span class="number">4</span>)</span> Info2 </span>&#123;</span><br><span class="line">  <span class="keyword">uint8_t</span> a;</span><br><span class="line">  <span class="keyword">uint16_t</span> b;</span><br><span class="line">  <span class="keyword">uint8_t</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 上面正常大小为：2 + 2 + 2 = 6 但对齐数为：4， 所以大小补齐到4的倍数，即大小为4</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="原始字面量"><a href="#原始字面量" class="headerlink" title="原始字面量"></a>原始字面量</h3><ul>
+<li>使用场景<ul>
+<li>windows下的路径</li>
+<li>换行字符串</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> str1 = <span class="string">R"(D:\hello\world\test.text)"</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="nullptr"><a href="#nullptr" class="headerlink" title="nullptr"></a>nullptr</h3><ul>
+<li>C++ 程序 NULL 就是 0</li>
+<li>C 程序 NULL 表示 <code>(void*)0</code></li>
+<li>C++ 中，<code>void *</code>类型无法隐式转换为其他类型的指针</li>
+<li>nullptr 无法隐式转换为整形，但是可以隐式匹配指针类型</li>
+</ul>
+<h3 id="constexpr"><a href="#constexpr" class="headerlink" title="constexpr"></a>constexpr</h3><ul>
+<li><p>const 语义</p>
+<ul>
+<li>变量只读，起始也是可变的，不能视为常量，不是在编译阶段计算</li>
+<li>修饰常量，编译阶段计算</li>
+</ul>
+</li>
+<li><p>常量表达式的计算往往发生在程序的<strong>编译阶段</strong></p>
+</li>
+<li><p>修饰函数</p>
+<ul>
+<li>整个函数的函数体中，不能出现非常量表达式之外的语句（using 指令、typedef 语句以及 static_assert 断言、return 语句除外）</li>
+<li>本质就是函数可以在编译阶段计算出结果，如果函数内部存在需要执行才能计算出结果的情况，则不能定义为常量表达式函数</li>
+</ul>
+</li>
+<li><p>修饰模板函数</p>
+<ul>
+<li>根据传入和传出的值判断是否用这个关键字，编译阶段就判断传入的是不是常量</li>
+</ul>
+</li>
+<li><p>修饰构造函数</p>
+<ul>
+<li>构造函数体需要为空，且只能通过初始化列表初始化</li>
+</ul>
+</li>
+<li><p>总结：就是告诉编译器可以在编译阶段就计算出结果</p>
+</li>
+</ul>
+<h3 id="自动类型推导"><a href="#自动类型推导" class="headerlink" title="自动类型推导"></a>自动类型推导</h3><ul>
+<li>auto<ul>
+<li>使用场景：<ul>
+<li>迭代器</li>
+<li>泛型编程，返回值类型是根据传入的泛型决定的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>decltype<ul>
+<li>使用场景：模板类中，如果传入的是STL容器，获取对应容器的迭代器<ul>
+<li>在定义迭代器的时候不能通过<code>T::iterator</code>来定义，因为T是未知的，必须通过一个已知的类型才能定义一个变量</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>返回值类型后置<ul>
+<li>使用decltype推导返回结果的数据类型</li>
+</ul>
+</li>
+</ul>
+<h3 id="final、override"><a href="#final、override" class="headerlink" title="final、override"></a>final、override</h3><ul>
+<li>final<ul>
+<li>注意修饰位置在函数和类后面</li>
+<li>修饰函数表示，这个方法不能在在子类中被重写了</li>
+<li>修饰类表示，这个类不能被继承</li>
+</ul>
+</li>
+<li>override<ul>
+<li>用于确保重写的函数函数名不会出错，写的位置是在重写函数名后面</li>
+</ul>
+</li>
+</ul>
+<h3 id="模板优化"><a href="#模板优化" class="headerlink" title="模板优化"></a>模板优化</h3><ul>
+<li><p>模板的右尖括号</p>
+<ul>
+<li>c++11以前，<code>Base&lt;vector&lt;int&gt;&gt; b;</code>这种写法的<code>&gt;&gt;</code>会被解析为右移</li>
+</ul>
+</li>
+<li><p>默认模板参数</p>
+<ul>
+<li>类和函数都可，函数没有传入实参时，会使用默认类型和默认值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <span class="keyword">int</span>, <span class="keyword">typename</span> U = <span class="keyword">char</span>&gt;</span><br><span class="line"><span class="keyword">void</span> func(T arg1 = <span class="number">100</span>, U arg2 = <span class="number">100</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"arg1: "</span> &lt;&lt; arg1 &lt;&lt; <span class="string">", arg2: "</span> &lt;&lt; arg2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 模板函数调用</span></span><br><span class="line">    func(<span class="string">'a'</span>);     <span class="comment">// a d </span></span><br><span class="line">    func(<span class="number">97</span>, <span class="string">'a'</span>); <span class="comment">// 97, a</span></span><br><span class="line">    func();    <span class="comment">// 打印：100， d </span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="using的使用"><a href="#using的使用" class="headerlink" title="using的使用"></a>using的使用</h3><blockquote>
+<p>using 语法和 typedef 一样，并不会创建出新的类型，它们只是给某些类型定义了新的别名</p>
+</blockquote>
+<ul>
+<li>定义别名<ul>
+<li>using 相较于 typedef 的优势在于定义函数指针别名时看起来更加直观</li>
+</ul>
+</li>
+<li>模板的别名<ul>
+<li>using 给模板定义别名更加简洁直观</li>
+</ul>
+</li>
+</ul>
+<h3 id="委托构造函数和继承构造函数"><a href="#委托构造函数和继承构造函数" class="headerlink" title="委托构造函数和继承构造函数"></a>委托构造函数和继承构造函数</h3><blockquote>
+<p><a href="https://subingwen.cn/cpp/construct/" target="_blank" rel="noopener">https://subingwen.cn/cpp/construct/</a></p>
+</blockquote>
+<ul>
+<li>委托构造函数<ul>
+<li>在构造函数中可以调用另外的构造函数，以此可精简代码</li>
+<li>c++11之前是不支持构造函数中调用别的构造函数的</li>
+</ul>
+</li>
+<li>继承构造函数<ul>
+<li>c++11之前继承是没有继承构造函数的，要初始化，只能在子类中再调用父类的构造函数</li>
+<li>继承构造函数就是可以允许子类继承父类的构造函数，直接可以初始化父类的成员变量</li>
+<li>使用<code>using Base::Base 、using Base::func</code>可直接使用父类的构造函数和被隐藏的函数func</li>
+</ul>
+</li>
+</ul>
+<h3 id="列表初始化"><a href="#列表初始化" class="headerlink" title="列表初始化"></a>列表初始化</h3><ul>
+<li>聚合体和非聚合体的初始化<ul>
+<li>只要有构造函数，都直接用就行</li>
+</ul>
+</li>
+<li>initializer_list ？？？</li>
+</ul>
+<h3 id="基于范围的for循环"><a href="#基于范围的for循环" class="headerlink" title="基于范围的for循环"></a>基于范围的for循环</h3><ul>
+<li>原始for循环可以一边循环一边修改循环的内容，因为每次都会对结束判断</li>
+<li>基于范围的for循环是一开始就确定了循环的范围，所以循环过程中是不能修改循环内容的，但是不用每次都判断是否结束了，效率更高</li>
+<li>set的值和map的key在循环时本身就是不可变的</li>
+</ul>
+<h3 id="可调用对象-？？？"><a href="#可调用对象-？？？" class="headerlink" title="可调用对象 ？？？"></a>可调用对象 ？？？</h3><ul>
+<li>包装器</li>
+<li>绑定器</li>
+</ul>
+<h3 id="Lambda-表达式"><a href="#Lambda-表达式" class="headerlink" title="Lambda 表达式"></a>Lambda 表达式</h3><blockquote>
+<p><a href="https://subingwen.cn/cpp/lambda/" target="_blank" rel="noopener">https://subingwen.cn/cpp/lambda/</a></p>
+</blockquote>
+<ul>
+<li>[] - 不捕捉任何变量</li>
+<li>[&amp;] - 捕获外部作用域中所有变量，并作为引用在函数体内使用 (按引用捕获)<ul>
+<li>可读写</li>
+</ul>
+</li>
+<li>[=] - 捕获外部作用域中所有变量，并作为副本在函数体内使用 (按值捕获)<ul>
+<li>拷贝的副本在匿名函数体内部是只读的</li>
+<li>需要mutable修改，才能在函数内部可写</li>
+</ul>
+</li>
+<li>[=, &amp;foo] - 按值捕获外部作用域中所有变量，并按照引用捕获外部变量 foo</li>
+<li>[bar] - 按值捕获 bar 变量，同时不捕获其他变量<ul>
+<li>需要mutable修改，才能在函数内部可写</li>
+</ul>
+</li>
+<li>[&amp;bar] - 按引用捕获 bar 变量，同时不捕获其他变量<ul>
+<li>可以读写</li>
+</ul>
+</li>
+<li>[this] - 捕获当前类中的 this 指针<ul>
+<li>可读写</li>
+<li>让 lambda 表达式拥有和当前类成员函数同样的访问权限</li>
+<li>如果已经使用了 &amp; 或者 =, 默认添加此选项</li>
+</ul>
+</li>
+</ul>
+<h3 id="右值引用"><a href="#右值引用" class="headerlink" title="右值引用"></a>右值引用</h3><blockquote>
+<p> <strong>引用本质是别名</strong></p>
+<p>核心： 用右值引用接收一个将亡值就是给这个将亡值续命，相当于通过这个右值引用可以继续使用这个将亡值，完全继承了将亡值的所有权，这个将亡值可以是函数的返回值，本来返回后应该就析构了，但是因为有右值引用接收，所以并不会析构，直到右值引用不使用时才析构</p>
+</blockquote>
+<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><ul>
+<li><p>初始化</p>
+<ul>
+<li><p>右值引用和常量右值引用<strong>只能通过右值</strong>初始化</p>
+</li>
+<li><p>左值引用不能通过右值初始化</p>
+</li>
+<li><p>常量左值引用可以通过很多种方式初始化，如下</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// 左值</span></span><br><span class="line">  <span class="keyword">int</span> num = <span class="number">5</span>;</span><br><span class="line">  <span class="keyword">int</span> num2 = <span class="number">6</span>;</span><br><span class="line">  <span class="comment">// 左值引用</span></span><br><span class="line">  <span class="keyword">int</span>&amp; a = num; <span class="comment">// a是num的左值引用</span></span><br><span class="line">  <span class="keyword">int</span>&amp; y = <span class="number">10</span>; <span class="comment">// error 10是右值</span></span><br><span class="line">  <span class="comment">// 右值引用</span></span><br><span class="line">  <span class="keyword">int</span>&amp;&amp; b = <span class="number">10</span>;</span><br><span class="line">    <span class="comment">// 常量右值引用</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> &amp;&amp; g = <span class="number">10</span>; <span class="comment">// 用右值初始化</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> &amp;&amp; h = g; <span class="comment">// 用常量右值引用初始化 error 右值引用只能用右值初始化</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> &amp;&amp; i = b; <span class="comment">// 用右值引用初始化 error 右值引用只能用右值初始化</span></span><br><span class="line">  <span class="keyword">int</span> &amp;&amp; j = b; <span class="comment">// 用右值引用初始化 error 右值引用只能用右值初始化</span></span><br><span class="line">  <span class="comment">// 常量左值引用</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> &amp; x = num; <span class="comment">// 用左值初始化</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> &amp; c = <span class="number">10</span>;  <span class="comment">// 用右值初始化  临时变量也可以 </span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> &amp; e = a;   <span class="comment">// 用左值引用初始化</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> &amp; f = b;   <span class="comment">// 用右值引用初始化</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> &amp; d = c;   <span class="comment">// 用常量左值引用初始化</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> &amp; k = g;   <span class="comment">// 用常量右值引用初始化</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>常量左值引用的理解</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> num = <span class="number">5</span>;</span><br><span class="line">  <span class="keyword">int</span> num2 = <span class="number">6</span>;</span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> &amp; a = num;  <span class="comment">// a是num的常量引用 a不能修改 a的值可以修改,但不能通过a修改num的值，num的值可以通过其他方式修改</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> &amp; b = a;</span><br><span class="line">  <span class="comment">// a = num2; // error 不能修改常量引用的值</span></span><br><span class="line">  <span class="comment">// a = 10; // error 不能修改常量引用的值</span></span><br><span class="line">  num = <span class="number">10</span>; <span class="comment">// 可以修改a的值</span></span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>; <span class="comment">// 10</span></span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;b&lt;&lt;<span class="built_in">endl</span>; <span class="comment">// 10</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="函数返回的临时对象处理"><a href="#函数返回的临时对象处理" class="headerlink" title="函数返回的临时对象处理"></a>函数返回的临时对象处理</h4><p>函数返回临时对象，外部接收时，直接是使用了函数内部构造的对象，地址都完全一样，这个过程没有调用拷贝构造和移动构造</p>
+<ul>
+<li><strong>即使发生NRV优化的情况下，Linux+ g++的环境是不管值返回方式还是引用方式返回的方式都不会发生拷贝构造函数，而Windows + VS2019在值返回的情况下发生拷贝构造函数，引用返回方式则不发生拷贝构造函数</strong><ul>
+<li><a href="https://interviewguide.cn/notes/03-hunting_job/02-interview/01-01-02-basic.html#_40%E3%80%81%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E4%BC%9A%E8%B0%83%E7%94%A8%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0" target="_blank" rel="noopener">阿秀：什么情况下会调用拷贝构造函数</a></li>
+</ul>
+</li>
+</ul>
+<p>反而是对返回的临时对象，使用move后再构造，会调用移动构造</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Test() : m_num(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">100</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"construct: my name is jerry"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Test(<span class="keyword">const</span> Test&amp; a) : m_num(<span class="keyword">new</span> <span class="keyword">int</span>(*a.m_num))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"copy construct: my name is tom"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加移动构造函数</span></span><br><span class="line">    Test(Test&amp;&amp; a) : m_num(a.m_num)</span><br><span class="line">    &#123;</span><br><span class="line">        a.m_num = <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"move construct: my name is sunny"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~Test()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">delete</span> m_num;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"destruct Test class ..."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span>* m_num;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">Test <span class="title">getObj</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Test t;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"&amp;t: "</span> &lt;&lt; &amp;t &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t.m_num: "</span> &lt;&lt; t.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Test <span class="title">getObj1</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> Test();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Test t1 = getObj();   <span class="comment">// 和t5用右值接收续命将亡值效果完全一样，不会调用构造函数</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"&amp;t1: "</span> &lt;&lt; &amp;t1 &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t1.m_num: "</span> &lt;&lt; t1.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"-------------------"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    Test t2 = getObj1(); <span class="comment">// 和t5用右值接收续命将亡值效果完全一样，不会调用构造函数</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t2.m_num: "</span> &lt;&lt; t2.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"-------------------"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="function">Test <span class="title">t3</span><span class="params">(getObj())</span></span>; <span class="comment">// 和t5用右值接收续命将亡值效果完全一样，不会调用构造函数</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"&amp;t3: "</span> &lt;&lt; &amp;t3 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t3.m_num: "</span> &lt;&lt; t3.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"-------------------"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="comment">//  使用move函数</span></span><br><span class="line">    Test t4 = <span class="built_in">move</span>(getObj()); <span class="comment">// move返回的是右值， 通过移动构造函数来构造t4</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"&amp;t4: "</span> &lt;&lt; &amp;t4 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t4.m_num: "</span> &lt;&lt; t4.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"-------------------"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    Test&amp;&amp; t5 = getObj(); </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"&amp;t5: "</span> &lt;&lt; &amp;t5 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t5.m_num: "</span> &lt;&lt; t5.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"-------------------"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    Test&amp;&amp; t6 = getObj1(); </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"&amp;t6: "</span> &lt;&lt; &amp;t6 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t6.m_num: "</span> &lt;&lt; t6.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 打印</span></span><br><span class="line">construct: my name is jerry</span><br><span class="line">&amp;t: <span class="number">0x7fffd883a718</span></span><br><span class="line">t.m_num: <span class="number">0x5570d17a7e70</span></span><br><span class="line">&amp;t1: <span class="number">0x7fffd883a718</span></span><br><span class="line">t1.m_num: <span class="number">0x5570d17a7e70</span></span><br><span class="line">-------------------</span><br><span class="line">construct: my name is jerry</span><br><span class="line">t2.m_num: <span class="number">0x5570d17a82a0</span></span><br><span class="line">-------------------</span><br><span class="line">construct: my name is jerry</span><br><span class="line">&amp;t: <span class="number">0x7fffd883a728</span></span><br><span class="line">t.m_num: <span class="number">0x5570d17a82c0</span></span><br><span class="line">&amp;t3: <span class="number">0x7fffd883a728</span></span><br><span class="line">t3.m_num: <span class="number">0x5570d17a82c0</span></span><br><span class="line">-------------------</span><br><span class="line">construct: my name is jerry</span><br><span class="line">&amp;t: <span class="number">0x7fffd883a740</span></span><br><span class="line">t.m_num: <span class="number">0x5570d17a82e0</span></span><br><span class="line"><span class="built_in">move</span> construct: my name is sunny</span><br><span class="line">destruct Test <span class="class"><span class="keyword">class</span> ...</span></span><br><span class="line"><span class="class">&amp;<span class="title">t4</span>:</span> <span class="number">0x7fffd883a730</span></span><br><span class="line">t4.m_num: <span class="number">0x5570d17a82e0</span></span><br><span class="line">-------------------</span><br><span class="line">construct: my name is jerry</span><br><span class="line">&amp;t: <span class="number">0x7fffd883a738</span></span><br><span class="line">t.m_num: <span class="number">0x5570d17a8300</span></span><br><span class="line">&amp;t5: <span class="number">0x7fffd883a738</span></span><br><span class="line">t5.m_num: <span class="number">0x5570d17a8300</span></span><br><span class="line">-------------------</span><br><span class="line">construct: my name is jerry</span><br><span class="line">&amp;t6: <span class="number">0x7fffd883a740</span></span><br><span class="line">t6.m_num: <span class="number">0x5570d17a8320</span></span><br><span class="line">destruct Test <span class="class"><span class="keyword">class</span> ...</span></span><br><span class="line"><span class="class"><span class="title">destruct</span> <span class="title">Test</span> <span class="title">class</span> ...</span></span><br><span class="line"><span class="class"><span class="title">destruct</span> <span class="title">Test</span> <span class="title">class</span> ...</span></span><br><span class="line"><span class="class"><span class="title">destruct</span> <span class="title">Test</span> <span class="title">class</span> ...</span></span><br><span class="line"><span class="class"><span class="title">destruct</span> <span class="title">Test</span> <span class="title">class</span> ...</span></span><br><span class="line"><span class="class"><span class="title">destruct</span> <span class="title">Test</span> <span class="title">class</span> ...</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="疑问？？？"><a href="#疑问？？？" class="headerlink" title="疑问？？？"></a>疑问？？？</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Test() : m_num(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">100</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"construct: my name is jerry"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Test(<span class="keyword">const</span> Test&amp; a) : m_num(<span class="keyword">new</span> <span class="keyword">int</span>(*a.m_num))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"copy construct: my name is tom"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加移动构造函数</span></span><br><span class="line">    Test(Test&amp;&amp; a) : m_num(a.m_num)</span><br><span class="line">    &#123;</span><br><span class="line">        a.m_num = <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"move construct: my name is sunny"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~Test()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(m_num == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"m_num is nullptr"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">delete</span> m_num;</span><br><span class="line">        m_num = <span class="literal">nullptr</span>; <span class="comment">// 防止野指针</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"destruct Test class ..."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span>* m_num;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">Test <span class="title">getObj</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Test t;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"&amp;t: "</span> &lt;&lt; &amp;t &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t.m_num: "</span> &lt;&lt; t.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Test <span class="title">getObj1</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> Test();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Test&amp;&amp; t7 = <span class="built_in">move</span>(getObj());</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"&amp;t7: "</span> &lt;&lt; &amp;t7 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t7.m_num: "</span> &lt;&lt; t7.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"-------------------"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    Test&amp;&amp; t8 = <span class="built_in">move</span>(getObj1());</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"&amp;t8: "</span> &lt;&lt; &amp;t8 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t8.m_num: "</span> &lt;&lt; t8.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 打印</span></span><br><span class="line">construct: my name is jerry</span><br><span class="line">&amp;t: <span class="number">0x7ffc4e831420</span></span><br><span class="line">t.m_num: <span class="number">0x5638e2442e70</span></span><br><span class="line">destruct Test <span class="class"><span class="keyword">class</span> ...   // 先析构  后面没有再析构 ？？？？？</span></span><br><span class="line"><span class="class">&amp;<span class="title">t7</span>:</span> <span class="number">0x7ffc4e831420</span></span><br><span class="line">t7.m_num: <span class="number">0</span></span><br><span class="line">-------------------</span><br><span class="line">construct: my name is jerry</span><br><span class="line">destruct Test <span class="class"><span class="keyword">class</span> ...   // 先析构  后面没有再析构 ？？？？？</span></span><br><span class="line"><span class="class">&amp;<span class="title">t8</span>:</span> <span class="number">0x7ffc4e831420</span></span><br><span class="line">t8.m_num: <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="移动和完美转发"><a href="#移动和完美转发" class="headerlink" title="移动和完美转发"></a>移动和完美转发</h3><h4 id="move"><a href="#move" class="headerlink" title="move"></a>move</h4><blockquote>
+<p>核心：move返回的是一个右值，用这个值初始化某个对象，就会调用这个对象的移动构造函数构造，如果没有移动构造函数则会调用拷贝构造函数构造</p>
+</blockquote>
+<ul>
+<li>move本质是将一个左值转化为一个右值</li>
+</ul>
+<p>下面是自定义移动构造的情况</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Test() : m_num(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">100</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"construct: my name is jerry"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Test(<span class="keyword">const</span> Test&amp; a) : m_num(<span class="keyword">new</span> <span class="keyword">int</span>(*a.m_num))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"copy construct: my name is tom"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加移动构造函数</span></span><br><span class="line">    Test(Test&amp;&amp; a) : m_num(a.m_num)</span><br><span class="line">    &#123;</span><br><span class="line">        a.m_num = <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"move construct: my name is sunny"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~Test()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">delete</span> m_num;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"destruct Test class ..."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span>* m_num;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 直接用右值引用接收右值</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Test t;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"==================="</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    Test&amp;&amp; t3 = <span class="built_in">move</span>(t);  <span class="comment">// 将t转化为一个右值  此时t3就只是t的一个别名  这个赋值过程没有调用任何构造函数</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t.m_num: "</span> &lt;&lt; *t.m_num &lt;&lt; <span class="built_in">endl</span>;   <span class="comment">// t还存在</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"t3.m_num: "</span> &lt;&lt; *t3.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"==================="</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印</span></span><br><span class="line">construct: my name is jerry</span><br><span class="line">===================</span><br><span class="line">t.m_num: <span class="number">100</span></span><br><span class="line">t3.m_num: <span class="number">100</span></span><br><span class="line">===================</span><br><span class="line">destruct Test class ...</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 用对象的左值接收右值，本质是用右值调用移动构造，构造了这个左值对象</span></span><br><span class="line"><span class="keyword">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    Test t;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"==================="</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    Test t2 = <span class="built_in">move</span>(t);  <span class="comment">// 将t转化为一个右值，用这右值使得调用移动构造函数来构造t2</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"==================="</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t2.m_num: "</span> &lt;&lt; *t2.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t.m_num: "</span> &lt;&lt; *t.m_num &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">// t.m_num在构造t2调用移动构造时置为nullptr了，所以这里报错，但是此时t还是存在的</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"==================="</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印</span></span><br><span class="line">construct: my name is jerry</span><br><span class="line">===================</span><br><span class="line"><span class="built_in">move</span> construct: my name is sunny  <span class="comment">// 移动构造t2</span></span><br><span class="line">===================</span><br><span class="line">t2.m_num: <span class="number">100</span></span><br><span class="line">Segmentation fault (core dumped)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    Test t;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"==================="</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    Test t2 = <span class="built_in">move</span>(t);  <span class="comment">// 将t转化为一个右值，用这右值使得调用移动构造函数来构造t2</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"==================="</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t2.m_num: "</span> &lt;&lt; *t2.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="comment">// cout &lt;&lt; "t.m_num: " &lt;&lt; *t.m_num &lt;&lt; endl;  不使用t.m_num则不会出错</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"==================="</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印</span></span><br><span class="line">construct: my name is jerry</span><br><span class="line">===================</span><br><span class="line"><span class="built_in">move</span> construct: my name is sunny</span><br><span class="line">===================</span><br><span class="line">t2.m_num: <span class="number">100</span></span><br><span class="line">===================</span><br><span class="line">destruct Test class ...</span><br><span class="line">destruct Test class ...</span><br></pre></td></tr></table></figure>
+
+<p>下面是没有自定义移动构造的情况</p>
+<ul>
+<li>没有自定义移动构造就是用一个右值，调用拷贝构造去构造了一个新对象，和直接=赋值效果是一样的</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Test() : m_num(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">100</span>))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"construct: my name is jerry"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Test(<span class="keyword">const</span> Test&amp; a) : m_num(<span class="keyword">new</span> <span class="keyword">int</span>(*a.m_num))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"copy construct: my name is tom"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加移动构造函数</span></span><br><span class="line">    <span class="comment">// Test(Test&amp;&amp; a) : m_num(a.m_num)</span></span><br><span class="line">    <span class="comment">// &#123;</span></span><br><span class="line">    <span class="comment">//     a.m_num = nullptr;</span></span><br><span class="line">    <span class="comment">//     cout &lt;&lt; "move construct: my name is sunny" &lt;&lt; endl;</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">    ~Test()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">delete</span> m_num;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"destruct Test class ..."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span>* m_num;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">Test <span class="title">getObj</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Test t;</span><br><span class="line">    <span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Test t;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"==================="</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    Test t2 = <span class="built_in">move</span>(t);  <span class="comment">// 将t转化为一个右值，用这右值使得调用拷贝构造函数来构造t2</span></span><br><span class="line">    Test t3 = t;       <span class="comment">// 调用拷贝构造函数</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"==================="</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t3.m_num: "</span> &lt;&lt; *t3.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t2.m_num: "</span> &lt;&lt; *t2.m_num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"t.m_num: "</span> &lt;&lt; *t.m_num &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">// 不使用t.m_num则不会出错</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"==================="</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 打印</span></span><br><span class="line">construct: my name is jerry</span><br><span class="line">===================</span><br><span class="line">copy construct: my name is tom</span><br><span class="line">copy construct: my name is tom</span><br><span class="line">===================</span><br><span class="line">t3.m_num: <span class="number">100</span></span><br><span class="line">t2.m_num: <span class="number">100</span></span><br><span class="line">t.m_num: <span class="number">100</span></span><br><span class="line">===================</span><br><span class="line">destruct Test class ...</span><br><span class="line">destruct Test class ...</span><br><span class="line">destruct Test class ...</span><br></pre></td></tr></table></figure>
+
+<h4 id="forward"><a href="#forward" class="headerlink" title="forward"></a>forward</h4><ul>
+<li>当T为左值引用类型时，t将被转换为T类型的左值</li>
+<li>当T不是左值引用类型时，t将被转换为T类型的右值，T为左值或左值引用也会被转换成右值</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::forward&lt;T&gt;(t);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h3><h4 id="auto-ptr"><a href="#auto-ptr" class="headerlink" title="auto_ptr"></a>auto_ptr</h4><ul>
+<li>c++17后移除</li>
+<li>问题：独占指针，但是可以赋值，<strong>赋值后再使用原来的指针则会报错</strong></li>
+<li>由new 创建堆区内容，auto_ptr指向这个堆区内容，在auto_ptr指针销毁时，他所指向的堆区也会自动被delete 掉。</li>
+<li>所有权转移:不小心把它传递给另外的智能指针，原来的指针就不再拥有这个对象了。在拷贝/赋值过程中，会直接剥夺指针对原对象对内存的控制权，<br>转交给新对象，然后再将原对象指针置为nullptr</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// auto_ptr</span></span><br><span class="line">  <span class="function"><span class="built_in">auto_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">p1</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>))</span></span>;</span><br><span class="line">  <span class="built_in">auto_ptr</span>&lt;<span class="keyword">int</span>&gt; p2 = p1;</span><br><span class="line">  <span class="comment">// p2 = p1;</span></span><br><span class="line">  <span class="comment">// cout &lt;&lt; *p1 &lt;&lt; endl; // error</span></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; *p2 &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">// 正常</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="unique-ptr"><a href="#unique-ptr" class="headerlink" title="unique_ptr"></a>unique_ptr</h4><blockquote>
+<p><a href="https://blog.csdn.net/qq_42518956/article/details/107490356" target="_blank" rel="noopener">使用踩坑</a></p>
+</blockquote>
+<ul>
+<li>unique_ptr是专属所有权所以unique_ptr管理的内存，只能被一个对象持有，不支持复制和赋值。</li>
+<li>移动语义: unique_ptr禁止了拷贝语义，但有时我们也需要能够转移所有权于是提供了移动语义，即可以使用std.move()进行控制所有权的转移。</li>
+</ul>
+<p><strong>初始化</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt;(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">520</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 通过构造函数初始化</span></span><br><span class="line">    <span class="function"><span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ptr1</span><span class="params">(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">10</span>))</span></span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"ptr1: "</span>&lt;&lt; *ptr1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="comment">// unique_ptr&lt;int&gt; ptr4 = ptr1; // error  编译器禁止拷贝</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过转移所有权的方式初始化</span></span><br><span class="line">    <span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; ptr2 = <span class="built_in">move</span>(ptr1);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"ptr2: "</span>&lt;&lt; *ptr2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="comment">// cout &lt;&lt; "ptr1: "&lt;&lt; *ptr1 &lt;&lt; endl;  // error  执行报错，ptr1已经没有了    也会报错？？？？</span></span><br><span class="line">    <span class="comment">// 通过函数返回值初始化  同 move 都是用右值初始化，右值初始化后，右值就没有了</span></span><br><span class="line">    <span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; ptr3 = func();</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"ptr3: "</span>&lt;&lt; *ptr3 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="comment">// 通过reset函数重置</span></span><br><span class="line">    ptr3.reset(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">1024</span>));</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"ptr3: "</span>&lt;&lt; *ptr3 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>踩坑</strong></p>
+<ul>
+<li>move后，用原来的指针也会报错，感觉和auto_ptr一样</li>
+<li>用一个原指针通过move初始化两个指针，编译不出错，但执行出错<ul>
+<li>ptr1已经转移所有权给ptr2  ptr1为空指针  再转移所有权给ptr3  ptr3为空指针  执行出错</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="keyword">int</span>* a_;</span><br><span class="line">  <span class="keyword">int</span> b_;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="comment">// 默认构造函数</span></span><br><span class="line">  Test():a_(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">0</span>)), b_(<span class="number">0</span>)&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="string">" :Test default constructor"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 有参构造函数</span></span><br><span class="line">  Test(<span class="keyword">int</span> a, <span class="keyword">int</span> b):a_(<span class="keyword">new</span> <span class="keyword">int</span>(a)), b_(b)&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="string">" :Test constructor"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 拷贝构造函数</span></span><br><span class="line">  Test(<span class="keyword">const</span> Test&amp; t):a_(<span class="keyword">new</span> <span class="keyword">int</span>(*t.a_)), b_(t.b_)&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="string">" :Test copy constructor"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 移动构造函数</span></span><br><span class="line">  Test(Test&amp;&amp; t):a_(t.a_), b_(t.b_)&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="string">" :Test move constructor"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    t.a_ = <span class="literal">nullptr</span>;</span><br><span class="line">    t.b_ = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 析构函数</span></span><br><span class="line">  ~Test()&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="string">" :Test destructor"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">delete</span> a_;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"print: "</span>&lt;&lt;<span class="string">"a: "</span>&lt;&lt;*a_&lt;&lt;<span class="string">" b: "</span>&lt;&lt;b_&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 通过构造函数初始化</span></span><br><span class="line">    <span class="function"><span class="built_in">unique_ptr</span>&lt;Test&gt; <span class="title">ptr1</span><span class="params">(<span class="keyword">new</span> Test(<span class="number">1</span>,<span class="number">2</span>))</span></span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"ptr1: "</span>;</span><br><span class="line">    ptr1-&gt;<span class="built_in">print</span>();</span><br><span class="line">    <span class="comment">// unique_ptr&lt;int&gt; ptr4 = ptr1; // error  编译器禁止拷贝</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过转移所有权的方式初始化</span></span><br><span class="line">    <span class="built_in">unique_ptr</span>&lt;Test&gt; ptr2 = <span class="built_in">move</span>(ptr1);</span><br><span class="line">    <span class="built_in">unique_ptr</span>&lt;Test&gt; ptr3 = <span class="built_in">move</span>(ptr1);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"ptr2: "</span>;</span><br><span class="line">    ptr2-&gt;<span class="built_in">print</span>();</span><br><span class="line">    <span class="comment">// cout&lt;&lt;"ptr3: ";</span></span><br><span class="line">    <span class="comment">// ptr3-&gt;print();  // 执行出错  ptr1已经转移所有权给ptr2  ptr1为空指针  再转移所有权给ptr3  ptr3为空指针  执行出错</span></span><br><span class="line">    <span class="comment">// cout&lt;&lt;"ptr1: ";</span></span><br><span class="line">    <span class="comment">// ptr1-&gt;print();  // error ptr1已经转移所有权 不能再使用  ??? 也报错</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印</span></span><br><span class="line"><span class="number">0x55812a6afe70</span> :Test constructor</span><br><span class="line">ptr1: <span class="built_in">print</span>: a: <span class="number">1</span> b: <span class="number">2</span></span><br><span class="line">ptr2: <span class="built_in">print</span>: a: <span class="number">1</span> b: <span class="number">2</span></span><br><span class="line"><span class="number">0x55812a6afe70</span> :Test destructor</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h4><h1 id="c-11-STL"><a href="#c-11-STL" class="headerlink" title="c++11 STL"></a>c++11 STL</h1><h2 id="emplace"><a href="#emplace" class="headerlink" title="emplace"></a>emplace</h2><blockquote>
+<p><a href="https://zhuanlan.zhihu.com/p/213853588?utm_id=0" target="_blank" rel="noopener">源码分析</a></p>
+</blockquote>
+<ul>
+<li><code>vec.push_back(Test()) 和 vec.emplace_back(Test())</code>  一样， 都是临时对象一次构造一次析构，一次移动构造</li>
+<li><code>vec.push_back(t) 和 vec.emplace_back(t)</code> 一样，都是一次拷贝构造(不算已有对象的构造和析构)，t是已经存在的对象</li>
+<li><code>vec.emplace_back(8, 108)</code> 的方式传入临时对象<code>Test(8,108)</code>时， 才只调用一次有参构造， 这种方式才不同于<code>push_back</code>， 效率更高</li>
+<li>总结：只有传入临时对象，且是以构建对象的参数传入时，<code>emplace_back</code>才会效率高于<code>push_back</code></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="keyword">int</span>* a_;</span><br><span class="line">  <span class="keyword">int</span> b_;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="comment">// 默认构造函数</span></span><br><span class="line">  Test():a_(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">0</span>)), b_(<span class="number">0</span>)&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="string">" :Test default constructor"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 有参构造函数</span></span><br><span class="line">  Test(<span class="keyword">int</span> a, <span class="keyword">int</span> b):a_(<span class="keyword">new</span> <span class="keyword">int</span>(a)), b_(b)&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="string">" :Test constructor"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 拷贝构造函数</span></span><br><span class="line">  Test(<span class="keyword">const</span> Test&amp; t):a_(<span class="keyword">new</span> <span class="keyword">int</span>(*t.a_)), b_(t.b_)&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="string">" :Test copy constructor"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 移动构造函数</span></span><br><span class="line">  Test(Test&amp;&amp; t):a_(t.a_), b_(t.b_)&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="string">" :Test move constructor"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    t.a_ = <span class="literal">nullptr</span>;</span><br><span class="line">    t.b_ = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 析构函数</span></span><br><span class="line">  ~Test()&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="keyword">this</span>&lt;&lt;<span class="string">" :Test destructor"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">delete</span> a_;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"print: "</span>&lt;&lt;<span class="string">"a: "</span>&lt;&lt;*a_&lt;&lt;<span class="string">" b: "</span>&lt;&lt;b_&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">vector</span>&lt;Test&gt; vec;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)&#123;</span><br><span class="line">    vec.push_back(Test(i, i + <span class="number">100</span>));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;<span class="string">"vec.capacity: "</span>&lt;&lt;vec.capacity()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;<span class="string">"vec.size: "</span>&lt;&lt;vec.<span class="built_in">size</span>()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// cout&lt;&lt;"--------push_back----------"&lt;&lt;endl;</span></span><br><span class="line">  <span class="comment">// 1 临时对象</span></span><br><span class="line">  <span class="comment">// vec.push_back(Test(4, 104));  // 调用移动构造函数       临时对象一次构造一次析构，一次移动构造</span></span><br><span class="line">  <span class="comment">// 2 已有对象</span></span><br><span class="line">  <span class="comment">// Test t(5, 105);</span></span><br><span class="line">  <span class="comment">// vec.push_back(t);  // 调用拷贝构造函数                  一次拷贝构造(不算已有对象的构造和析构)</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;<span class="string">"--------emplace_back----------"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">  <span class="comment">// 1 临时对象 </span></span><br><span class="line">  <span class="comment">// vec.emplace_back(Test(6, 106));  // 调用移动构造函数    临时对象一次构造一次析构，一次移动构造   同 push_back</span></span><br><span class="line">  <span class="comment">// 2 已有对象</span></span><br><span class="line">  <span class="comment">// Test t(7, 107);</span></span><br><span class="line">  <span class="comment">// vec.emplace_back(t);  // 调用拷贝构造函数               一次拷贝构造(不算已有对象的构造和析构)  同 push_back</span></span><br><span class="line">  <span class="comment">// 3 临时对象直接参数传递</span></span><br><span class="line">  vec.emplace_back(<span class="number">8</span>, <span class="number">108</span>);  <span class="comment">// 调用有参构造函数             一次有参构造                          不同   push_back  高效    </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C-11/" rel="tag"># C++11</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/26/C++/IntelTBB/" rel="prev" title="intel-TBB使用笔记">
+      <i class="fa fa-chevron-left"></i> intel-TBB使用笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/29/Graph/DataSet/" rel="next" title="图数据挖掘的数据集">
+      图数据挖掘的数据集 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#c-11-new"><span class="nav-text">c++11_new</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#alignas"><span class="nav-text">alignas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原始字面量"><span class="nav-text">原始字面量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nullptr"><span class="nav-text">nullptr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constexpr"><span class="nav-text">constexpr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动类型推导"><span class="nav-text">自动类型推导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#final、override"><span class="nav-text">final、override</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模板优化"><span class="nav-text">模板优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#using的使用"><span class="nav-text">using的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#委托构造函数和继承构造函数"><span class="nav-text">委托构造函数和继承构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列表初始化"><span class="nav-text">列表初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于范围的for循环"><span class="nav-text">基于范围的for循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可调用对象-？？？"><span class="nav-text">可调用对象 ？？？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambda-表达式"><span class="nav-text">Lambda 表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#右值引用"><span class="nav-text">右值引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化"><span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数返回的临时对象处理"><span class="nav-text">函数返回的临时对象处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#疑问？？？"><span class="nav-text">疑问？？？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动和完美转发"><span class="nav-text">移动和完美转发</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#move"><span class="nav-text">move</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#forward"><span class="nav-text">forward</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#智能指针"><span class="nav-text">智能指针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#auto-ptr"><span class="nav-text">auto_ptr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unique-ptr"><span class="nav-text">unique_ptr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shared-ptr"><span class="nav-text">shared_ptr</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c-11-STL"><span class="nav-text">c++11 STL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#emplace"><span class="nav-text">emplace</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chuckie"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Chuckie</p>
+  <div class="site-description" itemprop="description">Bright future</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ChuckieWill" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ChuckieWill" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/codewyj.163.com" title="E-Mail → codewyj.163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jianshu.com/u/de627226656c" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;de627226656c" rel="noopener" target="_blank">简书</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="/images/me.png"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chuckie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:04</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

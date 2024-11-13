@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="HTTP菜鸟教程 HTTP教程-MDN web docs Node.Js的HTTP-API Node.js-HTTP传输指南  一、HTTP基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP(0x01)-HTTP基础">
+<meta property="og:url" content="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Chuckie&#39;s Blog">
+<meta property="og:description" content="HTTP菜鸟教程 HTTP教程-MDN web docs Node.Js的HTTP-API Node.js-HTTP传输指南  一、HTTP基础">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200916173624473.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200916174544942.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20220531223255251.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200921131724348.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200921131838199.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200922155159908.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200922164501448.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200922174235645.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200926090805926.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200926092400199.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20220623220005045.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20220623220048377.png">
+<meta property="article:published_time" content="2020-09-01T02:43:17.000Z">
+<meta property="article:modified_time" content="2024-09-18T15:06:07.519Z">
+<meta property="article:author" content="Chuckie">
+<meta property="article:tag" content="HTTP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200916173624473.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>HTTP(0x01)-HTTP基础 | Chuckie's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chuckie's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HTTP(0x01)-HTTP基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-01 10:43:17" itemprop="dateCreated datePublished" datetime="2020-09-01T10:43:17+08:00">2020-09-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index"><span itemprop="name">HTTP</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p><a href="https://www.runoob.com/http/http-tutorial.html" target="_blank" rel="noopener">HTTP菜鸟教程</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP" target="_blank" rel="noopener">HTTP教程-MDN web docs</a></p>
+<p><a href="https://nodejs.org/api/http.html" target="_blank" rel="noopener">Node.Js的HTTP-API</a></p>
+<p><a href="https://nodejs.org/zh-cn/docs/guides/anatomy-of-an-http-transaction/" target="_blank" rel="noopener">Node.js-HTTP传输指南</a></p>
+</blockquote>
+<h1 id="一、HTTP基础"><a href="#一、HTTP基础" class="headerlink" title="一、HTTP基础"></a>一、HTTP基础</h1><h2 id="1-1-HTTP请求过程"><a href="#1-1-HTTP请求过程" class="headerlink" title="1.1 HTTP请求过程"></a>1.1 HTTP请求过程</h2><p><img src="/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200916173624473.png" alt="image-20200916173624473"></p>
+<ul>
+<li>Redirect : 将URL跳转到指定的URL(如果有指定的情况)</li>
+<li>APP cache :  查找资源是否已经缓存</li>
+<li>DNS : 将域名转换成IP地址</li>
+<li>TCP :  三次握手</li>
+<li>Request : 发送请求</li>
+<li>Response ：响应请求</li>
+</ul>
+<h2 id="1-2-五层网络模型"><a href="#1-2-五层网络模型" class="headerlink" title="1.2 五层网络模型"></a>1.2 五层网络模型</h2><p><img src="/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200916174544942.png" alt="image-20200916174544942"></p>
+<ul>
+<li>TCP在传输层，HTTP在应用层，HTTP的发送是建立在TCP之上的</li>
+<li>HTTP1.0以前，一个TCP的建立对应一个HTTP，HTTP内容传输完成后，TCP连接会自动释放，<em>效率低</em></li>
+<li>HTTP2.0开始，一个TCP的建立对应多个HTPP, 且可以是永久建立，即HTTP内容传输完成后，TCP连接任然保持建立，<em>效率高（减少了TCP建立的次数，从而减小了三次握手等产生的资源消耗）</em></li>
+</ul>
+<h2 id="1-3-TCP三次握手与四次挥手"><a href="#1-3-TCP三次握手与四次挥手" class="headerlink" title="1.3 TCP三次握手与四次挥手"></a>1.3 TCP三次握手与四次挥手</h2><blockquote>
+<p>关于TCP三次握手和四次挥手及面试相关问题可以查看文章—–&gt;<a href="https://chuckiewill.github.io/2020/09/02/HTTP/HTTP(0x02)-TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/" target="_blank" rel="noopener">HTTP(0x02)-TCP三次握手与四次挥手详解&amp;面试常见问题</a></p>
+</blockquote>
+<h2 id="1-4-URI、URL、URN"><a href="#1-4-URI、URL、URN" class="headerlink" title="1.4 URI、URL、URN"></a>1.4 URI、URL、URN</h2><blockquote>
+<p><a href="https://nodejs.org/api/url.html#url_the_whatwg_url_api" target="_blank" rel="noopener">Node.js v18.2.0 documentation</a></p>
+</blockquote>
+<p><strong>定义：</strong></p>
+<ul>
+<li>URI: 统一资源标识符，它包括：URL、URN</li>
+<li>URL: 统一资源定位器</li>
+<li>URN: 永久统一资源定位符</li>
+</ul>
+<p><strong>URL格式：</strong></p>
+<ul>
+<li>protocol :// hostname[:port] / path / [;parameters] [?query]#fragment</li>
+</ul>
+<p><img src="/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20220531223255251.png" alt="image-20220531223255251"></p>
+<p><strong>URL格式说明：</strong></p>
+<blockquote>
+<p><strong>protocol（协议）</strong></p>
+<p>指定使用的传输协议，下表列出 protocol 属性的有效方案名称。 最常用的是<a href="https://baike.baidu.com/item/HTTP协议" target="_blank" rel="noopener">HTTP协议</a>，它也是WWW中应用最广的协议。</p>
+<p>file 资源是本地计算机上的文件。格式file:///，注意后边应是三个斜杠。</p>
+<p>ftp 通过 FTP访问资源。格式 FTP://</p>
+<p>gopher 通过 Gopher 协议访问该资源。</p>
+<p>http 通过 HTTP 访问该资源。 格式 HTTP://</p>
+<p>https 通过安全的 HTTPS 访问该资源。 格式 HTTPS://</p>
+<p>mailto 资源为电子邮件地址，通过 SMTP 访问。 格式 mailto:</p>
+<p>MMS 通过 支持MMS（<a href="https://baike.baidu.com/item/流媒体" target="_blank" rel="noopener">流媒体</a>）协议的播放该资源。（代表软件：Windows Media Player）格式 MMS://</p>
+<p>ed2k 通过 支持ed2k（专用下载链接）协议的P2P软件访问该资源。（代表软件：<a href="https://baike.baidu.com/item/电驴" target="_blank" rel="noopener">电驴</a>） 格式 ed2k://</p>
+<p>Flashget 通过 支持Flashget:（专用下载链接）协议的P2P软件访问该资源。（代表软件：快车） 格式 Flashget://</p>
+<p>thunder 通过 支持thunder（专用下载链接）协议的P2P软件访问该资源。（代表软件：<a href="https://baike.baidu.com/item/迅雷" target="_blank" rel="noopener">迅雷</a>） 格式 thunder://</p>
+<p>news 通过 NNTP 访问该资源。</p>
+<p><strong>hostname（主机名）</strong></p>
+<p>是指存放资源的服务器的<a href="https://baike.baidu.com/item/域名系统" target="_blank" rel="noopener">域名系统</a>(DNS) 主机名或 IP 地址。有时，在主机名前也可以包含连接到服务器所需的用户名和密码（格式：username:password@hostname）。</p>
+<p><strong>port（端口号）</strong></p>
+<p>整数，可选，省略时使用方案的默认端口，各种<a href="https://baike.baidu.com/item/传输协议" target="_blank" rel="noopener">传输协议</a>都有默认的端口号，如http的默认端口为80。如果输入时省略，则使用默认端口号。有时候出于安全或其他考虑，可以在服务器上对端口进行重定义，即采用非标准端口号，此时，URL中就不能省略端口号这一项。</p>
+<p><strong>path（路径）</strong></p>
+<p>由零或多个“/”符号隔开的字符串，一般用来表示主机上的一个目录或文件地址。</p>
+<p><strong>parameters（参数）</strong></p>
+<p>这是用于指定特殊参数的可选项。</p>
+<p><strong>query(查询)</strong></p>
+<p>可选，用于给<a href="https://baike.baidu.com/item/动态网页" target="_blank" rel="noopener">动态网页</a>（如使用CGI、ISAPI、PHP/JSP/ASP/ASP.NET等技术制作的网页）传递参数，可有多个参数，用“&amp;”符号隔开，每个参数的名和值用“=”符号隔开。</p>
+<p><strong>fragment（信息片断）</strong></p>
+<p>字符串，用于指定网络资源中的片断。例如一个网页中有多个名词解释，可使用fragment直接定位到某一名词解释。</p>
+</blockquote>
+<h2 id="1-5-创建一个简单的web服务"><a href="#1-5-创建一个简单的web服务" class="headerlink" title="1.5 创建一个简单的web服务"></a>1.5 创建一个简单的web服务</h2><blockquote>
+<p><a href="https://nodejs.org/zh-cn/docs/guides/anatomy-of-an-http-transaction/" target="_blank" rel="noopener">Node.js-HTTP传输指南</a></p>
+<p><a href="https://nodejs.org/api/http.html" target="_blank" rel="noopener">Node.Js的HTTP-API</a></p>
+</blockquote>
+<ul>
+<li>http.createServer()： 创建服务 。创建的返回结果是一个server<ul>
+<li>server.listen(端口) ： 给服务添加监听端口</li>
+</ul>
+</li>
+<li>request相关的操作是对服务请求的处理<ul>
+<li>请求可以是直接在浏览器输入域名，或者在浏览器解析中发送请求。</li>
+</ul>
+</li>
+<li>response相关的操作是对请求返回的处理<ul>
+<li>对浏览器发来的请求作出反馈，返回浏览器需要的数据。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span> (<span class="params">request, response</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'request come'</span>, request.url)</span><br><span class="line"></span><br><span class="line">  <span class="comment">//设置允许跨域访问</span></span><br><span class="line">  response.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">    <span class="string">'Access-Control-Allow-Origin'</span>: <span class="string">'http://127.0.0.1:8888'</span>,</span><br><span class="line">    <span class="string">'Access-Control-Allow-Methods'</span>: <span class="string">'PUT, GET, OPTIONS'</span>,</span><br><span class="line">    <span class="string">'Access-Control-Allow-Headers'</span>: <span class="string">'X-Test-Cors, X-PINGOTHER, Content-Type'</span>,</span><br><span class="line">    <span class="string">'Access-Control-Max-Age'</span>: <span class="string">'86400'</span>,</span><br><span class="line">    <span class="string">'Content-Type'</span>: <span class="string">'text/html'</span>    <span class="comment">//以html个格式解析</span></span><br><span class="line">  &#125;)</span><br><span class="line">  response.end(<span class="string">'123'</span>)<span class="comment">//返回服务端的内容</span></span><br><span class="line">&#125;).listen(<span class="number">8887</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'server listening on 8887'</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="1-6-Git-Bash终端访问网路命令"><a href="#1-6-Git-Bash终端访问网路命令" class="headerlink" title="1.6 Git Bash终端访问网路命令"></a>1.6 Git Bash终端访问网路命令</h2><ul>
+<li><p><code>curl 域名</code>： 发送网络请求并接受返回结果</p>
+<ul>
+<li>案例</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl baidu.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200921131724348.png" alt="image-20200921131724348"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200921131838199.png" alt="image-20200921131838199"></p>
+</li>
+<li><p><code>curl -v  域名</code>  返回更详细的网络请求</p>
+</li>
+</ul>
+<h1 id="二、HTTP-方法"><a href="#二、HTTP-方法" class="headerlink" title="二、HTTP 方法"></a>二、HTTP 方法</h1><blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods" target="_blank" rel="noopener">HTTP 请求方法</a></p>
+</blockquote>
+<h1 id="三、HTTP-CODE"><a href="#三、HTTP-CODE" class="headerlink" title="三、HTTP CODE"></a>三、HTTP CODE</h1><blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status" target="_blank" rel="noopener">HTTP 响应代码</a></p>
+</blockquote>
+<h1 id="四、HTTP-访问控制-CORS-跨域问题"><a href="#四、HTTP-访问控制-CORS-跨域问题" class="headerlink" title="四、HTTP 访问控制(CORS)-跨域问题"></a>四、HTTP 访问控制(CORS)-跨域问题</h1><blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="noopener">HTTP访问控制（CORS）</a></p>
+<p><a href="https://chuckiewill.github.io/2020/09/03/HTTP/HTTP(0x03)-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/" target="_blank" rel="noopener">HTTP(0x03)-跨域问题</a></p>
+</blockquote>
+<h1 id="五、HTTP-Headers"><a href="#五、HTTP-Headers" class="headerlink" title="五、HTTP Headers"></a>五、HTTP Headers</h1><blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers" target="_blank" rel="noopener">HTTP Headers-MDN</a></p>
+<p><a href="https://www.runoob.com/http/http-header-fields.html" target="_blank" rel="noopener">HTTP Headers-菜鸟</a></p>
+</blockquote>
+<h3 id="Cache-Control（缓存）"><a href="#Cache-Control（缓存）" class="headerlink" title="Cache-Control（缓存）"></a>Cache-Control（缓存）</h3><blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Cache-Control" target="_blank" rel="noopener">Cache-Control-MDN</a></p>
+</blockquote>
+<h3 id="ETag-Last-Modified-缓存验证-协商缓存"><a href="#ETag-Last-Modified-缓存验证-协商缓存" class="headerlink" title="ETag Last-Modified (缓存验证-协商缓存)"></a>ETag Last-Modified (缓存验证-协商缓存)</h3><blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/ETag" target="_blank" rel="noopener">ETag</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Last-Modified" target="_blank" rel="noopener">Last-Modified</a></p>
+</blockquote>
+<ul>
+<li><strong>缓存验证前提：<code>Cache-Control</code>设置为<code>no-cache</code></strong><ul>
+<li><code>no-cache</code>是只允许协商缓存不允许强制缓存，但是每次发送网络请求都仍然需要发送到原服务器，通过<code>ETag</code>或<code>Last-Modified</code>判断请求的数据是否修改，如果没有修改就用缓存中的数据，如果修改了则使用实时返回的数据。</li>
+</ul>
+</li>
+<li><strong>缓存验证的意义</strong><ul>
+<li><code>Cache-Control</code>设置为<code>public</code>或<code>private</code>时，可以实现缓存，但是也存在一个问题，就是如果设置的缓存时间过长，有可能服务端数据已经改变，但是网络请求任然使用的是本都缓存的数据，不能及时更新服务端的数据</li>
+<li>缓存验证就是判断服务端的数据是是否变化，如果变化了就把服务端的更新后的数据发送过来，如果没有变化就使用本地缓存的数据</li>
+</ul>
+</li>
+</ul>
+<p><strong>ETag</strong></p>
+<ul>
+<li><p><code>ETag</code>判断服务端数据是否修改的方法是：<strong>数据签名</strong>，及对数据进行例如哈希计算的方式计算出一个唯一的值，只要数据发发生改变这个值就会变化，通过比较这个值即可判断数据是否修改了，其验证相对<code>Last-Modified</code>更严格</p>
+</li>
+<li><p><code>ETag</code>验证流程</p>
+<ul>
+<li>浏览器第一次向服务端发送请求，在服务端返回的文件头中就会包括<code>ETag=777</code> (777是虚拟的数据唯一签名)，浏览器会将这个数据签名保存在<code>If-None-Match</code>属性中</li>
+<li>下一次浏览器访问服务端时就会将<code>If-None-Match=777</code>在文件头中发送给服务端，服务端会将<code>If-None-Match</code>和实时的<code>ETag</code>比较，如果不同就说明数据变化了，则返回浏览器新的数据及更新后的<code>ETag</code>, 如果相同则说明数据没有变化，返回<code>304</code>(因为304表示Not Modified 数据没有修改)，浏览器识别304后会忽略返回主体（事实上此时返回主体中也没有太多数据，验证的本质就是减少数据的传递，而此时根本不需要传数据）中的数据直接从缓存中取数据。</li>
+</ul>
+</li>
+<li><p>下面是浏览器&gt;=第二次向服务端发送请求，服务端返回的结果</p>
+</li>
+</ul>
+<p><img src="/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200922155159908.png" alt="image-20200922155159908"></p>
+<p><strong>Last-Modified</strong></p>
+<ul>
+<li><code>Last-Modified</code>判断服务端数据是否修改的方法是：<strong>数据修改时间</strong>，通过比较修改时间判断是否修改。</li>
+<li>验证流程同<code>ETag</code>，只是把数据签名改成了数据修改时间</li>
+</ul>
+<h3 id="Content-Type"><a href="#Content-Type" class="headerlink" title="Content-Type"></a>Content-Type</h3><blockquote>
+<p><a href="https://www.runoob.com/http/http-content-type.html" target="_blank" rel="noopener">content-type</a></p>
+</blockquote>
+<h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Set-Cookie" target="_blank" rel="noopener">Set-Cookie</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Set-Cookie" target="_blank" rel="noopener">Cookie</a></p>
+</blockquote>
+<p><strong><code>Cookie</code>是服务端通过<code>Set-Cookie</code>设置并返回给浏览器的唯一标识，浏览器接收这个标识后会保存，在下一次发送同域请求时会带上<code>Cookie</code></strong>   </p>
+<p><code>Cookie</code>的典型应用是：辨识同一个用户为服务端的访问，及将<code>Cookie</code>的值设置为用户id的键值对，每次访问服务端都带上用户id即可辩护是否是同一个用户</p>
+<p><strong>通过<code>Set-Cookie</code>设置<code>Cookie</code></strong></p>
+<ul>
+<li>Cookie值是键值对（id=123）</li>
+<li>Set-Cookie可以设置多个Cookie，以数组的形式</li>
+<li>max-age: 设置cookie过期时间，超过设置的时间，在浏览器请求服务端的时候就不会带上这个cookie值了</li>
+<li>httponly: 不允许以documnet.cookie的形式直接获取cookie</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">response.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">   <span class="string">'Content-Type'</span>: <span class="string">'text/html'</span>,<span class="comment">//以html个格式解析</span></span><br><span class="line">   <span class="string">'Set-Cookie'</span>: [<span class="string">'id=123; max-age=2'</span>, <span class="string">'abc=345; httponly'</span>]</span><br><span class="line"> &#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>以上设置服务端返回的效果</li>
+</ul>
+<p><img src="/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200922164501448.png" alt="image-20200922164501448"></p>
+<p><strong><code>document.cookie</code>的方式获取<code>cookie</code></strong></p>
+<ul>
+<li>直接通过js代码即可获取</li>
+<li>如果<code>Set-Cookie</code>对<code>Cookie</code>设置了httponly, 则<code>document.cookie</code>访问的方式失效</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="built_in">console</span>.log(<span class="built_in">document</span>.cookie)</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>在同域下，每次发送网络请求，只要cookie值未超时，都会自动带在request header中发送给服务端</strong></p>
+<h3 id="Connection-（HTTP长连接）"><a href="#Connection-（HTTP长连接）" class="headerlink" title="Connection （HTTP长连接）"></a>Connection （HTTP长连接）</h3><p><strong>理解HTTP长连接</strong></p>
+<ul>
+<li>HTTP是建立在TCP连接之上的</li>
+<li>HTTP2.0开始，一个TCP的建立对应多个HTPP, 且可以是永久建立，即HTTP内容传输完成后，TCP连接任然保持建立，<em>效率高（减少了TCP建立的次数，从而减小了三次握手等产生的资源消耗）</em></li>
+<li><strong>THHP长连接就是指的TCP的永久建立</strong>，当传输任务完成后，TCP任然保持连接，当有HTTP传输时直接利用这个建立好的TCP连接，不用再次三次挥手建立TCP连接，以此减少资源的消耗（TCP永久建立也有时间设置，超过某个时间段任然没有HTTP传输，TCP连接也会自动释放）</li>
+</ul>
+<p><strong>浏览器中查看HTTP长连接</strong></p>
+<ul>
+<li>右击<code>Name</code> 勾选<code>Connection ID</code> 即可在右侧显示连接ID</li>
+<li>点击右侧的<code>Connection ID</code> 可以升序摆列ID号</li>
+<li><code>Connection ID</code> ： 就是TCP连接的ID，同一个ID号表示同一个TCP连接</li>
+<li>相同的ID表示这些HTTP在这同一个TCP连接上传递数据</li>
+</ul>
+<p><img src="/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200922174235645.png" alt="image-20200922174235645"></p>
+<p><strong>设置<code>Connection</code></strong></p>
+<ul>
+<li>默认情况下为<code>Connention : keep-alive</code>，无需代码设置，此时表示允许建立HTTP长连接</li>
+<li>若要关闭HTTP长连接，需要做如下设置：<code>Connection&#39;: &#39;close&#39;</code>，关闭后TCP连接就不再保持持久连接，一旦数据传输完成就立马断开连接。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">response.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">      <span class="string">'Content-Type'</span>: <span class="string">'image/jpg'</span>,</span><br><span class="line">      <span class="string">'Connection'</span>: <span class="string">'close'</span></span><br><span class="line"></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="数据协商（Accept、Content、User-Agent）"><a href="#数据协商（Accept、Content、User-Agent）" class="headerlink" title="数据协商（Accept、Content、User-Agent）"></a>数据协商（Accept、Content、User-Agent）</h3><ul>
+<li>Accept ——  Content-Type   :  数据格式</li>
+<li>Accept-Encoding ——-  Content-Encoding  :  编码方式</li>
+<li>Accept-Language  ——   Content-Language  :  语言</li>
+<li>User-Agent  :   浏览器或客户端设备信息 </li>
+</ul>
+<p><strong>请求头 Request:</strong></p>
+<p><img src="/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200926090805926.png" alt="image-20200926090805926"></p>
+<p><strong>返回头Response:</strong></p>
+<p><img src="/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20200926092400199.png" alt="image-20200926092400199"></p>
+<h3 id="Content-Encoding：gzip-数据压缩"><a href="#Content-Encoding：gzip-数据压缩" class="headerlink" title="Content-Encoding：gzip 数据压缩"></a>Content-Encoding：gzip 数据压缩</h3><ul>
+<li>压缩数据使得传输的数据减小，提高传输速率</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> zlib = <span class="built_in">require</span>(<span class="string">'zlib'</span>)<span class="comment">//node自带的压缩包</span></span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span> (<span class="params">request, response</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'request come'</span>, request.url)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> html = fs.readFileSync(<span class="string">'test.html'</span>) <span class="comment">//同步读取html文件</span></span><br><span class="line">  response.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">    <span class="string">'Content-Type'</span>: <span class="string">'text/html'</span>,<span class="comment">//以html个格式解析</span></span><br><span class="line">    <span class="string">'Content-Encoding'</span>: <span class="string">'gzip'</span> <span class="comment">// 以gzip的方式编码（压缩）</span></span><br><span class="line">  &#125;)</span><br><span class="line">  response.end(zlib.gzipSync(html)) <span class="comment">//压缩数据并返回浏览器</span></span><br><span class="line">&#125;).listen(<span class="number">8888</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'server listening on 8888'</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Location-重定向"><a href="#Location-重定向" class="headerlink" title="Location(重定向)"></a>Location(重定向)</h3><blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Location" target="_blank" rel="noopener">Location-MDN</a></p>
+</blockquote>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li>将页面重定向到新的地址，以前数据在地址A,但现在数据在地址B,但以前的用户仍然在用地址A获取数据，此时是获取不到数据的，而用<code>Location</code>就可以直接在用户请求地址A时自动跳转到新的地址B，即可获取数据</li>
+</ul>
+<p><strong>重定向中状态码301与302区别：</strong></p>
+<ul>
+<li>301 ： 第一次请求原地址（地址A），地址A会响应再跳转到新地址（地址B）,后续再请求地址A时，请求不会发到地址A，而是直接跳转到地址B，由地址B响应</li>
+<li>302 ： 每次请求原地都是原地址响应再跳转到新地址，新地址再响应</li>
+<li>301只有第一次请求需要原地址响应，而302每次都到原地址响应</li>
+</ul>
+<p><strong>301重定向的原理：</strong></p>
+<ul>
+<li>301重定向是将新地址的数据缓存到了浏览器，每次请求就直接在缓存中获取了</li>
+<li>这样缓存的问题： 一旦服务端数据发生变化，客户端不能及时更新</li>
+</ul>
+<p><strong>使用：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"></span><br><span class="line">http.createServer(<span class="function"><span class="keyword">function</span> (<span class="params">request, response</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'request come'</span>, request.url)</span><br><span class="line">   <span class="comment">//原地址</span></span><br><span class="line">  <span class="keyword">if</span>(request.url === <span class="string">'/'</span>)&#123;</span><br><span class="line">    response.writeHead(<span class="number">302</span>, &#123;</span><br><span class="line">      <span class="string">'Location'</span>: <span class="string">'/new'</span>   <span class="comment">//重定向到新的地址</span></span><br><span class="line">    &#125;)</span><br><span class="line">    response.end(<span class="string">''</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//新地址</span></span><br><span class="line">  <span class="keyword">if</span>(request.url === <span class="string">'/new'</span>)&#123;</span><br><span class="line">    response.writeHead(<span class="number">200</span>)</span><br><span class="line">    response.end(<span class="string">'http'</span>)</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">&#125;).listen(<span class="number">8888</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'server listening on 8888'</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="六、web权限认证"><a href="#六、web权限认证" class="headerlink" title="六、web权限认证"></a>六、web权限认证</h1><p><strong>Cookie的方式</strong></p>
+<ul>
+<li>服务器需要保存session</li>
+<li>不利于集群服务器，因为各个服务器之间要通信获取session</li>
+</ul>
+<p><img src="/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20220623220005045.png" alt="image-20220623220005045"></p>
+<p><strong>Token的方式</strong></p>
+<blockquote>
+<ul>
+<li>token是基于<a href="https://jwt.io/" target="_blank" rel="noopener">JWT</a></li>
+<li>直接通过算法计算，不需要存储唯一标识</li>
+</ul>
+</blockquote>
+<ul>
+<li>1 登录接口(邮箱，密码登录) 获取 token</li>
+<li>2 将token添加到请求头<code>common.Authorization</code>中，每次请求都携带</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'vuex'</span></span><br><span class="line"><span class="keyword">import</span> &#123; instance, <span class="keyword">get</span>, post &#125; <span class="keyword">from</span> <span class="string">'../utils/resques'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> GlobalDataProps &#123;</span><br><span class="line">  token: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> createStore&lt;GlobalDataProps&gt;(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    token: <span class="string">''</span></span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    login (state, rawData) &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; token &#125; = rawData.data</span><br><span class="line">      state.token = token</span><br><span class="line">      instance.defaults.headers.common.Authorization = token  <span class="comment">// 将token添加到请求头中，每次请求都携带</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  actions: &#123;</span><br><span class="line">    <span class="keyword">async</span> login (context, payload) &#123;</span><br><span class="line">      <span class="keyword">const</span> data = <span class="keyword">await</span> post(<span class="string">'user/login'</span>, payload) <span class="comment">//获取 token</span></span><br><span class="line">      context.commit(<span class="string">'fetchPosts'</span>, data)</span><br><span class="line">      <span class="keyword">return</span> data</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/image-20220623220048377.png" alt="image-20220623220048377"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/05/Javascript/Javascript-0x05-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/" rel="prev" title="Javascript(0x05)-异步编程">
+      <i class="fa fa-chevron-left"></i> Javascript(0x05)-异步编程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/02/Index/blog%E6%A8%A1%E6%9D%BF/" rel="next" title="HTTP(0x02)-blog-template">
+      HTTP(0x02)-blog-template <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、HTTP基础"><span class="nav-text">一、HTTP基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-HTTP请求过程"><span class="nav-text">1.1 HTTP请求过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-五层网络模型"><span class="nav-text">1.2 五层网络模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-TCP三次握手与四次挥手"><span class="nav-text">1.3 TCP三次握手与四次挥手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-URI、URL、URN"><span class="nav-text">1.4 URI、URL、URN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-创建一个简单的web服务"><span class="nav-text">1.5 创建一个简单的web服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-Git-Bash终端访问网路命令"><span class="nav-text">1.6 Git Bash终端访问网路命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、HTTP-方法"><span class="nav-text">二、HTTP 方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、HTTP-CODE"><span class="nav-text">三、HTTP CODE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、HTTP-访问控制-CORS-跨域问题"><span class="nav-text">四、HTTP 访问控制(CORS)-跨域问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、HTTP-Headers"><span class="nav-text">五、HTTP Headers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cache-Control（缓存）"><span class="nav-text">Cache-Control（缓存）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ETag-Last-Modified-缓存验证-协商缓存"><span class="nav-text">ETag Last-Modified (缓存验证-协商缓存)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content-Type"><span class="nav-text">Content-Type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie"><span class="nav-text">Cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Connection-（HTTP长连接）"><span class="nav-text">Connection （HTTP长连接）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据协商（Accept、Content、User-Agent）"><span class="nav-text">数据协商（Accept、Content、User-Agent）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Content-Encoding：gzip-数据压缩"><span class="nav-text">Content-Encoding：gzip 数据压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Location-重定向"><span class="nav-text">Location(重定向)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、web权限认证"><span class="nav-text">六、web权限认证</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chuckie"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Chuckie</p>
+  <div class="site-description" itemprop="description">Bright future</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ChuckieWill" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ChuckieWill" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/codewyj.163.com" title="E-Mail → codewyj.163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jianshu.com/u/de627226656c" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;de627226656c" rel="noopener" target="_blank">简书</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="/images/me.png"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chuckie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:04</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

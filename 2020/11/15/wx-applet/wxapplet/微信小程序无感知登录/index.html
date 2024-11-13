@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一、面向微信登录 面向微信登录是指：小程序端获得用户授权后从微信获取用户信息，因为小程序是微信生态的，用户信息微信本身就有，只要用户授权即可从微信获取。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wxapplet(0x03)-小程序无感知登录">
+<meta property="og:url" content="http://yoursite.com/2020/11/15/wx-applet/wxapplet/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%97%A0%E6%84%9F%E7%9F%A5%E7%99%BB%E5%BD%95/index.html">
+<meta property="og:site_name" content="Chuckie&#39;s Blog">
+<meta property="og:description" content="一、面向微信登录 面向微信登录是指：小程序端获得用户授权后从微信获取用户信息，因为小程序是微信生态的，用户信息微信本身就有，只要用户授权即可从微信获取。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/11/15/wx-applet/wxapplet/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%97%A0%E6%84%9F%E7%9F%A5%E7%99%BB%E5%BD%95/image-20201115003830001.png">
+<meta property="article:published_time" content="2020-11-15T02:46:17.000Z">
+<meta property="article:modified_time" content="2024-09-18T15:06:07.725Z">
+<meta property="article:author" content="Chuckie">
+<meta property="article:tag" content="wxapplet">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/11/15/wx-applet/wxapplet/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%97%A0%E6%84%9F%E7%9F%A5%E7%99%BB%E5%BD%95/image-20201115003830001.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/11/15/wx-applet/wxapplet/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%97%A0%E6%84%9F%E7%9F%A5%E7%99%BB%E5%BD%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>wxapplet(0x03)-小程序无感知登录 | Chuckie's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chuckie's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/15/wx-applet/wxapplet/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%97%A0%E6%84%9F%E7%9F%A5%E7%99%BB%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          wxapplet(0x03)-小程序无感知登录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-15 10:46:17" itemprop="dateCreated datePublished" datetime="2020-11-15T10:46:17+08:00">2020-11-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/wx-applet/" itemprop="url" rel="index"><span itemprop="name">wx-applet</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/wx-applet/wxapplet/" itemprop="url" rel="index"><span itemprop="name">wxapplet</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、面向微信登录"><a href="#一、面向微信登录" class="headerlink" title="一、面向微信登录"></a>一、面向微信登录</h1><blockquote>
+<p>面向微信登录是指：小程序端获得用户授权后从微信获取用户信息，因为小程序是微信生态的，用户信息微信本身就有，只要用户授权即可从微信获取。</p>
+</blockquote>
+<ul>
+<li>获取用户公开信息 用open-data组件</li>
+<li>js中获取用户信息流程：button让用户授权—–&gt;js中再用wx.getUserInfo（）API获取用户信息</li>
+</ul>
+<h2 id="1-open-data"><a href="#1-open-data" class="headerlink" title="1 open-data"></a>1 open-data</h2><ul>
+<li><p>微信官方文档：<a href="https://developers.weixin.qq.com/miniprogram/dev/component/open-data.html" target="_blank" rel="noopener">组件-&gt;开放能力-&gt;open-data</a></p>
+</li>
+<li><p>只能直接展示在界面上  　　　因为是在WXML中获取的  JS中没有获取信息</p>
+</li>
+<li><p>只能展示用户自己的相关信息</p>
+</li>
+</ul>
+<h2 id="2-wx-getUserInfo"><a href="#2-wx-getUserInfo" class="headerlink" title="2 wx.getUserInfo()"></a>2 wx.getUserInfo()</h2><ul>
+<li><p>获取用户授权信息API： wx.getSetting()</p>
+</li>
+<li><p>获取用户信息API： wx.getUserInfo()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">getSetting()与getUserInfo() 配合使用</span><br><span class="line">1 用getSetting() 获取用户是否授权的信息 </span><br><span class="line">2 若已经授权 则用getUserInfo()获取用户信息</span><br><span class="line">3 若未授权  则用下方的button 弹出获取用户的权限的弹出框</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li>使用前提: 必须是用户已经授权之后才可以调用这个接口  所以先用wx.getSetting获取用户授权情况 判断之后再使用wx.getUserInfo()</li>
+</ul>
+<h2 id="3-button"><a href="#3-button" class="headerlink" title="3 button"></a>3 button</h2><p>点击button 弹出获取用户权限的弹出框</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;button class&#x3D;&quot;login&quot;</span><br><span class="line">        open-type&#x3D;&quot;getUserInfo&quot;          &#x2F;&#x2F;固定写法 获取开放能力  包括&quot;getUserInfo&quot;也是固定</span><br><span class="line">        bindgetuserinfo&#x3D;&quot;onGotUserInfo&quot;&gt; &#x2F;&#x2F;bindgetuserinfo事件 会调用授权弹框  </span><br><span class="line">        获取微信授权信息&lt;&#x2F;button&gt;</span><br><span class="line">        </span><br><span class="line">   &#x2F;&#x2F;点击button 弹出获取用户权限的弹出框  选择“拒绝”或“允许”  选择后返回event      </span><br><span class="line">  onGotUserInfo(event)&#123;</span><br><span class="line">      console.log(event)     &#x2F;&#x2F;授权与否  若授权等信息都在event中</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-login云函数获取openId"><a href="#4-login云函数获取openId" class="headerlink" title="4 login云函数获取openId"></a>4 login云函数获取openId</h2><ul>
+<li><p>Cloud.getWXContext() </p>
+</li>
+<li><p>通过小程序自带的login云函数获取openID </p>
+</li>
+<li><p>返回值只有openId  和appId</p>
+</li>
+</ul>
+<h1 id="二、面向服务端登录"><a href="#二、面向服务端登录" class="headerlink" title="二、面向服务端登录"></a>二、面向服务端登录</h1><blockquote>
+<ul>
+<li><p>面向服务端登录是指：后端为自定义的服务端，向后端发送请求获取token，并在每次请求中携带token作为身份验证。</p>
+</li>
+<li><p>该方式登录常见问题：token会过期，对于过期的处理引出了<strong>无感知登录</strong>的需求，即不影响用户的情况下在token过期后自动向服务端获取新的token</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="2-1-登录流程"><a href="#2-1-登录流程" class="headerlink" title="2.1 登录流程"></a>2.1 登录流程</h2><blockquote>
+<p><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html" target="_blank" rel="noopener">微信官方文档-开发能力-小程序登录</a></p>
+</blockquote>
+<ul>
+<li>该方式登录本质还是微信帮助进行了用户合法性的验证，只是验证合法后，将用户信息存储到了自建数据库中</li>
+</ul>
+<h2 id="2-2-无感知登录"><a href="#2-2-无感知登录" class="headerlink" title="2.2 无感知登录"></a>2.2 无感知登录</h2><p><img src="/2020/11/15/wx-applet/wxapplet/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%97%A0%E6%84%9F%E7%9F%A5%E7%99%BB%E5%BD%95/image-20201115003830001.png" alt></p>
+<h3 id="2-2-1-实现流程"><a href="#2-2-1-实现流程" class="headerlink" title="2.2.1 实现流程"></a>2.2.1 实现流程</h3><ul>
+<li>每次向服务端发送业务请求时，从本地缓存中取出token，发送给服务端<ul>
+<li>若token存在（本地缓存中存在）且没有过期，则请求正常执行，从服务端获取需要的资源</li>
+<li>若token不存在或过期，服务端会返回403错误码，则执行下面两步操作<ul>
+<li>1 重新获取新令牌：执行获取token的请求，从服务端获取新的token</li>
+<li>2 二次重发：再次发送业务请求（相当于第一次业务请求失败没有从服务端拿到数据，触发了重新获取token，再次发送业务请求获取需要的数据）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-2-源码"><a href="#2-2-2-源码" class="headerlink" title="2.2.2 源码"></a>2.2.2 源码</h3><ul>
+<li>封装Token类，提供getTokenFromServer()函数获取新的token</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Token</span> </span>&#123;</span><br><span class="line">  getTokenFromServer() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>._getToken(resolve,reject)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  _getToken(resolve,reject)&#123;</span><br><span class="line">    wx.login(&#123;<span class="comment">// 1 从微信获取登录凭证code</span></span><br><span class="line">      success: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (res.code) &#123;</span><br><span class="line">          <span class="comment">//发起网络请求</span></span><br><span class="line">          wx.request(&#123;</span><br><span class="line">            url: <span class="string">'http://localhost:3000/v1/token/'</span>, <span class="comment">// 2 向服务端发送请求获取新token</span></span><br><span class="line">            method: <span class="string">"POST"</span>,</span><br><span class="line">            data: &#123;</span><br><span class="line">              account: res.code,</span><br><span class="line">              type: <span class="number">100</span> <span class="comment">//小程序登录方式</span></span><br><span class="line">            &#125;,</span><br><span class="line">            success: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">              <span class="built_in">console</span>.log(res.data)</span><br><span class="line">              <span class="keyword">const</span> status = res.statusCode.toString()</span><br><span class="line">              <span class="comment">//状态码以2开头，表示请求成功</span></span><br><span class="line">              <span class="keyword">if</span> (status.startsWith(<span class="string">'2'</span>)) &#123;</span><br><span class="line">                wx.setStorageSync(<span class="string">'token'</span>, res.data.token)<span class="comment">// 3 将token存入本地缓存</span></span><br><span class="line">                resolve()</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            fail: <span class="function">(<span class="params">err</span>)=&gt;</span> &#123;</span><br><span class="line">              reject()</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          reject()</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">'登录失败！'</span> + res.errMsg)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; Token &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在每次发送网络请求时，做token验证并执行重新获取token和二次重发的操作</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Base64&#125; <span class="keyword">from</span> <span class="string">'js-base64'</span></span><br><span class="line"><span class="keyword">import</span> &#123;config&#125; <span class="keyword">from</span> <span class="string">'../config.js'</span></span><br><span class="line"><span class="keyword">import</span> &#123;Token&#125; <span class="keyword">from</span> <span class="string">'./token.js'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HTTP</span></span>&#123;</span><br><span class="line">    request(&#123;url,data=&#123;&#125;,method=<span class="string">'GET'</span>&#125;)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>._request(url,resolve,reject,data,method)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    _request(url,resolve,reject,data=&#123;&#125;,method=<span class="string">'GET'</span>, noRefetch=<span class="literal">false</span>)&#123;</span><br><span class="line">        wx.request(&#123;</span><br><span class="line">            method,</span><br><span class="line">            data,</span><br><span class="line">            url:config.api_base_url + url,</span><br><span class="line">            header:&#123;</span><br><span class="line">                Authorization: <span class="keyword">this</span>._encode() <span class="comment">//将token传给服务端</span></span><br><span class="line">            &#125;,</span><br><span class="line">            success:<span class="function">(<span class="params">res</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="keyword">let</span> code = res.statusCode.toString()</span><br><span class="line">                <span class="keyword">if</span> (code.startsWith(<span class="string">'2'</span>))&#123;</span><br><span class="line">                    <span class="comment">//返回token验证成功</span></span><br><span class="line">                  resolve(res)</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">if</span>(code == <span class="string">'403'</span>)&#123;</span><br><span class="line">                        <span class="comment">//token过期</span></span><br><span class="line">                        <span class="keyword">if</span>(!noRefetch)&#123;</span><br><span class="line">                            <span class="comment">//重新获取token</span></span><br><span class="line">                            <span class="keyword">this</span>._refetch(</span><br><span class="line">                                url,</span><br><span class="line">                                resolve,</span><br><span class="line">                                reject,</span><br><span class="line">                                data,</span><br><span class="line">                                method</span><br><span class="line">                            )</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        <span class="comment">//返回token验证失败</span></span><br><span class="line">                        reject()</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            fail:<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;</span><br><span class="line">                reject()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//刷新token，并二次重发</span></span><br><span class="line">    _refetch(...param)&#123;</span><br><span class="line">        <span class="keyword">let</span> token = <span class="keyword">new</span> Token()</span><br><span class="line">        <span class="comment">//刷新token</span></span><br><span class="line">        token.getTokenFromServer().then(<span class="function">(<span class="params">token</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">//二次重发</span></span><br><span class="line">            <span class="keyword">this</span>._request(...param, <span class="literal">true</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//给token进行base64加密</span></span><br><span class="line">     _encode() &#123;</span><br><span class="line">        <span class="keyword">const</span> token = wx.getStorageSync(<span class="string">'token'</span>)</span><br><span class="line">        <span class="keyword">const</span> base64 = Base64.encode(token + <span class="string">":"</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Basic '</span> + base64</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;HTTP&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+<h1 id="三、强登录下的无感知登录解决方案"><a href="#三、强登录下的无感知登录解决方案" class="headerlink" title="三、强登录下的无感知登录解决方案"></a>三、强登录下的无感知登录解决方案</h1><blockquote>
+<p>强登录即需要用户输入账户和密码才可登录，不同于微信小程序登录在不需要用户授权的情况下只需要调用微信API:wx.login()即可获取权限。强登陆情况下，当token过期后就需要用户输入账号和密码才能再次获取新的token,这会严重影响用户体验，所以需要无感知登录来实时刷新token</p>
+</blockquote>
+<h2 id="方案1：-保存用户账户和密码"><a href="#方案1：-保存用户账户和密码" class="headerlink" title="方案1： 保存用户账户和密码"></a>方案1： 保存用户账户和密码</h2><blockquote>
+<p>该方式简单但是不推荐</p>
+</blockquote>
+<ul>
+<li>在用户第一次登录时保存用户的账户和密码</li>
+<li>当token过期时，直接从缓存拿到用户的账户和密码发送请求获取新的token,这样就避免了用户输入</li>
+</ul>
+<h2 id="方案2：-双令牌"><a href="#方案2：-双令牌" class="headerlink" title="方案2： 双令牌"></a>方案2： 双令牌</h2><ul>
+<li><p>1 用户登录时从服务端获取两个token</p>
+<ul>
+<li>access_token: 即普通的token，用于验证用户合法性，假设设置过期时间为2小时</li>
+<li>refresh_token: 用于验证是否可刷新获取新的access_token, 假设设置过期时间为30天</li>
+</ul>
+</li>
+<li><p>2 当access_token过期时（超过两小时）</p>
+<ul>
+<li>发送请求验证refresh_token是否过期（是否是30天内），若没有过期，则返回新的access_token, <strong>同时返回更新过期时间的refresh_token</strong>(保持每次获取新的access_token后refresh_token过期时间仍为30天),然后重新发送业务请求</li>
+</ul>
+</li>
+<li><p>发送请求验证refresh_token是否过期（是否是30天内），若过期，则需要用户输入账户和密码才可以登录，登录时获取新的access_token和refresh_token</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/wxapplet/" rel="tag"># wxapplet</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/20/tools/MySQL/MySQL/" rel="prev" title="MySQL">
+      <i class="fa fa-chevron-left"></i> MySQL
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/17/Javascript/Javascript(0x08)-JS%E4%B8%AD%E7%9A%84JSON%E5%BA%8F%E5%88%97%E5%8C%96/" rel="next" title="Javascript(0x08)-JS中的JSON序列化">
+      Javascript(0x08)-JS中的JSON序列化 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、面向微信登录"><span class="nav-text">一、面向微信登录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-open-data"><span class="nav-text">1 open-data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-wx-getUserInfo"><span class="nav-text">2 wx.getUserInfo()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-button"><span class="nav-text">3 button</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-login云函数获取openId"><span class="nav-text">4 login云函数获取openId</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、面向服务端登录"><span class="nav-text">二、面向服务端登录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-登录流程"><span class="nav-text">2.1 登录流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-无感知登录"><span class="nav-text">2.2 无感知登录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-实现流程"><span class="nav-text">2.2.1 实现流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-源码"><span class="nav-text">2.2.2 源码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、强登录下的无感知登录解决方案"><span class="nav-text">三、强登录下的无感知登录解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方案1：-保存用户账户和密码"><span class="nav-text">方案1： 保存用户账户和密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方案2：-双令牌"><span class="nav-text">方案2： 双令牌</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chuckie"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Chuckie</p>
+  <div class="site-description" itemprop="description">Bright future</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ChuckieWill" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ChuckieWill" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/codewyj.163.com" title="E-Mail → codewyj.163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jianshu.com/u/de627226656c" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;de627226656c" rel="noopener" target="_blank">简书</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="/images/me.png"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chuckie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:04</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

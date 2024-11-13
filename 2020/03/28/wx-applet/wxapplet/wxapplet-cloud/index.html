@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="云开发 云开发包括：云函数、云数据库、云存储、云调用、HTTP API 小程序端和云函数端云开发可参考以下微信官方文档：  云开发-开发指引 云开发-SDK文档   第三方调用云函数、操作云数据库、云存储、云调用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wxapplet(0x01)-小程序云开发">
+<meta property="og:url" content="http://yoursite.com/2020/03/28/wx-applet/wxapplet/wxapplet-cloud/index.html">
+<meta property="og:site_name" content="Chuckie&#39;s Blog">
+<meta property="og:description" content="云开发 云开发包括：云函数、云数据库、云存储、云调用、HTTP API 小程序端和云函数端云开发可参考以下微信官方文档：  云开发-开发指引 云开发-SDK文档   第三方调用云函数、操作云数据库、云存储、云调用">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-28T02:46:17.000Z">
+<meta property="article:modified_time" content="2024-09-18T15:06:07.721Z">
+<meta property="article:author" content="Chuckie">
+<meta property="article:tag" content="wxapplet">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/28/wx-applet/wxapplet/wxapplet-cloud/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>wxapplet(0x01)-小程序云开发 | Chuckie's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chuckie's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/28/wx-applet/wxapplet/wxapplet-cloud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          wxapplet(0x01)-小程序云开发
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-28 10:46:17" itemprop="dateCreated datePublished" datetime="2020-03-28T10:46:17+08:00">2020-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/wx-applet/" itemprop="url" rel="index"><span itemprop="name">wx-applet</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/wx-applet/wxapplet/" itemprop="url" rel="index"><span itemprop="name">wxapplet</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="云开发"><a href="#云开发" class="headerlink" title="云开发"></a>云开发</h1><ul>
+<li>云开发包括：<strong>云函数</strong>、云数据库、云存储、云调用、HTTP API</li>
+<li><strong>小程序端和云函数端</strong>云开发可参考以下微信官方文档： <ul>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/" target="_blank" rel="noopener">云开发-开发指引</a></li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-sdk-api/Cloud.init.html" target="_blank" rel="noopener">云开发-SDK文档</a></li>
+</ul>
+</li>
+<li><strong>第三方</strong>调用云函数、操作云数据库、云存储、云调用</li>
+</ul>
+<h2 id="云函数"><a href="#云函数" class="headerlink" title="云函数"></a>云函数</h2><ul>
+<li>云函数是基于<code>node</code>环境的</li>
+<li>使用第三方库时需要导入</li>
+<li><strong>每个云函数是独立的，需要使用第三方库时都要单独导入</strong><ul>
+<li>例如A云函数导入m库,则m库只对A云函数起作用</li>
+<li>其他云函数需要使用m库，则需要自己再导入</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-云函数使用第三方库流程"><a href="#1-云函数使用第三方库流程" class="headerlink" title="1 云函数使用第三方库流程"></a>1 云函数使用第三方库流程</h3><ul>
+<li>安装：打开云函数的终端命令方式安装<ul>
+<li><strong>注意：</strong>打开需要的云函数的终端，每个云函数是独立的</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>安装<code>node</code>环境</li>
+<li>安装需要的第三方库</li>
+<li>在<code>js</code>文件中导入第三方库</li>
+<li>完成以上步骤即可在云函数<code>js</code>文件中使用第三方库了</li>
+</ol>
+<h3 id="2-云函数定时触发"><a href="#2-云函数定时触发" class="headerlink" title="2 云函数定时触发"></a>2 云函数定时触发</h3><ul>
+<li>使用场景： 云函数需要定时触发，向后端获取数据以刷新前端数据</li>
+</ul>
+<p>在需要添加触发器的云函数目录下新建文件 <code>config.json</code>，格式如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">// triggers 字段是触发器数组，目前仅支持一个触发器，即数组只能填写一个，不可添加多个</span></span><br><span class="line">  <span class="attr">"triggers"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">// name: 触发器的名字</span></span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"myTrigger"</span>,</span><br><span class="line">      <span class="comment">// type: 触发器类型，目前仅支持 timer (即 定时触发器)</span></span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"timer"</span>,</span><br><span class="line">      <span class="comment">// config: 触发器配置，在定时触发器下，config 格式为 cron 表达式</span></span><br><span class="line">      <span class="attr">"config"</span>: <span class="string">"0 0 2 1 * * *"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>相关规则可查看微信官方文档：<a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/functions/triggers.html" target="_blank" rel="noopener">云函数定时触发器</a><ul>
+<li>微信官方文档位置：云开发—-开发指引—-云函数—–定时触发器</li>
+</ul>
+</li>
+</ul>
+<h2 id="云数据库"><a href="#云数据库" class="headerlink" title="云数据库"></a>云数据库</h2><h3 id="归纳"><a href="#归纳" class="headerlink" title="归纳"></a>归纳</h3><h4 id="1-数据库中1对N的3中设计方式"><a href="#1-数据库中1对N的3中设计方式" class="headerlink" title="1  数据库中1对N的3中设计方式"></a>1  数据库中1对N的3中设计方式</h4><ol>
+<li>N属于[0, 几十]时  存储于集合A中  N以数组的形式作为一个属性存储在每条记录中 </li>
+<li>N属于[几十，几百]时   集合A 中存储1  集合B中存储N   同时集合A中用一个数组存储集合B中与之相关的记录的_id</li>
+<li>N属于[几千，几万]时  集合A 中存储1  集合B中存储N   同时集合B存储它关联的集合A中的记录的_id</li>
+</ol>
+<h4 id="2-查询条数权限"><a href="#2-查询条数权限" class="headerlink" title="2 查询条数权限"></a>2 查询条数权限</h4><ul>
+<li>小程序端  20条</li>
+<li>服务端(云函数)   100条</li>
+<li>HTTP API        10条(默认 若设置了skip  limit 则按limit来定)</li>
+</ul>
+<h4 id="3-where-和-doc-的区别"><a href="#3-where-和-doc-的区别" class="headerlink" title="3  where() 和 doc() 的区别"></a>3  where() 和 doc() 的区别</h4><ul>
+<li>where()可以取到集合中所有符合条件的记录</li>
+<li>doc()只能取到集合中唯一标识的一条记录</li>
+</ul>
+<h3 id="0-note"><a href="#0-note" class="headerlink" title="0 note"></a>0 note</h3><h4 id="0-1-小程序端与服务端初始化的区别"><a href="#0-1-小程序端与服务端初始化的区别" class="headerlink" title="0.1 小程序端与服务端初始化的区别"></a>0.1 小程序端与服务端初始化的区别</h4><ul>
+<li>小程序端</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> db = wx.cloud.database()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>云函数端</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cloud = <span class="built_in">require</span>(<span class="string">'wx-server-sdk'</span>)</span><br><span class="line">cloud.init(&#123;</span><br><span class="line">  env: cloud.DYNAMIC_CURRENT_ENV</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">const</span> db = cloud.database()</span><br></pre></td></tr></table></figure>
+
+<h4 id="0-2-注意事项"><a href="#0-2-注意事项" class="headerlink" title="0.2 注意事项"></a>0.2 注意事项</h4><ul>
+<li>在小程序端插入数据库时 数据中会自动包含openId   在服务端插入数据库不自带openid</li>
+</ul>
+<h3 id="1-Database"><a href="#1-Database" class="headerlink" title="1 Database"></a>1 Database</h3><h4 id="1-1-ServerDate-获取服务端时间"><a href="#1-1-ServerDate-获取服务端时间" class="headerlink" title="1.1 ServerDate()获取服务端时间"></a>1.1 ServerDate()获取服务端时间</h4><ul>
+<li>支持端：小程序、云函数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">createTime: db.serverDate(), &#x2F;&#x2F; 服务端的时间   ----比获取用户设备时间更准确</span><br><span class="line"></span><br><span class="line">返回值：2020-02-09T06:28:42.065Z</span><br><span class="line">Sun Feb 09 2020 14:28:42 GMT+0800 (中国标准时间)</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-ReExp实现模糊查询"><a href="#1-2-ReExp实现模糊查询" class="headerlink" title="1.2 ReExp实现模糊查询"></a>1.2 ReExp实现模糊查询</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//案例1</span></span><br><span class="line">w = &#123;</span><br><span class="line">    content: <span class="keyword">new</span> db.RegExp(&#123;   <span class="comment">//content 为集合中的属性名称</span></span><br><span class="line">      regexp: keyword,         <span class="comment">//查询关键词  由keyword传入</span></span><br><span class="line">      options: <span class="string">'i'</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">blogCollection.where(w).get()</span><br><span class="line"></span><br><span class="line"><span class="comment">//案例2</span></span><br><span class="line">db.collection(<span class="string">'todos'</span>).where(&#123;</span><br><span class="line">  description: <span class="keyword">new</span> db.RegExp(&#123;  <span class="comment">// description为集合中的属性名称</span></span><br><span class="line">    regexp: <span class="string">'miniprogram'</span>,</span><br><span class="line">    options: <span class="string">'i'</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="2-Collection"><a href="#2-Collection" class="headerlink" title="2 Collection"></a>2 Collection</h3><h4 id="2-1-查询条件"><a href="#2-1-查询条件" class="headerlink" title="2.1 查询条件"></a>2.1 查询条件</h4><h5 id="orderBy排序查询"><a href="#orderBy排序查询" class="headerlink" title="orderBy排序查询"></a>orderBy排序查询</h5><ul>
+<li><p><code>orderBy()</code>用于对从云数据库中查询到的数据进行排序</p>
+</li>
+<li><p>orderBy(fieldName: string, order: string)</p>
+<ul>
+<li>fieldNme:   用于定义需要排序的字段 </li>
+<li>order: asc（正序） 、   desc（逆序）</li>
+</ul>
+</li>
+<li><p>案例</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> db = wx.cloud.database()</span><br><span class="line">db.collection(<span class="string">'todos'</span>).orderBy(<span class="string">'progress'</span>, <span class="string">'asc'</span>)</span><br><span class="line">  .get()</span><br><span class="line">  .then(<span class="built_in">console</span>.log)</span><br><span class="line">  .catch(<span class="built_in">console</span>.error)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>微信官方文档： <a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-client-api/database/collection.orderBy.html" target="_blank" rel="noopener">排序查询orderBy</a></li>
+</ul>
+<h4 id="2-2-请求"><a href="#2-2-请求" class="headerlink" title="2.2 请求"></a>2.2 请求</h4><h5 id="count-获取集合记录条数"><a href="#count-获取集合记录条数" class="headerlink" title="count()获取集合记录条数"></a>count()获取集合记录条数</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> db = wx.cloud.database()</span><br><span class="line"><span class="keyword">const</span> blogCollection = db.collection(<span class="string">'blog'</span>)</span><br><span class="line"><span class="comment">//blogCollection集合  count()方法返回记录条数的对象</span></span><br><span class="line"><span class="keyword">const</span> countResult = <span class="keyword">await</span> blogCollection.count()  </span><br><span class="line"><span class="comment">//对象中的total属性记录了集合中记录的条数</span></span><br><span class="line"><span class="keyword">const</span> total = countResult.total</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="云存储"><a href="#云存储" class="headerlink" title="云存储"></a>云存储</h2><h3 id="1-上传文件uploadFile-）"><a href="#1-上传文件uploadFile-）" class="headerlink" title="1 上传文件uploadFile(）"></a>1 上传文件uploadFile(）</h3><ol>
+<li>小程序端uploadFile(）</li>
+</ol>
+<ul>
+<li><p>API： wx.cloud.uploadFile()</p>
+<p>注意： 此函数一次只能上传一个文件  若有多个文件  则要循环上传</p>
+<p>cloudPath  ： 云存储路径    //  “’blog/‘”: 为云存储中存储这一类文件的文件夹</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i =<span class="number">0</span> ,len = <span class="keyword">this</span>.data.images.length;i&lt;len;i++)&#123;</span><br><span class="line">      <span class="keyword">let</span> item = <span class="keyword">this</span>.data.images[i]</span><br><span class="line">      <span class="comment">//取到文件扩展名</span></span><br><span class="line">      <span class="keyword">let</span> suffix = <span class="regexp">/\.\w+$/</span>.exec(item)[<span class="number">0</span>]</span><br><span class="line">      wx.cloud.uploadFile(&#123;</span><br><span class="line">      <span class="comment">//  “'blog/'”: 为云存储中存储这一类文件的文件夹</span></span><br><span class="line">        cloudPath: <span class="string">'blog/'</span> + <span class="built_in">Date</span>.now() + <span class="string">'-'</span> + <span class="built_in">Math</span>.random() * <span class="number">1000000</span> + suffix,</span><br><span class="line">        filePath: item ,=======================================================不同</span><br><span class="line">        success: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.log(res)</span><br><span class="line">        &#125;,</span><br><span class="line">        fail: <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.error(err)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>云函数端uploadFile(）</li>
+</ol>
+<ul>
+<li><p>API ： cloud.uploadFile()</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> cloud.uploadFile(&#123;</span><br><span class="line">    cloudPath: <span class="string">'demo.jpg'</span>,</span><br><span class="line">    fileContent: fileStream,================================================不同</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ul>
+<h2 id="第三方HTTP请求"><a href="#第三方HTTP请求" class="headerlink" title="第三方HTTP请求"></a>第三方HTTP请求</h2><h3 id="1-获取接口调用凭证-access-token"><a href="#1-获取接口调用凭证-access-token" class="headerlink" title="1 获取接口调用凭证 access_token"></a>1 获取接口调用凭证 access_token</h3><ul>
+<li><p>微信官方文档： <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/access-token/auth.getAccessToken.html" target="_blank" rel="noopener">getAccessToken</a></p>
+</li>
+<li><p>getAccessToken.js</p>
+<ul>
+<li>参数：无</li>
+<li>返回值：<code>access_token</code></li>
+<li>第一次调用后会在同文件夹下生产<code>access_token.json</code>文件，用于存储<code>access_token</code></li>
+<li>因为<code>access_token</code>有效期只有2小时，所以该函数调用后会以1小时55分钟为间隔循环执行</li>
+<li>使用前提<ul>
+<li>node环境</li>
+<li>网络请求依赖<code>request-promise</code>  可更换</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> rp = <span class="built_in">require</span>(<span class="string">'request-promise'</span>)</span><br><span class="line"><span class="keyword">const</span> APPID = 	<span class="string">'wx4585ed7abca6e338'</span></span><br><span class="line"><span class="keyword">const</span> APPSECRET = <span class="string">'edf80ecdf2d5335e0ac8c41b52db06ba'</span></span><br><span class="line"><span class="keyword">const</span> URL = <span class="string">`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&amp;appid=<span class="subst">$&#123;APPID&#125;</span>&amp;secret=<span class="subst">$&#123;APPSECRET&#125;</span>`</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> fileName = path.resolve(__dirname,<span class="string">'./access_token.json'</span>)</span><br><span class="line"><span class="comment">//console.log(fileName)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// -------------------------------定义函数----------------------------</span></span><br><span class="line"><span class="comment">//更新AccessToken函数</span></span><br><span class="line"><span class="keyword">const</span> updateAccessToken = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> resStr = <span class="keyword">await</span> rp(URL)</span><br><span class="line">    <span class="keyword">const</span> res = <span class="built_in">JSON</span>.parse(resStr)</span><br><span class="line">    <span class="comment">//console.log(res)</span></span><br><span class="line">    <span class="comment">//写文件</span></span><br><span class="line">    <span class="keyword">if</span>(res.access_token)&#123;</span><br><span class="line">        fs.writeFileSync(fileName, <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">            access_token:res.access_token,</span><br><span class="line">            createTime: <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">        &#125;))</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//再次调用获取access_token的函数</span></span><br><span class="line">        updateAccessToken()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//从文件中读取access_token</span></span><br><span class="line"><span class="keyword">const</span> getAccessToken = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> readRes = fs.readFileSync(fileName,<span class="string">'utf8'</span>)</span><br><span class="line">        <span class="keyword">const</span> readObj = <span class="built_in">JSON</span>.parse(readRes)</span><br><span class="line">        <span class="comment">//console.log(readObj)</span></span><br><span class="line">        <span class="keyword">const</span> createTime = <span class="keyword">new</span> <span class="built_in">Date</span>(readObj.createTime).getTime()</span><br><span class="line">        <span class="keyword">const</span> nowTime = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime() </span><br><span class="line">        <span class="keyword">if</span>((nowTime - createTime) / <span class="number">1000</span> / <span class="number">60</span> / <span class="number">60</span> &gt;= <span class="number">2</span>)&#123;</span><br><span class="line">            <span class="comment">//时间超过了2小时则重新更新并获取</span></span><br><span class="line">            <span class="keyword">await</span> updateAccessToken()</span><br><span class="line">            <span class="keyword">await</span> getAccessToken()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> readObj.access_token</span><br><span class="line">    &#125;<span class="keyword">catch</span>(error)&#123;</span><br><span class="line">        <span class="comment">//没获取则更新access_token</span></span><br><span class="line">        <span class="keyword">await</span> updateAccessToken()</span><br><span class="line">        <span class="keyword">await</span> getAccessToken()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// -------------------------------调用函数----------------------------</span></span><br><span class="line"><span class="comment">//每两小时就更新一次  并且提前5分钟（官方建议）</span></span><br><span class="line">setInterval(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> updateAccessToken()</span><br><span class="line">&#125;,(<span class="number">7200</span> - <span class="number">300</span>)*<span class="number">1000</span>)</span><br><span class="line"><span class="comment">//updateAccessToken()</span></span><br><span class="line"><span class="comment">//console.log(getAccessToken())  </span></span><br><span class="line"><span class="comment">//将函数抛出</span></span><br><span class="line"><span class="built_in">module</span>.exports = getAccessToken</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-调用云函数"><a href="#2-调用云函数" class="headerlink" title="2 调用云函数"></a>2 调用云函数</h3><ul>
+<li><p>微信官方文档： <a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/functions/invokeCloudFunction.html" target="_blank" rel="noopener">调用云函数</a></p>
+</li>
+<li><p>触发云函数的好处：请求或提交数据的方法在云函数中已经封装好了，直接调用就可以，不用自己再从头写请求或提交数据的方法</p>
+</li>
+<li><p>注意： 触发云函数是<code>POST</code>请求</p>
+</li>
+<li><p>callCloudFn.js</p>
+<ul>
+<li>返回值：<strong>Promised对象</strong></li>
+<li>参数：<ul>
+<li>env: 云环境ID</li>
+<li>fnName: 云函数名称</li>
+<li>params: 云函数需要的数据</li>
+</ul>
+</li>
+<li>使用前提<ul>
+<li>node环境</li>
+<li>网络请求依赖<code>request-promise</code>  可更换</li>
+<li>导入<code>getAccessToken</code>用于获取<code>access-token</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> rp = <span class="built_in">require</span>(<span class="string">'request-promise'</span>)</span><br><span class="line"><span class="comment">//获取access_token</span></span><br><span class="line"><span class="keyword">const</span> getAccessToken = <span class="built_in">require</span>(<span class="string">'./getAccessToken.js'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//fnName:云函数名称  params:云函数需要的数据</span></span><br><span class="line"><span class="keyword">const</span> callCloudFn = <span class="keyword">async</span>(env,fnName,params)=&gt;&#123;</span><br><span class="line">    <span class="comment">//获取access_token</span></span><br><span class="line">    <span class="keyword">const</span> access_token = <span class="keyword">await</span> getAccessToken()</span><br><span class="line">    <span class="comment">//触发云函数HTTP　API</span></span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">`https://api.weixin.qq.com/tcb/invokecloudfunction?access_token=<span class="subst">$&#123;access_token&#125;</span>&amp;env=<span class="subst">$&#123;env&#125;</span>&amp;name=<span class="subst">$&#123;fnName&#125;</span>`</span></span><br><span class="line">    <span class="keyword">var</span> options = &#123;</span><br><span class="line">        method: <span class="string">'POST'</span>,</span><br><span class="line">        uri: url,</span><br><span class="line">        body: &#123;</span><br><span class="line">            ...params</span><br><span class="line">        &#125;,</span><br><span class="line">        json: <span class="literal">true</span> <span class="comment">// Automatically stringifies the body to JSON</span></span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">await</span> rp(options)</span><br><span class="line">        .then( <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">           <span class="comment">//console.log(res)</span></span><br><span class="line">           <span class="keyword">return</span> res</span><br><span class="line">        &#125;)</span><br><span class="line">        .catch(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">            <span class="comment">// POST failed...</span></span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = callCloudFn</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-调用云数据库"><a href="#3-调用云数据库" class="headerlink" title="3 调用云数据库"></a>3 调用云数据库</h3><ul>
+<li><p>微信官方文档： <a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/database/#数据库" target="_blank" rel="noopener">调用云数据库</a> </p>
+</li>
+<li><p>注意： 触发云函数是<code>POST</code>请求</p>
+</li>
+<li><p>callCloudDB.js</p>
+<ul>
+<li>返回值：<strong>Promised对象</strong></li>
+<li>参数：<ul>
+<li>env: 云环境ID</li>
+<li>fnName: 处理数据库的方式（13种） <a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/database/#数据库" target="_blank" rel="noopener">官方文档查看13种方式</a></li>
+<li>query: 查询指令</li>
+</ul>
+</li>
+<li>使用前提<ul>
+<li>node环境</li>
+<li>网络请求依赖<code>request-promise</code>  可更换</li>
+<li>导入<code>getAccessToken</code>用于获取`access-token</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> rp = <span class="built_in">require</span>(<span class="string">'request-promise'</span>)</span><br><span class="line"><span class="comment">//获取access_token</span></span><br><span class="line"><span class="keyword">const</span> getAccessToken = <span class="built_in">require</span>(<span class="string">'./getAccessToken.js'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//fnName : 处理数据库的方式（13种）//query:查询指令</span></span><br><span class="line"><span class="keyword">const</span> callCloudDB = <span class="keyword">async</span>(env,fnName,query = &#123;&#125;)=&gt;&#123;</span><br><span class="line">    <span class="comment">//获取access_token</span></span><br><span class="line">    <span class="keyword">const</span> access_token = <span class="keyword">await</span> getAccessToken()</span><br><span class="line">    <span class="comment">//触发云函数HTTP　API</span></span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">`https://api.weixin.qq.com/tcb/<span class="subst">$&#123;fnName&#125;</span>?access_token=<span class="subst">$&#123;access_token&#125;</span>`</span></span><br><span class="line">    <span class="keyword">var</span> options = &#123;</span><br><span class="line">        method: <span class="string">'POST'</span>,</span><br><span class="line">        uri: url,</span><br><span class="line">        body: &#123;</span><br><span class="line">            query,</span><br><span class="line">            env</span><br><span class="line">        &#125;,</span><br><span class="line">        json: <span class="literal">true</span> <span class="comment">// Automatically stringifies the body to JSON</span></span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">await</span> rp(options)</span><br><span class="line">        .then( <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">           <span class="comment">//console.log(res)</span></span><br><span class="line">           <span class="keyword">return</span> res</span><br><span class="line">        &#125;)</span><br><span class="line">        .catch(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">            <span class="comment">// POST failed...</span></span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = callCloudDB</span><br></pre></td></tr></table></figure>
+
+<p>使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="string">'/getById'</span>,<span class="keyword">async</span>(ctx,next)=&gt;&#123;</span><br><span class="line">    <span class="keyword">const</span> query = <span class="string">`db.collection('playlist').doc('<span class="subst">$&#123;ctx.request.query.id&#125;</span>').get()`</span></span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> callCloudDB(ctx.state.env, <span class="string">'databasequery'</span>,query)</span><br><span class="line">    ctx.body = &#123;</span><br><span class="line">        code: <span class="number">20000</span> ,<span class="comment">//vue-admin-template前端模板要求的</span></span><br><span class="line">        data: <span class="built_in">JSON</span>.parse(res.data)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-调用云存储"><a href="#4-调用云存储" class="headerlink" title="4 调用云存储"></a>4 调用云存储</h3><ul>
+<li><p>微信官方文档： <a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/storage/" target="_blank" rel="noopener">调用云存储</a> </p>
+</li>
+<li><p>注意</p>
+<ul>
+<li>触发云函数是<code>POST</code>请求</li>
+<li>每次上传文件返回的云存储链接（could:\格式的）要保存到云数据中</li>
+<li>每次获取下载文件链接需要先获取云存储链接（could:\格式的）可以去云数据库获取</li>
+</ul>
+</li>
+<li><p>callCloudStorage.js</p>
+<ul>
+<li>使用前提<ul>
+<li>node环境</li>
+<li>网络请求依赖<code>request-promise</code>  可更换</li>
+<li>导入<code>getAccessToken</code>用于获取`access-token</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>1 获取文件下载链接download（）</strong></p>
+<ul>
+<li><p>将云存储链（cloud://A.png）接转成网页链接（<a href="https://A.png）" target="_blank" rel="noopener">https://A.png）</a></p>
+</li>
+<li><p>参数</p>
+<ul>
+<li>env: 云环境ID</li>
+<li>fileList: 云文件列表(array)   —–  <strong>需要特殊的格式</strong><ul>
+<li>PS: 云存储链接可以先通过HTTP云数据库调用获取（前提：云储存链接保存在数据库）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"file_list"</span>: [</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="string">"fileid"</span>:<span class="string">"cloud://test2-4a89da.7465-test2-4a89da/A.png"</span>,</span><br><span class="line">			<span class="string">"max_age"</span>:<span class="number">7200</span></span><br><span class="line">		&#125;</span><br><span class="line">		]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>返回值：<strong>Promised对象</strong></p>
+<ul>
+<li>其中`download_url即为文件的网页链接</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">res:&#123;</span><br><span class="line">    <span class="string">"errcode"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"errmsg"</span>: <span class="string">"ok"</span>,</span><br><span class="line">    <span class="string">"file_list"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"fileid"</span>: <span class="string">"cloud://test2-4a89da.7465-test2-4a89da/A.png"</span>,</span><br><span class="line">            <span class="string">"download_url"</span>: <span class="string">"https://7465-test2-4a89da-1258717764.tcb.qcloud.la/A.png"</span>,</span><br><span class="line">            <span class="string">"status"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="string">"errmsg"</span>: <span class="string">"ok"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>2 获取文件上传链接update（）</strong></p>
+<ul>
+<li>参数<ul>
+<li>ctx: 上下文，从里面需要获取：1 云环境ID、2上传文件的文件对象<ul>
+<li><strong>这里的耦合度较高，使用时需要再重构一下</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>返回值：云存储路径:（cloud://….）</li>
+<li>注意： 此函数一次只能上传一个文件</li>
+<li>向云存储上传文件流程</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>发送网络请求，传入云存储路径，获取云储存上传链接及相关信息</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//云存储路径：云存储文件夹名+文件名</span></span><br><span class="line"><span class="comment">//‘0swiper’是云存储文件夹名</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="string">`0swiper/<span class="subst">$&#123;<span class="built_in">Date</span>.now()&#125;</span>-<span class="subst">$&#123;<span class="built_in">Math</span>.random()*<span class="number">1000000</span>&#125;</span>-<span class="subst">$&#123;file.name&#125;</span>`</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//请求返回值</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"errcode"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">"errmsg"</span>: <span class="string">"ok"</span>,</span><br><span class="line">    <span class="string">"url"</span>: <span class="string">"https://cos.ap-shanghai.myqcloud.com/7465-test2-4a89da-1258717764/testupload"</span>,</span><br><span class="line">    <span class="string">"token"</span>: <span class="string">"Cukha70zkXI..."</span>,</span><br><span class="line">    <span class="string">"authorization"</span>: <span class="string">"q-sign...."</span>,</span><br><span class="line">    <span class="string">"file_id"</span>: <span class="string">"cloud://test2-4a89da.7465-test2-4a89da-1258717764/testupload"</span>,</span><br><span class="line">    <span class="string">"cos_file_id"</span>: <span class="string">"HDze32/qZEN...."</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>根据请求回的信息向上传链接发送网络请求上传文件</li>
+</ol>
+<ul>
+<li><p><strong>3 删除文件</strong></p>
+<ul>
+<li>参数<ul>
+<li>env: 云环境ID</li>
+<li>fileIdList: 云存储链接列表(array)   <ul>
+<li>云存储链接（cloud://格式）</li>
+<li>传入的fileIdList是数组，所以可以一次删除多个文件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>返回值: 返回值为一个对象，其中包括删除的文件的云存储链接</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//callCloudStorage.js</span></span><br><span class="line"><span class="keyword">const</span> rp = <span class="built_in">require</span>(<span class="string">'request-promise'</span>)</span><br><span class="line"><span class="comment">//获取access_token</span></span><br><span class="line"><span class="keyword">const</span> getAccessToken = <span class="built_in">require</span>(<span class="string">'./getAccessToken.js'</span>)</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> cloudStorage = &#123;</span><br><span class="line">    <span class="comment">//---------------------------1 获取文件下载链接--------------------------------------</span></span><br><span class="line">    <span class="keyword">async</span> download(env,fileList) &#123;</span><br><span class="line">    <span class="comment">//获取access_token</span></span><br><span class="line">    <span class="keyword">const</span> access_token = <span class="keyword">await</span> getAccessToken()</span><br><span class="line">    <span class="comment">//触发云函数HTTP　API</span></span><br><span class="line">    <span class="keyword">const</span> url = <span class="string">`https://api.weixin.qq.com/tcb/batchdownloadfile?access_token=<span class="subst">$&#123;access_token&#125;</span>`</span></span><br><span class="line">    <span class="keyword">var</span> options = &#123;</span><br><span class="line">        method: <span class="string">'POST'</span>,</span><br><span class="line">        uri: url,</span><br><span class="line">        body: &#123;</span><br><span class="line">            env,</span><br><span class="line">            file_list: fileList</span><br><span class="line">        &#125;,</span><br><span class="line">        json: <span class="literal">true</span> <span class="comment">// Automatically stringifies the body to JSON</span></span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">await</span> rp(options)</span><br><span class="line">        .then( <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">           <span class="comment">//console.log(res)</span></span><br><span class="line">           <span class="keyword">return</span> res</span><br><span class="line">        &#125;)</span><br><span class="line">        .catch(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">            <span class="comment">// POST failed...</span></span><br><span class="line">            <span class="built_in">console</span>.log(err)</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">	<span class="comment">//---------------------------2 获取文件上传链接--------------------------------------</span></span><br><span class="line">    <span class="keyword">async</span> update(ctx)&#123;</span><br><span class="line">        <span class="comment">//2.1 获取文件上传链接</span></span><br><span class="line">        <span class="keyword">const</span> file = ctx.request.files.file</span><br><span class="line">        <span class="comment">//自定义文件路径，‘0swiper’是云存储文件夹名</span></span><br><span class="line">        <span class="keyword">const</span> path = <span class="string">`0swiper/<span class="subst">$&#123;<span class="built_in">Date</span>.now()&#125;</span>-<span class="subst">$&#123;<span class="built_in">Math</span>.random()*<span class="number">1000000</span>&#125;</span>-<span class="subst">$&#123;file.name&#125;</span>`</span></span><br><span class="line">        <span class="comment">//获取access_token</span></span><br><span class="line">        <span class="keyword">const</span> access_token = <span class="keyword">await</span> getAccessToken()</span><br><span class="line">        <span class="comment">//触发云函数HTTP　API</span></span><br><span class="line">        <span class="keyword">const</span> url = <span class="string">`https://api.weixin.qq.com/tcb/uploadfile?access_token=<span class="subst">$&#123;access_token&#125;</span>`</span></span><br><span class="line">        <span class="keyword">var</span> options = &#123;</span><br><span class="line">            method: <span class="string">'POST'</span>,</span><br><span class="line">            uri: url,</span><br><span class="line">            body: &#123;</span><br><span class="line">                path,</span><br><span class="line">                env: ctx.state.env</span><br><span class="line">            &#125;,</span><br><span class="line">            json: <span class="literal">true</span> <span class="comment">// Automatically stringifies the body to JSON</span></span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">const</span> info = <span class="keyword">await</span> rp(options)</span><br><span class="line">            .then( <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> res</span><br><span class="line">            &#125;)</span><br><span class="line">            .catch(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(err)</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2.2 上传文件</span></span><br><span class="line">        <span class="keyword">const</span> params = &#123;</span><br><span class="line">            method: <span class="string">'post'</span>,</span><br><span class="line">            headers: &#123;</span><br><span class="line">                <span class="string">'content-type'</span>: <span class="string">'multipart/form-data'</span></span><br><span class="line">            &#125;,</span><br><span class="line">            uri: info.url,</span><br><span class="line">            formData:&#123;</span><br><span class="line">                key:path,</span><br><span class="line">                Signature:info.authorization,</span><br><span class="line">                <span class="string">'x-cos-security-token'</span>:info.token,</span><br><span class="line">                <span class="string">'x-cos-meta-fileid'</span>:info.cos_file_id,</span><br><span class="line">                file:fs.createReadStream(file.path)  <span class="comment">//读取本地要上传的文件并转化成二进制</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">await</span> rp(params)</span><br><span class="line">        <span class="keyword">return</span> info.file_id</span><br><span class="line">    &#125;,</span><br><span class="line">	</span><br><span class="line">    <span class="comment">//----------------------------- 3 删除文件 --------------------------------------</span></span><br><span class="line">    <span class="comment">//参数 fileIdList : 文件ID （cloud://格式）</span></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">delete</span>(env,fileIdList)&#123;</span><br><span class="line">        <span class="comment">//获取access_token</span></span><br><span class="line">        <span class="keyword">const</span> access_token = <span class="keyword">await</span> getAccessToken()</span><br><span class="line">        <span class="comment">//触发云函数HTTP　API</span></span><br><span class="line">        <span class="keyword">const</span> url = <span class="string">`https://api.weixin.qq.com/tcb/batchdeletefile?access_token=<span class="subst">$&#123;access_token&#125;</span>`</span></span><br><span class="line">        <span class="keyword">const</span> options = &#123;</span><br><span class="line">            method: <span class="string">'POST'</span>,</span><br><span class="line">            uri: url,</span><br><span class="line">            body: &#123;</span><br><span class="line">                env，</span><br><span class="line">                fileid_list: fileIdList</span><br><span class="line">            &#125;,</span><br><span class="line">            json: <span class="literal">true</span> <span class="comment">// Automatically stringifies the body to JSON</span></span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">await</span> rp(options)</span><br><span class="line">            .then( <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">//console.log(res)</span></span><br><span class="line">                <span class="keyword">return</span> res</span><br><span class="line">            &#125;)</span><br><span class="line">            .catch(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">                <span class="comment">// POST failed...</span></span><br><span class="line">                <span class="built_in">console</span>.log(err)</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = cloudStorage</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/wxapplet/" rel="tag"># wxapplet</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/28/wx-applet/wxapplet/wxapplet/" rel="prev" title="wxapplet(0x01)-小程序端开发">
+      <i class="fa fa-chevron-left"></i> wxapplet(0x01)-小程序端开发
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/29/wx-applet/tcb-router/tcb-router/" rel="next" title="tcb-router">
+      tcb-router <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#云开发"><span class="nav-text">云开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#云函数"><span class="nav-text">云函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-云函数使用第三方库流程"><span class="nav-text">1 云函数使用第三方库流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-云函数定时触发"><span class="nav-text">2 云函数定时触发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#云数据库"><span class="nav-text">云数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#归纳"><span class="nav-text">归纳</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-数据库中1对N的3中设计方式"><span class="nav-text">1  数据库中1对N的3中设计方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-查询条数权限"><span class="nav-text">2 查询条数权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-where-和-doc-的区别"><span class="nav-text">3  where() 和 doc() 的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0-note"><span class="nav-text">0 note</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#0-1-小程序端与服务端初始化的区别"><span class="nav-text">0.1 小程序端与服务端初始化的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0-2-注意事项"><span class="nav-text">0.2 注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Database"><span class="nav-text">1 Database</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-ServerDate-获取服务端时间"><span class="nav-text">1.1 ServerDate()获取服务端时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-ReExp实现模糊查询"><span class="nav-text">1.2 ReExp实现模糊查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Collection"><span class="nav-text">2 Collection</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-查询条件"><span class="nav-text">2.1 查询条件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#orderBy排序查询"><span class="nav-text">orderBy排序查询</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-请求"><span class="nav-text">2.2 请求</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#count-获取集合记录条数"><span class="nav-text">count()获取集合记录条数</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#云存储"><span class="nav-text">云存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-上传文件uploadFile-）"><span class="nav-text">1 上传文件uploadFile(）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三方HTTP请求"><span class="nav-text">第三方HTTP请求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-获取接口调用凭证-access-token"><span class="nav-text">1 获取接口调用凭证 access_token</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-调用云函数"><span class="nav-text">2 调用云函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-调用云数据库"><span class="nav-text">3 调用云数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-调用云存储"><span class="nav-text">4 调用云存储</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chuckie"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Chuckie</p>
+  <div class="site-description" itemprop="description">Bright future</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ChuckieWill" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ChuckieWill" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/codewyj.163.com" title="E-Mail → codewyj.163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jianshu.com/u/de627226656c" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;de627226656c" rel="noopener" target="_blank">简书</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="/images/me.png"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chuckie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:04</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

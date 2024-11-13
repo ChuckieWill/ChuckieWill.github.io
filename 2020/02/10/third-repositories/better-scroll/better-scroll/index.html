@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="better-scroll一、介绍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="better-scroll">
+<meta property="og:url" content="http://yoursite.com/2020/02/10/third-repositories/better-scroll/better-scroll/index.html">
+<meta property="og:site_name" content="Chuckie&#39;s Blog">
+<meta property="og:description" content="better-scroll一、介绍">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-10T13:45:50.000Z">
+<meta property="article:modified_time" content="2024-09-18T15:06:07.677Z">
+<meta property="article:author" content="Chuckie">
+<meta property="article:tag" content="better-scroll">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/10/third-repositories/better-scroll/better-scroll/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>better-scroll | Chuckie's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chuckie's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/10/third-repositories/better-scroll/better-scroll/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          better-scroll
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-10 21:45:50" itemprop="dateCreated datePublished" datetime="2020-02-10T21:45:50+08:00">2020-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/third-repositories/" itemprop="url" rel="index"><span itemprop="name">third-repositories</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/third-repositories/better-scroll/" itemprop="url" rel="index"><span itemprop="name">better-scroll</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="better-scroll"><a href="#better-scroll" class="headerlink" title="better-scroll"></a>better-scroll</h1><h2 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h2><blockquote>
+<p><a href="https://github.com/ustbhuangyi/better-scroll" target="_blank" rel="noopener">better-scroll:github</a></p>
+<p><a href="https://better-scroll.github.io/docs/zh-CN/" target="_blank" rel="noopener">better-scroll:官网</a></p>
+</blockquote>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ul>
+<li>这种方式安装就包括安装了better-scroll所有插件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install better-scroll --save</span><br></pre></td></tr></table></figure>
+
+<h3 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h3><ol>
+<li>html 中需要滚动动的元素必须用 一个容器(wrapper)包裹</li>
+</ol>
+<ul>
+<li>只有wrapper容器的第一个子元素有效果</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//html</span><br><span class="line">//content元素有效果</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrapper"</span> <span class="attr">ref</span>=<span class="string">"wrapper"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>css 中设置 wrapper容器的高度或宽度 并设置 超过部分隐藏</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrapper</span>&#123;</span><br><span class="line">	height: 150px ;     //1 设置 wrapper容器的高度或宽度</span><br><span class="line">    overflow: hidden;   //2 设置 超过部分隐藏</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>js 中引入及创建</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> BScroll <span class="keyword">from</span> <span class="string">'better-scroll'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> bscroll = <span class="keyword">new</span> BScroll(<span class="built_in">document</span>.querySelector(<span class="string">'.wrapper'</span>))</span><br></pre></td></tr></table></figure>
+
+<p><strong>vue中建议用this.$refs.refname拿到元素或组件对象</strong></p>
+<ul>
+<li>以<code>ref</code>的方式拿到的对象可以确保是唯一的</li>
+<li>以<code>document.querySelector(&#39;.wrapper&#39;)</code>的方式拿到的对象可能不唯一  因为可能有多个class 名为：<code>wrapper</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> BScroll <span class="keyword">from</span> <span class="string">'better-scroll'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> bscroll = <span class="keyword">new</span> BScroll(<span class="keyword">this</span>.$refs.wrapper)</span><br></pre></td></tr></table></figure>
+
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><h4 id="1-事件点击无效问题"><a href="#1-事件点击无效问题" class="headerlink" title="1 事件点击无效问题"></a>1 事件点击无效问题</h4><ul>
+<li>设置<code>click:true</code></li>
+</ul>
+<h4 id="2-pc端-鼠标滚轮滚动无效问题"><a href="#2-pc端-鼠标滚轮滚动无效问题" class="headerlink" title="2 pc端 鼠标滚轮滚动无效问题"></a>2 pc端 鼠标滚轮滚动无效问题</h4><ul>
+<li>设置<code>muoseWheel:true</code></li>
+</ul>
+<h2 id="二、常用功能"><a href="#二、常用功能" class="headerlink" title="二、常用功能"></a>二、常用功能</h2><h3 id="监听滚动位置"><a href="#监听滚动位置" class="headerlink" title="监听滚动位置"></a>监听滚动位置</h3><ol>
+<li>设置<code>probeType</code>属性为：2 或3</li>
+</ol>
+<ul>
+<li><code>probeType</code>可取值<ul>
+<li>默认值0  不能实时监听滚动位置</li>
+<li>1： 不能实时监听滚动位置</li>
+<li>2： 可监听实时滚动位置  但惯性滚动过程不能实时监听</li>
+<li>3： 可监听实时滚动位置  且惯性滚动过程也能实时监听</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> BScroll <span class="keyword">from</span> <span class="string">''</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> bscroll = <span class="keyword">new</span> BScroll(<span class="built_in">document</span>.querySelector(<span class="string">'.wrapper'</span>),&#123;</span><br><span class="line">    probeType: <span class="number">3</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>监听<code>scroll</code>钩子函数</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//opsition中就可以查看当前滚动的实时位置</span></span><br><span class="line">bscroll.on(<span class="string">'scroll'</span>, (opsition) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(opsition)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="上拉加载更多"><a href="#上拉加载更多" class="headerlink" title="上拉加载更多"></a>上拉加载更多</h3><ol>
+<li>设置<code>pullUpLoad: true</code></li>
+</ol>
+<ul>
+<li><code>pullUpLoad</code>可取值<ul>
+<li>默认值： false     上拉不能触发事件</li>
+<li>true  : 上拉可以触发事件</li>
+<li>{ threshold :  数值}： threshold设置了上拉触发事件的阈值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> BScroll <span class="keyword">from</span> <span class="string">''</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> bscroll = <span class="keyword">new</span> BScroll(<span class="built_in">document</span>.querySelector(<span class="string">'.wrapper'</span>),&#123;</span><br><span class="line">    pullUpLoad: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>监听<code>pullingUp</code>钩子函数</li>
+</ol>
+<ul>
+<li><strong>注意：</strong>结束具体业务处理后需要执行<code>bscroll.finishPullUp()</code>函数  用于结束一次上拉加载   否则不能进行下一次下拉加载更多的操作</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//上拉加载事件处理</span></span><br><span class="line">bscroll.on(<span class="string">'pullingUp'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 1 发送网络请求等操作</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 2 结束上拉加载</span></span><br><span class="line">    bscroll.finishPullUp()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="回到顶部-滚动到指定位置"><a href="#回到顶部-滚动到指定位置" class="headerlink" title="回到顶部/滚动到指定位置"></a>回到顶部/滚动到指定位置</h3><ul>
+<li>使用scrollTo(x, y, time, easing, extraTransform, isSilent)方法</li>
+</ul>
+<ul>
+<li>参数：<ul>
+<li>{Number} x 横轴坐标（单位 px）</li>
+<li>{Number} y 纵轴坐标（单位 px）</li>
+<li>{Number} time 滚动动画执行的时长（单位 ms）</li>
+<li>{Object} easing 缓动函数，一般不建议修改，如果想修改，参考源码中的 <code>packages/shared-utils/src/ease.ts</code> 里的写法</li>
+</ul>
+</li>
+</ul>
+<h2 id="三、BUG解决"><a href="#三、BUG解决" class="headerlink" title="三、BUG解决"></a>三、BUG解决</h2><h3 id="scroll可滚动区域计算与图片加载不匹配的问题"><a href="#scroll可滚动区域计算与图片加载不匹配的问题" class="headerlink" title="scroll可滚动区域计算与图片加载不匹配的问题"></a>scroll可滚动区域计算与图片加载不匹配的问题</h3><p><strong>根本原因：</strong></p>
+<ul>
+<li>在scroll创建时会先计算可滚动区域的高度 </li>
+<li>若滚动 区域里有异步加载的内容  例如图片</li>
+<li>在计算可滚动区域高度时 图片可能还没有加载完成 ， 这种情况下就会使计算的高度偏小</li>
+</ul>
+<p><strong>可能产生的表象问题：</strong></p>
+<ul>
+<li>上拉加载更多时  可能界面上还没触底  就已经触发了上拉加载更多的操作</li>
+</ul>
+<p><strong>解决方案：</strong></p>
+<ul>
+<li><p>在每次数据加载完成时（图片加载完成时），刷新一下scroll  让scroll再重新计算一次可滚动区域的高度  这时高度的计算就包括了异步加载的内容（图片）的高度</p>
+</li>
+<li><p>刷新操作：<code>refresh()</code>方法</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scroll.refresh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>监听图片加载完成<ul>
+<li>原生js监听图片：img.onload = function(){}</li>
+<li>Vue中监听图片： @load= “方法”   </li>
+</ul>
+</li>
+</ul>
+<h3 id="Vue框架下-页面保存状态-再次进入后仍有显示问题"><a href="#Vue框架下-页面保存状态-再次进入后仍有显示问题" class="headerlink" title="Vue框架下  页面保存状态 再次进入后仍有显示问题"></a>Vue框架下  页面保存状态 再次进入后仍有显示问题</h3><p><strong>表象问题：</strong></p>
+<ul>
+<li>路由设置了<code>&lt;keep-alive&gt;</code>     离开页面再次进入时应该保持原来的状态</li>
+<li>但是页面中使用了<code>better-scroll</code>后再次回到页面会出现一些问题：<ul>
+<li>不是原来的位置</li>
+<li>不能滑动</li>
+</ul>
+</li>
+</ul>
+<p><strong>解决方案：</strong></p>
+<ul>
+<li>离开页面时保存<code>scroll</code>的位置</li>
+<li>再次进入页面时根据保存的位置再次设置<code>scrol</code>l的位置    <code>scroll.scrollTo(x, y)</code></li>
+<li>重新设置位置后刷新<code>scroll</code>    <code>scroll.refresh()</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;进入页面</span><br><span class="line">activated()&#123;</span><br><span class="line">    this.$refs.scroll.scrollTo(0, this.saveY, 0)  &#x2F;&#x2F;重置位置</span><br><span class="line">    this.$refs.scroll.refresh()    &#x2F;&#x2F;刷新scroll</span><br><span class="line">&#125;,</span><br><span class="line">&#x2F;&#x2F;离开页面</span><br><span class="line">deactivated()&#123;</span><br><span class="line">    this.saveY &#x3D; this.$refs.scroll.getScrollY()  &#x2F;&#x2F;saveY 保存离开时的位置</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/better-scroll/" rel="tag"># better-scroll</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/08/third-repositories/fastclick/fastclick/" rel="prev" title="fastclick">
+      <i class="fa fa-chevron-left"></i> fastclick
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/12/third-repositories/axios/axios/" rel="next" title="axios">
+      axios <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#better-scroll"><span class="nav-text">better-scroll</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、介绍"><span class="nav-text">一、介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础使用"><span class="nav-text">基础使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-text">注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-事件点击无效问题"><span class="nav-text">1 事件点击无效问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-pc端-鼠标滚轮滚动无效问题"><span class="nav-text">2 pc端 鼠标滚轮滚动无效问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、常用功能"><span class="nav-text">二、常用功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#监听滚动位置"><span class="nav-text">监听滚动位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上拉加载更多"><span class="nav-text">上拉加载更多</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回到顶部-滚动到指定位置"><span class="nav-text">回到顶部&#x2F;滚动到指定位置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、BUG解决"><span class="nav-text">三、BUG解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scroll可滚动区域计算与图片加载不匹配的问题"><span class="nav-text">scroll可滚动区域计算与图片加载不匹配的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue框架下-页面保存状态-再次进入后仍有显示问题"><span class="nav-text">Vue框架下  页面保存状态 再次进入后仍有显示问题</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chuckie"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Chuckie</p>
+  <div class="site-description" itemprop="description">Bright future</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ChuckieWill" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ChuckieWill" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/codewyj.163.com" title="E-Mail → codewyj.163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jianshu.com/u/de627226656c" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;de627226656c" rel="noopener" target="_blank">简书</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="/images/me.png"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chuckie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:04</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

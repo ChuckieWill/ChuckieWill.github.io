@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="GraphPi-paper GraphPi论文 2020.11 Tianhui Shi, Mingshu Zhai, Yi Xu, Jidong Zhai 清华大学 计算机体系结构&#x2F;并行与分布计算&#x2F;存储系统 会议：SC 出版社：IEEE A类 无向图 可单机也可分布式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GraphPi论文梳理">
+<meta property="og:url" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/index.html">
+<meta property="og:site_name" content="Chuckie&#39;s Blog">
+<meta property="og:description" content="GraphPi-paper GraphPi论文 2020.11 Tianhui Shi, Mingshu Zhai, Yi Xu, Jidong Zhai 清华大学 计算机体系结构&#x2F;并行与分布计算&#x2F;存储系统 会议：SC 出版社：IEEE A类 无向图 可单机也可分布式">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202203041553089.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202203070933186.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202203141517748.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202203141534957.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202203070955947.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202203151052664.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202203160941348.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202203161022863.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202203170930380.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202203170930982.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202203171429066.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202204071015008.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202204071016202.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202204071042410.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202204071106953.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202204071121063.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202204071138910.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202204071448361.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202204071459385.png">
+<meta property="og:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202204071507327.png">
+<meta property="article:published_time" content="2022-07-12T07:43:17.000Z">
+<meta property="article:modified_time" content="2024-09-18T15:06:07.491Z">
+<meta property="article:author" content="Chuckie">
+<meta property="article:tag" content="图挖掘">
+<meta property="article:tag" content="GraphPi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/202203041553089.png">
+
+<link rel="canonical" href="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>GraphPi论文梳理 | Chuckie's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chuckie's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/07/12/Graph/GraphPi-paper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GraphPi论文梳理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-12 15:43:17" itemprop="dateCreated datePublished" datetime="2022-07-12T15:43:17+08:00">2022-07-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Graph/" itemprop="url" rel="index"><span itemprop="name">Graph</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="GraphPi-paper"><a href="#GraphPi-paper" class="headerlink" title="GraphPi-paper"></a>GraphPi-paper</h1><blockquote>
+<p><a href="https://pacman.cs.tsinghua.edu.cn/~zjd/publication/sc20-graphpi/sc20-graphpi.pdf" target="_blank" rel="noopener">GraphPi论文</a></p>
+<p>2020.11</p>
+<p>Tianhui Shi, Mingshu Zhai, Yi Xu, Jidong Zhai</p>
+<p>清华大学</p>
+<p>计算机体系结构/并行与分布计算/存储系统</p>
+<p>会议：SC</p>
+<p>出版社：IEEE</p>
+<p>A类</p>
+<p>无向图</p>
+<p>可单机也可分布式</p>
+</blockquote>
+<ul>
+<li><p>方案</p>
+</li>
+<li><p>优点</p>
+<ul>
+<li>性能预测模型，排列组合所有约束集合和匹配顺序的组合，并通过对<strong>真实图特征的分析</strong>(真实图中顶点，边，三角形个数等信息)，预测出最优的schedule(约束集合和匹配顺序的组合)</li>
+<li>核心：考虑了真实图的数据分布，使得schedule的预测更加准确</li>
+</ul>
+</li>
+<li><p>缺点</p>
+</li>
+<li><p>编程模型</p>
+</li>
+<li><p>对标系统</p>
+<ul>
+<li>Fractal、GraphZero</li>
+</ul>
+</li>
+<li><p>基于系统</p>
+<ul>
+<li>Automine —&gt;  GraphZero —&gt; GraphPi</li>
+</ul>
+</li>
+</ul>
+<h2 id="KEYWORDS"><a href="#KEYWORDS" class="headerlink" title="KEYWORDS"></a>KEYWORDS</h2><ul>
+<li>Graph mining, pattern matching, automor-phisms elimination</li>
+<li>图挖掘、模式匹配、自同构消除 </li>
+</ul>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>目前图挖掘系统面临的两个挑战：</p>
+<ul>
+<li><p>模式中固有的<strong>对称性</strong>可能会引入大量冗余计算</p>
+</li>
+<li><p>模式的<strong>不同匹配顺序</strong>有显著的性能差异，很难预测</p>
+</li>
+</ul>
+<p>GraphPi: 分布式,  无向图</p>
+<p>GraphPi创新点：</p>
+<ul>
+<li>利用群论中基于2-圈(2-cycles)的<strong>新算法</strong>生成多组非对称约束，每组约束可以完全消除冗余计算</li>
+<li>设计了一个精确的<strong>性能模型</strong>，以确定有效模式匹配的<strong>最佳匹配顺序和不对称约束集</strong></li>
+</ul>
+<p>性能效果：</p>
+<ul>
+<li>测试环境：天河2A超级计算机</li>
+<li>GraphPi在单个节点上对6个真实图形数据集的性能优于最先进的系统，最高可达105倍。还将GraphPi扩展到1024个节点（24576个核）</li>
+</ul>
+<h2 id="I-INTRODUCTION"><a href="#I-INTRODUCTION" class="headerlink" title="I.  INTRODUCTION"></a>I.  INTRODUCTION</h2><p>图分析问题主要可以分为两类：</p>
+<ul>
+<li>图计算</li>
+<li>图挖掘<ul>
+<li>模式匹配是最经典，最常见的图挖掘问题，是<a href="https://blog.csdn.net/wxdsdtc831/article/details/7942435" target="_blank" rel="noopener">NP-complete</a>问题</li>
+</ul>
+</li>
+</ul>
+<p>目前最先进图挖掘系统的性能表现：</p>
+<ul>
+<li>最先进的图形模式匹配系统(Graphzero)[12]需要几个小时甚至几天的时间，才能在具有数<strong>百万条</strong>边的未标记图形上挖掘出大小为6的模式[13]</li>
+</ul>
+<p>通用的图挖掘系统：</p>
+<ul>
+<li><p>Arabesque</p>
+<ul>
+<li>分布式</li>
+<li>创新点：提出<strong>过滤处理编程模型</strong>简化可伸缩图形挖掘算法的开发 </li>
+<li>问题：分布式带来的启动和通信的开销；挖掘过程中产生大量的中间结果</li>
+</ul>
+</li>
+<li><p>RStream</p>
+<ul>
+<li>特点：单机  去核心( out-of-core)  利用磁盘来存储中间结果</li>
+<li>创新点：<ul>
+<li>提出了一个新的编程模型，这个编程模型为开发人员提供了<strong>关系代数</strong>来表达各种各样的挖掘任务</li>
+<li>提出了一个运行时引擎，<strong>通过元组流高效实现关系代数</strong>的运行时引擎</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>目前通用图挖掘系统的问题：</p>
+<ul>
+<li>性能相对较差，存储候选数据的中间数据呈指数级增长</li>
+<li>案例：RStream生成大约1.2TB的中间数据，以计算具有100万条边的MiCo图上的4-motif[18] </li>
+</ul>
+</li>
+</ul>
+<p>特殊的图挖掘系统：</p>
+<ul>
+<li><p>频繁子图挖掘(FSM)</p>
+</li>
+<li><p>近似模式挖掘( approximate pattern mining)</p>
+<ul>
+<li>ASAP [23]: 分布式近似模式挖掘系统， 用于估计模式图在真实图中的数量， 允许用户在结果准确性和用时上权衡</li>
+<li>ASAP的问题：如果挖掘的模式图在真实图中很少，ASAP无法通过采样生成相对准确的估计，这在一些实际的图挖掘应用中很常见</li>
+</ul>
+</li>
+<li><p>目前比较好的特殊图挖掘系统</p>
+<ul>
+<li><p>这两个系统解决的问题：模式图与真实图匹配时存在大量不同的匹配顺序，这个匹配顺序称之为：<strong>schedule</strong>，不用的匹配顺序，性能有很大的区别</p>
+</li>
+<li><p>AutoMine [18]</p>
+<ul>
+<li>提出了一种性能评估模型，用于选择性能相对较高的schedule(匹配顺序)</li>
+</ul>
+</li>
+<li><p>GraphZero[12]</p>
+<ul>
+<li>基于AutoMine，GraphZero进一步生成一组限制条件，以打破模式中的对称性</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>当前特殊图挖掘系统存在的两个局限性：</p>
+<ul>
+<li>由于模式图的<strong>对称性</strong>，导致挖掘结果存在重复结果，产生了大量冗余计算<ul>
+<li>GraphZero通过使用限制来消除自同构</li>
+<li>但GraphZero不考虑不同的限制对性能的影响 </li>
+</ul>
+</li>
+<li>不同的匹配顺序(schedule)，使得匹配性能有很大的不同，很难找到一个最佳的schedule</li>
+</ul>
+<p><strong>GraphPI提出的4个新组件，也是GraphPi的主要贡献：</strong></p>
+<ul>
+<li>提出了一种基于两个循环（2-cycle  基于群论）的自同构消除算法，用于生成多组约束（restrictions），从而有效地打破模式的对称性 (Section IV-A)</li>
+<li>提出了一个2阶段“计算避免”schedule生成器，以消除低效的schedule (Section IV-B)</li>
+<li>提出了一个精确的性能预测模型，用于确定schedule和约束集的最佳组合 (Section IV-C)</li>
+<li>提出了一种包含排除原则(Inclusion-Exclusion Principle )优化技术 ，只用计算嵌入数量（embeddings），而不用知道具体是哪些匹配结果时使用 (Section IV-D)</li>
+</ul>
+<p>性能评估：</p>
+<ul>
+<li>GraphPi比在同一个节点上运行的GraphZero快105倍，比Fractal[26]快154倍。</li>
+<li>在使用包含排除原理（IEP）计算嵌入数后，GraphPi的性能可以比不使用IEP的性能进一步提高1110倍。</li>
+<li>目前，GraphPi可以扩展到1024个计算节点（24576个计算核心）。</li>
+</ul>
+<h2 id="II-BACKGROUND-AND-MOTIVATION"><a href="#II-BACKGROUND-AND-MOTIVATION" class="headerlink" title="II.  BACKGROUND AND MOTIVATION"></a>II.  BACKGROUND AND MOTIVATION</h2><p>Schedules and Restrictions</p>
+<ul>
+<li>Schedules ：就是匹配顺序<ul>
+<li>A1表示，A第一个开始匹配、B2表示，B第二个开始匹配、、、</li>
+</ul>
+</li>
+<li>Restrictions：约束就是当同构的点匹配真实图中顶点时，匹配的结果有一个大小的比较，由此可以避免结果交换产生的同构<ul>
+<li>边上大于号表示，在真实图中的匹配结果要满足这个大小关系，A1&gt;B2, 即要求id(A) &gt; id(B)   ， id(A)表示A在真实图中匹配的点</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202203041553089.png" alt="image-20220304155304142"></p>
+<ul>
+<li>以上的约束过程用到了领域等价类的概念 [29]，但是领域等价类只对部分模式图有效，针对这个问题GraphZero提出了以下解决方案<ul>
+<li>GraphZero通过减少任何模式的自同构数目到1来部分地解决这个问题</li>
+<li>GraphZero仍然存在的问题：它只能产生一组限制，并且不考虑模式匹配中不同约束集的性能差异</li>
+</ul>
+</li>
+</ul>
+<h3 id="Challenges-of-Pattern-Matching"><a href="#Challenges-of-Pattern-Matching" class="headerlink" title="Challenges of Pattern Matching"></a>Challenges of Pattern Matching</h3><ul>
+<li><p>很难提前预测并找到一个最佳的schedule和restrictions的组合，使得挖掘效果最好</p>
+</li>
+<li><p>n个顶点的图会生成n!个匹配顺序(schedule)</p>
+</li>
+<li><p>每个匹配顺序都对应于多个约束集合(restrictions)，这导致组合非常多，而每种组合的挖掘性能都有很大差距</p>
+</li>
+</ul>
+<h2 id="III-OVERVIEW-OF-GRAPHPI"><a href="#III-OVERVIEW-OF-GRAPHPI" class="headerlink" title="III. OVERVIEW OF GRAPHPI"></a>III. OVERVIEW OF GRAPHPI</h2><p>GraphPi由四个主要组件组成：</p>
+<ul>
+<li>配置(configuration)生成： 生成所有约束集和匹配顺序的组合，configuration：指每个组合</li>
+<li>性能预测： 找到匹配顺序和约束集最佳的组合</li>
+<li>代码生成和编译</li>
+<li>分布式模式匹配</li>
+</ul>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202203070933186.png" alt="image-20220307093346953"></p>
+<h2 id="IV-METHODOLOGY-OF-GRAPHPI"><a href="#IV-METHODOLOGY-OF-GRAPHPI" class="headerlink" title="IV. METHODOLOGY OF GRAPHPI"></a>IV. METHODOLOGY OF GRAPHPI</h2><h4 id="A-2-Cycle-Based-Automorphism-Elimination"><a href="#A-2-Cycle-Based-Automorphism-Elimination" class="headerlink" title="A. 2-Cycle Based Automorphism Elimination"></a>A. 2-Cycle Based Automorphism Elimination</h4><blockquote>
+<p>本部分的置换群只是用来形式化(formalize)要解决的问题，其实就是用更规范的方式来表示同构</p>
+<p>模式图的所有同构结果构成一个置换群</p>
+</blockquote>
+<ul>
+<li><p>本方法的目的：生成约束集合，打破对称性，消除自同构</p>
+</li>
+<li><p>生成约束集合的流程</p>
+<ul>
+<li>根据模式图生成所有的自同构 ，没有细讲，需要自行理解</li>
+<li>根据所有的自同构生成所有的置换(permutation), 也就是置换群( permutation group)，没有细讲，需要自行理解</li>
+<li>根据置换群生成约束集合(sets of restrictions), 这个生成过程是这部分主要讲解的内容<ul>
+<li>其实就是根据所有的2-cycle(两个元素的置换)排列组合（排列组合不是全排列，只是抽取其中的几个置换约束），保证可以消除所有的同构</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="置换群表示同构"><a href="#置换群表示同构" class="headerlink" title="置换群表示同构"></a>置换群表示同构</h5><ul>
+<li>置换群的基本概念</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">矩阵形式  ----&gt;   简写形式</span><br><span class="line">1 2 3</span><br><span class="line">1 2 3    ----&gt;   (1)</span><br><span class="line"></span><br><span class="line">1 2 3 </span><br><span class="line">2 1 3    ----&gt;   (12)</span><br><span class="line"></span><br><span class="line">1 2 3 </span><br><span class="line">3 2 1    ----&gt;   (13)</span><br><span class="line"></span><br><span class="line">1 2 3 </span><br><span class="line">1 3 2    ----&gt;   (23)</span><br><span class="line"></span><br><span class="line">1 2 3 </span><br><span class="line">2 3 1    ----&gt;   (123)</span><br><span class="line"></span><br><span class="line">1 2 3 </span><br><span class="line">3 1 2    ----&gt;   (132)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>置换群在表示同构中的使用<ul>
+<li>2-cycle是置换的基本元素，任何k-cycle(k&gt;2)都可以拆解为2-cycle</li>
+<li>例如：（A，B，C，D）就可以拆解为（A，B）、（A，C）、（A，D）</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202203141517748.png" alt="image-20220314151749694"></p>
+<ul>
+<li>模式图的所有同构结果构成一个置换群(生成所有同构和所有置换)</li>
+</ul>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202203141534957.png" alt="image-20220314153428398"></p>
+<h5 id="根据置换群生成约束集合"><a href="#根据置换群生成约束集合" class="headerlink" title="根据置换群生成约束集合"></a>根据置换群生成约束集合</h5><ul>
+<li>约束可以有很多：<code>R1、R2、R3、R4、R5、、、、、</code>，但一个约束集合只需要中其中几个约束就可以保证去除所有同构，而且不同的约束集合在与不同的匹配顺序组合时会产生显著的性能差异，所以需要先列举所有的约束集合并选择最合适的与匹配顺序组合（这个组合和选择的过程在C部分会讲到）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">约束集合1：&#123;&#123;R1&#x3D;id(B)&gt;id(D)&#125;,&#123;R3&#x3D;id(A)&gt;id(C)&#125;,&#123;R4&#x3D;id(A)&gt;id(B)&#125;&#125;</span><br><span class="line">约束集合2：&#123;&#123;R1&#x3D;id(B)&gt;id(D)&#125;,&#123;R3&#x3D;id(A)&gt;id(C)&#125;,&#123;R5&#x3D;id(C)&gt;id(D)&#125;&#125;</span><br><span class="line">约束集合3：&#123;&#123;R2&#x3D;id(A)&gt;id(D)&#125;.......</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>值得注意的：<code>R1和R3</code>两个约束没有直接匹配⑧中的两个置换(2个2-cycle：(A,D)(B,C))，但是仍然得到了约束<ul>
+<li>假设有①的匹配结果<code>e1(x1,x2,x3,x4)</code>,由<code>R1、R3</code>两个约束可以得到下面两个结果<ul>
+<li><code>id(B)&gt;id(D)  -----&gt;   x2&gt;x4</code></li>
+<li><code>id(A)&gt;id(C)  -----&gt;   x1&gt;x3</code></li>
+</ul>
+</li>
+<li>则有⑧的匹配结果<code>e2(x4,x3,x2,x1)</code>, 由<code>R1、R3</code>两个约束可以得到下面两个结果<ul>
+<li><code>id(B)&gt;id(D)  -----&gt;   x3&gt;x1</code>  ，与上面的<code>id(A)&gt;id(C)  -----&gt;   x1&gt;x3</code>矛盾</li>
+<li><code>id(A)&gt;id(C)  -----&gt;   x4&gt;x2</code>  ，与上面的<code>id(B)&gt;id(D)  -----&gt;   x2&gt;x4</code>矛盾</li>
+</ul>
+</li>
+<li>可以看到如何满足了与①的匹配，在<code>R1、R3</code>的约束下就一定不能得到⑧的匹配</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202203070955947.png" alt="image-20220307095543140"></p>
+<h5 id="几个算法思想"><a href="#几个算法思想" class="headerlink" title="几个算法思想"></a>几个算法思想</h5><h6 id="validate"><a href="#validate" class="headerlink" title="validate"></a>validate</h6><blockquote>
+<p>用于判断约束集合是否可以去除所有置换(permutation)，最终只保留自身置换(identity permutation)</p>
+<p>也就是判断是否可以消除所有同构</p>
+</blockquote>
+<p><strong>思想</strong></p>
+<ul>
+<li>使用这个约束集合的情况下在一个n(模式图的顶点个数)个顶点的完全图中挖掘模式图，得到挖掘结果个数ANSwith</li>
+<li>不使用这个约束集合的情况下在一个n(模式图的顶点个数)个顶点的完全图中挖掘模式图，得到挖掘结果个数ANSwithout</li>
+<li>如果满足：<code>ANSwith = ANSwithout/automorphisms_count</code>,则表示可以实现对自身外的所有自同构的约束<ul>
+<li><code>automorphisms_count:同构个数</code></li>
+<li><code>/：去除，不是除号</code></li>
+</ul>
+</li>
+</ul>
+<h6 id="no-conflict"><a href="#no-conflict" class="headerlink" title="no_conflict"></a>no_conflict</h6><blockquote>
+<p>用于判断当前的约束集合是否可以消除某个置换(permutation)</p>
+<p>例如案例中的：R1和R3两个约束构成的约束集合可以对⑧构成约束</p>
+</blockquote>
+<p><strong>思想</strong></p>
+<ul>
+<li>使用一个有向图记录约束，若图中出现了环则说明约束成功，若图为有向无环图则约束不成功</li>
+<li>对于置换(A)(B)(C)(D)，有匹配结果e1(x1,x2,x3,x4)，若存在约束<code>{R1=id(B)&gt;id(D),R3=id(A)&gt;id(C)}</code>, 则将边<code>x2--&gt;x4</code>和<code>x1--&gt;x3</code>加入图中</li>
+<li>对于置换(A,D)(B,C),  则有匹配结果e2(x4,x3,x2,x1),  对于上面的约束<code>R1,R2</code>, 则将边<code>x4--&gt;x2</code>和<code>x3--&gt;x1</code>加入图中</li>
+<li>此时在图中就形成了由<code>x2--&gt;x4</code>与<code>x4--&gt;x2</code>构成的环，即表示存在<code>x2&gt;x4</code>与<code>x4&gt;x2</code>的冲突，还有<code>x1--&gt;x3</code>与，，的环，只要图中有一个环则表示基于当前约束(<code>R1,R2</code>)，该置换(<code>(A,D)(B,C)</code>)可以被消除</li>
+</ul>
+<h4 id="B-2-Phase-Computation-Avoid-Schedule-Generation"><a href="#B-2-Phase-Computation-Avoid-Schedule-Generation" class="headerlink" title="B. 2-Phase Computation-Avoid Schedule Generation"></a>B. 2-Phase Computation-Avoid Schedule Generation</h4><blockquote>
+<p>n个顶点的模式图理论上有n!和匹配顺序，但并不是把n！个顺序都交给后续的性能预测环节去计算最有效的匹配顺序与约束的组合</p>
+<p>通过本部分的两个步骤找到最有可能使得挖掘效率高的匹配顺序，再交由后续的性能预测模型</p>
+</blockquote>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202203151052664.png" alt="image-20220315105236944"></p>
+<p><strong>步骤1</strong></p>
+<ul>
+<li><strong>保证当前挖掘点必须与之前已经挖掘过的点是相连的</strong>，这样才能使得当前挖掘点的匹配候选集尽可能少<ul>
+<li>例如已经挖掘了C、D点，当前挖掘点应该从与它们相连的A或B中选择，但是如果选择E那么E的候选集就是整个真实图的所有顶点</li>
+<li>如果当前挖掘点选择A, 则A的匹配候选集是C的匹配点的所有邻接点，即<code>N(vC)</code>, 挖掘A后再挖掘E，那么E的匹配候选集是A的匹配点的所有邻接点，即<code>N(vA)</code></li>
+<li>显然候选集<code>N(vA)</code>远小于整个真实图中的所有顶点</li>
+<li>所以保持当前挖掘的点与之前已经挖掘过的点是相连的，可以大量削减当前点的匹配候选集</li>
+</ul>
+</li>
+<li>该过程也存在<strong>求交过程</strong><ul>
+<li>例如已经挖掘了A, B点， 再选择挖掘E, 此时E的匹配候选集是A的匹配点的邻接点集与B的匹配点的邻接点集的交集，即<code>N (vA)∩ N (vB)</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>步骤2</strong></p>
+<ul>
+<li><strong>将求交过程尽可能放在外层循环中</strong>，因为求交过程是匹配过程中计算消耗最大的环节，而外层循环执行次数少，所以将求交过程尽可能放在外层会使得总计算最少</li>
+<li>找到模式图中最大的任意两两不想连的顶点集，并保证如果有匹配顺序<strong>不是</strong>这个顶点集中的顶点在最内层循环中匹配时，那么删除这个匹配顺序<ul>
+<li>如上图(b) The pseudocode,  可以看到匹配过程是多层循环，每层循环匹配完成一个点的匹配，并对需要求交的集合执行求交操作</li>
+<li>如上图(a),  最大的任意两两不相连的顶点集为：{D,E} 或 {C, D}或{A,D}或{B,C},  虽然有多个这样的顶点集，但都是最大2个顶点，那就从中任选一个(如果有顶更多的这样的顶点集，则选择顶点更多的那个顶点集)</li>
+<li>如果选择{D,E}这个顶点集，则这两个点放在最内层循环中匹配时，如上图(b)，这个匹配顺序就会被保留，如果最后两个顶点不是两两不相连的就会删除当前匹配顺序</li>
+</ul>
+</li>
+<li>将最大的任意两两不想连的顶点集中顶点放在最内层的原因<ul>
+<li>因为两两不相连，所以拿到当前点的邻接点后不需要与之前已经匹配的点的邻接点求交集，因为后面的点一定用不到这个求交结果</li>
+<li>假设当前匹配A, 之前已经匹配了B,  后续还有C要匹配，而A,C是两两不不相连的<ul>
+<li>如果C的匹配候选集是 N(vA)∩N(vB)， 那么说明C与A,B一定是相连的，只有与它们相连的情况下才会用它们的邻接点的交集作为候选集，而这与假设中的A,C两两不相连矛盾</li>
+<li>所以如果将两两不相连的点放在最内层匹配，则拿到其邻接点集后一定不用执行求交操作</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如下图</li>
+</ul>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202203160941348.png" alt="image-20220316094113298"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">最大两两不相连的顶点集：&#123;3，4，5&#125;</span><br><span class="line"></span><br><span class="line">如下顺序会被保留</span><br><span class="line">0 &lt;--- G </span><br><span class="line">1 &lt;--- N(v0)  此处执行求交操作N(v0)∩N(v1)用于下一步计算   在第二层  求交操作在更外层</span><br><span class="line">2 &lt;--- N(v0)∩N(v1)</span><br><span class="line">3 &lt;--- N(v0)</span><br><span class="line">4 &lt;--- N(v1)</span><br><span class="line">5 &lt;--- N(v2)</span><br><span class="line"></span><br><span class="line">如下顺序会被修剪</span><br><span class="line">5 &lt;--- G</span><br><span class="line">0 &lt;--- N(v3)</span><br><span class="line">1 &lt;--- N(v0)   此处执行求交操作N(v0)∩N(v1)用于下一步计算  在第三层  </span><br><span class="line">2 &lt;--- N(v0)∩N(v1)</span><br><span class="line">4 &lt;--- N(v1)</span><br><span class="line">5 &lt;--- N(v2)</span><br><span class="line"></span><br><span class="line">因为最内层的三个循环点不是两两不相连的（2-5相连），所以会被修剪</span><br></pre></td></tr></table></figure>
+
+<h4 id="C-An-Accurate-Performance-Prediction-Model"><a href="#C-An-Accurate-Performance-Prediction-Model" class="headerlink" title="C. An Accurate Performance Prediction Model"></a>C. An Accurate Performance Prediction Model</h4><ul>
+<li>影响算法性能的因素有三个：(核心算法如图：Fig5 : (b) The pseudocode )<ul>
+<li>循环遍历的集合的基数（如line1） </li>
+<li>因不满足限制而中断循环的概率（如line3）</li>
+<li>以及两个集合相交的开销 </li>
+</ul>
+</li>
+<li>性能预测模型<ul>
+<li><code>n : 模式图的顶点个数</code></li>
+<li><code>costi : 第i层循环的总计算成本</code></li>
+<li><code>li ： 每层循环的循环基数 ， 即候选集的大小， i表示循环的层数</code></li>
+<li><code>fi : 一个嵌入被过滤掉的概率 ， 如line3</code></li>
+<li><code>ci : 求交操作的开销</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202203161022863.png" alt="image-20220316102223216"></p>
+<ul>
+<li><p>计算每个影响性能的变量</p>
+<ul>
+<li>计算<code>ci</code><ul>
+<li>真实图中顶点的邻接点可以预先排序，因此相交操作的时间复杂度为O（card1+card2），其中card1和card2是相交的两个集合的基数(集合中的顶点个数)。</li>
+</ul>
+</li>
+<li>计算<code>li</code><ul>
+<li>就是当前循环的候选集的基数，如果候选集是求交的结果，则<code>li</code>就等于求交结果的基数，例如<code>line 7, l4 = |tmpAB| = |N (vA)∩N (vB)|</code></li>
+</ul>
+</li>
+<li>基数(cardinalities)的预测, <em>因为性能预测过程是预处理过程，并没有真实匹配，所以候选集的基数，不能直接同过<code>.size</code>方法得到，只能预测</em><ul>
+<li>一个顶点的邻接点集合的基数的估计<ul>
+<li><code>基数= 2*|EG|/|VG|</code>     ， 也就是每个点平均的邻接点个数  ，</li>
+<li><code>|EG|</code> : 真实图的边数； <code>|VG|</code> : 真实图的顶点数 </li>
+<li><code>2*|EG|</code> : 图中所有顶点的邻接点的总和， 一条边被两个点公用， 也就是一条边产生2个邻接点<ul>
+<li>A—B, A的邻接点有B，计算一次，B的邻接点有A，计算第二次</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>多个顶点的邻接点集合的交集的基数的估计<ul>
+<li>基数 = 下图第一个公式</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202203170930380.png" alt="image-20220317093009988"></p>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202203170930982.png" alt="image-20220317093034534"></p>
+<ul>
+<li>计算<code>fi</code><ul>
+<li>对于n个顶点的模式图，与之匹配的一个嵌入有n!种自同构，这些自同构结果存储再一个集合S中</li>
+<li>例如：n=5的模式图，有则S中有 [1,2,3,4,5], [1,2,3,5,4],[1,2,4,3,5]…..n!中自同构</li>
+<li>对于限制 id(A) &gt; id(B)，有S中有一半的结果会被过滤掉,如下列举了会被过滤的所有组合，所以<code>fi = ((4+3+3+1)*3*2*1)/n! = 1/2</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1 2 ...  2 3 ...  3 4 ...  4 5...</span><br><span class="line">1 3 ...  2 4 ...  3 5 ...</span><br><span class="line">1 4 ...  2 5 ...</span><br><span class="line">1 5 ...</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="D-Counting-with-Inclusion-Exclusion-Principle"><a href="#D-Counting-with-Inclusion-Exclusion-Principle" class="headerlink" title="D. Counting with Inclusion-Exclusion Principle"></a>D. Counting with Inclusion-Exclusion Principle</h4><p><img src="/2022/07/12/Graph/GraphPi-paper/202203171429066.png" alt="image-20220317142939567"></p>
+<ul>
+<li><p>但是以上方式没有考虑内K层循环中可能存在约束，这会使得求得的计数是有可能偏大的</p>
+<ul>
+<li><p>可以使用计算约束集合的<code>Algorithm 1</code>中的<code>no_conflict</code>函数求得使用某几个约束，而不使用某几个约束时，还有哪些自同构情况没有被移除掉，并用x记录没有被移除的自同构个数</p>
+<ul>
+<li>例如Fig4中有约束集合：<code>{R1=id(B)&gt;id(D),R3=id(A)&gt;id(C),R4=id(A)&gt;id(B)}</code>，假如在内K层循环中有R4这个约束，则有①和⑦这种自同构没有被移除掉，所以x = 2</li>
+</ul>
+</li>
+<li><p>最后的计数应该是：<code>ansIEP/x</code></p>
+<ul>
+<li><code>ansIEP</code>: 是同过以上方式挖掘的计数结果</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="E-Distributed-Implementation"><a href="#E-Distributed-Implementation" class="headerlink" title="E. Distributed Implementation"></a>E. Distributed Implementation</h4><ul>
+<li>GraphPi可以处理的数据图的大小受到内存的限制。</li>
+<li>内存感知、图分区、网络负载平衡 这些分布式问题暂时没有解决</li>
+<li>目前GraphPi解决的分布式问题主要是： 任务划分带来的工作负载不均衡</li>
+<li>GraphPi中的真实图的存储是以邻接的形式存储在一维数组中，且邻接点是排序的， 即稀疏矩阵的存储格式</li>
+<li>由于顶点度数在现实图形中通常遵循<strong>幂律分布</strong>，GraphPi利用<strong>细粒度任务划分技术</strong>来处理工作负载不平衡问题<ul>
+<li>在GraphPi中，有一个主线程负责划分和分配任务</li>
+<li>主线程执行外部循环，并将外部循环的值打包到任务中。</li>
+<li>工作线程需要解包任务并继续执行剩余的内部循环。</li>
+</ul>
+</li>
+<li>GraphPi使用工作窃取算法来安排节点之间的计算。 </li>
+</ul>
+<h2 id="V-EVALUATION"><a href="#V-EVALUATION" class="headerlink" title="V. EVALUATION"></a>V. EVALUATION</h2><h3 id="A-Methodology"><a href="#A-Methodology" class="headerlink" title="A. Methodology"></a>A. Methodology</h3><h4 id="Platforms"><a href="#Platforms" class="headerlink" title="Platforms"></a>Platforms</h4><ul>
+<li>天河2A超级计算机上进行测试，每个节点有2个12核Intel Xeon E5-2692（v2）处理器（禁用超线程）和64GB内存</li>
+<li>我们已经用OpenMP/MPI混合编程模型实现了GraphPi。在每个节点上，我们使用24个OpenMP线程运行1个MPI进程。</li>
+<li>每个节点都使用Linux内核版本3.10.0和gcc版本4.8.5运行Kylin Linux。所有程序都使用-O3优化选项编译 </li>
+</ul>
+<h4 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a>Datasets</h4><p><img src="/2022/07/12/Graph/GraphPi-paper/202204071015008.png" alt="image-20220407101513255"></p>
+<h4 id="Patterns"><a href="#Patterns" class="headerlink" title="Patterns"></a>Patterns</h4><p><img src="/2022/07/12/Graph/GraphPi-paper/202204071016202.png" alt="image-20220407101601032"></p>
+<h4 id="Comparison"><a href="#Comparison" class="headerlink" title="Comparison"></a>Comparison</h4><ul>
+<li>评估对比系统：<strong>GraphZero [12] and Fractal [26]</strong> （最先进的单机模式匹配系统）<ul>
+<li>GraphZero是AutoMine[18]的升级版，其性能比AutoMine高出40倍。</li>
+<li>Fractal是一种基于JVM的系统，它在性能上优于几种基于JVM的专用算法（MRSUB[35]、SEED[36]和QKCount[37]）和通用系统（Arabesque[14]和GraphFrames[38]）</li>
+</ul>
+</li>
+<li>与GraphZero和Fractal相比，GraphPi在单个节点上运行，<strong>不使用包含排除优化原理（IEP）</strong></li>
+</ul>
+<h3 id="B-Overall-Performance"><a href="#B-Overall-Performance" class="headerlink" title="B. Overall Performance"></a>B. Overall Performance</h3><ul>
+<li>对于不同图形上的6种模式，GraphPi分别比GraphZero高9.7倍、1.4倍、26.0倍、11.7倍、42.5倍和60.3倍。 </li>
+<li>对于不同图形上的6种模式，GraphPi分别比Fractal好83.6倍、64.9倍、154.3倍、35.5倍、36.5倍和25.7倍。 </li>
+<li>因为Orkut上的Fractal内存不足，所以没有测试结果</li>
+<li>与GraphZero和Fractal相比，GraphPi在单个节点上运行，<strong>不使用包含排除优化原理（IEP）</strong></li>
+</ul>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202204071042410.png" alt="image-20220407104244969"></p>
+<h3 id="C-Breakdown-Analysis"><a href="#C-Breakdown-Analysis" class="headerlink" title="C. Breakdown Analysis"></a>C. Breakdown Analysis</h3><h4 id="Restriction-Set-Generation"><a href="#Restriction-Set-Generation" class="headerlink" title="Restriction Set Generation"></a>Restriction Set Generation</h4><blockquote>
+<p> 分析选择的限制集合是否是最合适的 </p>
+</blockquote>
+<ul>
+<li>GraphPI相对GraphZero 列举了更多的限制集合，使得schedule选择时有更多的选择，从而使得选到更合适的限制集合，使得性能更好</li>
+<li>GraphPI和GraphZero 在处理同样的模式图和真实图的挖掘时，选择的限制集合不同，导致性能不同</li>
+<li>GraphZero只会产生一个限制集合，这集合产生的schedule匹配的性能可能时次优的</li>
+<li>GraphPih会生成所有的限制集合，以供schedule的选择，找到最优的匹配schedule</li>
+</ul>
+<p>下面是模式图P1、P2、P3分别在真实图Wiki-Vote和Patents上执行挖掘时，GraphPi相对GraphZero性能提升的表</p>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202204071106953.png" alt="image-20220407110654822"></p>
+<h4 id="Schedule-Generation-and-Selection"><a href="#Schedule-Generation-and-Selection" class="headerlink" title="Schedule Generation and Selection"></a>Schedule Generation and Selection</h4><blockquote>
+<p>分析基于匹配顺序选择的schedule是否是最合适的</p>
+</blockquote>
+<ul>
+<li>列举了P3在Wiki-Vote执行挖掘产生的所有schedule</li>
+<li><code>x</code>表示被GraphPi的 2-phase computation-avoid schedule generator剪枝的匹配顺序</li>
+<li><code>空心圆圈</code>表示经过GraphPi的 2-phase computation-avoid schedule generator保留下来的匹配顺序</li>
+<li><code>红三角形</code>表示GraphZero选择的schedule</li>
+<li><code>蓝色五角星</code>表示GraphPi选择的schedule</li>
+</ul>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202204071121063.png" alt="image-20220407112115731"></p>
+<h4 id="Accuracy-of-Performance-Prediction-Model"><a href="#Accuracy-of-Performance-Prediction-Model" class="headerlink" title="Accuracy of Performance Prediction Model"></a>Accuracy of Performance Prediction Model</h4><blockquote>
+<p>性能预测模型的准确性</p>
+<p>分析预测的最优schedule相对实际最优schedule差距有多大</p>
+</blockquote>
+<ul>
+<li><p>如下图</p>
+<ul>
+<li><p>Oracle表示实际最优的schedule</p>
+</li>
+<li><p>GraphPi表示GraphPi选择的schedule</p>
+</li>
+</ul>
+</li>
+<li><p>平均而言，GraphPi选择的schedule只比Oracle schedule慢32%</p>
+</li>
+</ul>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202204071138910.png" alt="image-20220407113834442"></p>
+<h3 id="D-Counting-Embeddings-with-IEP"><a href="#D-Counting-Embeddings-with-IEP" class="headerlink" title="D. Counting Embeddings with IEP"></a>D. Counting Embeddings with IEP</h3><blockquote>
+<p>分析使用IEP和不适用带来的性能差异</p>
+</blockquote>
+<ul>
+<li>对于不同图形上的6种模式，有IEP的计数平均比没有IEP的计数分别高出4.3倍、457.8倍、320.5倍、265.5倍、11.1倍和10.1倍</li>
+</ul>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202204071448361.png" alt="image-20220407144832881"></p>
+<h3 id="E-Scalability-of-Distributed-V-ersion"><a href="#E-Scalability-of-Distributed-V-ersion" class="headerlink" title="E. Scalability of Distributed V ersion"></a>E. Scalability of Distributed V ersion</h3><blockquote>
+<p>分布式版本的可扩展性</p>
+</blockquote>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202204071459385.png" alt="image-20220407145858979"></p>
+<h3 id="F-Overhead-of-Preprocessing-and-Code-Generation"><a href="#F-Overhead-of-Preprocessing-and-Code-Generation" class="headerlink" title="F . Overhead of Preprocessing and Code Generation"></a>F . Overhead of Preprocessing and Code Generation</h3><blockquote>
+<p>预处理和代码生成的开销</p>
+</blockquote>
+<ul>
+<li>实验中报告的时间不包括预处理（即配置生成和性能预测）和代码生成时间</li>
+<li>因为预处理时间相对于挖掘时间很短，可以忽略</li>
+<li>下面是6个模式图预处理的时间消耗</li>
+</ul>
+<p><img src="/2022/07/12/Graph/GraphPi-paper/202204071507327.png" alt="image-20220407150724803"></p>
+<h2 id="VI-RELATEDWORK"><a href="#VI-RELATEDWORK" class="headerlink" title="VI. RELATEDWORK"></a>VI. RELATEDWORK</h2><h3 id="General-Purpose-Graph-Mining-Systems"><a href="#General-Purpose-Graph-Mining-Systems" class="headerlink" title="General-Purpose Graph Mining Systems"></a>General-Purpose Graph Mining Systems</h3><blockquote>
+<p>通用图形挖掘系统 </p>
+<p>提供了<strong>灵活的编程模型</strong>来表达复杂的图挖掘算法</p>
+</blockquote>
+<ul>
+<li>Arabesque[14]是第一个提供高级抽象和灵活编程模型的分布式图形挖掘系统</li>
+<li>G-thinker[16]提供了一个直观的图形探索API，用于实现各种图形挖掘算法和一个高效的运行时引擎<ul>
+<li>G-Miner[17]将图形挖掘作业的处理建模为一个独立的任务，并通过一种新颖的设计简化了任务处理</li>
+</ul>
+</li>
+<li>RStream[15]是一个单机系统，通过元组流高效地实现关系代数<ul>
+<li>为了支持可扩展的图形挖掘，RStream使用核心外处理来利用磁盘支持来存储中间数据</li>
+</ul>
+</li>
+</ul>
+<h3 id="Graph-Pattern-Matching-Systems"><a href="#Graph-Pattern-Matching-Systems" class="headerlink" title="Graph Pattern Matching Systems"></a>Graph Pattern Matching Systems</h3><blockquote>
+<p>图模式匹配系统</p>
+</blockquote>
+<ul>
+<li><p>已经提出了专门的模式匹配系统[19]–[21]，[29]，[39]，[40]</p>
+</li>
+<li><p>Automine[18]建立在基于集合的表示之上，并使用编译技术生成高效的模式匹配代码</p>
+<ul>
+<li>由于模式图结构上固有的对称性，Automine的算法会导致大量计算冗余</li>
+</ul>
+</li>
+<li><p>GraphZero[12]基于Automine提供了一种基于群论的算法，以打破模式中固有的对称性，消除冗余计算 </p>
+</li>
+<li><p>Peregrine[41]是另一个基于DFS的系统，它提供了基于模式的编程模型和工作流（类似于GraphZero）</p>
+<ul>
+<li>Peregrine也有一个schedule生成模块，但Peregrine生成的schedule仅基于模式，没有考虑真实图中的数据分布（真实图中顶点，边，三角形个数等信息，即GraphPi用于性能预测的信息）</li>
+</ul>
+</li>
+</ul>
+<h3 id="Approximate-Subgraph-Counting"><a href="#Approximate-Subgraph-Counting" class="headerlink" title="Approximate Subgraph Counting"></a>Approximate Subgraph Counting</h3><blockquote>
+<p>近似子图计数</p>
+</blockquote>
+<ul>
+<li>一些计算引擎和系统被设计用于<strong>估计</strong>嵌入的大致数量[2]、[42]、[43] 。ASAP[23]是其中最先进的一种</li>
+<li>ASAP是一个用于图形模式匹配的分布式<strong>近似</strong>计算引擎<ul>
+<li>通过<strong>抽取样本</strong>的方式进行估计</li>
+</ul>
+</li>
+</ul>
+<h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><p>使用：</p>
+<ul>
+<li>为什么要提前输入真实图中三角形个数<ul>
+<li>用于预测多个邻接点集合求交后集合的基数，用于选出约束与匹配顺序最优的组合</li>
+<li>没有提前输入三角形个数则不能找到最优组合</li>
+</ul>
+</li>
+<li>什么情况下不能使用IEP<ul>
+<li>模式图不存在最大两两不相连的顶点集</li>
+</ul>
+</li>
+</ul>
+<p>缺陷:</p>
+<ul>
+<li>从每个点出发 ,而不是从最小匹配点出发</li>
+<li>匹配过程中没有出入度的匹配约束</li>
+<li>需要提前输入真实图中的三角形个数才能使用性能预测模型</li>
+</ul>
+<p>GraphPi执行流程：</p>
+<ul>
+<li>对于用户输入的任意模式图，会在预处理阶段生成多组约束，然后找到schedule和约束集的最佳组合，然后再执行匹配</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9B%BE%E6%8C%96%E6%8E%98/" rel="tag"># 图挖掘</a>
+              <a href="/tags/GraphPi/" rel="tag"># GraphPi</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/06/C++/c++-%E9%9F%B3%E8%A7%86%E9%A2%91/" rel="prev" title="音视频">
+      <i class="fa fa-chevron-left"></i> 音视频
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/27/Graph/VEQs/" rel="next" title="VEQ_S的使用">
+      VEQ_S的使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GraphPi-paper"><span class="nav-text">GraphPi-paper</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#KEYWORDS"><span class="nav-text">KEYWORDS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-INTRODUCTION"><span class="nav-text">I.  INTRODUCTION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II-BACKGROUND-AND-MOTIVATION"><span class="nav-text">II.  BACKGROUND AND MOTIVATION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Challenges-of-Pattern-Matching"><span class="nav-text">Challenges of Pattern Matching</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#III-OVERVIEW-OF-GRAPHPI"><span class="nav-text">III. OVERVIEW OF GRAPHPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IV-METHODOLOGY-OF-GRAPHPI"><span class="nav-text">IV. METHODOLOGY OF GRAPHPI</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-2-Cycle-Based-Automorphism-Elimination"><span class="nav-text">A. 2-Cycle Based Automorphism Elimination</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#置换群表示同构"><span class="nav-text">置换群表示同构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#根据置换群生成约束集合"><span class="nav-text">根据置换群生成约束集合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#几个算法思想"><span class="nav-text">几个算法思想</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#validate"><span class="nav-text">validate</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#no-conflict"><span class="nav-text">no_conflict</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-2-Phase-Computation-Avoid-Schedule-Generation"><span class="nav-text">B. 2-Phase Computation-Avoid Schedule Generation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-An-Accurate-Performance-Prediction-Model"><span class="nav-text">C. An Accurate Performance Prediction Model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#D-Counting-with-Inclusion-Exclusion-Principle"><span class="nav-text">D. Counting with Inclusion-Exclusion Principle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#E-Distributed-Implementation"><span class="nav-text">E. Distributed Implementation</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V-EVALUATION"><span class="nav-text">V. EVALUATION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#A-Methodology"><span class="nav-text">A. Methodology</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Platforms"><span class="nav-text">Platforms</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Datasets"><span class="nav-text">Datasets</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Patterns"><span class="nav-text">Patterns</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Comparison"><span class="nav-text">Comparison</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-Overall-Performance"><span class="nav-text">B. Overall Performance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-Breakdown-Analysis"><span class="nav-text">C. Breakdown Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Restriction-Set-Generation"><span class="nav-text">Restriction Set Generation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Schedule-Generation-and-Selection"><span class="nav-text">Schedule Generation and Selection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Accuracy-of-Performance-Prediction-Model"><span class="nav-text">Accuracy of Performance Prediction Model</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#D-Counting-Embeddings-with-IEP"><span class="nav-text">D. Counting Embeddings with IEP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#E-Scalability-of-Distributed-V-ersion"><span class="nav-text">E. Scalability of Distributed V ersion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#F-Overhead-of-Preprocessing-and-Code-Generation"><span class="nav-text">F . Overhead of Preprocessing and Code Generation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VI-RELATEDWORK"><span class="nav-text">VI. RELATEDWORK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#General-Purpose-Graph-Mining-Systems"><span class="nav-text">General-Purpose Graph Mining Systems</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Graph-Pattern-Matching-Systems"><span class="nav-text">Graph Pattern Matching Systems</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Approximate-Subgraph-Counting"><span class="nav-text">Approximate Subgraph Counting</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PS"><span class="nav-text">PS</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chuckie"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Chuckie</p>
+  <div class="site-description" itemprop="description">Bright future</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ChuckieWill" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ChuckieWill" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/codewyj.163.com" title="E-Mail → codewyj.163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jianshu.com/u/de627226656c" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;de627226656c" rel="noopener" target="_blank">简书</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="/images/me.png"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chuckie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:04</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

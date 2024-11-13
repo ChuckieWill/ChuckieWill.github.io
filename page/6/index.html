@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Bright future">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Chuckie&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/page/6/index.html">
+<meta property="og:site_name" content="Chuckie&#39;s Blog">
+<meta property="og:description" content="Bright future">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Chuckie">
+<meta property="article:tag" content="软件，技术，前端">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/page/6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Chuckie's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chuckie's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/03/Javascript/Javascript(0x07)-JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%93%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/03/Javascript/Javascript(0x07)-JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%93%BE/" class="post-title-link" itemprop="url">Javascript(0x07)-JS中的原型链</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-03 16:02:21" itemprop="dateCreated datePublished" datetime="2020-10-03T16:02:21+08:00">2020-10-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="JS中的原型链"><a href="#JS中的原型链" class="headerlink" title="JS中的原型链"></a>JS中的原型链</h1><h2 id="一、原型"><a href="#一、原型" class="headerlink" title="一、原型"></a>一、原型</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/03/Javascript/Javascript(0x07)-JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%93%BE/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/02/Javascript/Javascript(0x06)-js%E5%BC%82%E6%AD%A5%E4%B8%AD%E7%9A%84%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/02/Javascript/Javascript(0x06)-js%E5%BC%82%E6%AD%A5%E4%B8%AD%E7%9A%84%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" class="post-title-link" itemprop="url">Javascript(0x06)-js异步中的任务队列</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-02 18:25:21" itemprop="dateCreated datePublished" datetime="2020-10-02T18:25:21+08:00">2020-10-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>851</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="事件循环与任务队列"><a href="#事件循环与任务队列" class="headerlink" title="事件循环与任务队列"></a>事件循环与任务队列</h2><h3 id="1-事件处理流程"><a href="#1-事件处理流程" class="headerlink" title="1 事件处理流程"></a>1 事件处理流程</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/02/Javascript/Javascript(0x06)-js%E5%BC%82%E6%AD%A5%E4%B8%AD%E7%9A%84%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/30/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/C++/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95(C++)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/30/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/C++/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95(C++)/" class="post-title-link" itemprop="url">数据结构与算法(C++)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-30 22:43:17" itemprop="dateCreated datePublished" datetime="2020-09-30T22:43:17+08:00">2020-09-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>0</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/03/HTTP/HTTP(0x03)-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/03/HTTP/HTTP(0x03)-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">HTTP(0x03)-跨域问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-03 10:43:17" itemprop="dateCreated datePublished" datetime="2020-09-03T10:43:17+08:00">2020-09-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index"><span itemprop="name">HTTP</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>跨域问题的情况、原理及解决方案</p>
+<blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="noopener">HTTP访问控制（CORS）</a></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/03/HTTP/HTTP(0x03)-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/02/HTTP/HTTP(0x02)-TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/02/HTTP/HTTP(0x02)-TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/" class="post-title-link" itemprop="url">HTTP(0x02)-TCP三次握手与四次挥手详解&面试常见问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-02 10:43:17" itemprop="dateCreated datePublished" datetime="2020-09-02T10:43:17+08:00">2020-09-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index"><span itemprop="name">HTTP</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p><strong>鸣谢!</strong></p>
+<p><a href="https://blog.csdn.net/zengrenyuan/article/details/80313449?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param" target="_blank" rel="noopener">TCP协议中的三次握手和四次挥手 图解、原因、状态码总结</a></p>
+<p><a href="https://blog.csdn.net/weixin_34406061/article/details/92213156?utm_medium=distribute.pc_feed_404.none-task-blog-BlogCommendFromBaidu-1.nonecase&depth_1-utm_source=distribute.pc_feed_404.none-task-blog-BlogCommendFromBaidu-1.nonecas" target="_blank" rel="noopener">TCP 三次握手 和 四次挥手</a></p>
+<p><a href="https://blog.csdn.net/Shuffle_Ts/article/details/93778635?utm_medium=distribute.pc_feed_404.none-task-blog-BlogCommendFromBaidu-2.nonecase&depth_1-utm_source=distribute.pc_feed_404.none-task-blog-BlogCommendFromBaidu-2.nonecas" target="_blank" rel="noopener">TCP三次握手详解及面试题</a></p>
+</blockquote>
+<h3 id="一、状态码"><a href="#一、状态码" class="headerlink" title="一、状态码"></a>一、状态码</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/02/HTTP/HTTP(0x02)-TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/02/Index/blog%E6%A8%A1%E6%9D%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/02/Index/blog%E6%A8%A1%E6%9D%BF/" class="post-title-link" itemprop="url">HTTP(0x02)-blog-template</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-02 10:43:17" itemprop="dateCreated datePublished" datetime="2020-09-02T10:43:17+08:00">2020-09-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Index/" itemprop="url" rel="index"><span itemprop="name">Index</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>0</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">HTTP(0x01)-HTTP基础</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-01 10:43:17" itemprop="dateCreated datePublished" datetime="2020-09-01T10:43:17+08:00">2020-09-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index"><span itemprop="name">HTTP</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p><a href="https://www.runoob.com/http/http-tutorial.html" target="_blank" rel="noopener">HTTP菜鸟教程</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP" target="_blank" rel="noopener">HTTP教程-MDN web docs</a></p>
+<p><a href="https://nodejs.org/api/http.html" target="_blank" rel="noopener">Node.Js的HTTP-API</a></p>
+<p><a href="https://nodejs.org/zh-cn/docs/guides/anatomy-of-an-http-transaction/" target="_blank" rel="noopener">Node.js-HTTP传输指南</a></p>
+</blockquote>
+<h1 id="一、HTTP基础"><a href="#一、HTTP基础" class="headerlink" title="一、HTTP基础"></a>一、HTTP基础</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/01/HTTP/HTTP(0x01)-HTTP%E5%9F%BA%E7%A1%80/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/05/Javascript/Javascript-0x05-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/05/Javascript/Javascript-0x05-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/" class="post-title-link" itemprop="url">Javascript(0x05)-异步编程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-05 10:39:21" itemprop="dateCreated datePublished" datetime="2020-08-05T10:39:21+08:00">2020-08-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index"><span itemprop="name">Javascript</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h1><h2 id="1-promise"><a href="#1-promise" class="headerlink" title="1 promise"></a>1 promise</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/05/Javascript/Javascript-0x05-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/02/Index/snabbdom-diff/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/02/Index/snabbdom-diff/" class="post-title-link" itemprop="url">虚拟DOM的diff算法（snabbdom源码分析）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-02 10:43:17" itemprop="dateCreated datePublished" datetime="2020-08-02T10:43:17+08:00">2020-08-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Index/" itemprop="url" rel="index"><span itemprop="name">Index</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Module &#125; <span class="keyword">from</span> <span class="string">"./modules/module"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; vnode, VNode &#125; <span class="keyword">from</span> <span class="string">"./vnode"</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> is <span class="keyword">from</span> <span class="string">"./is"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; htmlDomApi, DOMAPI &#125; <span class="keyword">from</span> <span class="string">"./htmldomapi"</span>;</span><br><span class="line"></span><br><span class="line">type NonUndefined&lt;T&gt; = T extends <span class="literal">undefined</span> ? never : T;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isUndef</span>(<span class="params">s: any</span>): <span class="title">boolean</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> s === <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isDef</span>&lt;<span class="title">A</span>&gt;(<span class="params">s: A</span>): <span class="title">s</span> <span class="title">is</span> <span class="title">NonUndefined</span>&lt;<span class="title">A</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> s !== <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type VNodeQueue = VNode[];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> emptyNode = vnode(<span class="string">""</span>, &#123;&#125;, [], <span class="literal">undefined</span>, <span class="literal">undefined</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sameVnode</span>(<span class="params">vnode1: VNode, vnode2: VNode</span>): <span class="title">boolean</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> isSameKey = vnode1.key === vnode2.key;</span><br><span class="line">  <span class="keyword">const</span> isSameIs = vnode1.data?.is === vnode2.data?.is;</span><br><span class="line">  <span class="keyword">const</span> isSameSel = vnode1.sel === vnode2.sel;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> isSameSel &amp;&amp; isSameKey &amp;&amp; isSameIs;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isVnode</span>(<span class="params">vnode: any</span>): <span class="title">vnode</span> <span class="title">is</span> <span class="title">VNode</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> vnode.sel !== <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type KeyToIndexMap = &#123; [key: string]: number &#125;;</span><br><span class="line"></span><br><span class="line">type ArraysOf&lt;T&gt; = &#123;</span><br><span class="line">  [K <span class="keyword">in</span> keyof T]: <span class="built_in">Array</span>&lt;T[K]&gt;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">type ModuleHooks = ArraysOf&lt;Required&lt;Module&gt;&gt;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createKeyToOldIdx</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  children: VNode[],</span></span></span><br><span class="line"><span class="function"><span class="params">  beginIdx: number,</span></span></span><br><span class="line"><span class="function"><span class="params">  endIdx: number</span></span></span><br><span class="line"><span class="function"><span class="params"></span>): <span class="title">KeyToIndexMap</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> map: KeyToIndexMap = &#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = beginIdx; i &lt;= endIdx; ++i) &#123;</span><br><span class="line">    <span class="keyword">const</span> key = children[i]?.key;</span><br><span class="line">    <span class="keyword">if</span> (key !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">      map[key <span class="keyword">as</span> string] = i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> hooks: <span class="built_in">Array</span>&lt;keyof Module&gt; = [</span><br><span class="line">  <span class="string">"create"</span>,</span><br><span class="line">  <span class="string">"update"</span>,</span><br><span class="line">  <span class="string">"remove"</span>,</span><br><span class="line">  <span class="string">"destroy"</span>,</span><br><span class="line">  <span class="string">"pre"</span>,</span><br><span class="line">  <span class="string">"post"</span>,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params">modules: Array&lt;Partial&lt;Module&gt;&gt;, domApi?: DOMAPI</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> i: number;</span><br><span class="line">  <span class="keyword">let</span> j: number;</span><br><span class="line">  <span class="keyword">const</span> cbs: ModuleHooks = &#123;</span><br><span class="line">    create: [],</span><br><span class="line">    update: [],</span><br><span class="line">    remove: [],</span><br><span class="line">    destroy: [],</span><br><span class="line">    pre: [],</span><br><span class="line">    post: [],</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> api: DOMAPI = domApi !== <span class="literal">undefined</span> ? domApi : htmlDomApi;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; hooks.length; ++i) &#123;</span><br><span class="line">    cbs[hooks[i]] = [];</span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; modules.length; ++j) &#123;</span><br><span class="line">      <span class="keyword">const</span> hook = modules[j][hooks[i]];</span><br><span class="line">      <span class="keyword">if</span> (hook !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">        (cbs[hooks[i]] <span class="keyword">as</span> any[]).push(hook);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">emptyNodeAt</span>(<span class="params">elm: Element</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> id = elm.id ? <span class="string">"#"</span> + elm.id : <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// elm.className doesn't return a string when elm is an SVG element inside a shadowRoot.</span></span><br><span class="line">    <span class="comment">// https://stackoverflow.com/questions/29454340/detecting-classname-of-svganimatedstring</span></span><br><span class="line">    <span class="keyword">const</span> classes = elm.getAttribute(<span class="string">"class"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> c = classes ? <span class="string">"."</span> + classes.split(<span class="string">" "</span>).join(<span class="string">"."</span>) : <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">return</span> vnode(</span><br><span class="line">      api.tagName(elm).toLowerCase() + id + c,</span><br><span class="line">      &#123;&#125;,</span><br><span class="line">      [],</span><br><span class="line">      <span class="literal">undefined</span>,</span><br><span class="line">      elm</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">createRmCb</span>(<span class="params">childElm: Node, listeners: number</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">rmCb</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (--listeners === <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> parent = api.parentNode(childElm) <span class="keyword">as</span> Node;</span><br><span class="line">        api.removeChild(parent, childElm);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">createElm</span>(<span class="params">vnode: VNode, insertedVnodeQueue: VNodeQueue</span>): <span class="title">Node</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> i: any;</span><br><span class="line">    <span class="keyword">let</span> data = vnode.data;</span><br><span class="line">    <span class="keyword">if</span> (data !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> init = data.hook?.init;</span><br><span class="line">      <span class="keyword">if</span> (isDef(init)) &#123;</span><br><span class="line">        init(vnode);</span><br><span class="line">        data = vnode.data;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> children = vnode.children;</span><br><span class="line">    <span class="keyword">const</span> sel = vnode.sel;</span><br><span class="line">    <span class="keyword">if</span> (sel === <span class="string">"!"</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (isUndef(vnode.text)) &#123;</span><br><span class="line">        vnode.text = <span class="string">""</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      vnode.elm = api.createComment(vnode.text!);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sel !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="comment">// Parse selector</span></span><br><span class="line">      <span class="keyword">const</span> hashIdx = sel.indexOf(<span class="string">"#"</span>);</span><br><span class="line">      <span class="keyword">const</span> dotIdx = sel.indexOf(<span class="string">"."</span>, hashIdx);</span><br><span class="line">      <span class="keyword">const</span> hash = hashIdx &gt; <span class="number">0</span> ? hashIdx : sel.length;</span><br><span class="line">      <span class="keyword">const</span> dot = dotIdx &gt; <span class="number">0</span> ? dotIdx : sel.length;</span><br><span class="line">      <span class="keyword">const</span> tag =</span><br><span class="line">        hashIdx !== <span class="number">-1</span> || dotIdx !== <span class="number">-1</span></span><br><span class="line">          ? sel.slice(<span class="number">0</span>, <span class="built_in">Math</span>.min(hash, dot))</span><br><span class="line">          : sel;</span><br><span class="line">      <span class="keyword">const</span> elm = (vnode.elm =</span><br><span class="line">        isDef(data) &amp;&amp; isDef((i = data.ns))</span><br><span class="line">          ? api.createElementNS(i, tag, data)</span><br><span class="line">          : api.createElement(tag, data));</span><br><span class="line">      <span class="keyword">if</span> (hash &lt; dot) elm.setAttribute(<span class="string">"id"</span>, sel.slice(hash + <span class="number">1</span>, dot));</span><br><span class="line">      <span class="keyword">if</span> (dotIdx &gt; <span class="number">0</span>)</span><br><span class="line">        elm.setAttribute(<span class="string">"class"</span>, sel.slice(dot + <span class="number">1</span>).replace(<span class="regexp">/\./g</span>, <span class="string">" "</span>));</span><br><span class="line">      <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; cbs.create.length; ++i) cbs.create[i](emptyNode, vnode);</span><br><span class="line">      <span class="keyword">if</span> (is.array(children)) &#123;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; children.length; ++i) &#123;</span><br><span class="line">          <span class="keyword">const</span> ch = children[i];</span><br><span class="line">          <span class="keyword">if</span> (ch != <span class="literal">null</span>) &#123;</span><br><span class="line">            api.appendChild(elm, createElm(ch <span class="keyword">as</span> VNode, insertedVnodeQueue));</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (is.primitive(vnode.text)) &#123;</span><br><span class="line">        api.appendChild(elm, api.createTextNode(vnode.text));</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">const</span> hook = vnode.data!.hook;</span><br><span class="line">      <span class="keyword">if</span> (isDef(hook)) &#123;</span><br><span class="line">        hook.create?.(emptyNode, vnode);</span><br><span class="line">        <span class="keyword">if</span> (hook.insert) &#123;</span><br><span class="line">          insertedVnodeQueue.push(vnode);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      vnode.elm = api.createTextNode(vnode.text!);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> vnode.elm;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">addVnodes</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    parentElm: Node,</span></span></span><br><span class="line"><span class="function"><span class="params">    before: Node | null,</span></span></span><br><span class="line"><span class="function"><span class="params">    vnodes: VNode[],</span></span></span><br><span class="line"><span class="function"><span class="params">    startIdx: number,</span></span></span><br><span class="line"><span class="function"><span class="params">    endIdx: number,</span></span></span><br><span class="line"><span class="function"><span class="params">    insertedVnodeQueue: VNodeQueue</span></span></span><br><span class="line"><span class="function"><span class="params">  </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (; startIdx &lt;= endIdx; ++startIdx) &#123;</span><br><span class="line">      <span class="keyword">const</span> ch = vnodes[startIdx];</span><br><span class="line">      <span class="keyword">if</span> (ch != <span class="literal">null</span>) &#123;</span><br><span class="line">        api.insertBefore(parentElm, createElm(ch, insertedVnodeQueue), before);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">invokeDestroyHook</span>(<span class="params">vnode: VNode</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> data = vnode.data;</span><br><span class="line">    <span class="keyword">if</span> (data !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">      data?.hook?.destroy?.(vnode);</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; cbs.destroy.length; ++i) cbs.destroy[i](vnode);</span><br><span class="line">      <span class="keyword">if</span> (vnode.children !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; vnode.children.length; ++j) &#123;</span><br><span class="line">          <span class="keyword">const</span> child = vnode.children[j];</span><br><span class="line">          <span class="keyword">if</span> (child != <span class="literal">null</span> &amp;&amp; <span class="keyword">typeof</span> child !== <span class="string">"string"</span>) &#123;</span><br><span class="line">            invokeDestroyHook(child);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">removeVnodes</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    parentElm: Node,</span></span></span><br><span class="line"><span class="function"><span class="params">    vnodes: VNode[],</span></span></span><br><span class="line"><span class="function"><span class="params">    startIdx: number,</span></span></span><br><span class="line"><span class="function"><span class="params">    endIdx: number</span></span></span><br><span class="line"><span class="function"><span class="params">  </span>): <span class="title">void</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (; startIdx &lt;= endIdx; ++startIdx) &#123;</span><br><span class="line">      <span class="keyword">let</span> listeners: number;</span><br><span class="line">      <span class="keyword">let</span> rm: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">void</span>;</span><br><span class="line">      <span class="keyword">const</span> ch = vnodes[startIdx];</span><br><span class="line">      <span class="keyword">if</span> (ch != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (isDef(ch.sel)) &#123;</span><br><span class="line">          invokeDestroyHook(ch);</span><br><span class="line">          listeners = cbs.remove.length + <span class="number">1</span>;</span><br><span class="line">          rm = createRmCb(ch.elm!, listeners);</span><br><span class="line">          <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; cbs.remove.length; ++i) cbs.remove[i](ch, rm);</span><br><span class="line">          <span class="keyword">const</span> removeHook = ch?.data?.hook?.remove;</span><br><span class="line">          <span class="keyword">if</span> (isDef(removeHook)) &#123;</span><br><span class="line">            removeHook(ch, rm);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            rm();</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">// Text node</span></span><br><span class="line">          api.removeChild(parentElm, ch.elm!);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">updateChildren</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    parentElm: Node,</span></span></span><br><span class="line"><span class="function"><span class="params">    oldCh: VNode[],</span></span></span><br><span class="line"><span class="function"><span class="params">    newCh: VNode[],</span></span></span><br><span class="line"><span class="function"><span class="params">    insertedVnodeQueue: VNodeQueue</span></span></span><br><span class="line"><span class="function"><span class="params">  </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> oldStartIdx = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> newStartIdx = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> oldEndIdx = oldCh.length - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">let</span> oldStartVnode = oldCh[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">let</span> oldEndVnode = oldCh[oldEndIdx];</span><br><span class="line">    <span class="keyword">let</span> newEndIdx = newCh.length - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">let</span> newStartVnode = newCh[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">let</span> newEndVnode = newCh[newEndIdx];</span><br><span class="line">    <span class="keyword">let</span> oldKeyToIdx: KeyToIndexMap | <span class="literal">undefined</span>;</span><br><span class="line">    <span class="keyword">let</span> idxInOld: number;</span><br><span class="line">    <span class="keyword">let</span> elmToMove: VNode;</span><br><span class="line">    <span class="keyword">let</span> before: any;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (oldStartIdx &lt;= oldEndIdx &amp;&amp; newStartIdx &lt;= newEndIdx) &#123;</span><br><span class="line">      <span class="keyword">if</span> (oldStartVnode == <span class="literal">null</span>) &#123;</span><br><span class="line">        oldStartVnode = oldCh[++oldStartIdx]; <span class="comment">// Vnode might have been moved left</span></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (oldEndVnode == <span class="literal">null</span>) &#123;</span><br><span class="line">        oldEndVnode = oldCh[--oldEndIdx];</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (newStartVnode == <span class="literal">null</span>) &#123;</span><br><span class="line">        newStartVnode = newCh[++newStartIdx];</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (newEndVnode == <span class="literal">null</span>) &#123;</span><br><span class="line">        newEndVnode = newCh[--newEndIdx];</span><br><span class="line">      <span class="comment">//开始和开始比对</span></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldStartVnode, newStartVnode)) &#123;</span><br><span class="line">        patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue);</span><br><span class="line">        oldStartVnode = oldCh[++oldStartIdx];</span><br><span class="line">        newStartVnode = newCh[++newStartIdx];</span><br><span class="line">      <span class="comment">//结束和结束比对</span></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldEndVnode, newEndVnode)) &#123;</span><br><span class="line">        patchVnode(oldEndVnode, newEndVnode, insertedVnodeQueue);</span><br><span class="line">        oldEndVnode = oldCh[--oldEndIdx];</span><br><span class="line">        newEndVnode = newCh[--newEndIdx];</span><br><span class="line">      <span class="comment">//旧children开始和新children结束比对</span></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldStartVnode, newEndVnode)) &#123;</span><br><span class="line">        <span class="comment">// Vnode moved right</span></span><br><span class="line">        patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue);</span><br><span class="line">        api.insertBefore(</span><br><span class="line">          parentElm,</span><br><span class="line">          oldStartVnode.elm!,</span><br><span class="line">          api.nextSibling(oldEndVnode.elm!)</span><br><span class="line">        );</span><br><span class="line">        oldStartVnode = oldCh[++oldStartIdx];</span><br><span class="line">        newEndVnode = newCh[--newEndIdx];</span><br><span class="line">      <span class="comment">//旧children结束和新children开始比对</span></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sameVnode(oldEndVnode, newStartVnode)) &#123;</span><br><span class="line">        <span class="comment">// Vnode moved left</span></span><br><span class="line">        patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue);</span><br><span class="line">        api.insertBefore(parentElm, oldEndVnode.elm!, oldStartVnode.elm!);</span><br><span class="line">        oldEndVnode = oldCh[--oldEndIdx];</span><br><span class="line">        newStartVnode = newCh[++newStartIdx];</span><br><span class="line">      <span class="comment">//以上比对都未命中</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (oldKeyToIdx === <span class="literal">undefined</span>) &#123;</span><br><span class="line">          oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//拿新节点key,能否对应上oldChildren中某个节点的key</span></span><br><span class="line">        idxInOld = oldKeyToIdx[newStartVnode.key <span class="keyword">as</span> string];</span><br><span class="line">        <span class="comment">//没对应导上</span></span><br><span class="line">        <span class="keyword">if</span> (isUndef(idxInOld)) &#123;</span><br><span class="line">          <span class="comment">// New element</span></span><br><span class="line">          api.insertBefore(</span><br><span class="line">            parentElm,</span><br><span class="line">            createElm(newStartVnode, insertedVnodeQueue),</span><br><span class="line">            oldStartVnode.elm!</span><br><span class="line">          );</span><br><span class="line">        <span class="comment">//对应上了</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">//对应上key的节点</span></span><br><span class="line">          elmToMove = oldCh[idxInOld];</span><br><span class="line">          <span class="comment">//sel是否相等（sameVnode()的条件）</span></span><br><span class="line">          <span class="keyword">if</span> (elmToMove.sel !== newStartVnode.sel) &#123;</span><br><span class="line">            <span class="comment">//新建</span></span><br><span class="line">            api.insertBefore(</span><br><span class="line">              parentElm,</span><br><span class="line">              createElm(newStartVnode, insertedVnodeQueue),</span><br><span class="line">              oldStartVnode.elm!</span><br><span class="line">            );</span><br><span class="line">          <span class="comment">//sel相等， key相等</span></span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            patchVnode(elmToMove, newStartVnode, insertedVnodeQueue);</span><br><span class="line">            oldCh[idxInOld] = <span class="literal">undefined</span> <span class="keyword">as</span> any;</span><br><span class="line">            api.insertBefore(parentElm, elmToMove.elm!, oldStartVnode.elm!);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        newStartVnode = newCh[++newStartIdx];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (oldStartIdx &lt;= oldEndIdx || newStartIdx &lt;= newEndIdx) &#123;</span><br><span class="line">      <span class="keyword">if</span> (oldStartIdx &gt; oldEndIdx) &#123;</span><br><span class="line">        before = newCh[newEndIdx + <span class="number">1</span>] == <span class="literal">null</span> ? <span class="literal">null</span> : newCh[newEndIdx + <span class="number">1</span>].elm;</span><br><span class="line">        addVnodes(</span><br><span class="line">          parentElm,</span><br><span class="line">          before,</span><br><span class="line">          newCh,</span><br><span class="line">          newStartIdx,</span><br><span class="line">          newEndIdx,</span><br><span class="line">          insertedVnodeQueue</span><br><span class="line">        );</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">patchVnode</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    oldVnode: VNode,</span></span></span><br><span class="line"><span class="function"><span class="params">    vnode: VNode,</span></span></span><br><span class="line"><span class="function"><span class="params">    insertedVnodeQueue: VNodeQueue</span></span></span><br><span class="line"><span class="function"><span class="params">  </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> hook = vnode.data?.hook;</span><br><span class="line">    hook?.prepatch?.(oldVnode, vnode);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置vnode.elm</span></span><br><span class="line">    <span class="keyword">const</span> elm = (vnode.elm = oldVnode.elm)!;</span><br><span class="line">    <span class="comment">//旧的children</span></span><br><span class="line">    <span class="keyword">const</span> oldCh = oldVnode.children <span class="keyword">as</span> VNode[];</span><br><span class="line">    <span class="comment">//新的children</span></span><br><span class="line">    <span class="keyword">const</span> ch = vnode.children <span class="keyword">as</span> VNode[];</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (oldVnode === vnode) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span> (vnode.data !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; cbs.update.length; ++i)</span><br><span class="line">        cbs.update[i](oldVnode, vnode);</span><br><span class="line">      vnode.data.hook?.update?.(oldVnode, vnode);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//新的vnode.text === undefined (vnode.children !== undefined)</span></span><br><span class="line">    <span class="keyword">if</span> (isUndef(vnode.text)) &#123;</span><br><span class="line">      <span class="comment">//新旧都有children</span></span><br><span class="line">      <span class="keyword">if</span> (isDef(oldCh) &amp;&amp; isDef(ch)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue);</span><br><span class="line">      <span class="comment">//新children有，旧children无，（旧vnode可能有text）</span></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isDef(ch)) &#123;</span><br><span class="line">        <span class="comment">//清空text</span></span><br><span class="line">        <span class="keyword">if</span> (isDef(oldVnode.text)) api.setTextContent(elm, <span class="string">""</span>);</span><br><span class="line">        <span class="comment">//添加children</span></span><br><span class="line">        addVnodes(elm, <span class="literal">null</span>, ch, <span class="number">0</span>, ch.length - <span class="number">1</span>, insertedVnodeQueue);</span><br><span class="line">      <span class="comment">//旧children有，新children无</span></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isDef(oldCh)) &#123;</span><br><span class="line">        <span class="comment">//移除旧children</span></span><br><span class="line">        removeVnodes(elm, oldCh, <span class="number">0</span>, oldCh.length - <span class="number">1</span>);</span><br><span class="line">      <span class="comment">//旧text有值</span></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isDef(oldVnode.text)) &#123;</span><br><span class="line">        <span class="comment">//散出旧text</span></span><br><span class="line">        api.setTextContent(elm, <span class="string">""</span>);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//新的vnode.text !== undefined (vnode.children === undefined)</span></span><br><span class="line">    <span class="comment">//新的vnode.text !== 旧的vnode.text</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (oldVnode.text !== vnode.text) &#123;</span><br><span class="line">      <span class="comment">//移除旧children</span></span><br><span class="line">      <span class="keyword">if</span> (isDef(oldCh)) &#123;</span><br><span class="line">        removeVnodes(elm, oldCh, <span class="number">0</span>, oldCh.length - <span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">//设置新text</span></span><br><span class="line">      api.setTextContent(elm, vnode.text!);</span><br><span class="line">    &#125;</span><br><span class="line">    hook?.postpatch?.(oldVnode, vnode);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">patch</span>(<span class="params">oldVnode: VNode | Element, vnode: VNode</span>): <span class="title">VNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> i: number, <span class="attr">elm</span>: Node, <span class="attr">parent</span>: Node;</span><br><span class="line">    <span class="keyword">const</span> insertedVnodeQueue: VNodeQueue = [];</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; cbs.pre.length; ++i) cbs.pre[i]();</span><br><span class="line">    <span class="comment">//第一个参数是否是vnode</span></span><br><span class="line">    <span class="keyword">if</span> (!isVnode(oldVnode)) &#123;</span><br><span class="line">      <span class="comment">//创建一个空的vnode，关联到这个实际的DOM元素,</span></span><br><span class="line">      <span class="comment">//对应patch(container, vnode)的container</span></span><br><span class="line">      oldVnode = emptyNodeAt(oldVnode);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//相同的vnode(key和sel都相等)</span></span><br><span class="line">    <span class="keyword">if</span> (sameVnode(oldVnode, vnode)) &#123;</span><br><span class="line">      <span class="comment">//对比两个vnode</span></span><br><span class="line">      patchVnode(oldVnode, vnode, insertedVnodeQueue);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//不同的vnode， 直接删掉重建</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      elm = oldVnode.elm!;</span><br><span class="line">      parent = api.parentNode(elm) <span class="keyword">as</span> Node;</span><br><span class="line">      <span class="comment">//重建</span></span><br><span class="line">      createElm(vnode, insertedVnodeQueue);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (parent !== <span class="literal">null</span>) &#123;</span><br><span class="line">        api.insertBefore(parent, vnode.elm!, api.nextSibling(elm));</span><br><span class="line">        removeVnodes(parent, [oldVnode], <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; insertedVnodeQueue.length; ++i) &#123;</span><br><span class="line">      insertedVnodeQueue[i].data!.hook!.insert!(insertedVnodeQueue[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; cbs.post.length; ++i) cbs.post[i]();</span><br><span class="line">    <span class="keyword">return</span> vnode;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/01/third-repositories/webpack/webpack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/01/third-repositories/webpack/webpack/" class="post-title-link" itemprop="url">webpack系统学习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-01 10:43:17" itemprop="dateCreated datePublished" datetime="2020-08-01T10:43:17+08:00">2020-08-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/third-repositories/" itemprop="url" rel="index"><span itemprop="name">third-repositories</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/third-repositories/webpack/" itemprop="url" rel="index"><span itemprop="name">webpack</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h1><h1 id="一、webpack"><a href="#一、webpack" class="headerlink" title="一、webpack"></a>一、webpack</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/01/third-repositories/webpack/webpack/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chuckie"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Chuckie</p>
+  <div class="site-description" itemprop="description">Bright future</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ChuckieWill" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ChuckieWill" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/codewyj.163.com" title="E-Mail → codewyj.163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jianshu.com/u/de627226656c" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;de627226656c" rel="noopener" target="_blank">简书</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="/images/me.png"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chuckie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:04</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

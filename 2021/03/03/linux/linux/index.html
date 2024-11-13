@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="linux常用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux">
+<meta property="og:url" content="http://yoursite.com/2021/03/03/linux/linux/index.html">
+<meta property="og:site_name" content="Chuckie&#39;s Blog">
+<meta property="og:description" content="linux常用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230112133716636.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611212717790.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611212942618.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611213109594.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611213437318.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611213545952.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611214815555.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611215339574.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230611215450213.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230614212006079.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230614212401186.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20240403110853006.png">
+<meta property="article:published_time" content="2021-03-03T02:46:17.000Z">
+<meta property="article:modified_time" content="2024-09-18T15:06:07.654Z">
+<meta property="article:author" content="Chuckie">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/03/03/linux/linux/image-20230112133716636.png">
+
+<link rel="canonical" href="http://yoursite.com/2021/03/03/linux/linux/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>linux | Chuckie's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Chuckie's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/03/linux/linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Chuckie">
+      <meta itemprop="description" content="Bright future">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuckie's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-03 10:46:17" itemprop="dateCreated datePublished" datetime="2021-03-03T10:46:17+08:00">2021-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-18 23:06:07" itemprop="dateModified" datetime="2024-09-18T23:06:07+08:00">2024-09-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><h2 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h2><h5 id="查看一个进程的运行时间"><a href="#查看一个进程的运行时间" class="headerlink" title="查看一个进程的运行时间"></a>查看一个进程的运行时间</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">top 查看 PID</span><br><span class="line">ps -o etime= -p &lt;PID&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="查看环境变量"><a href="#查看环境变量" class="headerlink" title="查看环境变量"></a>查看环境变量</h5><ul>
+<li>命令解释器会在环境变量的目录中查找命令对应的可执行文件，如果可以找到即可执行</li>
+<li>环境变量之间通过<code>:</code>分割</li>
+<li>$ 表示取地址</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo $PATH</span><br><span class="line"></span><br><span class="line">wangyj@node29:/home/wangyj/CUDA-code$ echo $PATH</span><br><span class="line">/home/wangyj/.vscode-server/bin/0ee08df0cf4527e40edc9aa28f4b5bd38bbff2b2/bin/remote-cli::/usr/local/cuda-11.1/bin::/usr/local/cuda-11.1/.local/bin:/usr/local/cuda/bin:/usr/bin/java/jdk1.8.0_211/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/cuda-11.1/bin</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>$lib_root  是个变量 值就是第一行的 /data/cuda</li>
+<li>LD_LIBRARY_PATH 是动态链接库的环境变量</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> 1 lib_root=/data/cuda</span><br><span class="line"> 2 export LD_LIBRARY_PATH=$lib_root/TensorRT-8.6.1/lib:$lib_root/cudnn-8.9.3/lib:$CONDA_PREFIX/lib:/data/cuda/cuda-11.7/lib64:$LD_LIBRARY_PATH</span><br><span class="line"> 3 export PATH=$lib_root/TensorRT-8.6.1/bin:/data/cuda/cuda-11.7/bin:$PATH</span><br><span class="line"> 4 </span><br><span class="line"> 5 # CUDA_VISIBLE_DEVICES=1 nvprof --concurrent-kernels on -f --export-profile ann_server.profile.gpu ./ann_server &amp; disown</span><br><span class="line"> 6 # ASAN_OPTIONS=protect_shadow_gap=0:replace_intrin=0:detect_leaks=0 CUDA_VISIBLE_DEVICES=1 ./ann_server &amp; disown</span><br><span class="line"> 7 # CUDA_LAUNCH_BLOCKING=1 cuda-memcheck ./ann_server &amp; disown</span><br><span class="line"> 8 # CUDA_ENABLE_COREDUMP_ON_EXCEPTION=1 CUDA_VISIBLE_DEVICES=1 cuda-memcheck --report-api-errors yes ./ann_server &amp; disown</span><br><span class="line"> 9 # CUDA_VISIBLE_DEVICES=1 gdb -q --args ./ann_server</span><br><span class="line">10 </span><br><span class="line">11 # gdb -q --args ./ann_server</span><br><span class="line">12 </span><br><span class="line">13 # CUDA_VISIBLE_DEVICES=1 nvprof --concurrent-kernels on -f --export-profile cr_server.nvvp ./cr_server &amp; disown</span><br><span class="line">14 # ulimit -c 0</span><br><span class="line">15 ./ann_server &gt;s.log 2&gt;&amp;1 &amp; disown</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="bashrc"><a href="#bashrc" class="headerlink" title=".bashrc"></a>.bashrc</h5><blockquote>
+<p><a href="https://blog.csdn.net/weixin_57208584/article/details/135868555" target="_blank" rel="noopener">【Linux】什么是.bashrc，以及其使用方法</a></p>
+</blockquote>
+<ul>
+<li>编辑<code>.bashrc</code></li>
+<li><code>~</code>表示用户的家目录，每个用户都有自己的<code>.bashrc</code>文件</li>
+<li>在<code>.bashrc</code>文件中可以设置环境变量</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="Screen"><a href="#Screen" class="headerlink" title="Screen"></a>Screen</h5><blockquote>
+<p>用于将linux上的任务在后台执行，即使ssh断开也可以在后台继续执行</p>
+<p><a href="https://www.elecfans.com/emb/202212051948505.html" target="_blank" rel="noopener">https://www.elecfans.com/emb/202212051948505.html</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">screen -S &quot;win&quot; 新建   &#x2F;&#x2F; S 必须大写</span><br><span class="line">screen -ls      查看</span><br><span class="line">screen -r &quot;win&quot; 重新进入</span><br><span class="line">exit            退出</span><br><span class="line">screen -d -r 26285.win  重名时 通过pid选择  pid &#x3D; 26285</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="安装g"><a href="#安装g" class="headerlink" title="安装g++"></a>安装g++</h5><blockquote>
+<p>[Ubuntu18.04中安装gcc、g++编译器 /运行c文件、c++文件【超详细图文教程】] : <a href="https://blog.csdn.net/weixin_43290551/article/details/125970965" target="_blank" rel="noopener">https://blog.csdn.net/weixin_43290551/article/details/125970965</a></p>
+<p>[快速升级到g++11和gcc11] : <a href="https://blog.csdn.net/weixin_37726222/article/details/124002454" target="_blank" rel="noopener">https://blog.csdn.net/weixin_37726222/article/details/124002454</a></p>
+<p>查看版本：<a href="https://www.cnblogs.com/liujiaxin2018/p/16695558.html" target="_blank" rel="noopener">https://www.cnblogs.com/liujiaxin2018/p/16695558.html</a></p>
+</blockquote>
+<h5 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h5><blockquote>
+<p><a href="https://www.cnblogs.com/chinareny2k/archive/2010/01/05/1639468.html" target="_blank" rel="noopener">zip</a></p>
+</blockquote>
+<h5 id="cmake"><a href="#cmake" class="headerlink" title="cmake"></a>cmake</h5><blockquote>
+<p><a href="https://blog.csdn.net/qq_41375609/article/details/110535697" target="_blank" rel="noopener">https://blog.csdn.net/qq_41375609/article/details/110535697</a></p>
+</blockquote>
+<h5 id="shell脚本"><a href="#shell脚本" class="headerlink" title="shell脚本"></a>shell脚本</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/bash        // 向系统表明是shell文件</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"build 生成生产环境代码"</span>   // <span class="built_in">echo</span> 表示输出 输出内容用双引号</span><br></pre></td></tr></table></figure>
+
+<p>定时执行任务</p>
+<ul>
+<li>该方式可以定时，但是任务提前完成仍然要等到定时时间结束后才能执行下一个任务</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">echo "================data/itwiki-2013====query/7_p3.graph============================" &gt;&gt; all28.txt</span><br><span class="line">bin/count data/itwiki-2013 query/7_p3.graph 28 &gt;&gt; all28.txt &amp;  // &amp;符号获取pid</span><br><span class="line">PID=$!  // 获取上面程序执行的pid</span><br><span class="line">sleep 18000  //定时5小时 18000s  无论前面的任务是否在5小时内完成，都要等五小时，才能执行后面的z</span><br><span class="line">echo "===============================================================================" &gt;&gt; all28.txt</span><br><span class="line">kill -9 $PID //定时结束后结束进程</span><br><span class="line"></span><br><span class="line">echo "================data/itwiki-2013====query/7_p3.graph============================" &gt;&gt; all28.txt</span><br><span class="line">bin/count data/itwiki-2013 query/7_p3.graph 28 &gt;&gt; all28.txt &amp;</span><br><span class="line">PID=$!</span><br><span class="line">sleep 18000</span><br><span class="line">echo "===============================================================================" &gt;&gt; all28.txt</span><br><span class="line">kill -9 $PID</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="查看设备配置"><a href="#查看设备配置" class="headerlink" title="查看设备配置"></a>查看设备配置</h5><blockquote>
+<p><a href="https://blog.csdn.net/weixin_53060366/article/details/125255658" target="_blank" rel="noopener">https://blog.csdn.net/weixin_53060366/article/details/125255658</a></p>
+<p><a href="https://blog.csdn.net/wangquan1992/article/details/103821138" target="_blank" rel="noopener">Linux下查看CPU高速缓存(cache)信息</a></p>
+<p><a href="https://blog.csdn.net/weixin_40535588/article/details/119998102" target="_blank" rel="noopener">Linux的CPU高速缓存cache和页高速缓存cache，buffer</a></p>
+</blockquote>
+<p>查看内存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">wangyj@node1:~&#x2F;patternset$ free -h</span><br><span class="line">              total        used        free      shared  buff&#x2F;cache   available</span><br><span class="line">Mem:           251G         16G         19G        2.3M        215G        233G</span><br><span class="line">Swap:          8.0G        1.0M        8.0G</span><br><span class="line"></span><br><span class="line">free [-bkmotV][-s &lt;间隔秒数&gt;]</span><br><span class="line"></span><br><span class="line">-b 　以Byte为单位显示内存使用情况。</span><br><span class="line"></span><br><span class="line">-k 　以KB为单位显示内存使用情况。</span><br><span class="line"></span><br><span class="line">-m 　以MB为单位显示内存使用情况。</span><br><span class="line"></span><br><span class="line">-h 　以合适的单位显示内存使用情况，最大为三位数，自动计算对应的单位值。单位有：B &#x3D; bytes、K &#x3D; kilos、M &#x3D; megas、G &#x3D; gigas、T &#x3D; teras</span><br></pre></td></tr></table></figure>
+
+<p>查看gpu信息</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/weixin_38452632/article/details/136633239" target="_blank" rel="noopener">lspci详解</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lspci | grep -e VGA</span><br></pre></td></tr></table></figure>
+
+
+
+<p>查看cpu信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lscpu</span><br></pre></td></tr></table></figure>
+
+<p>查看一级二级三级高速缓存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">lscpu</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;</span><br><span class="line">L1d cache:           32K</span><br><span class="line">L1i cache:           32K      </span><br><span class="line">L2 cache:            1024K    &#x2F;&#x2F; 1MB</span><br><span class="line">L3 cache:            19712K   &#x2F;&#x2F; 9.25MB</span><br></pre></td></tr></table></figure>
+
+<p>CPU 具体型号</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>CPU 个数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo| grep <span class="string">"physical id"</span>| sort| uniq| wc -l</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>CPU 每个里面的具体内核数量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo| grep <span class="string">"cpu cores"</span>| uniq</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>CPU 逻辑个数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/cpuinfo| grep <span class="string">"processor"</span>| wc -l</span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>内核版本信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -r 或 uname -a</span><br></pre></td></tr></table></figure>
+
+<p>磁盘空间大小：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -hT</span><br></pre></td></tr></table></figure>
+
+<p>内存大小：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">free -mh</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="comment">#内存使用的百分比</span></span><br><span class="line">free -m | sed -n <span class="string">'2p'</span> | awk <span class="string">'&#123;print "used mem is "$3"M,total mem is "$2"M,used percent is "$3/$2*100"%"&#125;'</span></span><br></pre></td></tr></table></figure>
+
+<p>查看高速缓存区(Cached)</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/weixin_32559261/article/details/116801710" target="_blank" rel="noopener">https://blog.csdn.net/weixin_32559261/article/details/116801710</a></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat &#x2F;proc&#x2F;meminfo</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看Linux内存消耗"><a href="#查看Linux内存消耗" class="headerlink" title="查看Linux内存消耗"></a>查看Linux内存消耗</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo du -sh &#x2F;home&#x2F;wangyj</span><br><span class="line">du -sh &#x2F;home&#x2F;wangyj</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="如何查看Ubuntu版本"><a href="#如何查看Ubuntu版本" class="headerlink" title="如何查看Ubuntu版本"></a>如何查看Ubuntu版本</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cat &#x2F;etc&#x2F;issue</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; or</span><br><span class="line">uname -v</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; or</span><br><span class="line">lsb_release -a</span><br></pre></td></tr></table></figure>
+
+<h5 id="在test-txtd第一行加入hello"><a href="#在test-txtd第一行加入hello" class="headerlink" title="在test.txtd第一行加入hello"></a>在test.txtd第一行加入hello</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed &#39;1i\hello&#39; test.txt &gt; tmp; mv -f tmp test.txt</span><br></pre></td></tr></table></figure>
+
+<h5 id="将本地文件拷贝到远程服务器"><a href="#将本地文件拷贝到远程服务器" class="headerlink" title="将本地文件拷贝到远程服务器"></a>将本地文件拷贝到远程服务器</h5><ul>
+<li><code>scp</code> 远程拷贝</li>
+<li><code>root@121.199.70.72:</code> 远程地址<ul>
+<li><code>root</code>远程服务器名</li>
+<li><code>121.199.70.72</code>远程服务器地址</li>
+</ul>
+</li>
+<li><code>/var/www/zhihu</code> 文件要拷贝到远程服务器的文件夹路径</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -i ~&#x2F;.ssh&#x2F;vikingship.pem -r *  root@121.199.70.72:&#x2F;var&#x2F;www&#x2F;zhihu</span><br></pre></td></tr></table></figure>
+
+<h5 id="Xshell-XFTP链接"><a href="#Xshell-XFTP链接" class="headerlink" title="Xshell XFTP链接"></a>Xshell XFTP链接</h5><ul>
+<li>密钥密码是密钥生成的时候设置的，如果生成密钥是一路回车，那密钥密码就是空（不输入即可）</li>
+<li>本地密钥文件是不带后缀的id_rsa文件</li>
+</ul>
+<p><img src="/2021/03/03/linux/linux/image-20230112133716636.png" alt="image-20230112133716636"></p>
+<h5 id="查看文件大小"><a href="#查看文件大小" class="headerlink" title="查看文件大小"></a>查看文件大小</h5><blockquote>
+<p><a href="https://blog.csdn.net/oqqHuTu12345678/article/details/125556409" target="_blank" rel="noopener">https://blog.csdn.net/oqqHuTu12345678/article/details/125556409</a></p>
+</blockquote>
+<p>使用“ls -l filepath”查看文件大小，第五列为文件字节数。</p>
+<p>使用“ls -lh filepath”查看文件大小，加-h参数可以人性化显示文件大小。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wangyj@node1:~&#x2F;dataset$ ls -l amazon-2008.txt </span><br><span class="line">-rw-rw-r-- 1 wangyj wangyj 70632805 May  5  2022 amazon-2008.txt</span><br><span class="line">wangyj@node1:~&#x2F;dataset$ ls -lh amazon-2008.txt </span><br><span class="line">-rw-rw-r-- 1 wangyj wangyj 68M May  5  2022 amazon-2008.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="linux非root安装JDK11"><a href="#linux非root安装JDK11" class="headerlink" title="linux非root安装JDK11"></a>linux非root安装JDK11</h2><ol>
+<li><p><strong>下载 JDK 11：</strong> 打开 Oracle 或者 OpenJDK 官方网站，在下载页面找到 JDK 11 的版本。你可以选择 Oracle JDK 或 OpenJDK，视你的需求而定。</p>
+<p>例如，如果你选择使用 OpenJDK，可以使用如下命令下载：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https:&#x2F;&#x2F;download.java.net&#x2F;openjdk&#x2F;jdk11&#x2F;ri&#x2F;openjdk-11+28_linux-x64_bin.tar.gz</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>解压缩文件：</strong> 使用以下命令解压缩下载的 tar 文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf openjdk-11+28_linux-x64_bin.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>这将在当前目录下创建一个新的目录，其中包含解压缩后的 JDK。</p>
+</li>
+<li><p><strong>设置环境变量：</strong> 设置 <code>JAVA_HOME</code> 和 <code>PATH</code> 环境变量，让系统知道 JDK 的位置。假设你的 JDK 解压到了 <code>~/jdk-11</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;~&#x2F;jdk-11</span><br><span class="line">export PATH&#x3D;$JAVA_HOME&#x2F;bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>如果你想使这些变量在每次登录时都自动设置，将上述命令添加到你的 shell 配置文件（如 <code>~/.bashrc</code> 或 <code>~/.zshrc</code>）。</p>
+</li>
+<li><p><strong>验证安装：</strong> 打开一个新的终端窗口并运行以下命令，验证是否正确安装了 JDK：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h2 id="虚拟机安装Ubuntu和CentOS"><a href="#虚拟机安装Ubuntu和CentOS" class="headerlink" title="虚拟机安装Ubuntu和CentOS"></a>虚拟机安装Ubuntu和CentOS</h2><h3 id="安装Ubuntu"><a href="#安装Ubuntu" class="headerlink" title="安装Ubuntu"></a>安装Ubuntu</h3><blockquote>
+<p><a href="https://ubuntu.com/" target="_blank" rel="noopener">官网</a></p>
+</blockquote>
+<h4 id="下载镜像文件-iso"><a href="#下载镜像文件-iso" class="headerlink" title="下载镜像文件(.iso)"></a>下载镜像文件(.iso)</h4><p><img src="/2021/03/03/linux/linux/image-20230611212717790.png" alt="image-20230611212717790"></p>
+<p><img src="/2021/03/03/linux/linux/image-20230611212942618.png" alt="image-20230611212942618"></p>
+<ul>
+<li>点击后滑动到底部，如下</li>
+</ul>
+<p><img src="/2021/03/03/linux/linux/image-20230611213109594.png" alt="image-20230611213109594"></p>
+<p><img src="/2021/03/03/linux/linux/image-20230611213437318.png" alt="image-20230611213437318"></p>
+<p><img src="/2021/03/03/linux/linux/image-20230611213545952.png" alt="image-20230611213545952"></p>
+<h4 id="VMware安装Ubuntu"><a href="#VMware安装Ubuntu" class="headerlink" title="VMware安装Ubuntu"></a>VMware安装Ubuntu</h4><blockquote>
+<p><a href="https://blog.csdn.net/GRT609/article/details/123931322" target="_blank" rel="noopener">在VMware上安装Ubuntu详细教程</a></p>
+</blockquote>
+<h3 id="安装CentOS"><a href="#安装CentOS" class="headerlink" title="安装CentOS"></a>安装CentOS</h3><h4 id="下载镜像文件-iso-1"><a href="#下载镜像文件-iso-1" class="headerlink" title="下载镜像文件(.iso)"></a>下载镜像文件(.iso)</h4><blockquote>
+<p><a href="https://www.centos.org/" target="_blank" rel="noopener">官网</a></p>
+<p><a href="https://blog.csdn.net/qq_52772669/article/details/130735077" target="_blank" rel="noopener">centos下载镜像文件</a></p>
+<p><a href="http://www.taodudu.cc/news/show-567516.html?action=onClick" target="_blank" rel="noopener">CentOS 7镜像下载和安装教程</a></p>
+<p><a href="https://blog.csdn.net/weixin_72637522/article/details/130295593" target="_blank" rel="noopener">Centos7镜像版本命名规则</a></p>
+</blockquote>
+<p><img src="/2021/03/03/linux/linux/image-20230611214815555.png" alt="image-20230611214815555"></p>
+<p><img src="/2021/03/03/linux/linux/image-20230611215339574.png" alt="image-20230611215339574"></p>
+<p><img src="/2021/03/03/linux/linux/image-20230611215450213.png" alt="image-20230611215450213"></p>
+<h4 id="VMware安装CentOS"><a href="#VMware安装CentOS" class="headerlink" title="VMware安装CentOS"></a>VMware安装CentOS</h4><blockquote>
+<p><a href="https://blog.csdn.net/GRT609/article/details/123931322" target="_blank" rel="noopener">超详细VMware安装CentOs图文教程</a></p>
+<p><a href="https://blog.csdn.net/weixin_45630258/article/details/125070170" target="_blank" rel="noopener">vmware 安装 centos</a></p>
+</blockquote>
+<h2 id="xftp连接虚拟机ubuntu"><a href="#xftp连接虚拟机ubuntu" class="headerlink" title="xftp连接虚拟机ubuntu"></a>xftp连接虚拟机ubuntu</h2><p><strong>ubuntu配置</strong></p>
+<blockquote>
+<p><a href="https://blog.csdn.net/xuyankuanrong/article/details/80246203" target="_blank" rel="noopener">xshell和xftp与虚拟机Ubuntu之间的连接与配置</a></p>
+</blockquote>
+<ul>
+<li>安装openssh-server</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install openssh-server</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>检测是否启动<ul>
+<li>只有<code>ssh-agent</code>则未启动，否则启动了</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -e|grep ssh</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/03/03/linux/linux/image-20230614212006079.png" alt="image-20230614212006079"></p>
+<ul>
+<li>启动ssh</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;etc&#x2F;init.d&#x2F;ssh start</span><br></pre></td></tr></table></figure>
+
+<p>基本以上步骤就可以连接了, 以下可以参考</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install openssh-server // </span><br><span class="line">apt install net-tools   // 安装net-tools工具</span><br><span class="line">ifconfig // 查看ip</span><br><span class="line"></span><br><span class="line">1.检查Ubuntu是否已安装xftp</span><br><span class="line">vsftpd --version</span><br><span class="line">2.如果没有安装，先安装xftp</span><br><span class="line">sudo apt-get install vsftpd</span><br><span class="line">3.检测Ubuntu是否安装ssh</span><br><span class="line">ps -e|grep ssh</span><br><span class="line">4.如果没有安装，先安装ssh</span><br><span class="line">sudo apt-get install openssh-server</span><br><span class="line">5.启动ssh</span><br><span class="line">/etc/init.d/ssh start</span><br></pre></td></tr></table></figure>
+
+<p><strong>xftp设置</strong></p>
+<ul>
+<li>只需要虚拟机ubuntu的IP地址和用户名和密码即可</li>
+</ul>
+<p><img src="/2021/03/03/linux/linux/image-20230614212401186.png" alt="image-20230614212401186"></p>
+<h2 id="vscode-连接虚拟机ubuntu"><a href="#vscode-连接虚拟机ubuntu" class="headerlink" title="vscode 连接虚拟机ubuntu"></a>vscode 连接虚拟机ubuntu</h2><p>ubuntu上的配置同：xftp连接虚拟机ubuntu</p>
+<p><img src="/2021/03/03/linux/linux/image-20240403110853006.png" alt="image-20240403110853006"></p>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><p>查看路由表</p>
+<p>在 Linux 操作系统，我们可以使用 <code>route -n</code> 命令查看当前系统的路由表</p>
+<p>在 Linux 系统中，我们可以使用 <code>arp -a</code> 命令来查看 ARP 缓存的内容</p>
+<h1 id="linux教程"><a href="#linux教程" class="headerlink" title="linux教程"></a>linux教程</h1><h2 id="用户管理命令"><a href="#用户管理命令" class="headerlink" title="用户管理命令"></a>用户管理命令</h2><h3 id="2-1-添加新用户"><a href="#2-1-添加新用户" class="headerlink" title="2.1 添加新用户"></a>2.1 添加新用户</h3><ul>
+<li><code>sudo useradd -m -s /bin/bash  用户名</code>该方式不能设置密码，需要通过修改密码来重置密码才能正常登录</li>
+<li><code>sudo adduser 用户名</code>新建过程会自动创建家目录，且创建过程可以设置密码，不用额外的操作</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 添加用户</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> sudo -&gt; 使用管理员权限执行这个命令</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo adduser 用户名</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> centos</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo useradd 用户名</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> ubuntu</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo useradd -m -s /bin/bash  用户名   <span class="comment"># -m 自动在home下新建用户的家目录 -s /bin/bash指定命令解析器</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 在使用 adduser 添加新用户的时候，有的Linux版本执行完命令就结束了，有的版本会提示设置密码等用户信息</span></span><br><span class="line">robin@OS:~/Linux$ sudo adduser lisi</span><br><span class="line">Adding user `lisi' ...</span><br><span class="line">Adding new group `lisi' (1004) ...</span><br><span class="line">Adding new user `lisi' (1004) with group `lisi' ...</span><br><span class="line">Creating home directory `/home/lisi' ...</span><br><span class="line">Copying files from `/etc/skel' ...</span><br><span class="line">Enter new UNIX password: </span><br><span class="line">Retype new UNIX password: </span><br><span class="line">passwd: password updated successfully</span><br><span class="line">Changing the user information for lisi</span><br><span class="line">Enter the new value, or press ENTER for the default</span><br><span class="line">        Full Name []: </span><br><span class="line">        Room Number []: </span><br><span class="line">        Work Phone []: </span><br><span class="line">        Home Phone []: </span><br><span class="line">        Other []: </span><br><span class="line">Is the information correct? [Y/n] y</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h2><h3 id="6-15-vim配置"><a href="#6-15-vim配置" class="headerlink" title="6.15 vim配置"></a>6.15 vim配置</h3><h4 id="显示行号"><a href="#显示行号" class="headerlink" title="显示行号"></a>显示行号</h4><blockquote>
+<p><a href="https://blog.csdn.net/bobo82529/article/details/134072369" target="_blank" rel="noopener">https://blog.csdn.net/bobo82529/article/details/134072369</a></p>
+</blockquote>
+<p>1、临时显示行号</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">只须按ESC键退出编辑内容模式，输入“：” </span><br><span class="line">再输入“set number”或者“set nu”后按回车键，就可以显示行号了</span><br><span class="line">取消显示行号：输入“：set nonu”</span><br></pre></td></tr></table></figure>
+
+<p>2、永久显示行号</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.vimrc </span><br><span class="line"><span class="meta">#</span><span class="bash"> 打开后输入如下设置</span></span><br><span class="line">set number 或者 set nu</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="动态静态链接库"><a href="#动态静态链接库" class="headerlink" title="动态静态链接库"></a>动态静态链接库</h2><blockquote>
+<p><a href="https://subingwen.cn/linux/library/" target="_blank" rel="noopener">https://subingwen.cn/linux/library/</a></p>
+</blockquote>
+<h3 id="2-4-3-动态连接库环境变量配置"><a href="#2-4-3-动态连接库环境变量配置" class="headerlink" title="2.4.3 动态连接库环境变量配置"></a>2.4.3 动态连接库环境变量配置</h3><p>动态库使用报错</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wangyj@node1:~/learn/library/dynamic/test$ ./main </span><br><span class="line">./main: error while loading shared libraries: libcalc.so: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>出现以上错误即动态库地址没有在环境变量中配置</li>
+</ul>
+<h4 id="配置LD-LIBRARY-PATH"><a href="#配置LD-LIBRARY-PATH" class="headerlink" title="配置LD_LIBRARY_PATH"></a>配置LD_LIBRARY_PATH</h4><p>方式1：终端字符串拼接，临时的</p>
+<ul>
+<li>将动态链接库的地址<code>/home/wangyj/learn/library/dynamic/test:</code>拼接到LD_LIBRARY_PATH， 注意最后加<code>:</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wangyj@node1:~/learn/library/dynamic$ LD_LIBRARY_PATH=/home/wangyj/learn/library/dynamic/test:$LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改后需要<code>source ~/.bashrc</code>重新加载配置</li>
+</ul>
+<p>方式2：修改配置文件</p>
+<ul>
+<li>找到相关的配置文件，永久的<ul>
+<li>用户级别: <code>~/.bashrc</code> —&gt; 设置对当前用户有效</li>
+<li>系统级别:<code>/etc/profile</code> —&gt; 设置对所有用户有效</li>
+</ul>
+</li>
+<li>使用 vim 打开配置文件, 在文件最后添加这样一句话</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 自己把路径写进去就行了</span></span><br><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH :动态库的绝对路径  // 注意=号间没有空格</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改后需要<code>source ~/.bashrc</code>重新加载配置<ul>
+<li><code>source</code>可以简写为一个<code>.</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 修改的是哪一个就执行对应的那个命令</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">source</span> 可以简写为一个 . , 作用是让文件内容被重新加载</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">source</span> ~/.bashrc          (. ~/.bashrc)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">source</span> /etc/profile       (. /etc/profile)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="7-makefile练习"><a href="#7-makefile练习" class="headerlink" title="7 makefile练习"></a>7 makefile练习</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 目录结构</span></span><br><span class="line">.</span><br><span class="line">├── include</span><br><span class="line">│   └── head.h	==&gt; 头文件, 声明了加减乘除四个函数</span><br><span class="line">├── main.c		==&gt; 测试程序, 调用了head.h中的函数</span><br><span class="line">└── src</span><br><span class="line">    ├── add.c	==&gt; 加法运算</span><br><span class="line">    ├── div.c	==&gt; 除法运算</span><br><span class="line">    ├── mult.c  ==&gt; 乘法运算</span><br><span class="line">    └── sub.c   ==&gt; 减法运算</span><br></pre></td></tr></table></figure>
+
+<p>makefile如下</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最终的目标名 app</span></span><br><span class="line">target = app</span><br><span class="line"><span class="comment"># 搜索当前项目目录下的源文件</span></span><br><span class="line">src=<span class="variable">$(<span class="built_in">wildcard</span> *.c ./src/*.c)</span></span><br><span class="line"><span class="comment"># 将文件的后缀替换掉 .c -&gt; .o</span></span><br><span class="line">obj=<span class="variable">$(<span class="built_in">patsubst</span> %.c, %.o, <span class="variable">$(src)</span>)</span></span><br><span class="line"><span class="comment"># 头文件目录</span></span><br><span class="line">include=./<span class="keyword">include</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一条规则</span></span><br><span class="line"><span class="comment"># 依赖中都是 xx.o yy.o zz.o</span></span><br><span class="line"><span class="comment"># gcc命令执行的是链接操作</span></span><br><span class="line"><span class="variable">$(target)</span>:<span class="variable">$(obj)</span></span><br><span class="line">        gcc <span class="variable">$^</span> -o <span class="variable">$@</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 模式匹配规则</span></span><br><span class="line"><span class="comment"># 执行汇编操作, 前两步: 预处理, 编译是自动完成</span></span><br><span class="line"><span class="section">%.o:%.c</span></span><br><span class="line">        gcc <span class="variable">$&lt;</span> -c -I <span class="variable">$(include)</span> -o <span class="variable">$@</span>  <span class="comment"># 这里要加-o $@才能保证生成的*.o文件在./src/目录下，否则生成在g</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加一个清除文件的规则</span></span><br><span class="line"><span class="meta"><span class="meta-keyword">.PHONY</span>:clean</span></span><br><span class="line"></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">        -rm <span class="variable">$(obj)</span> <span class="variable">$(target)</span> -f</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/03/wx-applet/wxapplet-ui/wxapplet-ui/" rel="prev" title="微信小程序UI框架使用指南">
+      <i class="fa fa-chevron-left"></i> 微信小程序UI框架使用指南
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/14/C++/c++meteo/" rel="next" title="基于c++开发的气象数据中心项目">
+      基于c++开发的气象数据中心项目 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux"><span class="nav-text">linux</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用"><span class="nav-text">常用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看一个进程的运行时间"><span class="nav-text">查看一个进程的运行时间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看环境变量"><span class="nav-text">查看环境变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#bashrc"><span class="nav-text">.bashrc</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Screen"><span class="nav-text">Screen</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装g"><span class="nav-text">安装g++</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解压"><span class="nav-text">解压</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cmake"><span class="nav-text">cmake</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#shell脚本"><span class="nav-text">shell脚本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看设备配置"><span class="nav-text">查看设备配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看Linux内存消耗"><span class="nav-text">查看Linux内存消耗</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如何查看Ubuntu版本"><span class="nav-text">如何查看Ubuntu版本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在test-txtd第一行加入hello"><span class="nav-text">在test.txtd第一行加入hello</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#将本地文件拷贝到远程服务器"><span class="nav-text">将本地文件拷贝到远程服务器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Xshell-XFTP链接"><span class="nav-text">Xshell XFTP链接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看文件大小"><span class="nav-text">查看文件大小</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux非root安装JDK11"><span class="nav-text">linux非root安装JDK11</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机安装Ubuntu和CentOS"><span class="nav-text">虚拟机安装Ubuntu和CentOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Ubuntu"><span class="nav-text">安装Ubuntu</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载镜像文件-iso"><span class="nav-text">下载镜像文件(.iso)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VMware安装Ubuntu"><span class="nav-text">VMware安装Ubuntu</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装CentOS"><span class="nav-text">安装CentOS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载镜像文件-iso-1"><span class="nav-text">下载镜像文件(.iso)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VMware安装CentOS"><span class="nav-text">VMware安装CentOS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xftp连接虚拟机ubuntu"><span class="nav-text">xftp连接虚拟机ubuntu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vscode-连接虚拟机ubuntu"><span class="nav-text">vscode 连接虚拟机ubuntu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络"><span class="nav-text">网络</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux教程"><span class="nav-text">linux教程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户管理命令"><span class="nav-text">用户管理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-添加新用户"><span class="nav-text">2.1 添加新用户</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim"><span class="nav-text">vim</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-15-vim配置"><span class="nav-text">6.15 vim配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#显示行号"><span class="nav-text">显示行号</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态静态链接库"><span class="nav-text">动态静态链接库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-动态连接库环境变量配置"><span class="nav-text">2.4.3 动态连接库环境变量配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置LD-LIBRARY-PATH"><span class="nav-text">配置LD_LIBRARY_PATH</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-makefile练习"><span class="nav-text">7 makefile练习</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chuckie"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Chuckie</p>
+  <div class="site-description" itemprop="description">Bright future</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ChuckieWill" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ChuckieWill" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/codewyj.163.com" title="E-Mail → codewyj.163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jianshu.com/u/de627226656c" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;de627226656c" rel="noopener" target="_blank">简书</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="/images/me.png"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chuckie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">17:04</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
