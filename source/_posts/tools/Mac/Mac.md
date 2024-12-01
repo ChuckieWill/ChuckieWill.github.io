@@ -34,3 +34,39 @@ categories:
 
 
 
+
+
+#   终端
+
+显示可用的shell
+
+```shell
+xiating@192 ~ % cat /etc/shells
+```
+
+切换shell
+
+```c++
+chsh -s /bin/bash
+  
+chsh: no changes made  问题待解决
+```
+
+显示使用的shell
+
+```shell
+echo $SHELL 
+```
+
+
+
+修改终端显示所有路径
+
+```shell
+vim ~/.zshrc
+# .zshrc开头添加下面的内容  这里的 %~ 表示当前工作目录的完整路径
+export PS1="%~ %# "
+
+source ~/.zshrc
+```
+

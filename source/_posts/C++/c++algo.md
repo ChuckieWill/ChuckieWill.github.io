@@ -4417,7 +4417,7 @@ vector<int> countBits(int n){
 ####  **序列型动态规划**
 
 * 序列+状态
-* Lintcode 516
+* Lintcode 516 https://www.lintcode.com/problem/516/
   * `f[i][j] = min{f[i-1][k] (k != j)} + cost[i][j]`
   * 时间复杂度：`O(N*k*K)`
   * 优化：
@@ -4441,6 +4441,7 @@ int minCost11(vector<vector<int>>& cost){
   for(int i=1; i<n; ++i){
     int first = INT32_MAX, second = INT32_MAX;
     int a , b;
+    // 注意最小值 和 次小值的求法
     for(int j = 0; j < k; ++j){
       if(f[i-1][j] < first){
         second = first;
@@ -4470,7 +4471,7 @@ int minCost11(vector<vector<int>>& cost){
 }
 ```
 
-* 392 · 打劫房屋
+* 392 · 打劫房屋 https://www.lintcode.com/problem/392/
 
 **最长序列型动态规**
 
@@ -4676,7 +4677,7 @@ public:
 > * 元素不可重复用：lint92、lint563、lint125
 >   * 考虑对象为元素，需要用二维数组，但可以空间优化
 
-* lint92
+* lint92 https://www.lintcode.com/problem/92/record
   * 记录是否可以  bool
   * 元素不可重复
   * 二维数组  
@@ -4705,12 +4706,12 @@ f[0][1->w] = false;
 
 
 // 空间优化
-f[w] = f[w] || f[w-arr[i-1]]
+f[w] = f[w] || f[w-arr[i-1]]  // 从右往左覆盖
 f[0] = true;
 f[1--w] = false
 ```
 
-* lint563
+* lint563 https://www.lintcode.com/problem/563/
   * 记录组合数
   * 元素不可重复
   * 二维数组
@@ -4763,7 +4764,7 @@ solution(vector<int> a, int target){
 }
 ```
 
-* lint125
+* lint125 https://www.lintcode.com/problem/125/record
   * 总价值最大
   * 记录总价值
   * 元素不可重复
@@ -4782,7 +4783,7 @@ solution(vector<int> a, int target){
 // 从左往右覆盖
 ```
 
-* lint 440
+* lint 440 https://www.lintcode.com/problem/440/
   * 总价值最大
   * 记录总价值
   * 元素可重复
@@ -5475,7 +5476,7 @@ public:
 
 * 62 [不同路径](https://leetcode.cn/problems/unique-paths/)
   * 有数学方法
-* 63 不同路径2
+* [63. 不同路径 II](https://leetcode.cn/problems/unique-paths-ii/)
 * 64 [最小路径和](https://leetcode.cn/problems/minimum-path-sum/)
 
 ####  打家劫舍
@@ -5535,8 +5536,8 @@ public:
 
 * 343 [ 整数拆分](https://leetcode.cn/problems/integer-break/)
   * 待复习
-  * `f[i] = max(max(j*f[i-j], j*(i-j))   1<=j<i`
-  * f[1] = 1
+  * `f[i] = max(f[i], max(j*f[i-j], j*(i-j))   1<=j<i`
+  * f[0]=f[1] = 0
   * 特别注意：调f[i-j]的时候是对i-j的继续拆分，不包括i-j本身  所以需要`max(j*f[i-j], j*(i-j)`
 * 279 [ 完全平方数](https://leetcode.cn/problems/perfect-squares/)
   * 上面学习过，查看以前的记录
@@ -5693,6 +5694,7 @@ public:
 
 ```c++
 // 贪心
+// 从栈的角度理解就清晰了
 //f[i]表示长度为 i 的最长上升子序列的末尾元素的最小值
 以输入序列 [0,8,4,12,2][0, 8, 4, 12, 2][0,8,4,12,2] 为例：
 
