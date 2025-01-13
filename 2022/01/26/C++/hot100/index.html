@@ -29,8 +29,9 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2022/01/26/C++/hot100/image-20221117203645300.png">
 <meta property="og:image" content="http://yoursite.com/2022/01/26/C++/hot100/image-20221117203736258.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/20260225-f580a07018d6c8c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/627/format/webp">
 <meta property="article:published_time" content="2022-01-26T06:43:17.000Z">
-<meta property="article:modified_time" content="2024-10-27T09:08:38.581Z">
+<meta property="article:modified_time" content="2025-01-13T04:24:43.536Z">
 <meta property="article:author" content="Chuckie">
 <meta property="article:tag" content="算法总结">
 <meta name="twitter:card" content="summary">
@@ -223,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-10-27 17:08:38" itemprop="dateModified" datetime="2024-10-27T17:08:38+08:00">2024-10-27</time>
+                <time title="修改时间：2025-01-13 12:24:43" itemprop="dateModified" datetime="2025-01-13T12:24:43+08:00">2025-01-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1132,24 +1133,35 @@
 </ul>
 </li>
 <li><p><a href="https://leetcode.cn/problems/remove-duplicates-from-sorted-array/" target="_blank" rel="noopener">26. 删除有序数组中的重复项</a></p>
+<ul>
+<li>双指针 同上</li>
+</ul>
 </li>
-<li><p>80</p>
+<li><p><a href="https://leetcode.cn/problems/remove-duplicates-from-sorted-array-ii/" target="_blank" rel="noopener">80. 删除有序数组中的重复项 II</a></p>
+<ul>
+<li>双指针   注意范围</li>
+</ul>
 </li>
 </ul>
 <p><strong>排序应用</strong></p>
 <ul>
-<li><p>75</p>
+<li><p><a href="https://leetcode.cn/problems/sort-colors/" target="_blank" rel="noopener">75. 颜色分类</a></p>
 <ul>
 <li>计数排序</li>
-<li>三路快排（适用于重复元素较多的情况）</li>
+<li>三路快排（适用于重复元素较多的情况）<ul>
+<li>[0,lt] == 0    lt是闭区间 则lt初始=-1  如果初始lt=0  那么久默认0位置就是==0了</li>
+<li>[lt+1, i) ==  1</li>
+<li>[gt, n-1] == 2  同理 gt是闭区间 所以gt初始=n</li>
 </ul>
 </li>
-<li><p>88</p>
+</ul>
+</li>
+<li><p><a href="https://leetcode.cn/problems/merge-sorted-array/" target="_blank" rel="noopener">88. 合并两个有序数组</a></p>
 <ul>
 <li>逆向双指针</li>
 </ul>
 </li>
-<li><p>215</p>
+<li><p><a href="https://leetcode.cn/problems/kth-largest-element-in-an-array/" target="_blank" rel="noopener">215. 数组中的第K个最大元素</a></p>
 <ul>
 <li>三路快排</li>
 </ul>
@@ -1157,43 +1169,97 @@
 </ul>
 <p><strong>对撞指针</strong></p>
 <ul>
-<li>167</li>
-<li>125</li>
-<li>344</li>
-<li>11 有难度</li>
+<li><p><a href="https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/" target="_blank" rel="noopener">167. 两数之和 II - 输入有序数组</a></p>
+</li>
+<li><p><a href="https://leetcode.cn/problems/valid-palindrome/" target="_blank" rel="noopener">125. 验证回文串</a></p>
+<ul>
+<li>字符串操作  isalnum  tolower</li>
+</ul>
+</li>
+<li><p><a href="https://leetcode.cn/problems/reverse-string/" target="_blank" rel="noopener">344. 反转字符串</a></p>
+</li>
+<li><p><a href="https://leetcode.cn/problems/container-with-most-water/" target="_blank" rel="noopener">11. 盛最多水的容器</a> </p>
+<ul>
+<li>有难度</li>
+<li>看解析</li>
+</ul>
+</li>
 </ul>
 <p><strong>滑动窗口</strong></p>
 <blockquote>
 <p>定宽窗口和变宽窗口有区别</p>
 </blockquote>
 <ul>
-<li>209</li>
-<li>3</li>
-<li>438  方法值得再研究</li>
-<li>76</li>
+<li><p><a href="https://leetcode.cn/problems/minimum-size-subarray-sum/" target="_blank" rel="noopener">209. 长度最小的子数组</a></p>
+<ul>
+<li>在有效时记录窗口宽度</li>
+</ul>
+</li>
+<li><p><a href="https://leetcode.cn/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener">3. 无重复字符的最长子串</a></p>
+<ul>
+<li>不方便while滑动时 就一步一步的滑动</li>
+</ul>
+</li>
+<li><p><a href="https://leetcode.cn/problems/find-all-anagrams-in-a-string/" target="_blank" rel="noopener">438. 找到字符串中所有字母异位词</a></p>
+<ul>
+<li>方法值得再研究</li>
+<li>记录每个需要字符的状态  对状态改变时修改need</li>
+<li>定宽滑动</li>
+</ul>
+</li>
+<li><p><a href="https://leetcode.cn/problems/minimum-window-substring/" target="_blank" rel="noopener">76. 最小覆盖子串</a></p>
+<ul>
+<li>变宽滑动</li>
+</ul>
+</li>
 </ul>
 <h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><blockquote>
 <p>set</p>
 <p>map</p>
 </blockquote>
 <ul>
-<li>349</li>
-<li>350</li>
-<li>242</li>
-<li>202</li>
-<li>290</li>
-<li>205</li>
-<li>451</li>
-<li>1</li>
-<li>15  三数之和   经典(看的解析)  时间复杂度高</li>
-<li>18 四数之和    经典(看的解析)  时间复杂度高</li>
-<li>16 <a href="https://leetcode.cn/problems/3sum-closest/" target="_blank" rel="noopener"> 最接近的三数之和</a></li>
-<li><a href="https://leetcode.cn/problems/4sum-ii/" target="_blank" rel="noopener">454. 四数相加 II</a>  (看的解析)<ul>
-<li>自己写哈希函数，待实现</li>
+<li><p><a href="https://leetcode.cn/problems/intersection-of-two-arrays/" target="_blank" rel="noopener">349. 两个数组的交集</a></p>
+</li>
+<li><p><a href="https://leetcode.cn/problems/intersection-of-two-arrays-ii/" target="_blank" rel="noopener">350. 两个数组的交集 II</a></p>
+</li>
+<li><p><a href="https://leetcode.cn/problems/valid-anagram/" target="_blank" rel="noopener">242. 有效的字母异位词</a></p>
+</li>
+<li><p><a href="https://leetcode.cn/problems/happy-number/" target="_blank" rel="noopener">202. 快乐数</a></p>
+</li>
+<li><p><a href="https://leetcode.cn/problems/word-pattern/" target="_blank" rel="noopener">290. 单词规律</a></p>
+</li>
+<li><p><a href="https://leetcode.cn/problems/isomorphic-strings/" target="_blank" rel="noopener">205. 同构字符串</a></p>
+</li>
+<li><p><a href="https://leetcode.cn/problems/sort-characters-by-frequency/" target="_blank" rel="noopener">451. 根据字符出现频率排序</a></p>
+</li>
+<li><p><a href="https://leetcode.cn/problems/two-sum/" target="_blank" rel="noopener">1. 两数之和</a></p>
+</li>
+<li><p><a href="https://leetcode.cn/problems/3sum/" target="_blank" rel="noopener">15. 三数之和</a></p>
+<ul>
+<li>经典(看的解析)  时间复杂度高</li>
 </ul>
 </li>
-<li>447</li>
-<li>149  困难 优化点很多 多方考虑<ul>
+<li><p><a href="https://leetcode.cn/problems/4sum/" target="_blank" rel="noopener">18. 四数之和</a></p>
+<ul>
+<li>经典(看的解析)  时间复杂度高</li>
+</ul>
+</li>
+<li><p>16 <a href="https://leetcode.cn/problems/3sum-closest/" target="_blank" rel="noopener"> 最接近的三数之和</a></p>
+</li>
+<li><p><a href="https://leetcode.cn/problems/4sum-ii/" target="_blank" rel="noopener">454. 四数相加 II</a>  (看的解析)</p>
+<ul>
+<li>就是枚举  不要想复杂了</li>
+<li>数学问题</li>
+</ul>
+</li>
+<li><p><a href="https://leetcode.cn/problems/number-of-boomerangs/" target="_blank" rel="noopener">447. 回旋镖的数量</a></p>
+<ul>
+<li>数学问题</li>
+</ul>
+</li>
+<li><p><a href="https://leetcode.cn/problems/max-points-on-a-line/" target="_blank" rel="noopener">149. 直线上最多的点数</a></p>
+<ul>
+<li>困难 优化点很多 多方考虑</li>
 <li>键值：两个有范围的数 如何相加得到一个独一无二的数 计算之后的和分布在不同的区间</li>
 </ul>
 </li>
@@ -1202,16 +1268,38 @@
 
 <p><strong>查找表+滑动窗口</strong></p>
 <ul>
-<li>219</li>
-<li>217</li>
-</ul>
-<p><strong>二分搜索树+滑动窗口</strong></p>
+<li><p><a href="https://leetcode.cn/problems/contains-duplicate-ii/" target="_blank" rel="noopener">219. 存在重复元素 II</a></p>
 <ul>
-<li>220  也可以是map处理（官方解答，时间复杂度更小），不用二分搜索(set就是也给二分搜索树)<ul>
-<li>map的方式实际用时似乎没有更少</li>
+<li>Unordered_map</li>
+<li>滑动窗口</li>
+</ul>
+</li>
+<li><p><a href="https://leetcode.cn/problems/contains-duplicate/" target="_blank" rel="noopener">217. 存在重复元素</a></p>
+<ul>
+<li>unordered_set</li>
 </ul>
 </li>
 </ul>
+<p><strong>二分搜索树+滑动窗口</strong></p>
+<ul>
+<li><a href="https://leetcode.cn/problems/contains-duplicate-iii/" target="_blank" rel="noopener">220. 存在重复元素 III</a><ul>
+<li>使用set   复习</li>
+<li>桶排序比较复杂</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><a href="https://zh.cppreference.com/w/cpp/container/map/lower_bound" target="_blank" rel="noopener">lower_bound</a></th>
+<th>返回指向首个<em>不小于</em>给定键的元素的迭代器 (公开成员函数)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://zh.cppreference.com/w/cpp/container/map/upper_bound" target="_blank" rel="noopener">upper_bound</a></td>
+<td>返回指向首个<em>大于</em>给定键的元素的迭代器</td>
+</tr>
+</tbody></table>
 <h2 id="差分数组"><a href="#差分数组" class="headerlink" title="差分数组"></a>差分数组</h2><blockquote>
 <p>注意对交点(增加和减少的汇聚点)的处理，根据业务情况确定在哪减</p>
 </blockquote>
@@ -1234,12 +1322,26 @@
 </li>
 </ul>
 </li>
+<li>快速幂<a href="https://leetcode.cn/problems/powx-n/" target="_blank" rel="noopener">50. Pow(x, n)</a><ul>
+<li><a href="https://blog.csdn.net/liangllhahaha/article/details/82119378" target="_blank" rel="noopener">快速幂/快速乘</a></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 快速幂</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ksm</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123; <span class="comment">// 计算a^b</span></span><br><span class="line">  <span class="keyword">int</span> ans = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">int</span> base = a;</span><br><span class="line">  <span class="keyword">while</span> (b) &#123;</span><br><span class="line">    <span class="keyword">if</span> ((b&amp;<span class="number">1</span>) != <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="comment">// 避免ans越界 可以用上线除以base 看是否小于ans  如果是则可以*base  否则不能</span></span><br><span class="line">      ans *= base;</span><br><span class="line">    &#125;</span><br><span class="line">    base *= base;</span><br><span class="line">    b &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 快速乘</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ksc</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123; <span class="comment">// 计算a*b</span></span><br><span class="line">  <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> base = a;</span><br><span class="line">  <span class="keyword">while</span> (b) &#123;</span><br><span class="line">    <span class="keyword">if</span> ((b&amp;<span class="number">1</span>) != <span class="number">0</span>) &#123;</span><br><span class="line">      ans += base;</span><br><span class="line">    &#125;</span><br><span class="line">    base += base;</span><br><span class="line">    b &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
 <li>29 <a href="https://leetcode.cn/problems/divide-two-integers/" target="_blank" rel="noopener">两数相除</a></li>
 </ul>
 <p>快速幂/快速乘： 下面的面试部分有讲解</p>
 <p>最大公因数： gcd(n,m)</p>
 <blockquote>
-<p><a href="ttps://blog.csdn.net/qq_36834256/article/details/79381912">辗转相除法</a></p>
+<p><a href="https://blog.csdn.net/qq_36834256/article/details/79381912" target="_blank" rel="noopener">辗转相除法</a></p>
 </blockquote>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 辗转相除法</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> n%m == <span class="number">0</span> ? m : gcd(m, n%m);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -1269,7 +1371,7 @@
 <p><a href="https://www.bilibili.com/video/BV1QT4y1Z7rR/?spm_id_from=333.337.search-card.all.click&vd_source=7230a052308bbb41976f248d2c778e3a" target="_blank" rel="noopener">视频讲解</a></p>
 </blockquote>
 <ul>
-<li><p>offer 专项 058</p>
+<li><p><a href="https://leetcode.cn/problems/fi9suh/" target="_blank" rel="noopener">LCR 058. 我的日程安排表 I</a></p>
 <ul>
 <li><p>map + 二分查找，简洁，易懂</p>
 <ul>
@@ -1294,12 +1396,22 @@
 <ul>
 <li>offer专项 067 <a href="https://leetcode.cn/problems/ms70jA/" target="_blank" rel="noopener"> 最大的异或</a><ul>
 <li>字典树处理，看解析，第一个评论解析比官方更易理解</li>
+<li>复习 容易忘</li>
 </ul>
 </li>
 </ul>
 <h2 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h2><p>offer专项 068 — 073</p>
 <ul>
-<li>offer 专项 072 <a href="https://leetcode.cn/problems/jJ0w9p/" target="_blank" rel="noopener">求平方根</a><ul>
+<li><p><a href="https://leetcode.cn/problems/N6YdxV/" target="_blank" rel="noopener">LCR 068. 搜索插入位置</a></p>
+</li>
+<li><p><a href="https://leetcode.cn/problems/B1IidL/" target="_blank" rel="noopener">LCR 069. 山脉数组的峰顶索引</a></p>
+</li>
+<li><p><a href="https://leetcode.cn/problems/skFtm2/" target="_blank" rel="noopener">LCR 070. 有序数组中的单一元素</a></p>
+</li>
+<li><p><a href="https://leetcode.cn/problems/cuyjEf/" target="_blank" rel="noopener">LCR 071. 按权重随机选择</a></p>
+</li>
+<li><p>offer 专项 072 <a href="https://leetcode.cn/problems/jJ0w9p/" target="_blank" rel="noopener">求平方根</a></p>
+<ul>
 <li>学习这种写法，多场景可用，记录可能满足的情况(and = mid)<ul>
 <li>将可能满足条件的情况记录，另一种情况直接不满足条件，用l&lt;=r退出，或l&lt;r退出，根据具体情况而定</li>
 </ul>
@@ -1309,20 +1421,36 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mySqrt</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">0</span>, r = x, ans = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span> (l &lt;= r) &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = l + (r - l) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span> ((<span class="keyword">long</span> <span class="keyword">long</span>)mid * mid &lt;= x) &#123;</span><br><span class="line">                ans = mid;</span><br><span class="line">                l = mid + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                r = mid - <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><a href="https://leetcode.cn/problems/nZZqjQ/" target="_blank" rel="noopener">LCR 073. 爱吃香蕉的狒狒</a><ul>
+<li>时间复杂度O(nlogk)</li>
+</ul>
+</li>
+</ul>
 <h2 id="栈、队列"><a href="#栈、队列" class="headerlink" title="栈、队列"></a><strong>栈、队列</strong></h2><ul>
 <li>20 <a href="https://leetcode.cn/problems/valid-parentheses/" target="_blank" rel="noopener">有效的括号</a></li>
 <li>150 <a href="https://leetcode.cn/problems/evaluate-reverse-polish-notation/" target="_blank" rel="noopener">逆波兰表达式求值</a><ul>
 <li>适合用栈操作运算：遇到数字则入栈；遇到算符则取出栈顶两个数字进行计算，并将结果压入栈中</li>
 </ul>
 </li>
-<li>71 <a href="https://leetcode.cn/problems/simplify-path/" target="_blank" rel="noopener">简化路径</a></li>
+<li>71 <a href="https://leetcode.cn/problems/simplify-path/" target="_blank" rel="noopener">简化路径</a><ul>
+<li>自己实现split函数</li>
 </ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">split</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; s, <span class="keyword">char</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; res;</span><br><span class="line">    <span class="built_in">string</span> cur;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; c : s) &#123;</span><br><span class="line">        <span class="keyword">if</span> (c == k) &#123;</span><br><span class="line">            <span class="keyword">if</span> (cur != <span class="string">""</span>) res.push_back(cur);</span><br><span class="line">            cur.<span class="built_in">clear</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cur += c;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (cur != <span class="string">""</span>) res.push_back(cur);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <p><strong>递归</strong></p>
 <ul>
 <li>144 <a href="https://leetcode.cn/problems/binary-tree-preorder-traversal/" target="_blank" rel="noopener">二叉树的前序遍历</a></li>
 <li>94 <a href="https://leetcode.cn/problems/binary-tree-inorder-traversal/" target="_blank" rel="noopener">二叉树的中序遍历</a></li>
 <li>145 <a href="https://leetcode.cn/problems/binary-tree-postorder-traversal/" target="_blank" rel="noopener">二叉树的后序遍历</a></li>
-<li>341 <a href="https://leetcode.cn/problems/flatten-nested-list-iterator/" target="_blank" rel="noopener"> 扁平化嵌套列表迭代器</a></li>
+<li>341 <a href="https://leetcode.cn/problems/flatten-nested-list-iterator/" target="_blank" rel="noopener"> 扁平化嵌套列表迭代器</a><ul>
+<li>递归先展开 </li>
+</ul>
+</li>
 </ul>
 <p><strong>队列</strong></p>
 <ul>
@@ -1365,7 +1493,7 @@
 <li>快排方式更快</li>
 </ul>
 </li>
-<li>23 合并K个升序链表<ul>
+<li><a href="https://leetcode.cn/problems/merge-k-sorted-lists/" target="_blank" rel="noopener">23. 合并 K 个升序链表</a><ul>
 <li>分治合并  待学习</li>
 <li>优先队列</li>
 </ul>
@@ -1835,14 +1963,17 @@
 </ul>
 <p>广度优先：一般用于计算最短路径的场景题</p>
 </blockquote>
-<p>offer专项 105-</p>
 <ul>
-<li>106 <a href="https://leetcode.cn/problems/vEAB3K/" target="_blank" rel="noopener">二分图</a><ul>
+<li><p><a href="https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/" target="_blank" rel="noopener">105. 从前序与中序遍历序列构造二叉树</a></p>
+</li>
+<li><p>106 <a href="https://leetcode.cn/problems/vEAB3K/" target="_blank" rel="noopener">二分图</a></p>
+<ul>
 <li>不熟悉，复习</li>
 <li>用序号来标记两个分组</li>
 </ul>
 </li>
-<li>107 <a href="https://leetcode.cn/problems/2bCMpM/" target="_blank" rel="noopener"> 矩阵中的距离</a><ul>
+<li><p>107 <a href="https://leetcode.cn/problems/2bCMpM/" target="_blank" rel="noopener"> 矩阵中的距离</a></p>
+<ul>
 <li>动态规划和广度优先  复习 不熟悉</li>
 <li>动态规划<ul>
 <li>从某个0到某个1的距离计算，先向下再向右和先向右再向下是等价的</li>
@@ -1854,14 +1985,16 @@
 </li>
 </ul>
 </li>
-<li>108 <a href="https://leetcode.cn/problems/om3reC/" target="_blank" rel="noopener">单词演变</a><ul>
+<li><p>108 <a href="https://leetcode.cn/problems/om3reC/" target="_blank" rel="noopener">单词演变</a></p>
+<ul>
 <li>不会， 复习</li>
 <li>图的构建不熟悉，复习</li>
 <li>遍历记得标记已经遍历的元素</li>
 <li>广度优先，找最短路径，记录层数的方法</li>
 </ul>
 </li>
-<li>111 <a href="https://leetcode.cn/problems/vlzXQL/" target="_blank" rel="noopener">计算除法</a><ul>
+<li><p>111 <a href="https://leetcode.cn/problems/vlzXQL/" target="_blank" rel="noopener">计算除法</a></p>
+<ul>
 <li>构建图，不熟悉，复习</li>
 <li>广度优先，<strong>记录路径</strong></li>
 </ul>
@@ -1906,9 +2039,9 @@
 </li>
 </ul>
 <h2 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h2><ul>
-<li>455</li>
-<li>392</li>
-<li>435 重叠子序列<ul>
+<li><a href="https://leetcode.cn/problems/assign-cookies/" target="_blank" rel="noopener">455. 分发饼干</a></li>
+<li><a href="https://leetcode.cn/problems/is-subsequence/" target="_blank" rel="noopener">392. 判断子序列</a></li>
+<li><a href="https://leetcode.cn/problems/non-overlapping-intervals/" target="_blank" rel="noopener">435. 无重叠区间</a><ul>
 <li>类似 动态规划中求最长递增子序列 300  (O(n^2))</li>
 <li>此题用动态规划 不通过 运行时间过长</li>
 <li>贪心思路 （O(n)）<ul>
@@ -1924,7 +2057,13 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 按照区间的结尾排序，</span></span><br><span class="line"><span class="comment">// 每次选择结尾最早的，且和前一个区间不重叠的区间</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="牛客面经"><a href="#牛客面经" class="headerlink" title="牛客面经"></a>牛客面经</h2><ol>
+<h2 id="牛客面经"><a href="#牛客面经" class="headerlink" title="牛客面经"></a>牛客面经</h2><blockquote>
+<p><a href="https://blog.csdn.net/u011386173/article/details/125295165" target="_blank" rel="noopener">有环或无环链表的相交问题</a></p>
+<p>情况2：一个链表有环，一个链表无环，这种情况不可能相交     相交后共用  一个有环 另一个一定也有  可以相交在环之前  也可以相交在换上</p>
+<p>两个链表相交，且两个链表的入环节点是同一个（loop1 = loop2，就认为 loop1 和 loop2 是终止节点，问题就变成了两个无环链表找第一个相交节点）       loop1 = loop2表示入环点相同 就可以确定是情况2了，，，</p>
+<p>重要思想：如果两个单链表有共同的节点，那么从第一个共同节点开始，后面的节点都会重叠，直到链表结束。<br>因为两个链表中有一个共同节点，则这个节点里的指针域指向的下一个节点地址一样，所以下一个节点也会相交，依次类推</p>
+</blockquote>
+<ol>
 <li>怎么判断链表相交</li>
 <li>怎么判断链表有环</li>
 <li>怎么找到环入口地址？为什么这么找？怎么证明</li>
@@ -2190,15 +2329,40 @@
 
 <p><strong>字符串转int</strong></p>
 <p>atoi()和stoi()</p>
-<blockquote>
-<p><a href="https://www.jianshu.com/p/e700ac920249" target="_blank" rel="noopener">atoi()和stoi()的区别</a></p>
-</blockquote>
 <ul>
 <li>atoi()和stoi()函数都是只转换字符串的数字部分，如果遇到其它字符的话则停止转换</li>
 <li>只返回有效数字 0123返回123</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> str[] = &#123;<span class="string">'1'</span>,<span class="string">'2'</span>,<span class="string">'a'</span>,<span class="string">'3'</span>&#125;;</span><br><span class="line">    <span class="built_in">string</span> str1 = <span class="string">"12aa3"</span>;</span><br><span class="line">    <span class="comment">//遇到了'a'字符，停止数字转换</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; atoi(str) &lt;&lt; <span class="built_in">endl</span>;   <span class="comment">// 打印 12</span></span><br><span class="line">    <span class="comment">//遇到了'a'字符，停止数字转换</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; stoi(str1) &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">// 打印 12</span></span><br><span class="line">    </span><br><span class="line">  <span class="built_in">string</span> s = <span class="string">"0123"</span>;</span><br><span class="line">  <span class="keyword">int</span> n = stoi(s);</span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;s&lt;&lt;<span class="built_in">endl</span>; <span class="comment">// 0123</span></span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;n&lt;&lt;<span class="built_in">endl</span>; <span class="comment">// 123</span></span><br><span class="line">    </span><br><span class="line">  <span class="built_in">string</span> s = <span class="string">"0"</span>;</span><br><span class="line">  <span class="keyword">int</span> n = stoi(s);</span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;s&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//0</span></span><br><span class="line">  <span class="built_in">cout</span>&lt;&lt;n&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; res;</span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">isTrue</span><span class="params">(<span class="built_in">string</span> s)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(s.length() &gt; <span class="number">1</span> &amp;&amp; s[<span class="number">0</span>] == <span class="string">'0'</span>) <span class="keyword">return</span> <span class="literal">false</span>;<span class="comment">//</span></span><br><span class="line">    <span class="keyword">int</span> it = stoi(s);</span><br><span class="line">    <span class="keyword">if</span>(it &gt;=<span class="number">0</span> &amp;&amp; it &lt;= <span class="number">255</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="built_in">string</span>&amp; s, <span class="keyword">int</span> index, <span class="keyword">int</span> need, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp;  pre)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(need == <span class="number">0</span>)&#123; <span class="comment">// 最后一层长度一定满足条件</span></span><br><span class="line">      <span class="built_in">string</span> last = s.substr(index);</span><br><span class="line">      <span class="keyword">if</span>(!isTrue(last)) <span class="keyword">return</span>;</span><br><span class="line">      <span class="built_in">string</span> temp = <span class="string">""</span>;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span>&amp; s : pre)&#123;</span><br><span class="line">        temp = temp + s + <span class="string">"."</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      temp += last;</span><br><span class="line">      res.push_back(temp);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = index; i&lt;index+<span class="number">3</span> &amp;&amp; i &lt;s.length(); ++i)&#123;</span><br><span class="line">      <span class="keyword">int</span> len = s.length() - i<span class="number">-1</span>;</span><br><span class="line">      <span class="comment">// cout&lt;&lt;"len: "&lt;&lt;len&lt;&lt;endl;</span></span><br><span class="line">      <span class="comment">// cout&lt;&lt;"need: "&lt;&lt;need&lt;&lt;"   need*3: "&lt;&lt;need*3&lt;&lt;endl;</span></span><br><span class="line">      <span class="keyword">if</span>(len&gt;= need &amp;&amp; len &lt;= need*<span class="number">3</span>)&#123;</span><br><span class="line">        <span class="built_in">string</span> cur = s.substr(index, i-index+<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span>(!isTrue(cur)) <span class="keyword">return</span>;</span><br><span class="line">        pre.push_back(cur);</span><br><span class="line">        dfs(s, i+<span class="number">1</span>, need<span class="number">-1</span>, pre);</span><br><span class="line">        pre.pop_back();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">restoreIpAddresses</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = s.length();</span><br><span class="line">    <span class="keyword">if</span>(len &lt; <span class="number">4</span> || len &gt; <span class="number">12</span>) <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; pre;</span><br><span class="line">    dfs(s, <span class="number">0</span>, <span class="number">3</span>, pre);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<blockquote>
+<p><a href="https://www.jianshu.com/p/e700ac920249" target="_blank" rel="noopener">atoi()和stoi()的区别</a></p>
+</blockquote>
+<ul>
+<li><p>相同点</p>
+<ul>
+<li><p>都是C++的字符处理函数，把数字字符串转换成int输出</p>
+</li>
+<li><p>头文件都是<code>#include&lt;cstring&gt;</code></p>
+</li>
+</ul>
+</li>
+<li><p>不同点</p>
+</li>
+<li><p>&lt;1&gt;参数类型不同</p>
+<ul>
+<li><p><code>atoi()</code>的参数是 <code>const char*</code> ,因此对于一个字符串str我们必须调用 <code>c_str()</code>的方法把这个<code>string</code>转换成 <code>const char*</code>类型。</p>
+</li>
+<li><p><code>stoi()</code>的参数是<code>const string&amp;</code>,不需要转化为 <code>const char*</code></p>
+</li>
+</ul>
+</li>
+<li><p>&lt;2&gt;范围检查</p>
+<ul>
+<li><code>atoi()</code>不会做范围检查，如果超出范围的话，超出上界，则输出上界，超出下界，则输出下界；</li>
+<li><code>stoi()</code>会做范围检查，默认范围是在int的范围内的，如果超出范围的话则会吐核超出范围。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https:////upload-images.jianshu.io/upload_images/20260225-f580a07018d6c8c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/627/format/webp" alt="img"></p>
 <p><strong>string转char</strong></p>
 <p>c_str()</p>
 <blockquote>
@@ -2210,7 +2374,7 @@
 <p>to_string()</p>
 <p><strong>大小写字符转换</strong></p>
 <p><a href="https://blog.csdn.net/laozhuxinlu/article/details/51539737?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-51539737-blog-105710187.pc_relevant_3mothn_strategy_recovery&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-51539737-blog-105710187.pc_relevant_3mothn_strategy_recovery&utm_relevant_index=1" target="_blank" rel="noopener">tolower/toupper</a> </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;ctype.h&gt;   // c++中使用不用引入头文件</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;ctype.h&gt;   // c++中使用不用引入头文件</span></span></span><br><span class="line"><span class="comment">// 只能单个字符转换</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>判断字符数字</strong></p>
 <ul>
@@ -2379,7 +2543,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-count">118</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2441,7 +2605,7 @@
 <div class="copyright">
   
   &copy; 2020 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="/images/me.png"></i>
   </span>
@@ -2457,7 +2621,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">17:04</span>
+    <span title="站点阅读时长">17:09</span>
 </div>
 
         
