@@ -4,7 +4,7 @@ date: 2020-04-02 10:43:17
 tags:
 - html
 categories:
-- [tools,http-server]
+- [tools, http-server]
 ---
 
 > [npm: http-server](https://www.npmjs.com/package/http-server)

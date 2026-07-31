@@ -1,3 +1,12 @@
+---
+title: Recommended Background
+date: 2024-12-09 12:25:48
+tags:
+- recall
+categories:
+- [recall]
+---
+
 #  Recommended Background
 
 [github推荐系统学习](https://github.com/datawhalechina/fun-rec/blob/master/readme.md)

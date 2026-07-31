@@ -177,31 +177,16 @@
       {%- endif %}
 
       {%- if is_index %}
-        {%- if post.description and theme.excerpt_description %}
-          <p>{{ post.description }}</p>
-          <!--noindex-->
-          {%- if theme.read_more_btn %}
-            <div class="post-button">
-              <a class="btn" href="{{ url_for(post.path) }}">
-                {{ __('post.read_more') }} &raquo;
-              </a>
-            </div>
-          {%- endif %}
-          <!--/noindex-->
-        {% elif post.excerpt %}
-          {{ post.excerpt }}
-          <!--noindex-->
-          {%- if theme.read_more_btn %}
-            <div class="post-button">
-              <a class="btn" href="{{ url_for(post.path) }}#more" rel="contents">
-                {{ __('post.read_more') }} &raquo;
-              </a>
-            </div>
-          {%- endif %}
-          <!--/noindex-->
-        {% else %}
-          {{ post.content }}
+        {# Homepage: title/meta only, skip excerpt body (avoids duplicated headings). #}
+        <!--noindex-->
+        {%- if theme.read_more_btn %}
+          <div class="post-button">
+            <a class="btn" href="{{ url_for(post.path) }}">
+              {{ __('post.read_more') }} &raquo;
+            </a>
+          </div>
         {%- endif %}
+        <!--/noindex-->
       {% else %}
         {{ post.content }}
       {%- endif %}
